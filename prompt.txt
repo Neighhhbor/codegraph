@@ -136,8 +136,6 @@ class CodeParser:
         return imports
 
 
-
-
 code_graph.py:
 import networkx as nx
 import os
@@ -202,7 +200,6 @@ class CodeGraph:
 
     def get_graph(self):
         return self.graph
-
 
 
 neo4j_utils.py:

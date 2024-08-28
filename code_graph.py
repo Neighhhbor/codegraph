@@ -46,18 +46,14 @@ class CodeGraph:
                 print(f"警告: 找不到被调用者节点: {callee}")
 
     def _resolve_function_name(self, func_name):
-        # 优先匹配完整的类成员函数名称
         for full_name in self.graph.nodes:
             if full_name.endswith(func_name) and self.graph.nodes[full_name]['type'] == 'function':
                 return full_name
-        # 如果找不到类成员函数，再考虑文件级别的函数
         for full_name in self.graph.nodes:
             if full_name.endswith(func_name.split('.')[-1]) and self.graph.nodes[full_name]['type'] == 'function':
                 return full_name
         print(f"警告: 未能解析函数名: {func_name}")
         return None
-
-
 
     def get_graph(self):
         return self.graph

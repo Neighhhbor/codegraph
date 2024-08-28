@@ -42,15 +42,16 @@ class CodeParser:
     def _extract_items(self, node, file_path, parent):
         for child in node.children:
             if child.type == 'class_definition':
-                class_name = self._get_node_text(child.children[1], file_path)
+                class_name_node = child.child_by_field_name('name')
+                class_name = self._get_node_text(class_name_node, file_path)
                 class_full_name = f"{file_path}.{class_name}"
                 self.classes[class_full_name] = {"file": file_path, "methods": []}
                 
-                # 遍历该类的内容，父节点设为当前类
                 self._extract_items(child, file_path, class_full_name)
 
             elif child.type == 'function_definition':
-                func_name = self._get_node_text(child.children[1], file_path)
+                func_name_node = child.child_by_field_name('name')
+                func_name = self._get_node_text(func_name_node, file_path)
                 if parent and parent in self.classes:
                     func_full_name = f"{parent}.{func_name}"
                     self.functions[func_full_name] = {"file": file_path, "class": parent}
@@ -79,9 +80,9 @@ class CodeParser:
         parts = []
         while node:
             if node.type == 'function_definition':
-                parts.insert(0, self._get_node_text(node.children[1], self.files[-1]))
+                parts.insert(0, self._get_node_text(node.child_by_field_name('name'), self.files[-1]))
             elif node.type == 'class_definition':
-                parts.insert(0, self._get_node_text(node.children[1], self.files[-1]))
+                parts.insert(0, self._get_node_text(node.child_by_field_name('name'), self.files[-1]))
             node = node.parent
         if parts:
             full_name = f"{self.files[-1]}." + ".".join(parts)
@@ -89,7 +90,6 @@ class CodeParser:
             return full_name
         print("无法解析当前函数")
         return None
-
 
     def _get_called_function(self, node):
         func_node = node.child_by_field_name('function')
@@ -99,25 +99,20 @@ class CodeParser:
 
         parts = []
         while func_node:
-            if func_node.type == 'identifier':
+            if func_node.type in ('identifier', 'attribute'):
                 parts.insert(0, self._get_node_text(func_node, self.files[-1]))
-            elif func_node.type == 'attribute':
-                parts.insert(0, self._get_node_text(func_node.child_by_field_name('attribute'), self.files[-1]))
-                value_node = func_node.child_by_field_name('value')
-                if value_node.type == 'identifier':
-                    parts.insert(0, self._get_node_text(value_node, self.files[-1]))
             func_node = func_node.child_by_field_name('value')
 
-        # 在定义的函数中匹配完整名称
+        full_name = ".".join(parts)
         for func in self.functions:
-            if func.endswith(".".join(parts)):
+            if func.endswith(full_name):
                 print(f"被调用函数的完整链路: {func}")
                 return func
 
         print(f"无法找到被调用函数: {node}")
-        return None
+        return full_name
 
-    
+
     def _get_imports(self):
         imports = []
         for file in self.files:
@@ -126,11 +121,9 @@ class CodeParser:
                 tree = self.parser.parse(bytes(content, "utf8"))
                 for node in tree.root_node.children:
                     if node.type == "import_statement":
-                        module_name = self._get_node_text(node.children[1], file)
+                        module_name = self._get_node_text(node.child_by_field_name('name'), file)
                         imports.append(module_name)
                     elif node.type == "import_from_statement":
-                        module_name = self._get_node_text(node.children[1], file)
+                        module_name = self._get_node_text(node.child_by_field_name('module_name'), file)
                         imports.append(module_name)
         return imports
-
-

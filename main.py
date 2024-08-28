@@ -1,6 +1,6 @@
-from parser.code_parser import CodeParser
-from graph.code_graph import CodeGraph
-from graph.neo4j_utils import Neo4jHandler
+from code_graph import CodeGraph
+from neo4j_utils import Neo4jHandler
+from code_parser import CodeParser
 import config
 
 def main():
