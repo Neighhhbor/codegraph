@@ -1,4 +1,5 @@
 from py2neo import Graph, Node, Relationship
+import os
 
 class Neo4jHandler:
     def __init__(self, url, user, password):
@@ -13,12 +14,18 @@ class Neo4jHandler:
     def import_graph(self, code_graph):
         nx_graph = code_graph.get_graph()
         for node, attrs in nx_graph.nodes(data=True):
-            # 提取最深层的名字（函数名、类名等）
             full_name = node
-            if '.' in full_name:
-                short_name = full_name.split('.')[-1]
+
+            # 根据节点类型选择简化名称的方式
+            if attrs['type'].upper() == 'FILE':
+                # 文件节点使用文件名作为简化名称
+                short_name = os.path.basename(full_name)
             else:
-                short_name = full_name
+                # 类和函数节点使用最后一个点后的部分作为简化名称
+                if '.' in full_name:
+                    short_name = full_name.split('.')[-1]
+                else:
+                    short_name = full_name
 
             # 根据节点类型创建节点
             n = Node(attrs['type'].upper(), name=short_name, full_name=full_name)
