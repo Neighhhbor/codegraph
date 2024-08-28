@@ -76,24 +76,61 @@ class CodeParser:
         return file_content[start_byte:end_byte]
 
     def _get_current_function(self, node):
+        parts = []
         while node:
             if node.type == 'function_definition':
-                if node.parent.type == 'class_definition':
-                    return f"{self.files[-1]}.{self._get_node_text(node.parent.children[1], self.files[-1])}.{self._get_node_text(node.children[1], self.files[-1])}"
-                return f"{self.files[-1]}.{self._get_node_text(node.children[1], self.files[-1])}"
+                parts.insert(0, self._get_node_text(node.children[1], self.files[-1]))
+            elif node.type == 'class_definition':
+                parts.insert(0, self._get_node_text(node.children[1], self.files[-1]))
             node = node.parent
+        if parts:
+            full_name = f"{self.files[-1]}." + ".".join(parts)
+            print(f"当前函数的完整链路: {full_name}")
+            return full_name
+        print("无法解析当前函数")
         return None
+
 
     def _get_called_function(self, node):
         func_node = node.child_by_field_name('function')
-        if func_node.type == 'identifier':
-            return f"{self.files[-1]}.{self._get_node_text(func_node, self.files[-1])}"
-        elif func_node.type == 'attribute':
-            value_node = func_node.child_by_field_name('value')
-            if value_node.type == 'identifier':
-                possible_class = f"{self.files[-1]}.{self._get_node_text(value_node, self.files[-1])}"
-                for func in self.functions:
-                    if func.startswith(possible_class):
-                        return f"{possible_class}.{self._get_node_text(func_node.child_by_field_name('attribute'), self.files[-1])}"
-            return f"{self.files[-1]}.{self._get_node_text(func_node.child_by_field_name('attribute'), self.files[-1])}"
+        if not func_node:
+            print(f"无法找到被调用函数: {node}")
+            return None
+
+        parts = []
+        while func_node:
+            if func_node.type == 'identifier':
+                parts.insert(0, self._get_node_text(func_node, self.files[-1]))
+            elif func_node.type == 'attribute':
+                parts.insert(0, self._get_node_text(func_node.child_by_field_name('attribute'), self.files[-1]))
+                value_node = func_node.child_by_field_name('value')
+                if value_node.type == 'identifier':
+                    parts.insert(0, self._get_node_text(value_node, self.files[-1]))
+            func_node = func_node.child_by_field_name('value')
+
+        # 在定义的函数中匹配完整名称
+        for func in self.functions:
+            if func.endswith(".".join(parts)):
+                print(f"被调用函数的完整链路: {func}")
+                return func
+
+        print(f"无法找到被调用函数: {node}")
         return None
+
+    
+    def _get_imports(self):
+        imports = []
+        for file in self.files:
+            with open(file, "r") as f:
+                content = f.read()
+                tree = self.parser.parse(bytes(content, "utf8"))
+                for node in tree.root_node.children:
+                    if node.type == "import_statement":
+                        module_name = self._get_node_text(node.children[1], file)
+                        imports.append(module_name)
+                    elif node.type == "import_from_statement":
+                        module_name = self._get_node_text(node.children[1], file)
+                        imports.append(module_name)
+        return imports
+
+

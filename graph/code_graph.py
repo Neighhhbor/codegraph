@@ -25,11 +25,12 @@ class CodeGraph:
         short_name = func_name.split('.')[-1]
 
         if not self.graph.has_node(func_full_name):
+            print(f"添加函数节点: {func_full_name}，属于容器: {container_name}")
             self.graph.add_node(func_full_name, type="function", display_name=short_name)
             self.graph.add_edge(container_name, func_full_name, relationship="CONTAINS")
-            print(f"添加函数节点: {func_full_name}，属于容器: {container_name}")
         else:
             print(f"函数节点已存在: {func_full_name}")
+
 
     def add_call(self, caller, callee):
         caller_full_name = self._resolve_function_name(caller)
@@ -50,7 +51,13 @@ class CodeGraph:
             if full_name.endswith(func_name) and self.graph.nodes[full_name]['type'] == 'function':
                 return full_name
         # 如果找不到类成员函数，再考虑文件级别的函数
+        for full_name in self.graph.nodes:
+            if full_name.endswith(func_name.split('.')[-1]) and self.graph.nodes[full_name]['type'] == 'function':
+                return full_name
+        print(f"警告: 未能解析函数名: {func_name}")
         return None
+
+
 
     def get_graph(self):
         return self.graph
