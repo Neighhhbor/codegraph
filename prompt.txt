@@ -1,0 +1,227 @@
+我提供你目前的代码：
+codeparser.py:
+import tree_sitter_python as tspython
+from tree_sitter import Language, Parser
+import os
+
+class CodeParser:
+    def __init__(self, project_path):
+        self.project_path = project_path
+        self.parser = self._init_parser()
+        self.files = []
+        self.classes = {}
+        self.functions = {}
+        self.calls = []
+
+    def _init_parser(self):
+        language = Language(tspython.language(), 'python')
+        parser = Parser()
+        parser.set_language(language)
+        return parser
+
+    def parse(self):
+        py_files = self._get_py_files()
+        for file in py_files:
+            self._parse_file(file)
+
+    def _get_py_files(self):
+        py_files = []
+        for root, _, files in os.walk(self.project_path):
+            for file in files:
+                if file.endswith(".py"):
+                    py_files.append(os.path.join(root, file))
+        return py_files
+
+    def _parse_file(self, file_path):
+        with open(file_path, "r") as file:
+            file_content = file.read()
+
+        tree = self.parser.parse(bytes(file_content, "utf8"))
+        self.files.append(file_path)
+
+        self._extract_items(tree.root_node, file_path, None)
+
+    def _extract_items(self, node, file_path, parent):
+        for child in node.children:
+            if child.type == 'class_definition':
+                class_name = self._get_node_text(child.children[1], file_path)
+                class_full_name = f"{file_path}.{class_name}"
+                self.classes[class_full_name] = {"file": file_path, "methods": []}
+                
+                # 遍历该类的内容，父节点设为当前类
+                self._extract_items(child, file_path, class_full_name)
+
+            elif child.type == 'function_definition':
+                func_name = self._get_node_text(child.children[1], file_path)
+                if parent and parent in self.classes:
+                    func_full_name = f"{parent}.{func_name}"
+                    self.functions[func_full_name] = {"file": file_path, "class": parent}
+                    self.classes[parent]["methods"].append(func_full_name)
+                else:
+                    func_full_name = f"{file_path}.{func_name}"
+                    # 如果已经有类成员函数的定义，忽略顶层函数定义
+                    if not any(func_full_name.endswith(f".{func_name}") for func_full_name in self.functions):
+                        self.functions[func_full_name] = {"file": file_path}
+                
+            elif child.type == 'call':
+                caller_func = self._get_current_function(node)
+                callee_func = self._get_called_function(child)
+                if caller_func and callee_func:
+                    self.calls.append((caller_func, callee_func))
+
+            self._extract_items(child, file_path, parent)
+
+    def _get_node_text(self, node, file_path):
+        start_byte = node.start_byte
+        end_byte = node.end_byte
+        with open(file_path, "r") as file:
+            file_content = file.read()
+        return file_content[start_byte:end_byte]
+
+    def _get_current_function(self, node):
+        while node:
+            if node.type == 'function_definition':
+                if node.parent.type == 'class_definition':
+                    return f"{self.files[-1]}.{self._get_node_text(node.parent.children[1], self.files[-1])}.{self._get_node_text(node.children[1], self.files[-1])}"
+                return f"{self.files[-1]}.{self._get_node_text(node.children[1], self.files[-1])}"
+            node = node.parent
+        return None
+
+    def _get_called_function(self, node):
+        func_node = node.child_by_field_name('function')
+        if func_node.type == 'identifier':
+            return f"{self.files[-1]}.{self._get_node_text(func_node, self.files[-1])}"
+        elif func_node.type == 'attribute':
+            value_node = func_node.child_by_field_name('value')
+            if value_node.type == 'identifier':
+                possible_class = f"{self.files[-1]}.{self._get_node_text(value_node, self.files[-1])}"
+                # 如果存在该类的成员函数，返回成员函数的全名
+                for func in self.functions:
+                    if func.startswith(possible_class):
+                        return f"{possible_class}.{self._get_node_text(func_node.child_by_field_name('attribute'), self.files[-1])}"
+            return f"{self.files[-1]}.{self._get_node_text(func_node.child_by_field_name('attribute'), self.files[-1])}"
+        return None
+
+
+code_graph.py:
+import networkx as nx
+import os
+
+class CodeGraph:
+    def __init__(self):
+        self.graph = nx.DiGraph()
+
+    def add_file(self, file_name):
+        short_name = os.path.basename(file_name)
+        self.graph.add_node(file_name, type="file", display_name=short_name)
+
+    def add_class(self, class_name, file_name):
+        class_full_name = f"{file_name}.{class_name}"
+        short_name = class_name.split('.')[-1]
+        if not self.graph.has_node(class_full_name):
+            self.graph.add_node(class_full_name, type="class", display_name=short_name)
+            self.graph.add_edge(file_name, class_full_name, relationship="CONTAINS")
+
+    def add_function(self, func_name, container_name):
+        func_full_name = func_name
+        short_name = func_name.split('.')[-1]
+
+        if not self.graph.has_node(func_full_name):
+            self.graph.add_node(func_full_name, type="function", display_name=short_name)
+            self.graph.add_edge(container_name, func_full_name, relationship="CONTAINS")
+
+    def add_call(self, caller, callee):
+        # 确保调用的节点已经存在图中，避免重复创建
+        caller = self._resolve_function_name(caller)
+        callee = self._resolve_function_name(callee)
+
+        if not self.graph.has_node(caller):
+            self.graph.add_node(caller, type="function")
+        if not self.graph.has_node(callee):
+            self.graph.add_node(callee, type="function")
+        self.graph.add_edge(caller, callee, relationship="CALLS")
+
+    def _resolve_function_name(self, func_name):
+        # 如果类成员函数存在，优先返回类成员函数的名称
+        for full_name in self.graph.nodes:
+            if full_name.endswith(func_name) and self.graph.nodes[full_name]['type'] == 'function':
+                return full_name
+        return func_name
+
+    def get_graph(self):
+        return self.graph
+
+neo4j_utils.py:
+from py2neo import Graph, Node, Relationship
+import os
+
+class Neo4jHandler:
+    def __init__(self, url, user, password):
+        self.graph = Graph(url, auth=(user, password))
+
+    def clean_database(self):
+        self.graph.run("MATCH (n) DETACH DELETE n")
+
+    def import_graph(self, code_graph):
+        nx_graph = code_graph.get_graph()
+        for node, attrs in nx_graph.nodes(data=True):
+            full_name = node
+            node_type = attrs.get('type', 'UNKNOWN').upper()
+
+            if node_type == 'UNKNOWN':
+                print(f"发现未知类型的节点: {full_name}")
+                continue
+
+            if node_type == 'FILE':
+                short_name = os.path.basename(full_name)
+            else:
+                if '.' in full_name:
+                    short_name = full_name.split('.')[-1]
+                else:
+                    short_name = full_name
+
+            n = Node(node_type, name=short_name, full_name=full_name)
+            self.graph.merge(n, node_type, 'full_name')
+
+        for edge in nx_graph.edges(data=True):
+            start = self.graph.nodes.match(full_name=edge[0]).first()
+            end = self.graph.nodes.match(full_name=edge[1]).first()
+            rel = Relationship(start, edge[2]['relationship'], end)
+            self.graph.merge(rel)
+
+
+
+main.py:
+from parser.code_parser import CodeParser
+from graph.code_graph import CodeGraph
+from graph.neo4j_utils import Neo4jHandler
+import config
+
+def main():
+    # 初始化Neo4j处理器
+    neo4j_handler = Neo4jHandler(config.NEO4J_URL, config.NEO4J_USER, config.NEO4J_PASSWORD)
+    
+    # 清空数据库
+    neo4j_handler.clean_database()
+
+    # 解析代码库
+    parser = CodeParser(config.PROJECT_PATH)
+    parser.parse()
+
+    # 构建关系图
+    code_graph = CodeGraph()
+    for file in parser.files:
+        code_graph.add_file(file)
+    for class_name, class_data in parser.classes.items():
+        code_graph.add_class(class_name, class_data["file"])
+    for func_name, func_data in parser.functions.items():
+        container = func_data.get("class") or func_data["file"]
+        code_graph.add_function(func_name, container)
+    for caller, callee in parser.calls:
+        code_graph.add_call(caller, callee)
+
+    # 导入Neo4j数据库
+    neo4j_handler.import_graph(code_graph)
+
+if __name__ == "__main__":
+    main()
