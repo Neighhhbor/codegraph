@@ -2,15 +2,31 @@ import tree_sitter_python as tspython
 from tree_sitter import Language, Parser
 import os
 
+class Node:
+    def __init__(self, name, node_type, code, signature=None, parent_fullname=None):
+        self.name = name
+        self.node_type = node_type  # 'module', 'class', 'function'
+        self.children = []
+        self.code = code
+        self.signature = signature
+
+        # 生成全名：从根节点到当前节点的路径名
+        if parent_fullname:
+            self.fullname = f"{parent_fullname}.{name}"
+        else:
+            self.fullname = name
+
+    def add_child(self, child_node):
+        self.children.append(child_node)
+
 class CodeParser:
-    def __init__(self, project_path):
+    def __init__(self, project_path, repo_name):
         self.project_path = project_path
+        self.repo_name = repo_name
         self.parser = self._init_parser()
-        self.files = []
-        self.classes = {}
-        self.functions = {}
-        self.calls = []
-        self.imports = []
+        self.trees = {}  # 存储每个文件的树结构
+        self.calls = []  # 存储调用关系
+        self.imports = {}  # 存储import关系
 
     def _init_parser(self):
         language = Language(tspython.language(), 'python')
@@ -22,7 +38,6 @@ class CodeParser:
         py_files = self._get_py_files()
         for file in py_files:
             self._parse_file(file)
-        self.imports = self._get_imports()
 
     def _get_py_files(self):
         py_files = []
@@ -37,94 +52,115 @@ class CodeParser:
             file_content = file.read()
 
         tree = self.parser.parse(bytes(file_content, "utf8"))
-        self.files.append(file_path)
 
-        self._extract_items(tree.root_node, file_path, None)
+        # 构建模块节点
+        module_name = self._get_module_name(file_path)
+        module_node = Node(module_name, 'module', file_content)
 
-    def _extract_items(self, node, file_path, parent):
+        # 递归构建树形结构
+        self._extract_items(tree.root_node, file_path, module_node)
+
+        # 保存树形结构
+        self.trees[file_path] = module_node
+
+    def _get_module_name(self, file_path):
+        relative_path = os.path.relpath(file_path, self.project_path)
+        module_name = os.path.splitext(relative_path)[0].replace(os.path.sep, '.')
+        return f"{self.repo_name}.{module_name}"
+
+    def _extract_items(self, node, file_path, parent_node):
         for child in node.children:
             if child.type == 'class_definition':
-                class_name_node = child.child_by_field_name('name')
-                class_name = self._get_node_text(class_name_node, file_path)
-                class_full_name = f"{file_path}.{class_name}"
-                self.classes[class_full_name] = {"file": file_path, "methods": []}
-                
-                self._extract_items(child, file_path, class_full_name)
+                class_name = self._get_node_text(child.child_by_field_name('name'), file_path)
+                class_signature = self._get_node_text(child, file_path)
+                class_node = Node(class_name, 'class', self._get_code_segment(child, file_path), class_signature, parent_node.fullname)
+                parent_node.add_child(class_node)
+                # 递归处理子节点
+                self._extract_items(child, file_path, class_node)
 
             elif child.type == 'function_definition':
-                func_name_node = child.child_by_field_name('name')
-                func_name = self._get_node_text(func_name_node, file_path)
-                if parent and parent in self.classes:
-                    func_full_name = f"{parent}.{func_name}"
-                    self.functions[func_full_name] = {"file": file_path, "class": parent}
-                    self.classes[parent]["methods"].append(func_full_name)
-                else:
-                    func_full_name = f"{file_path}.{func_name}"
-                    if not any(func_full_name.endswith(f".{func_name}") for func_full_name in self.functions):
-                        self.functions[func_full_name] = {"file": file_path}
-                
-            elif child.type == 'call':
-                caller_func = self._get_current_function(node)
-                callee_func = self._get_called_function(child)
-                if caller_func and callee_func:
-                    self.calls.append((caller_func, callee_func))
+                func_name = self._get_node_text(child.child_by_field_name('name'), file_path)
+                func_signature = self._get_node_text(child, file_path)
+                func_node = Node(func_name, 'function', self._get_code_segment(child, file_path), func_signature, parent_node.fullname)
+                parent_node.add_child(func_node)
+                # 递归处理子节点
+                self._extract_items(child, file_path, func_node)
 
-            self._extract_items(child, file_path, parent)
+            elif child.type == 'call':
+                # 处理函数调用，记录调用关系
+                caller_name = parent_node.fullname  # 调用者是当前节点的父节点
+                callee_name = self._get_called_function(child, file_path, caller_name)
+                if callee_name:
+                    self.calls.append((caller_name, callee_name))
+
+            elif child.type == 'import_statement':
+                # 处理import关系，记录import的模块
+                for name_node in child.named_children:
+                    if name_node.type == 'dotted_name' or name_node.type == 'identifier':
+                        import_name = self._get_node_text(name_node, file_path)
+                        as_name = import_name  # 默认使用原名，如果有别名会在下面处理
+                    if name_node.type == 'alias':
+                        as_name = self._get_node_text(name_node.child_by_field_name('name'), file_path)
+                        import_name = self._get_node_text(name_node.child_by_field_name('asname'), file_path)
+                    self.imports[as_name] = import_name
+
+            elif child.type == 'import_from_statement':
+                # 处理from ... import ...形式的导入
+                module_name_node = child.child_by_field_name('module')
+                module_name = self._get_node_text(module_name_node, file_path) if module_name_node else None
+
+                for import_node in child.named_children:
+                    if import_node.type == 'import_clause':
+                        import_name = self._get_node_text(import_node.child_by_field_name('name'), file_path)
+                        as_name = import_name  # 默认使用原名，如果有别名会在下面处理
+                        if import_node.child_by_field_name('alias'):
+                            as_name = self._get_node_text(import_node.child_by_field_name('alias'), file_path)
+                        if module_name:
+                            self.imports[as_name] = f"{module_name}.{import_name}"
+                        else:
+                            self.imports[as_name] = import_name
+
+            else:
+                # 递归处理其他子节点
+                self._extract_items(child, file_path, parent_node)
+
+    def _get_called_function(self, node, file_path, caller_fullname):
+        func_node = node.child_by_field_name('function')
+        if not func_node:
+            return None
+
+        # 拼接被调用函数的名字
+        parts = []
+        while func_node:
+            if func_node.type in ('identifier', 'attribute'):
+                parts.insert(0, self._get_node_text(func_node, file_path))
+            func_node = func_node.child_by_field_name('value')
+
+        callee_name = ".".join(parts)
+
+        # 优先通过import查找被调用函数
+        first_part = callee_name.split(".")[0]
+        if first_part in self.imports:
+            callee_name = callee_name.replace(first_part, self.imports[first_part], 1)
+            return callee_name
+
+        # 如果import中没有匹配项，则返回假定的全名
+        if "." in callee_name:
+            context_parts = callee_name.split(".")
+            callee_fullname = ".".join([caller_fullname.rsplit(".", len(context_parts) - 1)[0]] + context_parts)
+        else:
+            callee_fullname = f"{caller_fullname.rsplit('.', 1)[0]}.{callee_name}"
+
+        return callee_fullname
 
     def _get_node_text(self, node, file_path):
+        if node is None:
+            return ""
         start_byte = node.start_byte
         end_byte = node.end_byte
         with open(file_path, "r") as file:
             file_content = file.read()
         return file_content[start_byte:end_byte]
 
-    def _get_current_function(self, node):
-        parts = []
-        while node:
-            if node.type == 'function_definition':
-                parts.insert(0, self._get_node_text(node.child_by_field_name('name'), self.files[-1]))
-            elif node.type == 'class_definition':
-                parts.insert(0, self._get_node_text(node.child_by_field_name('name'), self.files[-1]))
-            node = node.parent
-        if parts:
-            full_name = f"{self.files[-1]}." + ".".join(parts)
-            print(f"当前函数的完整链路: {full_name}")
-            return full_name
-        print("无法解析当前函数")
-        return None
-
-    def _get_called_function(self, node):
-        func_node = node.child_by_field_name('function')
-        if not func_node:
-            print(f"无法找到被调用函数: {node}")
-            return None
-
-        parts = []
-        while func_node:
-            if func_node.type in ('identifier', 'attribute'):
-                parts.insert(0, self._get_node_text(func_node, self.files[-1]))
-            func_node = func_node.child_by_field_name('value')
-
-        full_name = ".".join(parts)
-        for func in self.functions:
-            if func.endswith(full_name):
-                print(f"被调用函数的完整链路: {func}")
-                return func
-
-        print(f"无法找到被调用函数: {node}")
-        return full_name
-
-    def _get_imports(self):
-        imports = []
-        for file in self.files:
-            with open(file, "r") as f:
-                content = f.read()
-                tree = self.parser.parse(bytes(content, "utf8"))
-                for node in tree.root_node.children:
-                    if node.type == "import_statement":
-                        module_name = self._get_node_text(node.child_by_field_name('name'), file)
-                        imports.append((file, module_name))
-                    elif node.type == "import_from_statement":
-                        module_name = self._get_node_text(node.child_by_field_name('module_name'), file)
-                        imports.append((file, module_name))
-        return imports
+    def _get_code_segment(self, node, file_path):
+        return self._get_node_text(node, file_path)

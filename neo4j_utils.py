@@ -26,7 +26,7 @@ class Neo4jHandler:
 
             existing_node = self.graph.nodes.match(node_type, full_name=full_name).first()
             if not existing_node:
-                n = Node(node_type, name=short_name, full_name=full_name)
+                n = Node(node_type, name=short_name, full_name=full_name, code=attrs.get('code', ''), signature=attrs.get('signature', ''), description=attrs.get('description', ''))
                 self.graph.create(n)
                 print(f"导入节点: {full_name} (类型: {node_type})")
 

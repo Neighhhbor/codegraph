@@ -5,61 +5,27 @@ class CodeGraph:
     def __init__(self):
         self.graph = nx.DiGraph()
 
-    def add_file(self, file_name):
-        short_name = os.path.basename(file_name)
-        self.graph.add_node(file_name, type="file", display_name=short_name)
-        print(f"添加文件节点: {file_name}")
-    
-    def add_import_relationship(self, file_name, module_name):
-        if not self.graph.has_node(module_name):
-            self.graph.add_node(module_name, type="module", display_name=module_name)
-        self.graph.add_edge(file_name, module_name, relationship="IMPORTS")
-        print(f"添加模块依赖关系: {file_name} -> {module_name}")
+    def build_graph_from_tree(self, tree_root):
+        # 从树的根节点开始构建图
+        self._add_node(tree_root)
+        self._build_edges(tree_root)
 
-    def add_class(self, class_name, file_name):
-        class_full_name = class_name
-        short_name = class_name.split('.')[-1]
-        if not self.graph.has_node(class_full_name):
-            self.graph.add_node(class_full_name, type="class", display_name=short_name)
-            self.graph.add_edge(file_name, class_full_name, relationship="CONTAINS")
-            print(f"添加类节点: {class_full_name}，属于文件: {file_name}")
+    def _add_node(self, node):
+        self.graph.add_node(node.fullname, type=node.node_type, code=node.code, signature=node.signature)
+        print(f"添加节点: {node.fullname} (类型: {node.node_type})")
+
+    def _build_edges(self, node):
+        for child in node.children:
+            self.graph.add_edge(node.fullname, child.fullname, relationship="CONTAINS")
+            self._add_node(child)
+            self._build_edges(child)
+
+    def add_call(self, caller_fullname, callee_fullname):
+        if caller_fullname in self.graph and callee_fullname in self.graph:
+            self.graph.add_edge(caller_fullname, callee_fullname, relationship="CALLS")
+            print(f"添加调用关系: {caller_fullname} -> {callee_fullname}")
         else:
-            print(f"类节点已存在: {class_full_name}")
-
-    def add_function(self, func_name, container_name):
-        func_full_name = func_name
-        short_name = func_name.split('.')[-1]
-
-        if not self.graph.has_node(func_full_name):
-            print(f"添加函数节点: {func_full_name}，属于容器: {container_name}")
-            self.graph.add_node(func_full_name, type="function", display_name=short_name)
-            self.graph.add_edge(container_name, func_full_name, relationship="CONTAINS")
-        else:
-            print(f"函数节点已存在: {func_full_name}")
-
-
-    def add_call(self, caller, callee):
-        caller_full_name = self._resolve_function_name(caller)
-        callee_full_name = self._resolve_function_name(callee)
-
-        if caller_full_name and callee_full_name:
-            self.graph.add_edge(caller_full_name, callee_full_name, relationship="CALLS")
-            print(f"添加调用关系: {caller_full_name} -> {callee_full_name}")
-        else:
-            if not caller_full_name:
-                print(f"警告: 找不到调用者节点: {caller}")
-            if not callee_full_name:
-                print(f"警告: 找不到被调用者节点: {callee}")
-
-    def _resolve_function_name(self, func_name):
-        for full_name in self.graph.nodes:
-            if full_name.endswith(func_name) and self.graph.nodes[full_name]['type'] == 'function':
-                return full_name
-        for full_name in self.graph.nodes:
-            if full_name.endswith(func_name.split('.')[-1]) and self.graph.nodes[full_name]['type'] == 'function':
-                return full_name
-        print(f"警告: 未能解析函数名: {func_name}")
-        return None
+            print(f"调用关系中的节点不存在: {caller_fullname} -> {callee_fullname}")
 
     def get_graph(self):
         return self.graph
