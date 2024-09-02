@@ -1,8 +1,8 @@
 import os
 from code_graph import CodeGraph
 from neo4j_utils import Neo4jHandler
-from contains_parser import ContainsParser
-from call_import_parser import CallAndImportParser
+from contains_parser import ContainsParser  # 引入包含关系的解析器
+from call_import_parser import CallAndImportParser  # 引入调用和导入关系的解析器
 import config
 
 def main():

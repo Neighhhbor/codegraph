@@ -1,3 +1,5 @@
+# call_import_parser.py
+
 import os
 import tree_sitter_python as tspython
 from tree_sitter import Language, Parser
@@ -9,26 +11,19 @@ class CallAndImportParser:
         self.project_path = project_path
         self.repo_name = repo_name
         self.parser = self._init_parser()
-        self.calls = []  # 存储调用关系
+        self.calls = []  # 存储调用关系 (caller, callee)
         self.imports = {}  # 存储import关系
         self.lsp_client = LspClientWrapper(project_root=project_path)
-        self.logger = self._init_logger()
-        self.trees = {}  # 存储每个文件的树形结构
+
+        # 配置日志记录
+        self.logger = logging.getLogger('call_import_parser')
+        self.logger.setLevel(logging.DEBUG)
 
     def _init_parser(self):
         language = Language(tspython.language(), 'python')
         parser = Parser()
         parser.set_language(language)
         return parser
-
-    def _init_logger(self):
-        logger = logging.getLogger('call_import_parser')
-        handler = logging.StreamHandler()
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-        logger.setLevel(logging.DEBUG)  # 设置为DEBUG模式
-        return logger
 
     def parse(self):
         py_files = self._get_py_files()
@@ -54,9 +49,6 @@ class CallAndImportParser:
         module_name = self._get_module_name(file_path)
 
         self.logger.debug(f"Module name: {module_name}")
-
-        # 保存当前文件的语法树
-        self.trees[module_name] = tree.root_node
 
         # 递归分析import和调用关系
         self._extract_items(tree.root_node, file_path, module_name)
@@ -84,6 +76,8 @@ class CallAndImportParser:
                     self.logger.debug(f"Call statement: {self._get_node_text(child, file_path)}")
                     self.logger.debug(f"Static analysis Caller: {caller_name}")
                     self.logger.debug(f"Static analysis Callee: {callee_name}")
+                    # 记录调用关系
+                    self.calls.append((caller_name, callee_name))
 
             elif child.type == 'import_statement':
                 # 处理import关系，记录import的模块
@@ -153,8 +147,34 @@ class CallAndImportParser:
         self.logger.debug(f"Converting definition to full name: {definition}")
         file_path = definition['absolutePath']  # 使用绝对路径
         module_name = self._get_module_name(file_path)
-        function_name = f"{module_name}.L{definition['range']['start']['line']}_C{definition['range']['start']['character']}"
+        
+        # 通过 AST 或者其他方式解析出具体的函数名称，而不是基于行列信息的生成
+        symbol_name = self._find_symbol_name(file_path, definition['range']['start']['line'], definition['range']['start']['character'])
+        
+        function_name = f"{module_name}.{symbol_name}"
         return function_name
+
+    def _find_symbol_name(self, file_path, line, character):
+        """
+        在文件中通过行号和列号找到符号的名称
+        """
+        # 打开文件并读取内容
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+
+        # 获取行内容
+        target_line = lines[line]
+
+        # 找到特定位置的符号名称
+        # 注意：这里是一个简单的字符串操作，实际中可能需要更复杂的分析
+        symbol_name = ""
+        for char in target_line[character:]:
+            if char.isalnum() or char == '_':
+                symbol_name += char
+            else:
+                break
+
+        return symbol_name
 
     def _get_node_text(self, node, file_path):
         if node is None:
@@ -164,31 +184,3 @@ class CallAndImportParser:
         with open(file_path, "r") as file:
             file_content = file.read()
         return file_content[start_byte:end_byte]
-
-    def _find_function_by_line(self, module_name, line):
-        """
-        根据模块名和行号查找函数的完整名
-        """
-        if module_name in self.trees:
-            return self._find_in_tree(self.trees[module_name], line)
-        return None
-
-    def _find_in_tree(self, node, line):
-        """
-        在语法树中递归查找对应行号的函数
-        """
-        for child in node.children:
-            if 'function' in child.node_type and self._node_covers_line(child, line):
-                return child.fullname
-            result = self._find_in_tree(child, line)
-            if result:
-                return result
-        return None
-
-    def _node_covers_line(self, node, line):
-        """
-        检查节点是否覆盖给定的行号
-        """
-        start_line = node.start_point[0]
-        end_line = node.end_point[0]
-        return start_line <= line <= end_line
