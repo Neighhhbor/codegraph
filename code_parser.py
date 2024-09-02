@@ -10,6 +10,7 @@ class CodeParser:
         self.classes = {}
         self.functions = {}
         self.calls = []
+        self.imports = []
 
     def _init_parser(self):
         language = Language(tspython.language(), 'python')
@@ -21,6 +22,7 @@ class CodeParser:
         py_files = self._get_py_files()
         for file in py_files:
             self._parse_file(file)
+        self.imports = self._get_imports()
 
     def _get_py_files(self):
         py_files = []
@@ -112,7 +114,6 @@ class CodeParser:
         print(f"无法找到被调用函数: {node}")
         return full_name
 
-
     def _get_imports(self):
         imports = []
         for file in self.files:
@@ -122,8 +123,8 @@ class CodeParser:
                 for node in tree.root_node.children:
                     if node.type == "import_statement":
                         module_name = self._get_node_text(node.child_by_field_name('name'), file)
-                        imports.append(module_name)
+                        imports.append((file, module_name))
                     elif node.type == "import_from_statement":
                         module_name = self._get_node_text(node.child_by_field_name('module_name'), file)
-                        imports.append(module_name)
+                        imports.append((file, module_name))
         return imports

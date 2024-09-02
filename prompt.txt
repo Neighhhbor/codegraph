@@ -44,15 +44,16 @@ class CodeParser:
     def _extract_items(self, node, file_path, parent):
         for child in node.children:
             if child.type == 'class_definition':
-                class_name = self._get_node_text(child.children[1], file_path)
+                class_name_node = child.child_by_field_name('name')
+                class_name = self._get_node_text(class_name_node, file_path)
                 class_full_name = f"{file_path}.{class_name}"
                 self.classes[class_full_name] = {"file": file_path, "methods": []}
                 
-                # 遍历该类的内容，父节点设为当前类
                 self._extract_items(child, file_path, class_full_name)
 
             elif child.type == 'function_definition':
-                func_name = self._get_node_text(child.children[1], file_path)
+                func_name_node = child.child_by_field_name('name')
+                func_name = self._get_node_text(func_name_node, file_path)
                 if parent and parent in self.classes:
                     func_full_name = f"{parent}.{func_name}"
                     self.functions[func_full_name] = {"file": file_path, "class": parent}
@@ -81,9 +82,9 @@ class CodeParser:
         parts = []
         while node:
             if node.type == 'function_definition':
-                parts.insert(0, self._get_node_text(node.children[1], self.files[-1]))
+                parts.insert(0, self._get_node_text(node.child_by_field_name('name'), self.files[-1]))
             elif node.type == 'class_definition':
-                parts.insert(0, self._get_node_text(node.children[1], self.files[-1]))
+                parts.insert(0, self._get_node_text(node.child_by_field_name('name'), self.files[-1]))
             node = node.parent
         if parts:
             full_name = f"{self.files[-1]}." + ".".join(parts)
@@ -91,7 +92,6 @@ class CodeParser:
             return full_name
         print("无法解析当前函数")
         return None
-
 
     def _get_called_function(self, node):
         func_node = node.child_by_field_name('function')
@@ -101,25 +101,20 @@ class CodeParser:
 
         parts = []
         while func_node:
-            if func_node.type == 'identifier':
+            if func_node.type in ('identifier', 'attribute'):
                 parts.insert(0, self._get_node_text(func_node, self.files[-1]))
-            elif func_node.type == 'attribute':
-                parts.insert(0, self._get_node_text(func_node.child_by_field_name('attribute'), self.files[-1]))
-                value_node = func_node.child_by_field_name('value')
-                if value_node.type == 'identifier':
-                    parts.insert(0, self._get_node_text(value_node, self.files[-1]))
             func_node = func_node.child_by_field_name('value')
 
-        # 在定义的函数中匹配完整名称
+        full_name = ".".join(parts)
         for func in self.functions:
-            if func.endswith(".".join(parts)):
+            if func.endswith(full_name):
                 print(f"被调用函数的完整链路: {func}")
                 return func
 
         print(f"无法找到被调用函数: {node}")
-        return None
+        return full_name
 
-    
+
     def _get_imports(self):
         imports = []
         for file in self.files:
@@ -128,12 +123,13 @@ class CodeParser:
                 tree = self.parser.parse(bytes(content, "utf8"))
                 for node in tree.root_node.children:
                     if node.type == "import_statement":
-                        module_name = self._get_node_text(node.children[1], file)
+                        module_name = self._get_node_text(node.child_by_field_name('name'), file)
                         imports.append(module_name)
                     elif node.type == "import_from_statement":
-                        module_name = self._get_node_text(node.children[1], file)
+                        module_name = self._get_node_text(node.child_by_field_name('module_name'), file)
                         imports.append(module_name)
         return imports
+
 
 
 code_graph.py:
@@ -185,21 +181,18 @@ class CodeGraph:
                 print(f"警告: 找不到被调用者节点: {callee}")
 
     def _resolve_function_name(self, func_name):
-        # 优先匹配完整的类成员函数名称
         for full_name in self.graph.nodes:
             if full_name.endswith(func_name) and self.graph.nodes[full_name]['type'] == 'function':
                 return full_name
-        # 如果找不到类成员函数，再考虑文件级别的函数
         for full_name in self.graph.nodes:
             if full_name.endswith(func_name.split('.')[-1]) and self.graph.nodes[full_name]['type'] == 'function':
                 return full_name
         print(f"警告: 未能解析函数名: {func_name}")
         return None
 
-
-
     def get_graph(self):
         return self.graph
+
 
 
 neo4j_utils.py:
@@ -227,30 +220,31 @@ class Neo4jHandler:
             if node_type == 'FILE':
                 short_name = os.path.basename(full_name)
             else:
-                if '.' in full_name:
-                    short_name = full_name.split('.')[-1]
-                else:
-                    short_name = full_name
+                short_name = full_name.split('.')[-1]
 
-            n = Node(node_type, name=short_name, full_name=full_name)
-            self.graph.merge(n, node_type, 'full_name')
-            print(f"导入节点: {full_name} (类型: {node_type})")
+            existing_node = self.graph.nodes.match(node_type, full_name=full_name).first()
+            if not existing_node:
+                n = Node(node_type, name=short_name, full_name=full_name)
+                self.graph.create(n)
+                print(f"导入节点: {full_name} (类型: {node_type})")
 
-        for edge in nx_graph.edges(data=True):
-            start = self.graph.nodes.match(full_name=edge[0]).first()
-            end = self.graph.nodes.match(full_name=edge[1]).first()
-            if start is None or end is None:
-                print(f"警告: 关系的起始节点或终止节点缺失，跳过创建关系: {edge}")
-                continue
-            rel = Relationship(start, edge[2]['relationship'], end)
-            self.graph.merge(rel)
-            print(f"导入关系: {edge[0]} -> {edge[1]} (类型: {edge[2]['relationship']})")
+        for start, end, edge_attrs in nx_graph.edges(data=True):
+            start_node = self.graph.nodes.match(full_name=start).first()
+            end_node = self.graph.nodes.match(full_name=end).first()
+            if start_node and end_node:
+                existing_rel = self.graph.match_one(nodes=(start_node, end_node), r_type=edge_attrs['relationship'])
+                if not existing_rel:
+                    rel = Relationship(start_node, edge_attrs['relationship'], end_node)
+                    self.graph.create(rel)
+                    print(f"导入关系: {start} -> {end} (类型: {edge_attrs['relationship']})")
+            else:
+                print(f"警告: 关系的起始节点或终止节点缺失，跳过创建关系: {start} -> {end}")
 
 
 main.py:
-from parser.code_parser import CodeParser
-from graph.code_graph import CodeGraph
-from graph.neo4j_utils import Neo4jHandler
+from code_graph import CodeGraph
+from neo4j_utils import Neo4jHandler
+from code_parser import CodeParser
 import config
 
 def main():
@@ -276,3 +270,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+config.py:
+# 配置文件
+PROJECT_PATH = "./testrepo"  # 需要分析的项目路径
+NEO4J_URL = "bolt://localhost:7687"     # Neo4j数据库的URL
+NEO4J_USER = "neo4j"                    # Neo4j数据库的用户名
+NEO4J_PASSWORD = "12341234"             # Neo4j数据库的密码

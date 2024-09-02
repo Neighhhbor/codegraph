@@ -22,6 +22,10 @@ def main():
     for caller, callee in parser.calls:
         code_graph.add_call(caller, callee)
 
+    # 添加模块依赖关系
+    for file, module in parser.imports:
+        code_graph.add_import_relationship(file, module)
+
     neo4j_handler.import_graph(code_graph)
 
 if __name__ == "__main__":

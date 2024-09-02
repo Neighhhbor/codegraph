@@ -9,6 +9,12 @@ class CodeGraph:
         short_name = os.path.basename(file_name)
         self.graph.add_node(file_name, type="file", display_name=short_name)
         print(f"添加文件节点: {file_name}")
+    
+    def add_import_relationship(self, file_name, module_name):
+        if not self.graph.has_node(module_name):
+            self.graph.add_node(module_name, type="module", display_name=module_name)
+        self.graph.add_edge(file_name, module_name, relationship="IMPORTS")
+        print(f"添加模块依赖关系: {file_name} -> {module_name}")
 
     def add_class(self, class_name, file_name):
         class_full_name = class_name
