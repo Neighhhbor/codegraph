@@ -1,23 +1,20 @@
-# call_import_parser.py
-
 import os
 import tree_sitter_python as tspython
 from tree_sitter import Language, Parser
 from lsp_client import LspClientWrapper
 import logging
 
-class CallAndImportParser:
+class CallParser:
     def __init__(self, project_path, repo_name):
         self.project_path = project_path
         self.repo_name = repo_name
         self.parser = self._init_parser()
         self.calls = []  # 存储调用关系 (caller, callee)
-        self.imports = {}  # 存储import关系
         self.lsp_client = LspClientWrapper(project_root=project_path)
 
         # 配置日志记录
-        self.logger = logging.getLogger('call_import_parser')
-        self.logger.setLevel(logging.DEBUG)
+        self.logger = logging.getLogger('call_parser')
+        self.logger.setLevel(logging.INFO)
 
     def _init_parser(self):
         language = Language(tspython.language(), 'python')
@@ -50,15 +47,15 @@ class CallAndImportParser:
 
         self.logger.debug(f"Module name: {module_name}")
 
-        # 递归分析import和调用关系
-        self._extract_items(tree.root_node, file_path, module_name)
+        # 递归分析调用关系
+        self._extract_calls(tree.root_node, file_path, module_name)
 
     def _get_module_name(self, file_path):
         relative_path = os.path.relpath(file_path, self.project_path)
         module_name = os.path.splitext(relative_path)[0].replace(os.path.sep, '.')
         return f"{self.repo_name}.{module_name}"
 
-    def _extract_items(self, node, file_path, current_fullname):
+    def _extract_calls(self, node, file_path, current_fullname):
         for child in node.children:
             if child.type == 'class_definition' or child.type == 'function_definition':
                 definition_name = self._get_node_text(child.child_by_field_name('name'), file_path)
@@ -66,7 +63,7 @@ class CallAndImportParser:
                 self.logger.debug(f"Extracting {child.type} - {full_definition_name}")
 
                 # 递归处理类或函数的子节点
-                self._extract_items(child, file_path, full_definition_name)
+                self._extract_calls(child, file_path, full_definition_name)
 
             elif child.type == 'call':
                 # 处理函数调用，记录调用关系
@@ -79,38 +76,9 @@ class CallAndImportParser:
                     # 记录调用关系
                     self.calls.append((caller_name, callee_name))
 
-            elif child.type == 'import_statement':
-                # 处理import关系，记录import的模块
-                for name_node in child.named_children:
-                    if name_node.type == 'dotted_name' or name_node.type == 'identifier':
-                        import_name = self._get_node_text(name_node, file_path)
-                        as_name = import_name  # 默认使用原名，如果有别名会在下面处理
-                    if name_node.type == 'alias':
-                        as_name = self._get_node_text(name_node.child_by_field_name('name'), file_path)
-                        import_name = self._get_node_text(name_node.child_by_field_name('asname'), file_path)
-                    self.imports[as_name] = import_name
-                self.logger.debug(f"Imports: {self.imports}")
-
-            elif child.type == 'import_from_statement':
-                # 处理from ... import ...形式的导入
-                module_name_node = child.child_by_field_name('module')
-                module_name = self._get_node_text(module_name_node, file_path) if module_name_node else None
-
-                for import_node in child.named_children:
-                    if import_node.type == 'import_clause':
-                        import_name = self._get_node_text(import_node.child_by_field_name('name'), file_path)
-                        as_name = import_name  # 默认使用原名，如果有别名会在下面处理
-                        if import_node.child_by_field_name('alias'):
-                            as_name = self._get_node_text(import_node.child_by_field_name('alias'), file_path)
-                        if module_name:
-                            self.imports[as_name] = f"{module_name}.{import_name}"
-                        else:
-                            self.imports[as_name] = import_name
-                self.logger.debug(f"Imports from statement: {self.imports}")
-
             else:
                 # 递归处理其他子节点
-                self._extract_items(child, file_path, current_fullname)
+                self._extract_calls(child, file_path, current_fullname)
 
     def _resolve_callee_name(self, node, file_path, current_fullname):
         func_node = node.child_by_field_name('function')

@@ -3,9 +3,9 @@ from tree_sitter import Language, Parser
 import os
 
 class Node:
-    def __init__(self, name, node_type, code, signature=None, parent_fullname=None):
+    def __init__(self, name, node_type, code=None, signature=None, parent_fullname=None):
         self.name = name
-        self.node_type = node_type  # 'module', 'class', 'function'
+        self.node_type = node_type  # 'directory', 'module', 'class', 'function'
         self.children = []
         self.code = code
         self.signature = signature
@@ -24,7 +24,8 @@ class ContainsParser:
         self.project_path = project_path
         self.repo_name = repo_name
         self.parser = self._init_parser()
-        self.trees = {}  # 存储每个文件的树结构
+        self.root = Node(repo_name, 'directory')  # 项目的根节点
+        self.nodes = {repo_name: self.root}  # 存储所有创建的节点
 
     def _init_parser(self):
         language = Language(tspython.language(), 'python')
@@ -33,38 +34,48 @@ class ContainsParser:
         return parser
 
     def parse(self):
-        py_files = self._get_py_files()
-        for file in py_files:
-            self._parse_file(file)
+        self._build_tree(self.project_path, self.root)
 
-    def _get_py_files(self):
-        py_files = []
-        for root, _, files in os.walk(self.project_path):
-            for file in files:
-                if file.endswith(".py"):
-                    py_files.append(os.path.join(root, file))
-        return py_files
+    def _build_tree(self, current_path, parent_node):
+        for item in os.listdir(current_path):
+            item_path = os.path.join(current_path, item)
+            if os.path.isdir(item_path):
+                # 创建目录节点
+                dir_node = self._create_node(item, 'directory', parent_node)
+                # 递归遍历子目录
+                self._build_tree(item_path, dir_node)
+            elif item.endswith(".py"):
+                # 创建文件模块节点并解析
+                module_node = self._create_node(item, 'module', parent_node)
+                self._parse_file(item_path, module_node)
 
-    def _parse_file(self, file_path):
+    def _create_node(self, name, node_type, parent_node):
+        # 去掉文件扩展名（仅对模块节点）
+        if node_type == 'module' and name.endswith('.py'):
+            name = name[:-3]  # 去除 .py 后缀
+
+        # 生成全名
+        if parent_node.fullname:
+            full_name = f"{parent_node.fullname}.{name}"
+        else:
+            full_name = name
+
+        # 创建节点
+        node = Node(name, node_type, parent_fullname=parent_node.fullname)
+        parent_node.add_child(node)
+        self.nodes[full_name] = node
+
+        return node
+
+
+    def _parse_file(self, file_path, module_node):
         with open(file_path, "r") as file:
             file_content = file.read()
 
         tree = self.parser.parse(bytes(file_content, "utf8"))
 
-        # 构建模块节点
-        module_name = self._get_module_name(file_path)
-        module_node = Node(module_name, 'module', file_content)
-
-        # 递归构建树形结构
+        # 递归构建文件内的树形结构
         self._extract_items(tree.root_node, file_path, module_node)
-
-        # 保存树形结构
-        self.trees[file_path] = module_node
-
-    def _get_module_name(self, file_path):
-        relative_path = os.path.relpath(file_path, self.project_path)
-        module_name = os.path.splitext(relative_path)[0].replace(os.path.sep, '.')
-        return f"{self.repo_name}.{module_name}"
 
     def _extract_items(self, node, file_path, parent_node):
         for child in node.children:
@@ -99,3 +110,4 @@ class ContainsParser:
 
     def _get_code_segment(self, node, file_path):
         return self._get_node_text(node, file_path)
+

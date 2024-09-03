@@ -27,5 +27,12 @@ class CodeGraph:
         else:
             print(f"调用关系中的节点不存在: {caller_fullname} -> {callee_fullname}")
 
+    def add_import(self, importer_fullname, imported_fullname):
+        if importer_fullname in self.graph and imported_fullname in self.graph:
+            self.graph.add_edge(importer_fullname, imported_fullname, relationship="IMPORTS")
+            print(f"添加import关系: {importer_fullname} -> {imported_fullname}")
+        else:
+            print(f"import关系中的节点不存在: {importer_fullname} -> {imported_fullname}")
+
     def get_graph(self):
         return self.graph
