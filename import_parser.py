@@ -12,7 +12,7 @@ class ImportParser:
 
         # 配置日志记录
         self.logger = logging.getLogger('import_parser')
-        self.logger.setLevel(logging.DEBUG)  # 设置为DEBUG模式以输出详细信息
+        self.logger.setLevel(logging.INFO)  # 设置为DEBUG模式以输出详细信息
         handler = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
@@ -28,7 +28,7 @@ class ImportParser:
         py_files = self._get_py_files()
         self.logger.debug(f"Found {len(py_files)} Python files to parse.")
         for file in py_files:
-            self.logger.info(f"Parsing file: {file}")
+            self.logger.debug(f"Parsing file: {file}")
             self._parse_file(file)
 
     def _get_py_files(self):
@@ -66,7 +66,7 @@ class ImportParser:
                     if name_node.type == 'dotted_name' or name_node.type == 'identifier':
                         import_name = self._get_node_text(name_node, file_path)
                         self.imports.append((current_fullname, import_name))
-                        self.logger.info(f"Recorded import: {current_fullname} imports {import_name}")
+                        self.logger.debug(f"Recorded import: {current_fullname} imports {import_name}")
 
             elif child.type == 'import_from_statement':
                 self.logger.debug(f"Found from-import statement in {current_fullname}")
@@ -75,8 +75,17 @@ class ImportParser:
                 module_name = self._get_node_text(module_name_node, file_path) if module_name_node else None
 
                 if module_name:
+                    # 记录从模块导入的关系
                     self.imports.append((current_fullname, module_name))
-                    self.logger.info(f"Recorded import: {current_fullname} imports from {module_name}")
+                    self.logger.debug(f"Recorded from-import: {current_fullname} imports from {module_name}")
+                    
+                    # 处理具体导入的元素
+                    for import_child in child.named_children:
+                        if import_child.type == 'dotted_name' or import_child.type == 'identifier':
+                            import_element = self._get_node_text(import_child, file_path)
+                            full_import_path = f"{module_name}.{import_element}"
+                            self.imports.append((current_fullname, full_import_path))
+                            self.logger.debug(f"Recorded from-import element: {current_fullname} imports {full_import_path}")
 
             else:
                 # 递归处理其他子节点
@@ -90,3 +99,4 @@ class ImportParser:
         with open(file_path, "r") as file:
             file_content = file.read()
         return file_content[start_byte:end_byte]
+

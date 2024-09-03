@@ -5,16 +5,17 @@ from lsp_client import LspClientWrapper
 import logging
 
 class CallParser:
-    def __init__(self, project_path, repo_name):
+    def __init__(self, project_path, repo_name, code_graph):
         self.project_path = project_path
         self.repo_name = repo_name
         self.parser = self._init_parser()
         self.calls = []  # 存储调用关系 (caller, callee)
         self.lsp_client = LspClientWrapper(project_root=project_path)
+        self.code_graph = code_graph  # 包含结构图
 
         # 配置日志记录
         self.logger = logging.getLogger('call_parser')
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
 
     def _init_parser(self):
         language = Language(tspython.language(), 'python')
@@ -55,48 +56,50 @@ class CallParser:
         module_name = os.path.splitext(relative_path)[0].replace(os.path.sep, '.')
         return f"{self.repo_name}.{module_name}"
 
-    def _extract_calls(self, node, file_path, current_fullname):
+    def _extract_calls(self, node, file_path, current_fullname, current_class=None):
+        """
+        遍历AST节点，查找所有的函数调用，并使用LSP解析被调用函数的定义位置。
+        """
         for child in node.children:
-            if child.type == 'class_definition' or child.type == 'function_definition':
-                definition_name = self._get_node_text(child.child_by_field_name('name'), file_path)
-                full_definition_name = f"{current_fullname}.{definition_name}"
-                self.logger.debug(f"Extracting {child.type} - {full_definition_name}")
+            if child.type == 'class_definition':
+                # 进入类定义，更新当前类的上下文
+                class_name = self._get_node_text(child.child_by_field_name('name'), file_path)
+                class_fullname = f"{current_fullname}.{class_name}"
+                self.logger.debug(f"Entering class: {class_fullname}")
+                self._extract_calls(child, file_path, current_fullname, class_fullname)
 
-                # 递归处理类或函数的子节点
-                self._extract_calls(child, file_path, full_definition_name)
+            elif child.type == 'function_definition':
+                # 进入一个函数定义，更新当前函数的上下文
+                function_name = self._get_node_text(child.child_by_field_name('name'), file_path)
+                function_fullname = f"{current_class}.{function_name}" if current_class else f"{current_fullname}.{function_name}"
+                self.logger.debug(f"Entering function: {function_fullname}")
+                self._extract_calls(child, file_path, function_fullname, current_class)
 
             elif child.type == 'call':
-                # 处理函数调用，记录调用关系
-                callee_name = self._resolve_callee_name(child, file_path, current_fullname)
+                # 处理函数调用
+                callee_name = self._resolve_callee_name(child, file_path)
                 if callee_name:
-                    caller_name = current_fullname  # 调用者是当前所在的函数或类
-                    self.logger.debug(f"Call statement: {self._get_node_text(child, file_path)}")
-                    self.logger.debug(f"Static analysis Caller: {caller_name}")
-                    self.logger.debug(f"Static analysis Callee: {callee_name}")
-                    # 记录调用关系
-                    self.calls.append((caller_name, callee_name))
+                    self.calls.append((current_fullname, callee_name))
+                    self.logger.debug(f"Added call: {current_fullname} -> {callee_name}")
 
             else:
                 # 递归处理其他子节点
-                self._extract_calls(child, file_path, current_fullname)
+                self._extract_calls(child, file_path, current_fullname, current_class)
 
-    def _resolve_callee_name(self, node, file_path, current_fullname):
+    def _resolve_callee_name(self, node, file_path):
+        """
+        使用LSP客户端解析被调用者的定义位置，并在已构建的图上查找目标节点。
+        """
         func_node = node.child_by_field_name('function')
         if not func_node:
             return None
 
-        # 拼接被调用函数的名字
-        parts = []
-        while func_node:
-            if func_node.type in ('identifier', 'attribute'):
-                parts.insert(0, self._get_node_text(func_node, file_path))
-            func_node = func_node.child_by_field_name('value')
+        # 获取被调用函数的名称
+        callee_text = self._get_node_text(func_node, file_path)
+        self.logger.debug(f"Resolved callee name from tree-sitter: {callee_text}")
 
-        callee_name = ".".join(parts)
-        self.logger.debug(f"Trying to resolve callee: {callee_name} in {file_path}")
-
-        # 使用 LSP 的 request_definition 查找定义
-        definition = self.lsp_client.find_definition(file_path, node.start_point[0], node.start_point[1])
+        # 使用LSP客户端查找被调用函数的定义位置
+        definition = self.lsp_client.find_definition(file_path, func_node.start_point[0], func_node.start_point[1])
 
         self.logger.debug(f"LSP definition result: {definition}")
 
@@ -106,43 +109,54 @@ class CallParser:
             self.logger.debug(f"Definition list is empty or not a list: {definition}")
             return None
 
-        callee_fullname = self._convert_definition_to_fullname(definition)
-        self.logger.debug(f"Resolved callee full name: {callee_fullname}")
+        # 基于LSP返回的位置和符号，结合语法树信息和项目结构图，定位目标节点
+        callee_fullname = self._find_callee_in_graph_with_context(node, definition, file_path, callee_text)
         return callee_fullname
 
-    def _convert_definition_to_fullname(self, definition):
-        # 将定义的位置转换为模块名称和函数名称的完整路径
-        self.logger.debug(f"Converting definition to full name: {definition}")
-        file_path = definition['absolutePath']  # 使用绝对路径
+    def _find_callee_in_graph_with_context(self, node, definition, file_path, callee_text):
+        """
+        在已有的图结构中，基于LSP和tree-sitter提供的信息搜索目标节点。
+        """
+        file_path = definition['absolutePath']
         module_name = self._get_module_name(file_path)
-        
-        # 通过 AST 或者其他方式解析出具体的函数名称，而不是基于行列信息的生成
-        symbol_name = self._find_symbol_name(file_path, definition['range']['start']['line'], definition['range']['start']['character'])
-        
-        function_name = f"{module_name}.{symbol_name}"
-        return function_name
 
-    def _find_symbol_name(self, file_path, line, character):
+        # 从tree-sitter获取函数上下文（包括所属类和方法）
+        full_context = self._get_full_context_from_node(node, file_path, callee_text)
+
+        if full_context:
+            potential_fullname = f"{module_name}.{full_context}"
+            self.logger.debug(f"Trying to find: {potential_fullname} in the graph.")
+            if potential_fullname in self.code_graph.graph.nodes:
+                self.logger.debug(f"Found callee in graph: {potential_fullname}")
+                return potential_fullname
+
+        self.logger.warning(f"Callee {full_context} not found in the existing graph.")
+        return None
+
+    def _get_full_context_from_node(self, node, file_path, callee_text):
         """
-        在文件中通过行号和列号找到符号的名称
+        使用tree-sitter从AST节点开始向上遍历，逐步构建完整的上下文路径。
         """
-        # 打开文件并读取内容
-        with open(file_path, 'r') as file:
-            lines = file.readlines()
+        context_parts = [callee_text]
+        current_node = node
 
-        # 获取行内容
-        target_line = lines[line]
+        self.logger.debug(f"Starting context resolution from node: {callee_text}")
 
-        # 找到特定位置的符号名称
-        # 注意：这里是一个简单的字符串操作，实际中可能需要更复杂的分析
-        symbol_name = ""
-        for char in target_line[character:]:
-            if char.isalnum() or char == '_':
-                symbol_name += char
-            else:
-                break
+        while current_node:
+            if current_node.type == 'function_definition':
+                func_name = self._get_node_text(current_node.child_by_field_name('name'), file_path)
+                context_parts.insert(0, func_name)  # 从内到外依次插入
+                self.logger.debug(f"Found function context: {func_name}")
+            elif current_node.type == 'class_definition':
+                class_name = self._get_node_text(current_node.child_by_field_name('name'), file_path)
+                context_parts.insert(0, class_name)
+                self.logger.debug(f"Found class context: {class_name}")
+            current_node = current_node.parent
 
-        return symbol_name
+        # 确保类、方法、内嵌函数的上下文都包含在路径中
+        full_context = ".".join(context_parts)
+        self.logger.debug(f"Full context resolved: {full_context}")
+        return full_context
 
     def _get_node_text(self, node, file_path):
         if node is None:
