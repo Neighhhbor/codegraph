@@ -21,39 +21,72 @@
 - **灵活匹配和上下文查找**：利用语法树的上下文信息，在图中找到最匹配的节点，即使 `LSP` 返回的定义信息不完整，也能准确建立调用关系。
 
 
+`CallParser` 的主要任务是解析 Python 项目中的函数调用关系，并结合 `tree-sitter` 和 LSP（Language Server Protocol）提供的信息，构建函数之间的调用图。以下是 `CallParser` 的工作思路：
+
+### 1. 初始化与配置
+- **项目路径与代码图**：`CallParser` 需要传入项目的根路径和已构建的代码图（包含类和函数的层次结构）。
+- **Parser 初始化**：通过 `tree-sitter` 初始化一个 Python 语法解析器，用于解析 Python 源代码文件的抽象语法树（AST）。
+- **LSP 客户端**：初始化 `LspClientWrapper`，用来调用 LSP 服务器获取精确的定义位置。
+
+### 2. 解析文件列表
+- **获取所有 Python 文件**：`CallParser` 遍历项目根目录，收集所有 `.py` 文件的路径。这些文件将被逐一解析。
+
+### 3. 解析文件与提取调用
+- **解析每个文件**：对于每个 `.py` 文件，使用 `tree-sitter` 生成该文件的 AST。
+- **提取调用**：从 AST 的根节点开始递归遍历，识别出类定义、函数定义和函数调用：
+  - **类定义**：当遇到类定义时，更新当前上下文，以便在解析类的方法时能识别出这些方法属于哪个类。
+  - **函数定义**：当遇到函数定义时，更新当前上下文，以便在解析函数体时能识别出这个函数属于哪个类或模块。
+  - **函数调用**：当遇到函数调用时，通过 `_resolve_callee_name` 方法解析被调用函数的位置和名称。
+
+### 4. 解析被调用函数的位置与名称
+- **通过 LSP 查找定义**：`_resolve_callee_name` 方法使用 LSP 客户端查找被调用函数的定义位置（行、列），并结合文件路径获取该函数的完整模块路径。
+- **上下文解析**：`_get_full_context` 方法使用 `tree-sitter` 结合 LSP 返回的结果，构建被调用函数的完整上下文路径。这包括类名、函数名，甚至是嵌套函数的名字。
+- **在图上查找目标节点**：在构建的代码图中，根据上下文路径定位被调用的函数节点，并将调用关系加入到图中。
+
+### 5. 构建调用关系
+- **记录调用关系**：对于每个解析出的函数调用关系，将调用者和被调用者之间的关系添加到代码图中。这使得代码图不仅包含类和函数的层次结构，还描述了函数之间的调用关系。
+
+### 6. 输出与错误处理
+- **日志记录**：在整个过程中，`CallParser` 会详细记录每一步的操作和遇到的任何问题，帮助调试和优化。
+- **错误处理**：如果 LSP 查找失败，或者无法在图中定位到被调用的函数，`CallParser` 会输出警告日志并跳过该调用关系。
+
+### 总结
+`CallParser` 的核心思想是通过 `tree-sitter` 提取函数调用信息，通过 LSP 提供的精确位置信息，结合现有的代码图，逐步构建并完善整个项目的函数调用关系图。这种方法不仅利用了静态代码分析的能力，还结合了 LSP 的动态分析功能，使得解析结果更加准确。
 
 
 
 
 
 
-请结合这个例子说明当前的问题：
-我要分析的函数调用：
-class MyClass:
-    def outer_method(self):
-        def inner_function():
-            pass
 
-        inner_function()
+现在的代码对以下代码的调用分析出错了：
 
-理论上希望得到的调用关系：
-testrepo.module1.MyClass.outer_method 
-calls 	
-testrepo.module1.MyClass.outer_method.inner_function
+# module2.py
+from module1 import standalone_function
 
-首先，我已经进行了一趟CONTAINS 关系的分析，获得了我的所有函数节点，也就是说
-以上两个function都是在我的图中已经构建好了：
-理论上 我在tree-sitter中得到了被调用名 innner_function （或许还可以有其他的信息）
-通过languageserver的find definition 获得了这个被调用函数的实际定义位置；
-definition result:[{'uri': 'file:///home/sxj/Desktop/Workspace/CodeQl/gptgraph/testrepo/module1.py', 'range': {'start': {'line': 3, 'character': 12}, 'end': {'line': 3, 'character': 26}}, 'absolutePath': '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/testrepo/module1.py', 'relativePath': 'module1.py'}]
+class AnotherClass:
+    def another_method(self):
+        standalone_function()
 
-但是现在我还是没有根据以上信息成功的定位到被调用函数的节点。
-中间输出如下：
+解析：
+module [0, 0] - [6, 0]
+  comment [0, 0] - [0, 12]
+  import_from_statement [1, 0] - [1, 39]
+    module_name: dotted_name [1, 5] - [1, 12]
+      identifier [1, 5] - [1, 12]
+    name: dotted_name [1, 20] - [1, 39]
+      identifier [1, 20] - [1, 39]
+  class_definition [3, 0] - [5, 29]
+    name: identifier [3, 6] - [3, 18]
+    body: block [4, 4] - [5, 29]
+      function_definition [4, 4] - [5, 29]
+        name: identifier [4, 8] - [4, 22]
+        parameters: parameters [4, 22] - [4, 28]
+          identifier [4, 23] - [4, 27]
+        body: block [5, 8] - [5, 29]
+          expression_statement [5, 8] - [5, 29]
+            call [5, 8] - [5, 29]
+              function: identifier [5, 8] - [5, 27]
+              arguments: argument_list [5, 27] - [5, 29]
 
-DEBUG:call_parser:Parsing file: ./testrepo/module1.py
-DEBUG:call_parser:Module name: testrepo.module1
-DEBUG:call_parser:Resolved callee name from tree-sitter: inner_function
-INFO:multilspy:{"time": "2024-09-03 14:56:33", "level": "INFO", "caller_file": "jedi_server.py", "caller_name": "start_server", "caller_line": 99, "message": "Starting jedi-language-server server process"}
-INFO:multilspy:{"time": "2024-09-03 14:56:33", "level": "INFO", "caller_file": "jedi_server.py", "caller_name": "start_server", "caller_line": 103, "message": "Sending initialize request from LSP client to LSP server and awaiting response"}
-DEBUG:call_parser:LSP definition result: [{'uri': 'file:///home/sxj/Desktop/Workspace/CodeQl/gptgraph/testrepo/module1.py', 'range': {'start': {'line': 3, 'character': 12}, 'end': {'line': 3, 'character': 26}}, 'absolutePath': '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/testrepo/module1.py', 'relativePath': 'module1.py'}]
-WARNING:call_parser:Callee inner_function not found in the existing graph.
+我的思路就是，这里检测到了call ，在遍历的过程中可以知道caller的fullname(因为是从moudle遍历到当前 function_definition) 这里也知道所调用的函数是一个identifier，那么就是一个全局函数，并且应该在之前第一遍扫描就已经注册了名字，所以会进入lsp】精准分析，获取其定义的位置，然后再根据反向遍历到module，可以知道被调用函数的精确fullname，你明白了吗

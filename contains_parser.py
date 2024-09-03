@@ -28,9 +28,8 @@ class ContainsParser:
         self.nodes = {repo_name: self.root}  # 存储所有创建的节点
 
     def _init_parser(self):
-        language = Language(tspython.language(), 'python')
-        parser = Parser()
-        parser.set_language(language)
+        PY_LANGUAGE=Language(tspython.language())
+        parser = Parser(PY_LANGUAGE)
         return parser
 
     def parse(self):
