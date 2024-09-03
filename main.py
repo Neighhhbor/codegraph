@@ -38,7 +38,7 @@ def main():
     # 第三步：解析调用关系
     call_parser = CallParser(config.PROJECT_PATH, repo_name, code_graph)
     call_parser.parse()
-
+    print(call_parser.defined_symbols)
     # 处理调用关系
     for caller, callee in call_parser.calls:
         code_graph.add_call(caller, callee)

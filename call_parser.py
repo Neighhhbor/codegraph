@@ -1,23 +1,29 @@
 import os
+import re
 import tree_sitter_python as tspython
 from tree_sitter import Language, Parser
-from lsp_client import LspClientWrapper
 import logging
+from lsp_client import LspClientWrapper
 
 class CallParser:
     def __init__(self, project_path, repo_name, code_graph):
         self.project_path = project_path
         self.repo_name = repo_name
         self.code_graph = code_graph
-        self.calls = []
-
-        self.defined_identifiers = set()  # 用于存储项目内定义的标识符
-
         self.parser = self._init_parser()
-        self.lsp_client = LspClientWrapper(project_root=project_path)
+        self.calls = []  # 存储调用关系 (caller, callee)
+        self.defined_symbols = {}  # 存储所有定义的标识符，格式为 {name: [module_name1, module_name2,...]}
 
+        # 配置日志记录
         self.logger = logging.getLogger('call_parser')
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)  # 设置为INFO模式以输出详细信息
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+
+        # 初始化LSP客户端
+        self.lsp_client = LspClientWrapper(self.project_path)
 
     def _init_parser(self):
         PY_LANGUAGE = Language(tspython.language())
@@ -25,128 +31,159 @@ class CallParser:
         return parser
 
     def parse(self):
-        for file in self._get_py_files():
-            self.logger.debug(f"Parsing file: {file}")
-            self._register_identifiers(file)
+        py_files = self._get_py_files()
+        self.logger.debug(f"Found {len(py_files)} Python files to parse.")
+        
+        # 第一遍扫描：注册所有标识符
+        for file in py_files:
+            self.logger.debug(f"Scanning definitions in file: {file}")
+            self._scan_definitions(file)
+        
+        # 第二遍解析：处理调用关系
+        for file in py_files:
+            self.logger.debug(f"Parsing calls in file: {file}")
             self._parse_file(file)
 
     def _get_py_files(self):
-        return [os.path.join(root, file)
-                for root, _, files in os.walk(self.project_path)
-                for file in files if file.endswith(".py")]
+        py_files = []
+        for root, _, files in os.walk(self.project_path):
+            for file in files:
+                if file.endswith(".py"):
+                    py_files.append(os.path.join(root, file))
+        return py_files
 
-    def _register_identifiers(self, file_path):
-        """第一遍扫描，注册项目内定义的标识符"""
+    def _get_module_name(self, file_path):
+        """根据文件路径生成模块全名"""
+        relative_path = os.path.relpath(file_path, self.project_path)
+        module_name = os.path.splitext(relative_path)[0].replace(os.path.sep, '.')
+        return f"{self.repo_name}.{module_name}"
+
+    def _remove_comments(self, code):
+        """移除Python代码中的注释"""
+        # 移除单行注释
+        code = re.sub(r'#.*', '', code)
+        # 移除多行字符串（包括注释）
+        code = re.sub(r'\'\'\'(.*?)\'\'\'', '', code, flags=re.DOTALL)
+        code = re.sub(r'\"\"\"(.*?)\"\"\"', '', code, flags=re.DOTALL)
+        return code
+
+    def _scan_definitions(self, file_path):
         with open(file_path, "r") as file:
-            tree = self.parser.parse(bytes(file.read(), "utf8"))
+            file_content = file.read()
 
-        self._collect_identifiers(tree.root_node, file_path)
+        # 去掉注释
+        file_content = self._remove_comments(file_content)
 
-    def _collect_identifiers(self, node, file_path):
-        """递归收集所有定义的标识符（函数、类）"""
+        tree = self.parser.parse(bytes(file_content, "utf8"))
+
+        # 构建模块名称
+        module_name = self._get_module_name(file_path)
+        self._register_definitions(tree.root_node, file_path, module_name)
+
+    def _register_definitions(self, node, file_path, current_fullname):
         for child in node.children:
-            if child.type in ['class_definition', 'function_definition']:
-                name_node = child.child_by_field_name('name')
-                if name_node:
-                    identifier_name = self._get_node_text(name_node, file_path)
-                    self.defined_identifiers.add(identifier_name)
-                    self.logger.debug(f"Registered identifier: {identifier_name}")
-            self._collect_identifiers(child, file_path)
+            if child.type == 'class_definition' or child.type == 'function_definition':
+                # 只注册函数名或类名，不包含路径
+                name = self._get_node_text(child.child_by_field_name('name'), file_path)
+                if name in self.defined_symbols:
+                    self.defined_symbols[name].append(current_fullname)
+                else:
+                    self.defined_symbols[name] = [current_fullname]
+                # 递归处理子节点
+                self._register_definitions(child, file_path, current_fullname)
+            else:
+                # 继续递归处理其他子节点
+                self._register_definitions(child, file_path, current_fullname)
 
     def _parse_file(self, file_path):
         with open(file_path, "r") as file:
-            tree = self.parser.parse(bytes(file.read(), "utf8"))
+            file_content = file.read()
 
+        # 去掉注释
+        file_content = self._remove_comments(file_content)
+
+        tree = self.parser.parse(bytes(file_content, "utf8"))
+
+        # 构建模块名称
         module_name = self._get_module_name(file_path)
-        self.logger.debug(f"Module name: {module_name}")
 
+        # 递归分析调用关系
         self._extract_calls(tree.root_node, file_path, module_name)
-
-    def _get_module_name(self, file_path):
-        relative_path = os.path.relpath(file_path, self.project_path)
-        return f"{self.repo_name}.{os.path.splitext(relative_path)[0].replace(os.path.sep, '.')}"
 
     def _extract_calls(self, node, file_path, current_fullname):
         for child in node.children:
-            if child.type == 'class_definition':
-                class_name = self._get_node_text(child.child_by_field_name('name'), file_path)
-                self._extract_calls(child, file_path, f"{current_fullname}.{class_name}")
-            elif child.type == 'function_definition':
+            if child.type == 'function_definition':
                 func_name = self._get_node_text(child.child_by_field_name('name'), file_path)
-                self._extract_calls(child, file_path, f"{current_fullname}.{func_name}")
+                func_fullname = f"{current_fullname}.{func_name}"
+
+                # 递归分析函数体内的调用
+                self._extract_calls(child, file_path, func_fullname)
+
             elif child.type == 'call':
-                callee_name = self._resolve_callee_name(child, file_path)
-                if callee_name:
-                    self.calls.append((current_fullname, callee_name))
-                    self.logger.debug(f"Added call: {current_fullname} -> {callee_name}")
+                func_name_node = child.child_by_field_name('function')
+                if func_name_node:
+                    callee_name = self._get_node_text(func_name_node, file_path)
+
+                    if callee_name in self.defined_symbols:
+                        # 获取定义路径列表
+                        definition_paths = self.defined_symbols[callee_name]
+
+                        if len(definition_paths) == 1:
+                            # 唯一定义，直接使用
+                            callee_fullname = definition_paths[0] + '.' + callee_name
+                            self.calls.append((current_fullname, callee_fullname))
+                            self.logger.info(f"Recorded call: {current_fullname} -> {callee_fullname}")
+
+                        else:
+                            # 多个定义，使用 LSP 确定具体定义
+                            definition = self.lsp_client.find_definition(file_path, func_name_node.start_point[0], func_name_node.start_point[1])
+                            if definition:
+                                callee_fullname = self._get_fullname_from_definition(definition)
+                                if callee_fullname and any(callee_fullname.startswith(path) for path in definition_paths):
+                                    self.calls.append((current_fullname, callee_fullname))
+                                    self.logger.info(f"Recorded call: {current_fullname} -> {callee_fullname}")
+                                else:
+                                    self.logger.warning(f"Could not determine the correct definition for {callee_name} called in {current_fullname}")
+
+                    else:
+                        self.logger.info(f"Call to external function {callee_name} in {current_fullname}, skipping.")
+
+            elif child.type == 'attribute':
+                # 处理成员函数或静态方法调用
+                object_name_node = child.child_by_field_name('object')
+                method_name_node = child.child_by_field_name('attribute')
+
+                object_name = self._get_node_text(object_name_node, file_path) if object_name_node else None
+                method_name = self._get_node_text(method_name_node, file_path) if method_name_node else None
+
+                if object_name and method_name:
+                    if method_name in self.defined_symbols:
+                        definition_paths = self.defined_symbols[method_name]
+
+                        if len(definition_paths) == 1:
+                            # 唯一定义，直接使用
+                            callee_fullname = definition_paths[0] + '.' + method_name
+                            self.calls.append((current_fullname, callee_fullname))
+                            self.logger.info(f"Recorded method call: {current_fullname} -> {callee_fullname}")
+
+                        else:
+                            # 多个定义，使用 LSP 确定具体定义
+                            definition = self.lsp_client.find_definition(file_path, method_name_node.start_point[0], method_name_node.start_point[1])
+                            if definition:
+                                callee_fullname = self._get_fullname_from_definition(definition)
+                                if callee_fullname and any(callee_fullname.startswith(path) for path in definition_paths):
+                                    self.calls.append((current_fullname, callee_fullname))
+                                    self.logger.info(f"Recorded method call: {current_fullname} -> {callee_fullname}")
+                                else:
+                                    self.logger.warning(f"Could not determine the correct definition for {method_name} called in {current_fullname}")
+
+                else:
+                    self.logger.error(f"Failed to extract method call details in {current_fullname}: object_name={object_name}, method_name={method_name}")
+
             else:
+                # 递归处理其他子节点
                 self._extract_calls(child, file_path, current_fullname)
 
-    def _resolve_callee_name(self, node, file_path):
-        func_node = node.child_by_field_name('function')
-        if not func_node:
-            return None
-
-        callee_text = self._get_node_text(func_node, file_path)
-        self.logger.debug(f"Resolved callee name from tree-sitter: {callee_text}")
-
-        # 如果被调用的标识符在定义的集合中，使用 LSP 进行解析
-        if callee_text in self.defined_identifiers:
-            self.logger.debug(f"Callee '{callee_text}' found in defined identifiers, using LSP to resolve.")
-            definition = self.lsp_client.find_definition(file_path, func_node.start_point[0], func_node.start_point[1])
-            self.logger.debug(f"LSP definition result: {definition}")
-
-            if not definition:
-                return None
-
-            definition = definition[0] if isinstance(definition, list) else definition
-            return self._find_callee_in_graph(node, definition, callee_text, file_path)
-        else:
-            # 如果标识符不在项目定义中，跳过进一步解析
-            self.logger.debug(f"Callee '{callee_text}' not found in defined identifiers, skipping LSP.")
-            return None
-
-    def _find_callee_in_graph(self, node, definition, callee_text, file_path):
-        if definition['uri'] != f"file://{file_path}":
-            file_path = definition['absolutePath']
-
-        module_name = self._get_module_name(file_path)
-        full_context = self._get_full_context(node, file_path, callee_text)
-
-        potential_fullname = f"{module_name}.{full_context}"
-        if potential_fullname in self.code_graph.graph.nodes:
-            self.logger.debug(f"Found callee in graph: {potential_fullname}")
-            return potential_fullname
-
-        self.logger.warning(f"Callee {potential_fullname} not found in the existing graph.")
-        return None
-
-    def _get_full_context(self, node, file_path, callee_text):
-        context_parts = [callee_text]
-        current_node = node
-
-        self.logger.debug(f"Starting context resolution from node: {callee_text}")
-
-        while current_node:
-            if current_node.type in ['function_definition', 'class_definition']:
-                name_node = current_node.child_by_field_name('name')
-                if name_node:
-                    context_parts.insert(0, self._get_node_text(name_node, file_path))
-            elif current_node.type == 'module':
-                self.logger.debug("Reached module level, stopping context resolution.")
-                break
-
-            current_node = current_node.parent
-
-        if len(context_parts) == 1:
-            module_name = self._get_module_name(file_path)
-            full_context = f"{module_name}.{callee_text}"
-            self.logger.debug(f"Top-level function detected, using full context: {full_context}")
-            return full_context
-
-        full_context = ".".join(context_parts).strip()
-        self.logger.debug(f"Full context resolved: {full_context}")
-        return full_context
 
     def _get_node_text(self, node, file_path):
         if node is None:
@@ -156,3 +193,26 @@ class CallParser:
         with open(file_path, "r") as file:
             file_content = file.read()
         return file_content[start_byte:end_byte]
+
+    def _get_fullname_from_definition(self, definition):
+        if not isinstance(definition, list) or len(definition) == 0:
+            self.logger.error(f"Unexpected definition format or empty list: {definition}")
+            return None
+
+        # 取列表中的第一个元素
+        definition = definition[0]
+
+        if not isinstance(definition, dict):
+            self.logger.error(f"Unexpected definition format: {definition}")
+            return None
+
+        # 根据LSP返回的定义位置，计算被调用函数的全名
+        def_file_path = os.path.abspath(definition['uri'].replace('file://', ''))
+        line = definition['range']['start']['line']
+        
+        # 解析被调用函数所在模块
+        module_name = self._get_module_name(def_file_path)
+
+        # 根据行号反向推断函数的全名
+        func_fullname = f"{module_name}"
+        return func_fullname
