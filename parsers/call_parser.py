@@ -17,6 +17,7 @@ class CallParser:
         self.logger.setLevel(logging.DEBUG)
         handler = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
         self.logger.addHandler(handler)
 
         # 初始化LSP客户端
@@ -84,14 +85,16 @@ class CallParser:
                 func_name_node = child.child_by_field_name('function')
                 if func_name_node:
                     callee_name = self._get_node_text(func_name_node, file_path)
-                    #分割线
                     self.logger.info("-" * 50)
-                    self._handle_call(callee_name, current_fullname, file_path, func_name_node)
+                    self._handle_call(func_name_node, callee_name, current_fullname, file_path)
+
+                # 递归处理链式调用
+                self._extract_calls(child, file_path, current_fullname)
             else:
                 # 递归处理其他节点
                 self._extract_calls(child, file_path, current_fullname)
 
-    def _handle_call(self, callee_name, caller_fullname, file_path, func_name_node):
+    def _handle_call(self, func_name_node, callee_name, caller_fullname, file_path):
         """
         处理全局函数和方法调用的统一逻辑
         """
@@ -130,6 +133,20 @@ class CallParser:
         else:
             self.logger.info(f"Call to external function {callee_name} in {caller_fullname}, skipping.")
 
+    def _resolve_call_with_lsp(self, caller_fullname, definition, definition_paths, callee_name):
+        """
+        使用 LSP 来确定调用函数的位置
+        """
+        self.logger.debug(f"Definition: {definition}")
+        if definition:
+            callee_fullname = self._get_fullname_from_definition(definition)
+            self.logger.debug(f"Resolved full function name: {callee_fullname}")
+            if callee_fullname and any(callee_fullname.startswith(path) for path in definition_paths):
+                self.calls.append((caller_fullname, callee_fullname))
+                self.logger.info(f"Recorded call: {caller_fullname} -> {callee_fullname}")
+            else:
+                self.logger.warning(f"Could not determine the correct definition for {callee_name} called in {caller_fullname}")
+
     def _process_method_call(self, object_name, method_name, caller_fullname):
         """
         处理类方法或实例方法调用
@@ -155,43 +172,67 @@ class CallParser:
             else:
                 self.logger.info(f"Method {method_name} not found for object {object_name}, skipping.")
 
-    def _resolve_call_with_lsp(self, caller_fullname, definition, definition_paths, callee_name):
-        """
-        使用 LSP 来确定调用函数的位置
-        """
-        if definition:
-            callee_fullname = self._get_fullname_from_definition(definition)
-            if callee_fullname and any(callee_fullname.startswith(path) for path in definition_paths):
-                self.calls.append((caller_fullname, callee_fullname))
-                self.logger.info(f"Recorded call: {caller_fullname} -> {callee_fullname}")
-            else:
-                self.logger.warning(f"Could not determine the correct definition for {callee_name} called in {caller_fullname}")
-
     def _get_fullname_from_definition(self, definition):
         """
-        从 LSP 的定义响应中提取完整的函数路径
+        从 LSP 的定义响应中，通过 Tree-sitter 解析出完整的 namespace 路径
         """
-        if not isinstance(definition, list) or len(definition) == 0:
-            self.logger.error(f"Unexpected definition format or empty list: {definition}")
-            return None
-
-        # 取列表中的第一个元素
         definition = definition[0]
-
         if not isinstance(definition, dict):
             self.logger.error(f"Unexpected definition format: {definition}")
             return None
 
-        # 根据LSP返回的定义位置，计算被调用函数的全名
+        # 获取 LSP 返回的位置信息
         def_file_path = os.path.abspath(definition['uri'].replace('file://', ''))
-        line = definition['range']['start']['line']
-        
-        # 解析被调用函数所在模块
-        module_name = self._get_module_name(def_file_path)
+        start_line = definition['range']['start']['line']
+        start_column = definition['range']['start']['character']
+        end_line = definition['range']['end']['line']
+        end_column = definition['range']['end']['character']
 
-        # 根据行号反向推断函数的全名
-        func_fullname = f"{module_name}"
-        return func_fullname
+        self.logger.debug(f"Definition file: {def_file_path}, start: ({start_line}, {start_column}), end: ({end_line}, {end_column})")
+
+        # 根据文件路径解析对应的源代码
+        with open(def_file_path, "r") as file:
+            file_content = file.read()
+
+        # 使用 tree-sitter 解析文件，生成语法树
+        tree = self.parser.parse(bytes(file_content, "utf8"))
+
+        # 根据 LSP 的位置信息找到语法树中的精确节点
+        target_node = tree.root_node.descendant_for_point_range((start_line, start_column), (end_line, end_column))
+        if not target_node:
+            self.logger.error(f"Could not locate node at ({start_line}, {start_column}) in {def_file_path}")
+            return None
+
+        # 构建命名空间路径（包括文件相对项目根路径的模块路径）
+        namespace = self._build_namespace_from_node(target_node, def_file_path)
+
+        self.logger.debug(f"Resolved full function name: {namespace}")
+        return namespace
+
+    def _build_namespace_from_node(self, node, def_file_path):
+        """
+        从指定的 AST 节点开始，向上遍历，构建 namespace 路径
+        """
+        components = []
+        current_node = node
+
+        # 自底向上遍历，找到 function, class, module 等定义，构建完整路径
+        while current_node:
+            self.logger.debug(f"Current node: {current_node.type}")
+            if current_node.type in ['function_definition', 'class_definition', 'module']:
+                # 获取函数或类的名字
+                name_node = current_node.child_by_field_name('name')
+                self.logger.debug(f"Found name node: {name_node}")
+                if name_node:
+                    self.logger.debug(f"Adding component: {self._get_node_text(name_node, def_file_path)}")
+                    components.insert(0, self._get_node_text(name_node, def_file_path))
+            current_node = current_node.parent
+
+        # 获取文件相对于项目根路径的模块路径
+        module_path = self._get_module_name(def_file_path)
+
+        # 返回完整的命名空间：模块路径 + 代码内部命名空间
+        return f"{module_path}{'.' if components else ''}{'.'.join(components)}"
 
     def _get_node_text(self, node, file_path):
         """
