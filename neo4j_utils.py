@@ -1,13 +1,16 @@
-from py2neo import Graph, Node, Relationship
 import os
+import logging
+from py2neo import Graph, Node, Relationship
 
 class Neo4jHandler:
     def __init__(self, url, user, password):
         self.graph = Graph(url, auth=(user, password))
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.DEBUG)  # Set the desired log level here
 
     def clean_database(self):
         self.graph.run("MATCH (n) DETACH DELETE n")
-        print("数据库已清空")
+        self.logger.debug("数据库已清空")
 
     def import_graph(self, code_graph):
         nx_graph = code_graph.get_graph()
@@ -16,7 +19,7 @@ class Neo4jHandler:
             node_type = attrs.get('type', 'UNKNOWN').upper()
 
             if node_type == 'UNKNOWN':
-                print(f"发现未知类型的节点: {full_name}")
+                self.logger.debug(f"发现未知类型的节点: {full_name}")
                 continue
 
             if node_type == 'FILE':
@@ -28,7 +31,7 @@ class Neo4jHandler:
             if not existing_node:
                 n = Node(node_type, name=short_name, full_name=full_name, code=attrs.get('code', ''), signature=attrs.get('signature', ''), description=attrs.get('description', ''))
                 self.graph.create(n)
-                print(f"导入节点: {full_name} (类型: {node_type})")
+                self.logger.debug(f"导入节点: {full_name} (类型: {node_type})")
 
         for start, end, edge_attrs in nx_graph.edges(data=True):
             start_node = self.graph.nodes.match(full_name=start).first()
@@ -38,6 +41,6 @@ class Neo4jHandler:
                 if not existing_rel:
                     rel = Relationship(start_node, edge_attrs['relationship'], end_node)
                     self.graph.create(rel)
-                    print(f"导入关系: {start} -> {end} (类型: {edge_attrs['relationship']})")
+                    self.logger.debug(f"导入关系: {start} -> {end} (类型: {edge_attrs['relationship']})")
             else:
-                print(f"警告: 关系的起始节点或终止节点缺失，跳过创建关系: {start} -> {end}")
+                self.logger.debug(f"警告: 关系的起始节点或终止节点缺失，跳过创建关系: {start} -> {end}")

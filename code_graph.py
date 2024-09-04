@@ -1,9 +1,13 @@
 import networkx as nx
 import os
+import logging
 
 class CodeGraph:
     def __init__(self):
         self.graph = nx.DiGraph()
+        self.logger = logging.getLogger(__name__)
+        #设置为DEBUG
+        self.logger.setLevel(logging.DEBUG)
 
     def build_graph_from_tree(self, tree_root):
         # 从树的根节点开始构建图
@@ -12,7 +16,7 @@ class CodeGraph:
 
     def _add_node(self, node):
         self.graph.add_node(node.fullname, type=node.node_type, code=node.code, signature=node.signature)
-        print(f"添加节点: {node.fullname} (类型: {node.node_type})")
+        self.logger.debug(f"添加节点: {node.fullname} (类型: {node.node_type})")
 
     def _build_edges(self, node):
         for child in node.children:
@@ -23,16 +27,16 @@ class CodeGraph:
     def add_call(self, caller_fullname, callee_fullname):
         if caller_fullname in self.graph and callee_fullname in self.graph:
             self.graph.add_edge(caller_fullname, callee_fullname, relationship="CALLS")
-            print(f"添加调用关系: {caller_fullname} -> {callee_fullname}")
+            self.logger.debug(f"添加调用关系: {caller_fullname} -> {callee_fullname}")
         else:
-            print(f"调用关系中的节点不存在: {caller_fullname} -> {callee_fullname}")
+            self.logger.debug(f"调用关系中的节点不存在: {caller_fullname} -> {callee_fullname}")
 
     def add_import(self, importer_fullname, imported_fullname):
         if importer_fullname in self.graph and imported_fullname in self.graph:
             self.graph.add_edge(importer_fullname, imported_fullname, relationship="IMPORTS")
-            print(f"添加import关系: {importer_fullname} -> {imported_fullname}")
+            self.logger.debug(f"添加import关系: {importer_fullname} -> {imported_fullname}")
         else:
-            print(f"import关系中的节点不存在: {importer_fullname} -> {imported_fullname}")
+            self.logger.debug(f"import关系中的节点不存在: {importer_fullname} -> {imported_fullname}")
 
     def get_graph(self):
         return self.graph
