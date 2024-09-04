@@ -1,5 +1,5 @@
 import os
-from tree_sitter import Parser , Language
+from tree_sitter import Parser, Language
 import tree_sitter_python as tspython
 from lsp_client import LspClientWrapper
 import logging
@@ -72,7 +72,7 @@ class CallParser:
         """
         for child in node.children:
             if child.type == 'class_definition' or child.type == 'function_definition':
-                # 处理类和函数，构建它们的完整路径
+                # 处理类和函数，构建它们的完整路径，避免冗余信息
                 name = self._get_node_text(child.child_by_field_name('name'), file_path)
                 fullname = f"{current_fullname}.{name}"
 
@@ -84,24 +84,27 @@ class CallParser:
                 func_name_node = child.child_by_field_name('function')
                 if func_name_node:
                     callee_name = self._get_node_text(func_name_node, file_path)
-                    self._handle_function_call(callee_name, current_fullname, file_path, func_name_node)
+                    #分割线
+                    self.logger.info("-" * 50)
+                    self._handle_function_or_method_call(callee_name, current_fullname, file_path, func_name_node)
             else:
+                # 递归处理其他节点
                 self._extract_calls(child, file_path, current_fullname)
 
-    def _handle_function_call(self, callee_name, caller_fullname, file_path, func_name_node):
+    def _handle_function_or_method_call(self, callee_name, caller_fullname, file_path, func_name_node):
         """
-        处理函数调用关系，并根据是否有多个定义路径决定是否使用 LSP
+        处理函数或方法调用关系
         """
         self.logger.info(f"Found call to {callee_name} in {caller_fullname}")
+
+        # 区分全局函数和方法调用
         if callee_name in self.defined_symbols:
             definition_paths = self.defined_symbols[callee_name]
-
             if len(definition_paths) == 1:
                 # 唯一定义，直接使用
                 callee_fullname = definition_paths[0]
                 self.calls.append((caller_fullname, callee_fullname))
                 self.logger.info(f"Recorded call: {caller_fullname} -> {callee_fullname}")
-
             else:
                 # 多个定义路径，使用 LSP 确定具体定义
                 definition = self.lsp_client.find_definition(file_path, func_name_node.start_point[0], func_name_node.start_point[1])
@@ -143,12 +146,25 @@ class CallParser:
 
     def _get_node_text(self, node, file_path):
         """
-        提取 AST 节点对应的源代码文本
+        提取 AST 节点对应的源代码文本，使用行列号而非字节
         """
         if node is None:
             return ""
-        start_byte = node.start_byte
-        end_byte = node.end_byte
+
+        start_line, start_column = node.start_point
+        end_line, end_column = node.end_point
+
         with open(file_path, "r") as file:
-            file_content = file.read()
-        return file_content[start_byte:end_byte]
+            file_lines = file.readlines()
+
+        if start_line == end_line:
+            # 同一行的情况，直接从 start_column 到 end_column
+            return file_lines[start_line][start_column:end_column].strip()
+        else:
+            # 跨多行的情况，处理起始行、中间行和结束行
+            extracted_text = []
+            extracted_text.append(file_lines[start_line][start_column:].strip())
+            for line in range(start_line + 1, end_line):
+                extracted_text.append(file_lines[line].strip())
+            extracted_text.append(file_lines[end_line][:end_column].strip())
+            return " ".join(extracted_text)
