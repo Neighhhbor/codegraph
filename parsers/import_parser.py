@@ -91,13 +91,13 @@ class ImportParser:
         for name_node in node.named_children:
             if name_node.type == 'dotted_name' or name_node.type == 'identifier':
                 import_name = self._get_node_text(name_node, file_path)
-                self.imports.append((current_fullname, import_name))
+                self.imports.append((current_fullname, import_name))  # 确保是 (importer, imported_module)
                 self.logger.debug(f"Recorded import: {current_fullname} imports {import_name}")
             # 处理别名（as导入）
             alias_node = node.child_by_field_name('alias')
             if alias_node:
                 alias_name = self._get_node_text(alias_node, file_path)
-                self.imports.append((current_fullname, alias_name))
+                self.imports.append((current_fullname, alias_name))  # 确保是 (importer, alias_name)
                 self.logger.debug(f"Recorded alias import: {current_fullname} imports {alias_name}")
 
     def _handle_from_import_statement(self, node, current_fullname, file_path):
@@ -109,7 +109,7 @@ class ImportParser:
 
         if module_name:
             # 记录从模块导入的关系
-            self.imports.append((current_fullname, module_name))
+            self.imports.append((current_fullname, module_name))  # 确保是 (importer, module_name)
             self.logger.debug(f"Recorded from-import: {current_fullname} imports from {module_name}")
             
             # 处理具体导入的元素
@@ -117,14 +117,14 @@ class ImportParser:
                 if import_child.type == 'dotted_name' or import_child.type == 'identifier':
                     import_element = self._get_node_text(import_child, file_path)
                     full_import_path = f"{module_name}.{import_element}"
-                    self.imports.append((current_fullname, full_import_path))
+                    self.imports.append((current_fullname, full_import_path))  # 确保是 (importer, full_import_path)
                     self.logger.debug(f"Recorded from-import element: {current_fullname} imports {full_import_path}")
                 # 处理别名导入
                 alias_node = node.child_by_field_name('alias')
                 if alias_node:
                     alias_name = self._get_node_text(alias_node, file_path)
                     full_alias_path = f"{module_name}.{alias_name}"
-                    self.imports.append((current_fullname, full_alias_path))
+                    self.imports.append((current_fullname, full_alias_path))  # 确保是 (importer, full_alias_path)
                     self.logger.debug(f"Recorded alias from-import: {current_fullname} imports {full_alias_path}")
 
     def _get_node_text(self, node, file_path):
@@ -150,3 +150,4 @@ class ImportParser:
             for line in range(start_line + 1, end_line):
                 extracted_text.append(file_lines[line].strip())
             extracted_text.append(file_lines[end_line][:end_column].strip())
+            return " ".join(extracted_text)

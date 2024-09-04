@@ -109,7 +109,7 @@ class CallParser:
             method_name = self._get_node_text(method_node, file_path) if method_node else None
 
             self.logger.debug(f"Found method call: {object_name}.{method_name} in {caller_fullname}")
-            self._process_method_call(object_name, method_name, caller_fullname)
+            self._process_method_call(object_name, method_name, caller_fullname, file_path)
 
         else:
             # 处理全局函数调用
@@ -147,7 +147,7 @@ class CallParser:
             else:
                 self.logger.warning(f"Could not determine the correct definition for {callee_name} called in {caller_fullname}")
 
-    def _process_method_call(self, object_name, method_name, caller_fullname):
+    def _process_method_call(self, object_name, method_name, caller_fullname, file_path):
         """
         处理类方法或实例方法调用
         """
@@ -159,10 +159,14 @@ class CallParser:
                 self.calls.append((caller_fullname, callee_fullname))
                 self.logger.debug(f"Recorded static method call: {caller_fullname} -> {callee_fullname}")
             else:
-                self.logger.warning(f"Multiple class definitions for {object_name}, skipping method call.")
+                # self.logger.warning(f"Multiple class definitions for {object_name}, skipping method call.")
+                # 多个类定义，使用 LSP 确定具体定义
+                definition = self.lsp_client.find_definition(file_path, object_name.start_point[0], object_name.start_point[1])
+                self._resolve_method_call_with_lsp(caller_fullname, definition, object_name, method_name)
+                
         else:
             if method_name in self.defined_symbols:
-                method_definitions = self.defined_symbols[method_name]
+                method_definitions = self.defined_symbols[method_name] 
                 if len(method_definitions) == 1:
                     callee_fullname = method_definitions[0]
                     self.calls.append((caller_fullname, callee_fullname))

@@ -34,9 +34,11 @@ def main():
     # 第二步：解析 import 关系
     import_parser = ImportParser(config.PROJECT_PATH, repo_name)
     import_parser.parse()
-
+    print(f"import_parser.imports: {import_parser.imports}")
     # 处理 import 关系
-    for importer, imported_module in import_parser.imports:
+    for import_data in import_parser.imports:
+        importer = import_data[0]
+        imported_module = import_data[1]
         print(f"importer: {importer}, imported_module: {imported_module}")
         code_graph.add_import(importer, imported_module)
 
@@ -45,7 +47,6 @@ def main():
     call_parser.parse()  # 使用已解析的符号来处理调用关系
 
     # 输出已定义的符号（调试用）
-    #分割线
     print('-'*50+'\n',f"已定义的符号: {call_parser.defined_symbols}\n",'-'*50+'\n')
 
     # 处理调用关系
