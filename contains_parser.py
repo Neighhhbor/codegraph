@@ -26,9 +26,10 @@ class ContainsParser:
         self.parser = self._init_parser()
         self.root = Node(repo_name, 'directory')  # 项目的根节点
         self.nodes = {repo_name: self.root}  # 存储所有创建的节点
+        self.defined_symbols = {}  # 用于存储函数和类的定义，key为name，value为定义路径列表
 
     def _init_parser(self):
-        PY_LANGUAGE=Language(tspython.language())
+        PY_LANGUAGE = Language(tspython.language())
         parser = Parser(PY_LANGUAGE)
         return parser
 
@@ -66,7 +67,6 @@ class ContainsParser:
 
         return node
 
-
     def _parse_file(self, file_path, module_node):
         with open(file_path, "r") as file:
             file_content = file.read()
@@ -83,6 +83,10 @@ class ContainsParser:
                 class_signature = self._get_node_text(child, file_path)
                 class_node = Node(class_name, 'class', self._get_code_segment(child, file_path), class_signature, parent_node.fullname)
                 parent_node.add_child(class_node)
+
+                # 注册类到 defined_symbols
+                self._register_symbol(class_name, class_node.fullname)
+
                 # 递归处理子节点
                 self._extract_items(child, file_path, class_node)
 
@@ -91,12 +95,26 @@ class ContainsParser:
                 func_signature = self._get_node_text(child, file_path)
                 func_node = Node(func_name, 'function', self._get_code_segment(child, file_path), func_signature, parent_node.fullname)
                 parent_node.add_child(func_node)
+
+                # 注册函数到 defined_symbols
+                self._register_symbol(func_name, func_node.fullname)
+
                 # 递归处理子节点
                 self._extract_items(child, file_path, func_node)
 
             else:
                 # 递归处理其他子节点
                 self._extract_items(child, file_path, parent_node)
+
+    def _register_symbol(self, name, fullname):
+        """
+        注册函数或类的定义到 defined_symbols 字典中。
+        如果符号已经存在，添加到其定义路径列表中。
+        """
+        if name in self.defined_symbols:
+            self.defined_symbols[name].append(fullname)
+        else:
+            self.defined_symbols[name] = [fullname]
 
     def _get_node_text(self, node, file_path):
         if node is None:
@@ -109,4 +127,3 @@ class ContainsParser:
 
     def _get_code_segment(self, node, file_path):
         return self._get_node_text(node, file_path)
-
