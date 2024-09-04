@@ -14,7 +14,7 @@ class CallParser:
 
         # 配置日志记录
         self.logger = logging.getLogger('call_parser')
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
         handler = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.logger.addHandler(handler)

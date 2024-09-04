@@ -5,8 +5,13 @@ from parsers.contains_parser import ContainsParser  # 引入包含关系的解�
 from parsers.import_parser import ImportParser  # 引入 import 关系的解析器
 from parsers.call_parser import CallParser  # 引入调用关系的解析器
 import config
+import logging
+ # 全局日志配置
+logging.basicConfig(level=logging.INFO, format=' %(name)s - %(levelname)s - %(message)s')
+
 
 def main():
+   
     # 连接到 Neo4j 数据库
     neo4j_handler = Neo4jHandler(config.NEO4J_URL, config.NEO4J_USER, config.NEO4J_PASSWORD)
     

@@ -117,13 +117,29 @@ class ContainsParser:
             self.defined_symbols[name] = [fullname]
 
     def _get_node_text(self, node, file_path):
+        """
+        提取 AST 节点对应的源代码文本，使用行列号而非字节
+        """
         if node is None:
             return ""
-        start_byte = node.start_byte
-        end_byte = node.end_byte
+
+        start_line, start_column = node.start_point
+        end_line, end_column = node.end_point
+
         with open(file_path, "r") as file:
-            file_content = file.read()
-        return file_content[start_byte:end_byte]
+            file_lines = file.readlines()
+
+        if start_line == end_line:
+            # 同一行的情况，直接从 start_column 到 end_column
+            return file_lines[start_line][start_column:end_column].strip()
+        else:
+            # 跨多行的情况，处理起始行、中间行和结束行
+            extracted_text = []
+            extracted_text.append(file_lines[start_line][start_column:].strip())
+            for line in range(start_line + 1, end_line):
+                extracted_text.append(file_lines[line].strip())
+            extracted_text.append(file_lines[end_line][:end_column].strip())
+            return " ".join(extracted_text)
 
     def _get_code_segment(self, node, file_path):
         return self._get_node_text(node, file_path)
