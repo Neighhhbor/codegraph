@@ -14,7 +14,7 @@ class CallParser:
 
         # 配置日志记录
         self.logger = logging.getLogger('call_parser')
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
         handler = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
@@ -85,7 +85,7 @@ class CallParser:
                 func_name_node = child.child_by_field_name('function')
                 if func_name_node:
                     callee_name = self._get_node_text(func_name_node, file_path)
-                    self.logger.info("-" * 50)
+                    self.logger.debug("-" * 50)
                     self._handle_call(func_name_node, callee_name, current_fullname, file_path)
 
                 # 递归处理链式调用
@@ -98,7 +98,7 @@ class CallParser:
         """
         处理全局函数和方法调用的统一逻辑
         """
-        self.logger.info(f"Found call to {callee_name} in {caller_fullname}")
+        self.logger.debug(f"Found call to {callee_name} in {caller_fullname}")
 
         if func_name_node.type == 'attribute':
             # 处理类方法或实例方法调用
@@ -108,7 +108,7 @@ class CallParser:
             object_name = self._get_node_text(object_node, file_path) if object_node else None
             method_name = self._get_node_text(method_node, file_path) if method_node else None
 
-            self.logger.info(f"Found method call: {object_name}.{method_name} in {caller_fullname}")
+            self.logger.debug(f"Found method call: {object_name}.{method_name} in {caller_fullname}")
             self._process_method_call(object_name, method_name, caller_fullname)
 
         else:
@@ -125,13 +125,13 @@ class CallParser:
                 # 唯一定义，直接使用
                 callee_fullname = definition_paths[0]
                 self.calls.append((caller_fullname, callee_fullname))
-                self.logger.info(f"Recorded function call: {caller_fullname} -> {callee_fullname}")
+                self.logger.debug(f"Recorded function call: {caller_fullname} -> {callee_fullname}")
             else:
                 # 多个定义路径，使用 LSP 确定具体定义
                 definition = self.lsp_client.find_definition(file_path, func_name_node.start_point[0], func_name_node.start_point[1])
                 self._resolve_call_with_lsp(caller_fullname, definition, definition_paths, callee_name)
         else:
-            self.logger.info(f"Call to external function {callee_name} in {caller_fullname}, skipping.")
+            self.logger.debug(f"Call to external function {callee_name} in {caller_fullname}, skipping.")
 
     def _resolve_call_with_lsp(self, caller_fullname, definition, definition_paths, callee_name):
         """
@@ -143,7 +143,7 @@ class CallParser:
             self.logger.debug(f"Resolved full function name: {callee_fullname}")
             if callee_fullname and any(callee_fullname.startswith(path) for path in definition_paths):
                 self.calls.append((caller_fullname, callee_fullname))
-                self.logger.info(f"Recorded call: {caller_fullname} -> {callee_fullname}")
+                self.logger.debug(f"Recorded call: {caller_fullname} -> {callee_fullname}")
             else:
                 self.logger.warning(f"Could not determine the correct definition for {callee_name} called in {caller_fullname}")
 
@@ -157,7 +157,7 @@ class CallParser:
                 # 静态方法调用，记录类方法调用
                 callee_fullname = f"{class_definitions[0]}.{method_name}"
                 self.calls.append((caller_fullname, callee_fullname))
-                self.logger.info(f"Recorded static method call: {caller_fullname} -> {callee_fullname}")
+                self.logger.debug(f"Recorded static method call: {caller_fullname} -> {callee_fullname}")
             else:
                 self.logger.warning(f"Multiple class definitions for {object_name}, skipping method call.")
         else:
@@ -166,11 +166,11 @@ class CallParser:
                 if len(method_definitions) == 1:
                     callee_fullname = method_definitions[0]
                     self.calls.append((caller_fullname, callee_fullname))
-                    self.logger.info(f"Recorded instance method call: {caller_fullname} -> {callee_fullname}")
+                    self.logger.debug(f"Recorded instance method call: {caller_fullname} -> {callee_fullname}")
                 else:
                     self.logger.warning(f"Multiple method definitions for {method_name}, skipping.")
             else:
-                self.logger.info(f"Method {method_name} not found for object {object_name}, skipping.")
+                self.logger.debug(f"Method {method_name} not found for object {object_name}, skipping.")
 
     def _get_fullname_from_definition(self, definition):
         """
@@ -222,7 +222,6 @@ class CallParser:
             if current_node.type in ['function_definition', 'class_definition', 'module']:
                 # 获取函数或类的名字
                 name_node = current_node.child_by_field_name('name')
-                self.logger.debug(f"Found name node: {name_node}")
                 if name_node:
                     self.logger.debug(f"Adding component: {self._get_node_text(name_node, def_file_path)}")
                     components.insert(0, self._get_node_text(name_node, def_file_path))
