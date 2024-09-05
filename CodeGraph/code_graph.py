@@ -50,25 +50,31 @@ class CodeGraph:
         """
         检测模块类型：标准库、第三方库或本地库
         """
-        # 检测标准库模块
-        if module_name in sys.builtin_module_names:
-            return "standard_library", None
+        try:
+            # 检测标准库模块
+            if module_name in sys.builtin_module_names:
+                return "standard_library", None
 
-        # 使用 importlib.util.find_spec 查找模块的元信息
-        module_spec = importlib.util.find_spec(module_name)
-        if module_spec is None:
-            self.logger.debug(f"无法找到模块 {module_name}")
+            # 使用 importlib.util.find_spec 查找模块的元信息
+            module_spec = importlib.util.find_spec(module_name)
+            if module_spec is None:
+                self.logger.debug(f"无法找到模块 {module_name}")
+                return "unknown", None
+
+            # 判断模块类型：第三方库或标准库
+            module_path = module_spec.origin
+            if not module_path:
+                return "unknown", None
+
+            if "site-packages" in module_path or "dist-packages" in module_path:
+                return "third_party_library", module_path
+            else:
+                return "local_module", module_path
+
+        except ModuleNotFoundError:
+            self.logger.debug(f"模块 {module_name} 未安装")
             return "unknown", None
 
-        # 判断模块类型：第三方库或标准库
-        module_path = module_spec.origin
-        if not module_path:
-            return "unknown", None
-
-        if "site-packages" in module_path or "dist-packages" in module_path:
-            return "third_party_library", module_path
-        else:
-            return "local_module", module_path
 
     def get_graph(self):
         return self.graph
