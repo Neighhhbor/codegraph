@@ -1,122 +1,6 @@
---- Start of contains_parser.py ---
-import tree_sitter_python as tspython
-from tree_sitter import Language, Parser
-import os
-
-class Node:
-    def __init__(self, name, node_type, code=None, signature=None, parent_fullname=None):
-        self.name = name
-        self.node_type = node_type  # 'directory', 'module', 'class', 'function'
-        self.children = []
-        self.code = code
-        self.signature = signature
-
-        # 生成全名：从根节点到当前节点的路径名
-        if parent_fullname:
-            self.fullname = f"{parent_fullname}.{name}"
-        else:
-            self.fullname = name
-
-    def add_child(self, child_node):
-        self.children.append(child_node)
-
-class ContainsParser:
-    def __init__(self, project_path, repo_name):
-        self.project_path = project_path
-        self.repo_name = repo_name
-        self.parser = self._init_parser()
-        self.root = Node(repo_name, 'directory')  # 项目的根节点
-        self.nodes = {repo_name: self.root}  # 存储所有创建的节点
-
-    def _init_parser(self):
-        PY_LANGUAGE=Language(tspython.language())
-        parser = Parser(PY_LANGUAGE)
-        return parser
-
-    def parse(self):
-        self._build_tree(self.project_path, self.root)
-
-    def _build_tree(self, current_path, parent_node):
-        for item in os.listdir(current_path):
-            item_path = os.path.join(current_path, item)
-            if os.path.isdir(item_path):
-                # 创建目录节点
-                dir_node = self._create_node(item, 'directory', parent_node)
-                # 递归遍历子目录
-                self._build_tree(item_path, dir_node)
-            elif item.endswith(".py"):
-                # 创建文件模块节点并解析
-                module_node = self._create_node(item, 'module', parent_node)
-                self._parse_file(item_path, module_node)
-
-    def _create_node(self, name, node_type, parent_node):
-        # 去掉文件扩展名（仅对模块节点）
-        if node_type == 'module' and name.endswith('.py'):
-            name = name[:-3]  # 去除 .py 后缀
-
-        # 生成全名
-        if parent_node.fullname:
-            full_name = f"{parent_node.fullname}.{name}"
-        else:
-            full_name = name
-
-        # 创建节点
-        node = Node(name, node_type, parent_fullname=parent_node.fullname)
-        parent_node.add_child(node)
-        self.nodes[full_name] = node
-
-        return node
-
-
-    def _parse_file(self, file_path, module_node):
-        with open(file_path, "r") as file:
-            file_content = file.read()
-
-        tree = self.parser.parse(bytes(file_content, "utf8"))
-
-        # 递归构建文件内的树形结构
-        self._extract_items(tree.root_node, file_path, module_node)
-
-    def _extract_items(self, node, file_path, parent_node):
-        for child in node.children:
-            if child.type == 'class_definition':
-                class_name = self._get_node_text(child.child_by_field_name('name'), file_path)
-                class_signature = self._get_node_text(child, file_path)
-                class_node = Node(class_name, 'class', self._get_code_segment(child, file_path), class_signature, parent_node.fullname)
-                parent_node.add_child(class_node)
-                # 递归处理子节点
-                self._extract_items(child, file_path, class_node)
-
-            elif child.type == 'function_definition':
-                func_name = self._get_node_text(child.child_by_field_name('name'), file_path)
-                func_signature = self._get_node_text(child, file_path)
-                func_node = Node(func_name, 'function', self._get_code_segment(child, file_path), func_signature, parent_node.fullname)
-                parent_node.add_child(func_node)
-                # 递归处理子节点
-                self._extract_items(child, file_path, func_node)
-
-            else:
-                # 递归处理其他子节点
-                self._extract_items(child, file_path, parent_node)
-
-    def _get_node_text(self, node, file_path):
-        if node is None:
-            return ""
-        start_byte = node.start_byte
-        end_byte = node.end_byte
-        with open(file_path, "r") as file:
-            file_content = file.read()
-        return file_content[start_byte:end_byte]
-
-    def _get_code_segment(self, node, file_path):
-        return self._get_node_text(node, file_path)
-
-
---- End of contains_parser.py ---
-
 --- Start of config.py ---
 # 配置文件
-PROJECT_PATH = "./testproject"  # 需要分析的项目路径
+PROJECT_PATH = "DevEval/Source_Code/Utilities/stellar"  # 需要分析的项目路径
 NEO4J_URL = "bolt://localhost:7687"     # Neo4j数据库的URL
 NEO4J_USER = "neo4j"                    # Neo4j数据库的用户名
 NEO4J_PASSWORD = "12341234"             # Neo4j数据库的密码
@@ -124,16 +8,19 @@ NEO4J_PASSWORD = "12341234"             # Neo4j数据库的密码
 --- End of config.py ---
 
 --- Start of neo4j_utils.py ---
-from py2neo import Graph, Node, Relationship
 import os
+import logging
+from py2neo import Graph, Node, Relationship
 
 class Neo4jHandler:
     def __init__(self, url, user, password):
         self.graph = Graph(url, auth=(user, password))
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.DEBUG)  # Set the desired log level here
 
     def clean_database(self):
         self.graph.run("MATCH (n) DETACH DELETE n")
-        print("数据库已清空")
+        self.logger.debug("数据库已清空")
 
     def import_graph(self, code_graph):
         nx_graph = code_graph.get_graph()
@@ -142,7 +29,7 @@ class Neo4jHandler:
             node_type = attrs.get('type', 'UNKNOWN').upper()
 
             if node_type == 'UNKNOWN':
-                print(f"发现未知类型的节点: {full_name}")
+                self.logger.debug(f"发现未知类型的节点: {full_name}")
                 continue
 
             if node_type == 'FILE':
@@ -154,7 +41,7 @@ class Neo4jHandler:
             if not existing_node:
                 n = Node(node_type, name=short_name, full_name=full_name, code=attrs.get('code', ''), signature=attrs.get('signature', ''), description=attrs.get('description', ''))
                 self.graph.create(n)
-                print(f"导入节点: {full_name} (类型: {node_type})")
+                self.logger.debug(f"导入节点: {full_name} (类型: {node_type})")
 
         for start, end, edge_attrs in nx_graph.edges(data=True):
             start_node = self.graph.nodes.match(full_name=start).first()
@@ -164,9 +51,9 @@ class Neo4jHandler:
                 if not existing_rel:
                     rel = Relationship(start_node, edge_attrs['relationship'], end_node)
                     self.graph.create(rel)
-                    print(f"导入关系: {start} -> {end} (类型: {edge_attrs['relationship']})")
+                    self.logger.debug(f"导入关系: {start} -> {end} (类型: {edge_attrs['relationship']})")
             else:
-                print(f"警告: 关系的起始节点或终止节点缺失，跳过创建关系: {start} -> {end}")
+                self.logger.debug(f"警告: 关系的起始节点或终止节点缺失，跳过创建关系: {start} -> {end}")
 
 --- End of neo4j_utils.py ---
 
@@ -174,12 +61,17 @@ class Neo4jHandler:
 import os
 from code_graph import CodeGraph
 from neo4j_utils import Neo4jHandler
-from contains_parser import ContainsParser  # 引入包含关系的解析器
-from import_parser import ImportParser  # 引入import关系的解析器
-from call_parser import CallParser  # 引入调用关系的解析器
+from parsers.contains_parser import ContainsParser  # 引入包含关系的解析器
+from parsers.import_parser import ImportParser  # 引入 import 关系的解析器
+from parsers.call_parser import CallParser  # 引入调用关系的解析器
 import config
+import logging
+ # 全局日志配置
+logging.basicConfig(level=logging.INFO, format=' %(name)s - %(levelname)s - %(message)s')
+
 
 def main():
+   
     # 连接到 Neo4j 数据库
     neo4j_handler = Neo4jHandler(config.NEO4J_URL, config.NEO4J_USER, config.NEO4J_PASSWORD)
     
@@ -189,9 +81,9 @@ def main():
     # 获取项目名称
     repo_name = os.path.basename(os.path.normpath(config.PROJECT_PATH))
 
-    # 第一步：解析CONTAINS关系
+    # 第一步：解析 CONTAINS 关系
     contains_parser = ContainsParser(config.PROJECT_PATH, repo_name)
-    contains_parser.parse()
+    contains_parser.parse()  # 解析目录结构和类、函数定义
 
     # 构建代码图
     code_graph = CodeGraph()
@@ -199,18 +91,23 @@ def main():
     # 遍历树形结构并构建图，从根节点开始
     code_graph.build_graph_from_tree(contains_parser.root)
 
-    # 第二步：解析import关系
+    # 第二步：解析 import 关系
     import_parser = ImportParser(config.PROJECT_PATH, repo_name)
     import_parser.parse()
-
-    # 处理import关系
-    for importer, imported_module in import_parser.imports:
+    print(f"import_parser.imports: {import_parser.imports}")
+    # 处理 import 关系
+    for import_data in import_parser.imports:
+        importer = import_data[0]
+        imported_module = import_data[1]
         print(f"importer: {importer}, imported_module: {imported_module}")
         code_graph.add_import(importer, imported_module)
 
     # 第三步：解析调用关系
-    call_parser = CallParser(config.PROJECT_PATH, repo_name, code_graph)
-    call_parser.parse()
+    call_parser = CallParser(config.PROJECT_PATH, repo_name, code_graph, contains_parser.defined_symbols)
+    call_parser.parse()  # 使用已解析的符号来处理调用关系
+
+    # 输出已定义的符号（调试用）
+    print('-'*50+'\n',f"已定义的符号: {call_parser.defined_symbols}\n",'-'*50+'\n')
 
     # 处理调用关系
     for caller, callee in call_parser.calls:
@@ -226,11 +123,15 @@ if __name__ == "__main__":
 
 --- Start of code_graph.py ---
 import networkx as nx
-import os
+import sys
+import importlib.util
+import logging
 
 class CodeGraph:
     def __init__(self):
         self.graph = nx.DiGraph()
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.DEBUG)
 
     def build_graph_from_tree(self, tree_root):
         # 从树的根节点开始构建图
@@ -239,7 +140,7 @@ class CodeGraph:
 
     def _add_node(self, node):
         self.graph.add_node(node.fullname, type=node.node_type, code=node.code, signature=node.signature)
-        print(f"添加节点: {node.fullname} (类型: {node.node_type})")
+        self.logger.debug(f"添加节点: {node.fullname} (类型: {node.node_type})")
 
     def _build_edges(self, node):
         for child in node.children:
@@ -250,16 +151,48 @@ class CodeGraph:
     def add_call(self, caller_fullname, callee_fullname):
         if caller_fullname in self.graph and callee_fullname in self.graph:
             self.graph.add_edge(caller_fullname, callee_fullname, relationship="CALLS")
-            print(f"添加调用关系: {caller_fullname} -> {callee_fullname}")
+            self.logger.debug(f"添加调用关系: {caller_fullname} -> {callee_fullname}")
         else:
-            print(f"调用关系中的节点不存在: {caller_fullname} -> {callee_fullname}")
+            self.logger.debug(f"调用关系中的节点不存在: {caller_fullname} -> {callee_fullname}")
 
     def add_import(self, importer_fullname, imported_fullname):
-        if importer_fullname in self.graph and imported_fullname in self.graph:
+        # 检测模块类型
+        module_type, module_path = self._detect_module_type(imported_fullname)
+
+        # 如果模块不存在图中，为第三方库、标准库或本地库创建虚拟节点
+        if imported_fullname not in self.graph:
+            self.logger.debug(f"创建节点: {imported_fullname} (类型: {module_type}) 路径: {module_path}")
+            self.graph.add_node(imported_fullname, type=module_type, code=None, signature=None)
+
+        if importer_fullname in self.graph:
             self.graph.add_edge(importer_fullname, imported_fullname, relationship="IMPORTS")
-            print(f"添加import关系: {importer_fullname} -> {imported_fullname}")
+            self.logger.debug(f"添加import关系: {importer_fullname} -> {imported_fullname}")
         else:
-            print(f"import关系中的节点不存在: {importer_fullname} -> {imported_fullname}")
+            self.logger.debug(f"import关系中的节点不存在: {importer_fullname} -> {imported_fullname}")
+
+    def _detect_module_type(self, module_name):
+        """
+        检测模块类型：标准库、第三方库或本地库
+        """
+        # 检测标准库模块
+        if module_name in sys.builtin_module_names:
+            return "standard_library", None
+
+        # 使用 importlib.util.find_spec 查找模块的元信息
+        module_spec = importlib.util.find_spec(module_name)
+        if module_spec is None:
+            self.logger.debug(f"无法找到模块 {module_name}")
+            return "unknown", None
+
+        # 判断模块类型：第三方库或标准库
+        module_path = module_spec.origin
+        if not module_path:
+            return "unknown", None
+
+        if "site-packages" in module_path or "dist-packages" in module_path:
+            return "third_party_library", module_path
+        else:
+            return "local_module", module_path
 
     def get_graph(self):
         return self.graph
@@ -322,33 +255,36 @@ class LspClientWrapper:
 
 --- End of lsp_client.py ---
 
---- Start of call_parser.py ---
-import os
-import re
+--- Start of parsers/contains_parser.py ---
 import tree_sitter_python as tspython
 from tree_sitter import Language, Parser
-import logging
-from lsp_client import LspClientWrapper
+import os
 
-class CallParser:
-    def __init__(self, project_path, repo_name, code_graph):
+class Node:
+    def __init__(self, name, node_type, code=None, signature=None, parent_fullname=None):
+        self.name = name
+        self.node_type = node_type  # 'directory', 'module', 'class', 'function'
+        self.children = []
+        self.code = code
+        self.signature = signature
+
+        # 生成全名：从根节点到当前节点的路径名
+        if parent_fullname:
+            self.fullname = f"{parent_fullname}.{name}"
+        else:
+            self.fullname = name
+
+    def add_child(self, child_node):
+        self.children.append(child_node)
+
+class ContainsParser:
+    def __init__(self, project_path, repo_name):
         self.project_path = project_path
         self.repo_name = repo_name
-        self.code_graph = code_graph
         self.parser = self._init_parser()
-        self.calls = []  # 存储调用关系 (caller, callee)
-        self.defined_symbols = set()  # 存储所有定义的标识符（简单名称）
-
-        # 配置日志记录
-        self.logger = logging.getLogger('call_parser')
-        self.logger.setLevel(logging.INFO)  # 设置为INFO模式以输出详细信息
-        handler = logging.StreamHandler()
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        handler.setFormatter(formatter)
-        self.logger.addHandler(handler)
-
-        # 初始化LSP客户端
-        self.lsp_client = LspClientWrapper(self.project_path)
+        self.root = Node(repo_name, 'directory')  # 项目的根节点
+        self.nodes = {repo_name: self.root}  # 存储所有创建的节点
+        self.defined_symbols = {}  # 用于存储函数和类的定义，key为name，value为定义路径列表
 
     def _init_parser(self):
         PY_LANGUAGE = Language(tspython.language())
@@ -356,20 +292,162 @@ class CallParser:
         return parser
 
     def parse(self):
+        self._build_tree(self.project_path, self.root)
+
+    def _build_tree(self, current_path, parent_node):
+        for item in os.listdir(current_path):
+            item_path = os.path.join(current_path, item)
+            if os.path.isdir(item_path):
+                # 创建目录节点
+                dir_node = self._create_node(item, 'directory', parent_node)
+                # 递归遍历子目录
+                self._build_tree(item_path, dir_node)
+            elif item.endswith(".py"):
+                # 创建文件模块节点并解析
+                module_node = self._create_node(item, 'module', parent_node)
+                self._parse_file(item_path, module_node)
+
+    def _create_node(self, name, node_type, parent_node):
+        # 去掉文件扩展名（仅对模块节点）
+        if node_type == 'module' and name.endswith('.py'):
+            name = name[:-3]  # 去除 .py 后缀
+
+        # 生成全名
+        if parent_node.fullname:
+            full_name = f"{parent_node.fullname}.{name}"
+        else:
+            full_name = name
+
+        # 创建节点
+        node = Node(name, node_type, parent_fullname=parent_node.fullname)
+        parent_node.add_child(node)
+        self.nodes[full_name] = node
+
+        return node
+
+    def _parse_file(self, file_path, module_node):
+        with open(file_path, "r") as file:
+            file_content = file.read()
+
+        tree = self.parser.parse(bytes(file_content, "utf8"))
+
+        # 递归构建文件内的树形结构
+        self._extract_items(tree.root_node, file_path, module_node)
+
+    def _extract_items(self, node, file_path, parent_node):
+        for child in node.children:
+            if child.type == 'class_definition':
+                class_name = self._get_node_text(child.child_by_field_name('name'), file_path)
+                class_signature = self._get_node_text(child, file_path)
+                class_node = Node(class_name, 'class', self._get_code_segment(child, file_path), class_signature, parent_node.fullname)
+                parent_node.add_child(class_node)
+
+                # 注册类到 defined_symbols
+                self._register_symbol(class_name, class_node.fullname)
+
+                # 递归处理子节点
+                self._extract_items(child, file_path, class_node)
+
+            elif child.type == 'function_definition':
+                func_name = self._get_node_text(child.child_by_field_name('name'), file_path)
+                func_signature = self._get_node_text(child, file_path)
+                func_node = Node(func_name, 'function', self._get_code_segment(child, file_path), func_signature, parent_node.fullname)
+                parent_node.add_child(func_node)
+
+                # 注册函数到 defined_symbols
+                self._register_symbol(func_name, func_node.fullname)
+
+                # 递归处理子节点
+                self._extract_items(child, file_path, func_node)
+
+            else:
+                # 递归处理其他子节点
+                self._extract_items(child, file_path, parent_node)
+
+    def _register_symbol(self, name, fullname):
+        """
+        注册函数或类的定义到 defined_symbols 字典中。
+        如果符号已经存在，添加到其定义路径列表中。
+        """
+        if name in self.defined_symbols:
+            self.defined_symbols[name].append(fullname)
+        else:
+            self.defined_symbols[name] = [fullname]
+
+    def _get_node_text(self, node, file_path):
+        """
+        提取 AST 节点对应的源代码文本，使用行列号而非字节
+        """
+        if node is None:
+            return ""
+
+        start_line, start_column = node.start_point
+        end_line, end_column = node.end_point
+
+        with open(file_path, "r") as file:
+            file_lines = file.readlines()
+
+        if start_line == end_line:
+            # 同一行的情况，直接从 start_column 到 end_column
+            return file_lines[start_line][start_column:end_column].strip()
+        else:
+            # 跨多行的情况，处理起始行、中间行和结束行
+            extracted_text = []
+            extracted_text.append(file_lines[start_line][start_column:].strip())
+            for line in range(start_line + 1, end_line):
+                extracted_text.append(file_lines[line].strip())
+            extracted_text.append(file_lines[end_line][:end_column].strip())
+            return " ".join(extracted_text)
+
+    def _get_code_segment(self, node, file_path):
+        return self._get_node_text(node, file_path)
+
+--- End of parsers/contains_parser.py ---
+
+--- Start of parsers/call_parser.py ---
+import os
+from tree_sitter import Parser, Language
+import tree_sitter_python as tspython
+from lsp_client import LspClientWrapper
+import logging
+
+class CallParser:
+    def __init__(self, project_path, repo_name, code_graph, defined_symbols):
+        self.project_path = project_path
+        self.repo_name = repo_name
+        self.code_graph = code_graph
+        self.defined_symbols = defined_symbols  # 从 ContainsParser 获取的符号定义
+        self.calls = []  # 存储调用关系 (caller, callee)
+
+        # 配置日志记录
+        self.logger = logging.getLogger('call_parser')
+        self.logger.setLevel(logging.INFO)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+
+        # 初始化LSP客户端
+        self.lsp_client = LspClientWrapper(self.project_path)
+        self.parser = self._init_parser()
+
+    def _init_parser(self):
+        PY_LANGUAGE = Language(tspython.language())
+        parser = Parser(PY_LANGUAGE)
+        return parser
+
+    def parse(self):
+        """
+        解析项目中的所有 Python 文件，构建函数调用关系。
+        """
         py_files = self._get_py_files()
-        self.logger.debug(f"Found {len(py_files)} Python files to parse.")
-        
-        # 第一遍扫描：注册所有标识符
         for file in py_files:
-            self.logger.debug(f"Scanning definitions in file: {file}")
-            self._scan_definitions(file)
-        
-        # 第二遍解析：处理调用关系
-        for file in py_files:
-            self.logger.debug(f"Parsing calls in file: {file}")
             self._parse_file(file)
 
     def _get_py_files(self):
+        """
+        获取项目中所有的 Python 文件
+        """
         py_files = []
         for root, _, files in os.walk(self.project_path):
             for file in files:
@@ -377,53 +455,11 @@ class CallParser:
                     py_files.append(os.path.join(root, file))
         return py_files
 
-    def _get_module_name(self, file_path):
-        """根据文件路径生成模块全名"""
-        relative_path = os.path.relpath(file_path, self.project_path)
-        module_name = os.path.splitext(relative_path)[0].replace(os.path.sep, '.')
-        return f"{self.repo_name}.{module_name}"
-
-    def _remove_comments(self, code):
-        """移除Python代码中的注释"""
-        # 移除单行注释
-        code = re.sub(r'#.*', '', code)
-        # 移除多行字符串（包括注释）
-        code = re.sub(r'\'\'\'(.*?)\'\'\'', '', code, flags=re.DOTALL)
-        code = re.sub(r'\"\"\"(.*?)\"\"\"', '', code, flags=re.DOTALL)
-        return code
-
-    def _scan_definitions(self, file_path):
-        with open(file_path, "r") as file:
-            file_content = file.read()
-
-        # 去掉注释
-        file_content = self._remove_comments(file_content)
-
-        tree = self.parser.parse(bytes(file_content, "utf8"))
-
-        # 构建模块名称
-        module_name = self._get_module_name(file_path)
-        self._register_definitions(tree.root_node, file_path, module_name)
-
-    def _register_definitions(self, node, file_path, current_fullname):
-        for child in node.children:
-            if child.type == 'class_definition' or child.type == 'function_definition':
-                # 只注册函数名或类名，不包含路径
-                name = self._get_node_text(child.child_by_field_name('name'), file_path)
-                self.defined_symbols.add(name)
-                # 递归处理子节点
-                self._register_definitions(child, file_path, current_fullname)
-            else:
-                # 继续递归处理其他子节点
-                self._register_definitions(child, file_path, current_fullname)
-
     def _parse_file(self, file_path):
         with open(file_path, "r") as file:
             file_content = file.read()
 
-        # 去掉注释
-        file_content = self._remove_comments(file_content)
-
+        # 使用 tree-sitter 解析文件
         tree = self.parser.parse(bytes(file_content, "utf8"))
 
         # 构建模块名称
@@ -432,101 +468,210 @@ class CallParser:
         # 递归分析调用关系
         self._extract_calls(tree.root_node, file_path, module_name)
 
-    def _extract_calls(self, node, file_path, current_fullname):
-        for child in node.children:
-            if child.type == 'function_definition':
-                # 获取当前函数的全名
-                func_name = self._get_node_text(child.child_by_field_name('name'), file_path)
-                func_fullname = f"{current_fullname}.{func_name}"
+    def _get_module_name(self, file_path):
+        """根据文件路径生成模块全名"""
+        relative_path = os.path.relpath(file_path, self.project_path)
+        module_name = os.path.splitext(relative_path)[0].replace(os.path.sep, '.')
+        return f"{self.repo_name}.{module_name}"
 
-                # 递归分析函数体内的调用
-                self._extract_calls(child, file_path, func_fullname)
+    def _extract_calls(self, node, file_path, current_fullname):
+        """
+        递归分析文件中的函数调用关系，保持与 ContainsParser 一致的自顶向下路径
+        """
+        for child in node.children:
+            if child.type == 'class_definition' or child.type == 'function_definition':
+                # 处理类和函数，构建它们的完整路径
+                name = self._get_node_text(child.child_by_field_name('name'), file_path)
+                fullname = f"{current_fullname}.{name}"
+
+                # 递归处理子节点
+                self._extract_calls(child, file_path, fullname)
 
             elif child.type == 'call':
-                # 检测到函数调用
+                # 处理函数调用
                 func_name_node = child.child_by_field_name('function')
                 if func_name_node:
-                    if func_name_node.type == 'identifier':
-                        # 处理全局函数调用
-                        callee_name = self._get_node_text(func_name_node, file_path)
+                    callee_name = self._get_node_text(func_name_node, file_path)
+                    self.logger.debug("-" * 50)
+                    self._handle_call(func_name_node, callee_name, current_fullname, file_path)
 
-                        # 检查这个函数是否在项目内定义
-                        if callee_name in self.defined_symbols:
-                            # 使用 LSP 查找函数定义位置
-                            definition = self.lsp_client.find_definition(file_path, func_name_node.start_point[0], func_name_node.start_point[1])
-                            if definition:
-                                callee_fullname = self._get_fullname_from_definition(definition)
-                                # 如果定义的位置也是在项目内，记录调用关系
-                                if callee_fullname and callee_fullname in self.defined_symbols:
-                                    self.calls.append((current_fullname, callee_fullname))
-                                    self.logger.info(f"Recorded call: {current_fullname} -> {callee_fullname}")
-
-                    elif func_name_node.type == 'attribute':
-                        # 处理成员函数或静态方法调用
-                        object_name_node = func_name_node.child_by_field_name('object')
-                        method_name_node = func_name_node.child_by_field_name('attribute')
-
-                        # 提取对象名和方法名
-                        object_name = self._get_node_text(object_name_node, file_path) if object_name_node else None
-                        method_name = self._get_node_text(method_name_node, file_path) if method_name_node else None
-
-                        if object_name and method_name:
-                            # 检查方法名是否在已定义的符号中
-                            if method_name in self.defined_symbols:
-                                # 使用 LSP 查找方法定义位置
-                                definition = self.lsp_client.find_definition(file_path, func_name_node.start_point[0], func_name_node.start_point[1])
-                                if definition:
-                                    callee_fullname = self._get_fullname_from_definition(definition)
-                                    # 如果定义的位置也是在项目内，记录调用关系
-                                    if callee_fullname and callee_fullname in self.defined_symbols:
-                                        self.calls.append((current_fullname, callee_fullname))
-                                        self.logger.info(f"Recorded call: {current_fullname} -> {callee_fullname}")
-                            else:
-                                # 记录静态方法或成员函数调用信息
-                                self.logger.info(f"Detected method call: {object_name}.{method_name} in {current_fullname}")
-                        else:
-                            # 记录提取失败的情况，便于调试
-                            self.logger.error(f"Failed to extract method call details in {current_fullname}: object_name={object_name}, method_name={method_name}")
-
+                # 递归处理链式调用
+                self._extract_calls(child, file_path, current_fullname)
             else:
-                # 递归处理其他子节点
+                # 递归处理其他节点
                 self._extract_calls(child, file_path, current_fullname)
 
-    def _get_node_text(self, node, file_path):
-        if node is None:
-            return ""
-        start_byte = node.start_byte
-        end_byte = node.end_byte
-        with open(file_path, "r") as file:
-            file_content = file.read()
-        return file_content[start_byte:end_byte]
+    def _handle_call(self, func_name_node, callee_name, caller_fullname, file_path):
+        """
+        处理全局函数和方法调用的统一逻辑
+        """
+        self.logger.debug(f"Found call to {callee_name} in {caller_fullname}")
+
+        if func_name_node.type == 'attribute':
+            # 处理类方法或实例方法调用
+            object_node = func_name_node.child_by_field_name('object')
+            method_node = func_name_node.child_by_field_name('attribute')
+
+            object_name = self._get_node_text(object_node, file_path) if object_node else None
+            method_name = self._get_node_text(method_node, file_path) if method_node else None
+
+            self.logger.debug(f"Found method call: {object_name}.{method_name} in {caller_fullname}")
+            self._process_method_call(object_name, method_name, caller_fullname, file_path)
+
+        else:
+            # 处理全局函数调用
+            self._process_function_call(callee_name, caller_fullname, file_path, func_name_node)
+
+    def _process_function_call(self, callee_name, caller_fullname, file_path, func_name_node):
+        """
+        处理全局函数调用
+        """
+        if callee_name in self.defined_symbols:
+            definition_paths = self.defined_symbols[callee_name]
+            if len(definition_paths) == 1:
+                # 唯一定义，直接使用
+                callee_fullname = definition_paths[0]
+                self.calls.append((caller_fullname, callee_fullname))
+                self.logger.debug(f"Recorded function call: {caller_fullname} -> {callee_fullname}")
+            else:
+                # 多个定义路径，使用 LSP 确定具体定义
+                definition = self.lsp_client.find_definition(file_path, func_name_node.start_point[0], func_name_node.start_point[1])
+                self._resolve_call_with_lsp(caller_fullname, definition, definition_paths, callee_name)
+        else:
+            self.logger.debug(f"Call to external function {callee_name} in {caller_fullname}, skipping.")
+
+    def _resolve_call_with_lsp(self, caller_fullname, definition, definition_paths, callee_name):
+        """
+        使用 LSP 来确定调用函数的位置
+        """
+        self.logger.debug(f"Definition: {definition}")
+        if definition:
+            callee_fullname = self._get_fullname_from_definition(definition)
+            self.logger.debug(f"Resolved full function name: {callee_fullname}")
+            if callee_fullname and any(callee_fullname.startswith(path) for path in definition_paths):
+                self.calls.append((caller_fullname, callee_fullname))
+                self.logger.debug(f"Recorded call: {caller_fullname} -> {callee_fullname}")
+            else:
+                self.logger.warning(f"Could not determine the correct definition for {callee_name} called in {caller_fullname}")
+
+    def _process_method_call(self, object_name, method_name, caller_fullname, file_path):
+        """
+        处理类方法或实例方法调用
+        """
+        if object_name in self.defined_symbols:
+            class_definitions = self.defined_symbols[object_name]
+            if len(class_definitions) == 1:
+                # 静态方法调用，记录类方法调用
+                callee_fullname = f"{class_definitions[0]}.{method_name}"
+                self.calls.append((caller_fullname, callee_fullname))
+                self.logger.debug(f"Recorded static method call: {caller_fullname} -> {callee_fullname}")
+            else:
+                # self.logger.warning(f"Multiple class definitions for {object_name}, skipping method call.")
+                # 多个类定义，使用 LSP 确定具体定义
+                definition = self.lsp_client.find_definition(file_path, object_name.start_point[0], object_name.start_point[1])
+                self._resolve_method_call_with_lsp(caller_fullname, definition, object_name, method_name)
+                
+        else:
+            if method_name in self.defined_symbols:
+                method_definitions = self.defined_symbols[method_name] 
+                if len(method_definitions) == 1:
+                    callee_fullname = method_definitions[0]
+                    self.calls.append((caller_fullname, callee_fullname))
+                    self.logger.debug(f"Recorded instance method call: {caller_fullname} -> {callee_fullname}")
+                else:
+                    self.logger.warning(f"Multiple method definitions for {method_name}, skipping.")
+            else:
+                self.logger.debug(f"Method {method_name} not found for object {object_name}, skipping.")
 
     def _get_fullname_from_definition(self, definition):
-        if not isinstance(definition, list) or len(definition) == 0:
-            self.logger.error(f"Unexpected definition format or empty list: {definition}")
-            return None
-
-        # 取列表中的第一个元素
+        """
+        从 LSP 的定义响应中，通过 Tree-sitter 解析出完整的 namespace 路径
+        """
         definition = definition[0]
-
         if not isinstance(definition, dict):
             self.logger.error(f"Unexpected definition format: {definition}")
             return None
 
-        # 根据LSP返回的定义位置，计算被调用函数的全名
+        # 获取 LSP 返回的位置信息
         def_file_path = os.path.abspath(definition['uri'].replace('file://', ''))
-        line = definition['range']['start']['line']
-        
-        # 解析被调用函数所在模块
-        module_name = self._get_module_name(def_file_path)
+        start_line = definition['range']['start']['line']
+        start_column = definition['range']['start']['character']
+        end_line = definition['range']['end']['line']
+        end_column = definition['range']['end']['character']
 
-        # 根据行号反向推断函数的全名
-        func_fullname = f"{module_name}"
-        return func_fullname
+        self.logger.debug(f"Definition file: {def_file_path}, start: ({start_line}, {start_column}), end: ({end_line}, {end_column})")
 
---- End of call_parser.py ---
+        # 根据文件路径解析对应的源代码
+        with open(def_file_path, "r") as file:
+            file_content = file.read()
 
---- Start of import_parser.py ---
+        # 使用 tree-sitter 解析文件，生成语法树
+        tree = self.parser.parse(bytes(file_content, "utf8"))
+
+        # 根据 LSP 的位置信息找到语法树中的精确节点
+        target_node = tree.root_node.descendant_for_point_range((start_line, start_column), (end_line, end_column))
+        if not target_node:
+            self.logger.error(f"Could not locate node at ({start_line}, {start_column}) in {def_file_path}")
+            return None
+
+        # 构建命名空间路径（包括文件相对项目根路径的模块路径）
+        namespace = self._build_namespace_from_node(target_node, def_file_path)
+
+        self.logger.debug(f"Resolved full function name: {namespace}")
+        return namespace
+
+    def _build_namespace_from_node(self, node, def_file_path):
+        """
+        从指定的 AST 节点开始，向上遍历，构建 namespace 路径
+        """
+        components = []
+        current_node = node
+
+        # 自底向上遍历，找到 function, class, module 等定义，构建完整路径
+        while current_node:
+            self.logger.debug(f"Current node: {current_node.type}")
+            if current_node.type in ['function_definition', 'class_definition', 'module']:
+                # 获取函数或类的名字
+                name_node = current_node.child_by_field_name('name')
+                if name_node:
+                    self.logger.debug(f"Adding component: {self._get_node_text(name_node, def_file_path)}")
+                    components.insert(0, self._get_node_text(name_node, def_file_path))
+            current_node = current_node.parent
+
+        # 获取文件相对于项目根路径的模块路径
+        module_path = self._get_module_name(def_file_path)
+
+        # 返回完整的命名空间：模块路径 + 代码内部命名空间
+        return f"{module_path}{'.' if components else ''}{'.'.join(components)}"
+
+    def _get_node_text(self, node, file_path):
+        """
+        提取 AST 节点对应的源代码文本，使用行列号而非字节
+        """
+        if node is None:
+            return ""
+
+        start_line, start_column = node.start_point
+        end_line, end_column = node.end_point
+
+        with open(file_path, "r") as file:
+            file_lines = file.readlines()
+
+        if start_line == end_line:
+            # 同一行的情况，直接从 start_column 到 end_column
+            return file_lines[start_line][start_column:end_column].strip()
+        else:
+            # 跨多行的情况，处理起始行、中间行和结束行
+            extracted_text = []
+            extracted_text.append(file_lines[start_line][start_column:].strip())
+            for line in range(start_line + 1, end_line):
+                extracted_text.append(file_lines[line].strip())
+            extracted_text.append(file_lines[end_line][:end_column].strip())
+            return " ".join(extracted_text)
+
+--- End of parsers/call_parser.py ---
+
+--- Start of parsers/import_parser.py ---
 import os
 import tree_sitter_python as tspython
 from tree_sitter import Language, Parser
@@ -541,18 +686,21 @@ class ImportParser:
 
         # 配置日志记录
         self.logger = logging.getLogger('import_parser')
-        self.logger.setLevel(logging.INFO)  # 设置为DEBUG模式以输出详细信息
+        self.logger.setLevel(logging.INFO)
         handler = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
 
     def _init_parser(self):
-        PY_LANGUAGE=Language(tspython.language())
+        PY_LANGUAGE = Language(tspython.language())
         parser = Parser(PY_LANGUAGE)
         return parser
 
     def parse(self):
+        """
+        解析项目中的所有 Python 文件并提取导入关系
+        """
         py_files = self._get_py_files()
         self.logger.debug(f"Found {len(py_files)} Python files to parse.")
         for file in py_files:
@@ -560,6 +708,9 @@ class ImportParser:
             self._parse_file(file)
 
     def _get_py_files(self):
+        """
+        获取项目中所有的 Python 文件
+        """
         py_files = []
         for root, _, files in os.walk(self.project_path):
             for file in files:
@@ -581,53 +732,103 @@ class ImportParser:
         self._extract_imports(tree.root_node, file_path, module_name)
 
     def _get_module_name(self, file_path):
+        """
+        生成基于文件路径的模块名称
+        """
         relative_path = os.path.relpath(file_path, self.project_path)
         module_name = os.path.splitext(relative_path)[0].replace(os.path.sep, '.')
         return f"{self.repo_name}.{module_name}"
 
     def _extract_imports(self, node, file_path, current_fullname):
+        """
+        递归解析文件中的 import 语句
+        """
         for child in node.children:
             if child.type == 'import_statement':
                 self.logger.debug(f"Found import statement in {current_fullname}")
-                # 处理import关系，记录import的模块
-                for name_node in child.named_children:
-                    if name_node.type == 'dotted_name' or name_node.type == 'identifier':
-                        import_name = self._get_node_text(name_node, file_path)
-                        self.imports.append((current_fullname, import_name))
-                        self.logger.debug(f"Recorded import: {current_fullname} imports {import_name}")
+                # 处理import语句
+                self._handle_import_statement(child, current_fullname, file_path)
 
             elif child.type == 'import_from_statement':
                 self.logger.debug(f"Found from-import statement in {current_fullname}")
-                # 处理from ... import ...形式的导入
-                module_name_node = child.child_by_field_name('module')
-                module_name = self._get_node_text(module_name_node, file_path) if module_name_node else None
-
-                if module_name:
-                    # 记录从模块导入的关系
-                    self.imports.append((current_fullname, module_name))
-                    self.logger.debug(f"Recorded from-import: {current_fullname} imports from {module_name}")
-                    
-                    # 处理具体导入的元素
-                    for import_child in child.named_children:
-                        if import_child.type == 'dotted_name' or import_child.type == 'identifier':
-                            import_element = self._get_node_text(import_child, file_path)
-                            full_import_path = f"{module_name}.{import_element}"
-                            self.imports.append((current_fullname, full_import_path))
-                            self.logger.debug(f"Recorded from-import element: {current_fullname} imports {full_import_path}")
+                # 处理 from ... import ... 语句
+                self._handle_from_import_statement(child, current_fullname, file_path)
 
             else:
                 # 递归处理其他子节点
                 self._extract_imports(child, file_path, current_fullname)
 
+    def _handle_import_statement(self, node, current_fullname, file_path):
+        """
+        处理普通的 import 语句
+        """
+        for name_node in node.named_children:
+            if name_node.type == 'dotted_name' or name_node.type == 'identifier':
+                import_name = self._get_node_text(name_node, file_path)
+                self.imports.append((current_fullname, import_name))  # 确保是 (importer, imported_module)
+                self.logger.debug(f"Recorded import: {current_fullname} imports {import_name}")
+            # 处理别名（as导入）
+            alias_node = node.child_by_field_name('alias')
+            if alias_node:
+                alias_name = self._get_node_text(alias_node, file_path)
+                self.imports.append((current_fullname, alias_name))  # 确保是 (importer, alias_name)
+                self.logger.debug(f"Recorded alias import: {current_fullname} imports {alias_name}")
+
+    def _handle_from_import_statement(self, node, current_fullname, file_path):
+        """
+        处理 from ... import ... 语句
+        """
+        module_name_node = node.child_by_field_name('module')
+        module_name = self._get_node_text(module_name_node, file_path) if module_name_node else None
+
+        if module_name:
+            # 记录从模块导入的关系
+            self.imports.append((current_fullname, module_name))  # 确保是 (importer, module_name)
+            self.logger.debug(f"Recorded from-import: {current_fullname} imports from {module_name}")
+            
+            # 处理具体导入的元素
+            for import_child in node.named_children:
+                if import_child.type == 'dotted_name' or import_child.type == 'identifier':
+                    import_element = self._get_node_text(import_child, file_path)
+                    full_import_path = f"{module_name}.{import_element}"
+                    self.imports.append((current_fullname, full_import_path))  # 确保是 (importer, full_import_path)
+                    self.logger.debug(f"Recorded from-import element: {current_fullname} imports {full_import_path}")
+                # 处理别名导入
+                alias_node = node.child_by_field_name('alias')
+                if alias_node:
+                    alias_name = self._get_node_text(alias_node, file_path)
+                    full_alias_path = f"{module_name}.{alias_name}"
+                    self.imports.append((current_fullname, full_alias_path))  # 确保是 (importer, full_alias_path)
+                    self.logger.debug(f"Recorded alias from-import: {current_fullname} imports {full_alias_path}")
+
     def _get_node_text(self, node, file_path):
+        """
+        提取 AST 节点对应的源代码文本，使用行列号而非字节
+        """
         if node is None:
             return ""
-        start_byte = node.start_byte
-        end_byte = node.end_byte
+
+        start_line, start_column = node.start_point
+        end_line, end_column = node.end_point
+
         with open(file_path, "r") as file:
-            file_content = file.read()
-        return file_content[start_byte:end_byte]
+            file_lines = file.readlines()
 
+        if start_line == end_line:
+            # 同一行的情况，直接从 start_column 到 end_column
+            return file_lines[start_line][start_column:end_column].strip()
+        else:
+            # 跨多行的情况，处理起始行、中间行和结束行
+            extracted_text = []
+            extracted_text.append(file_lines[start_line][start_column:].strip())
+            for line in range(start_line + 1, end_line):
+                extracted_text.append(file_lines[line].strip())
+            extracted_text.append(file_lines[end_line][:end_column].strip())
+            return " ".join(extracted_text)
 
---- End of import_parser.py ---
+--- End of parsers/import_parser.py ---
+
+--- Start of parsers/__init__.py ---
+
+--- End of parsers/__init__.py ---
 
