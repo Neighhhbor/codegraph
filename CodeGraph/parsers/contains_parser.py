@@ -83,6 +83,7 @@ class ContainsParser:
                 class_signature = self._get_node_text(child, file_path)
                 class_node = Node(class_name, 'class', self._get_code_segment(child, file_path), class_signature, parent_node.fullname)
                 parent_node.add_child(class_node)
+                self.nodes[class_node.fullname] = class_node
 
                 # 注册类到 defined_symbols
                 self._register_symbol(class_name, class_node.fullname)
@@ -97,6 +98,7 @@ class ContainsParser:
                 parent_node.add_child(func_node)
 
                 # 注册函数到 defined_symbols
+                self.nodes[func_node.fullname] = func_node
                 self._register_symbol(func_name, func_node.fullname)
 
                 # 递归处理子节点
