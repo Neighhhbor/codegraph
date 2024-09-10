@@ -4,14 +4,14 @@ from neo4j_utils import Neo4jHandler
 from parsers.contains_parser import ContainsParser  # 引入包含关系的解析器
 from parsers.import_parser import ImportParser  # 引入 import 关系的解析器
 from parsers.call_parser import CallParser  # 引入调用关系的解析器
+from lsp_client import LspClientWrapper  # LSP 客户端包装器
 import config
 import logging
- # 全局日志配置
+
+# 全局日志配置
 logging.basicConfig(level=logging.INFO, format=' %(name)s - %(levelname)s - %(message)s')
 
-
 def main():
-   
     # 连接到 Neo4j 数据库
     neo4j_handler = Neo4jHandler(config.NEO4J_URL, config.NEO4J_USER, config.NEO4J_PASSWORD)
     
@@ -42,16 +42,23 @@ def main():
         print(f"importer: {importer}, imported_module: {imported_module}")
         code_graph.add_import(importer, imported_module)
 
-    # 第三步：解析调用关系
-    call_parser = CallParser(config.PROJECT_PATH, repo_name, code_graph, contains_parser.defined_symbols)
-    call_parser.parse()  # 使用已解析的符号来处理调用关系
+    # 第三步：解析调用关系并启动 LSP 服务器
+    lsp_client = LspClientWrapper(config.PROJECT_PATH)  # 初始化 LSP 客户端包装器
+    lsp_client.start_server()  # 手动启动 LSP 服务器
 
-    # 输出已定义的符号（调试用）
-    print('-'*50+'\n',f"已定义的符号: {call_parser.defined_symbols}\n",'-'*50+'\n')
+    try:
+        call_parser = CallParser(config.PROJECT_PATH, repo_name, code_graph, contains_parser.defined_symbols, lsp_client)
+        call_parser.parse()  # 使用已解析的符号来处理调用关系
 
-    # 处理调用关系
-    for caller, callee in call_parser.calls:
-        code_graph.add_call(caller, callee)
+        # 输出已定义的符号（调试用）
+        print('-'*50+'\n',f"已定义的符号: {call_parser.defined_symbols}\n",'-'*50+'\n')
+
+        # 处理调用关系
+        for caller, callee in call_parser.calls:
+            code_graph.add_call(caller, callee)
+
+    finally:
+        lsp_client.stop_server()  # 手动停止 LSP 服务器
 
     # 最后，将图导入到 Neo4j 数据库
     neo4j_handler.import_graph(code_graph)
