@@ -41,12 +41,26 @@ class LspClientWrapper:
         if not self.active:
             try:
                 self.start_server()
-            except:
+            except Exception as e:
+                logging.error(f"Failed to start LSP server: {e}")
                 raise RuntimeError("LSP server not started or stopped")
 
         abs_file_path = os.path.abspath(file_path)
         logging.debug(f"Finding definition in file: {abs_file_path} at line: {line}, character: {character}")
-        return self.slsp.request_definition(abs_file_path, line, character)
+
+        try:
+            # 请求 LSP 查找定义
+            result = self.slsp.request_definition(abs_file_path, line, character)
+            if not result:
+                logging.warning(f"No definition found for {abs_file_path} at line {line}, character {character}")
+                return None  # 返回 None 以表示未找到定义
+            return result
+        except AssertionError as ae:
+            logging.error(f"LSP request failed with assertion error: {ae}")
+            return None  # 返回 None 表示解析失败
+        except Exception as e:
+            logging.error(f"Error finding definition for {abs_file_path} at line {line}, character {character}: {e}")
+            return None  # 捕获其他异常并返回 None
 
     def __enter__(self):
         """支持上下文管理器，进入时启动服务器"""
