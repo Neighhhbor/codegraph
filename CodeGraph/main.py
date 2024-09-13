@@ -1,22 +1,45 @@
 import os
+import matplotlib.pyplot as plt
+import networkx as nx
 from code_graph import CodeGraph
-from neo4j_utils import Neo4jHandler
+# from neo4j_utils import Neo4jHandler  # 引入 Neo4j 的工具类，注释掉
 from parsers.contains_parser import ContainsParser  # 引入包含关系的解析器
 from parsers.import_parser import ImportParser  # 引入 import 关系的解析器
 from parsers.call_parser import CallParser  # 引入调用关系的解析器
+from semantic_analyzer import SemanticAnalyzer  # 引入语义分析器
 import config
 import logging
- # 全局日志配置
+
+# 设置可见的 GPU 设备
+os.environ['CUDA_VISIBLE_DEVICES'] = '7'
+
+# 全局日志配置
 logging.basicConfig(level=logging.INFO, format=' %(name)s - %(levelname)s - %(message)s')
 
+def visualize_graph(graph):
+    """
+    可视化代码图
+    """
+    plt.figure(figsize=(12, 12))
+    pos = nx.spring_layout(graph, k=0.5)  # 布局图形
+    nx.draw(graph, pos, with_labels=True, node_size=3000, font_size=10, node_color="lightblue", font_weight="bold")
+    plt.title("Code Graph Visualization")
+    plt.show()
+
+def print_adjacency_list(graph):
+    """
+    输出图的邻接表
+    """
+    adj_list = nx.generate_adjlist(graph)
+    for line in adj_list:
+        print(line)
 
 def main():
-   
-    # 连接到 Neo4j 数据库
-    neo4j_handler = Neo4jHandler(config.NEO4J_URL, config.NEO4J_USER, config.NEO4J_PASSWORD)
+    # 连接到 Neo4j 数据库，注释掉数据库连接部分
+    # neo4j_handler = Neo4jHandler(config.NEO4J_URL, config.NEO4J_USER, config.NEO4J_PASSWORD)
     
-    # 清空 Neo4j 数据库
-    neo4j_handler.clean_database()
+    # 清空 Neo4j 数据库，注释掉数据库清理部分
+    # neo4j_handler.clean_database()
 
     # 获取项目名称
     repo_name = os.path.basename(os.path.normpath(config.PROJECT_PATH))
@@ -53,8 +76,23 @@ def main():
     for caller, callee in call_parser.calls:
         code_graph.add_call(caller, callee)
 
-    # 最后，将图导入到 Neo4j 数据库
-    neo4j_handler.import_graph(code_graph)
+    # 第四步：进行语义相似性分析，并创建SIMILAR关系的边
+    semantic_analyzer = SemanticAnalyzer()  # 实例化语义分析器
+    similar_pairs = semantic_analyzer.find_similar_nodes(code_graph)  # 查找相似节点对
+
+    # 为相似的节点对创建SIMILAR关系的边
+    for node1, node2 in similar_pairs:
+        code_graph.add_similarity_edge(node1, node2)
+
+    # 可视化代码图
+    visualize_graph(code_graph.get_graph())
+
+    # 打印图的邻接表
+    print("Adjacency List of the Code Graph:")
+    print_adjacency_list(code_graph.get_graph())
+
+    # 最后，将图导入到 Neo4j 数据库（暂时注释掉）
+    # neo4j_handler.import_graph(code_graph)
 
 if __name__ == "__main__":
     main()

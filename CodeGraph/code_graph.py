@@ -75,6 +75,16 @@ class CodeGraph:
             self.logger.debug(f"模块 {module_name} 未安装")
             return "unknown", None
 
-
+    def add_similarity_edge(self, node1, node2):
+        """
+        添加基于语义相似性的边
+        """
+        if node1 in self.graph and node2 in self.graph:
+            self.graph.add_edge(node1, node2, relationship="SIMILAR")
+            self.logger.debug(f"添加相似性边: {node1} -> {node2}")
+        else:
+            self.logger.debug(f"相似性边的节点不存在: {node1} -> {node2}")
+            
+            
     def get_graph(self):
         return self.graph
