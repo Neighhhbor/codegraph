@@ -7,8 +7,11 @@ from parsers.contains_parser import ContainsParser  # 引入包含关系的解�
 from parsers.import_parser import ImportParser  # 引入 import 关系的解析器
 from parsers.call_parser import CallParser  # 引入调用关系的解析器
 from semantic_analyzer import SemanticAnalyzer  # 引入语义分析器
+from save_similarity_data import save_similarity_to_csv, save_similarity_to_json  # 保存相似度数据的函数
 import config
 import logging
+import matplotlib
+matplotlib.use('Agg')  # 设置非交互式后端
 
 # 设置可见的 GPU 设备
 os.environ['CUDA_VISIBLE_DEVICES'] = '7'
@@ -16,15 +19,25 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '7'
 # 全局日志配置
 logging.basicConfig(level=logging.INFO, format=' %(name)s - %(levelname)s - %(message)s')
 
-def visualize_graph(graph):
+def visualize_similar_subgraph(graph):
     """
-    可视化代码图
+    可视化仅包含SIMILAR关系的子图，并将其保存为文件
     """
+    # Extract SIMILAR relationships from the graph
+    similar_edges = [(u, v) for u, v, d in graph.edges(data=True) if d.get('relationship') == 'SIMILAR']
+    
+    # Create a subgraph containing only the nodes and SIMILAR edges
+    similar_subgraph = graph.edge_subgraph(similar_edges).copy()
+    
+    # Visualize the subgraph
+    out_put_path = os.path.join("../data_process/similarity", "similar_subgraph_visualization.png")
     plt.figure(figsize=(12, 12))
-    pos = nx.spring_layout(graph, k=0.5)  # 布局图形
-    nx.draw(graph, pos, with_labels=True, node_size=3000, font_size=10, node_color="lightblue", font_weight="bold")
-    plt.title("Code Graph Visualization")
-    plt.show()
+    pos = nx.spring_layout(similar_subgraph, k=0.5)  # 布局图形
+    nx.draw(similar_subgraph, pos, with_labels=True, node_size=3000, font_size=10, node_color="lightgreen", font_weight="bold")
+    plt.title("Similar Subgraph Visualization")
+    plt.savefig(out_put_path)
+    print("Similar subgraph visualization saved to 'similar_subgraph_visualization.png'")
+    plt.close()  # 关闭图像，释放资源
 
 def print_adjacency_list(graph):
     """
@@ -78,14 +91,18 @@ def main():
 
     # 第四步：进行语义相似性分析，并创建SIMILAR关系的边
     semantic_analyzer = SemanticAnalyzer()  # 实例化语义分析器
-    similar_pairs = semantic_analyzer.find_similar_nodes(code_graph)  # 查找相似节点对
+    similar_pairs, similarities = semantic_analyzer.find_similar_nodes(code_graph)  # 查找相似节点对并返回相似度
+
+    # 保存相似度数据为 CSV 和 JSON
+    save_similarity_to_csv(similar_pairs, similarities, filename="similarity_data.csv")
+    save_similarity_to_json(similar_pairs, similarities, filename="similarity_data.json")
 
     # 为相似的节点对创建SIMILAR关系的边
     for node1, node2 in similar_pairs:
         code_graph.add_similarity_edge(node1, node2)
 
-    # 可视化代码图
-    visualize_graph(code_graph.get_graph())
+    # 可视化仅包含 SIMILAR 关系的子图并保存到文件
+    visualize_similar_subgraph(code_graph.get_graph())
 
     # 打印图的邻接表
     print("Adjacency List of the Code Graph:")
