@@ -105,8 +105,8 @@ def main():
     visualize_similar_subgraph(code_graph.get_graph())
 
     # 打印图的邻接表
-    print("Adjacency List of the Code Graph:")
-    print_adjacency_list(code_graph.get_graph())
+    # print("Adjacency List of the Code Graph:")
+    # print_adjacency_list(code_graph.get_graph())
 
     # 最后，将图导入到 Neo4j 数据库（暂时注释掉）
     # neo4j_handler.import_graph(code_graph)

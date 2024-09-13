@@ -4,32 +4,48 @@ import torch
 from sklearn.metrics.pairwise import cosine_similarity
 import logging
 from sentence_transformers import SentenceTransformer
+from sklearn.preprocessing import normalize  # 导入归一化方法
 
 # 设置可见的 GPU 设备
-os.environ['CUDA_VISIBLE_DEVICES'] = '7'
+os.environ['CUDA_VISIBLE_DEVICES'] = '6,7'
+# 1. Specify preffered dimensions
+DIMENSIONS = 512
+
+# 2. load model
+
+
 
 class SemanticAnalyzer:
     def __init__(self, model_path="/home/shixianjie/models"):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # 优先使用GPU
-        self.model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", cache_folder=model_path, device=self.device)
+        # self.model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", cache_folder=model_path, device=self.device)
+        # self.model = SentenceTransformer("mixedbread-ai/mxbai-embed-large-v1", cache_folder=model_path, device=self.device,truncate_dim=DIMENSIONS)
+        self.model = SentenceTransformer("dunzhang/stella_en_400M_v5", trust_remote_code=True,cache_folder=model_path, device=self.device)
+        # self.model = SentenceTransformer("dunzhang/stella_en_1.5B_v5", trust_remote_code=True,cache_folder=model_path, device=self.device)
+        
         self.logger.info(f"Model loaded on device {self.device}")
 
     def embed_code(self, code_snippet):
         """
-        使用 embedding 模型对代码片段进行嵌入，返回嵌入向量。
+        使用 embedding 模型对代码片段进行嵌入，返回归一化后的嵌入向量。
         Args:
             code_snippet (str): 需要嵌入的代码字符串。
         Returns:
-            numpy.ndarray: 代码的嵌入向量。
+            numpy.ndarray: 代码的归一化嵌入向量。
         """
+        # 获取嵌入向量
         embedding = self.model.encode(code_snippet)
-        return embedding
+        
+        # 对嵌入向量进行 L2 归一化
+        normalized_embedding = normalize(embedding.reshape(1, -1), norm='l2')[0]
+        
+        return normalized_embedding
 
     def calculate_similarity(self, embedding1, embedding2):
         """
-        计算两个嵌入向量之间的余弦相似度。
+        计算两个归一化后的嵌入向量之间的余弦相似度。
         Args:
             embedding1 (numpy.ndarray): 第一个嵌入向量。
             embedding2 (numpy.ndarray): 第二个嵌入向量。
@@ -41,7 +57,7 @@ class SemanticAnalyzer:
         similarity = cosine_similarity(embedding1, embedding2)[0][0]
         return similarity
 
-    def find_similar_nodes(self, code_graph, threshold=0.85):
+    def find_similar_nodes(self, code_graph, threshold=0.9):
         """
         遍历代码图中的所有类和函数节点，计算它们之间的相似性，返回相似的节点对和对应的相似度。
         Args:
@@ -51,10 +67,10 @@ class SemanticAnalyzer:
             List[Tuple]: 相似节点对列表。
             List[float]: 对应的相似度列表。
         """
-        nodes = [(n, d) for n, d in code_graph.get_graph().nodes(data=True) if d['type'] in ['function']]
+        nodes = [(n, d) for n, d in code_graph.get_graph().nodes(data=True) if d['type'] in ['class']]
         embeddings = {}
 
-        # 为每个节点计算 embedding
+        # 为每个节点计算 embedding，并归一化
         for node, data in nodes:
             code = data.get('code', '')
             embeddings[node] = self.embed_code(code)
