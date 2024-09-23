@@ -5,3 +5,8 @@
 log
 */*.txt
 DevEval/
+*/*.pkl
+
+*/*.json
+
+results/
