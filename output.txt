@@ -1,6 +1,7 @@
 --- Start of config.py ---
 # 配置文件
-PROJECT_PATH = "../Repos/testinherit"  # 需要分析的项目路径
+
+PROJECT_PATH = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Source_Code/Internet/Authlib"  # 需要分析的项目路径
 NEO4J_URL = "bolt://localhost:7687"     # Neo4j数据库的URL
 NEO4J_USER = "neo4j"                    # Neo4j数据库的用户名
 NEO4J_PASSWORD = "12341234"             # Neo4j数据库的密码
@@ -11,6 +12,7 @@ NEO4J_PASSWORD = "12341234"             # Neo4j数据库的密码
 import os
 import logging
 from py2neo import Graph, Node, Relationship
+from tqdm import tqdm
 
 class Neo4jHandler:
     def __init__(self, url, user, password):
@@ -24,36 +26,46 @@ class Neo4jHandler:
 
     def import_graph(self, code_graph):
         nx_graph = code_graph.get_graph()
-        for node, attrs in nx_graph.nodes(data=True):
-            full_name = node
-            node_type = attrs.get('type', 'UNKNOWN').upper()
 
-            if node_type == 'UNKNOWN':
-                self.logger.debug(f"发现未知类型的节点: {full_name}")
-                continue
+        # 使用 tqdm 为节点导入添加进度条
+        nodes = list(nx_graph.nodes(data=True))
+        with tqdm(total=len(nodes), desc="导入节点", unit="节点") as pbar:
+            for node, attrs in nodes:
+                full_name = node
+                node_type = attrs.get('type', 'UNKNOWN').upper()
 
-            if node_type == 'FILE':
-                short_name = os.path.basename(full_name)
-            else:
-                short_name = full_name.split('.')[-1]
+                if node_type == 'UNKNOWN':
+                    tqdm.write(f"发现未知类型的节点: {full_name}")  # 使用 tqdm.write 替代 logger，避免干扰进度条
+                    pbar.update(1)
+                    continue
 
-            existing_node = self.graph.nodes.match(node_type, full_name=full_name).first()
-            if not existing_node:
-                n = Node(node_type, name=short_name, full_name=full_name, code=attrs.get('code', ''), signature=attrs.get('signature', ''), description=attrs.get('description', ''))
-                self.graph.create(n)
-                self.logger.debug(f"导入节点: {full_name} (类型: {node_type})")
+                if node_type == 'FILE':
+                    short_name = os.path.basename(full_name)
+                else:
+                    short_name = full_name.split('.')[-1]
 
-        for start, end, edge_attrs in nx_graph.edges(data=True):
-            start_node = self.graph.nodes.match(full_name=start).first()
-            end_node = self.graph.nodes.match(full_name=end).first()
-            if start_node and end_node:
-                existing_rel = self.graph.match_one(nodes=(start_node, end_node), r_type=edge_attrs['relationship'])
-                if not existing_rel:
-                    rel = Relationship(start_node, edge_attrs['relationship'], end_node)
-                    self.graph.create(rel)
-                    self.logger.debug(f"导入关系: {start} -> {end} (类型: {edge_attrs['relationship']})")
-            else:
-                self.logger.debug(f"警告: 关系的起始节点或终止节点缺失，跳过创建关系: {start} -> {end}")
+                existing_node = self.graph.nodes.match(node_type, full_name=full_name).first()
+                if not existing_node:
+                    n = Node(node_type, name=short_name, full_name=full_name, code=attrs.get('code', ''), signature=attrs.get('signature', ''), description=attrs.get('description', ''))
+                    self.graph.create(n)
+                    tqdm.write(f"导入节点: {full_name} (类型: {node_type})")  # 使用 tqdm.write 替代 logger
+                pbar.update(1)  # 更新进度条
+
+        # 使用 tqdm 为关系导入添加进度条
+        edges = list(nx_graph.edges(data=True))
+        with tqdm(total=len(edges), desc="导入关系", unit="关系") as pbar:
+            for start, end, edge_attrs in edges:
+                start_node = self.graph.nodes.match(full_name=start).first()
+                end_node = self.graph.nodes.match(full_name=end).first()
+                if start_node and end_node:
+                    existing_rel = self.graph.match_one(nodes=(start_node, end_node), r_type=edge_attrs['relationship'])
+                    if not existing_rel:
+                        rel = Relationship(start_node, edge_attrs['relationship'], end_node)
+                        self.graph.create(rel)
+                        tqdm.write(f"导入关系: {start} -> {end} (类型: {edge_attrs['relationship']})")  # 使用 tqdm.write 替代 logger
+                else:
+                    tqdm.write(f"警告: 关系的起始节点或终止节点缺失，跳过创建关系: {start} -> {end}")
+                pbar.update(1)  # 更新进度条
 
 --- End of neo4j_utils.py ---
 
@@ -64,14 +76,14 @@ from neo4j_utils import Neo4jHandler
 from parsers.contains_parser import ContainsParser  # 引入包含关系的解析器
 from parsers.import_parser import ImportParser  # 引入 import 关系的解析器
 from parsers.call_parser import CallParser  # 引入调用关系的解析器
+from lsp_client import LspClientWrapper  # LSP 客户端包装器
 import config
 import logging
- # 全局日志配置
+
+# 全局日志配置
 logging.basicConfig(level=logging.INFO, format=' %(name)s - %(levelname)s - %(message)s')
 
-
 def main():
-   
     # 连接到 Neo4j 数据库
     neo4j_handler = Neo4jHandler(config.NEO4J_URL, config.NEO4J_USER, config.NEO4J_PASSWORD)
     
@@ -102,16 +114,23 @@ def main():
         print(f"importer: {importer}, imported_module: {imported_module}")
         code_graph.add_import(importer, imported_module)
 
-    # 第三步：解析调用关系
-    call_parser = CallParser(config.PROJECT_PATH, repo_name, code_graph, contains_parser.defined_symbols)
-    call_parser.parse()  # 使用已解析的符号来处理调用关系
+    # 第三步：解析调用关系并启动 LSP 服务器
+    lsp_client = LspClientWrapper(config.PROJECT_PATH)  # 初始化 LSP 客户端包装器
+    lsp_client.start_server()  # 手动启动 LSP 服务器
 
-    # 输出已定义的符号（调试用）
-    print('-'*50+'\n',f"已定义的符号: {call_parser.defined_symbols}\n",'-'*50+'\n')
+    try:
+        call_parser = CallParser(config.PROJECT_PATH, repo_name, code_graph, contains_parser.defined_symbols, lsp_client)
+        call_parser.parse()  # 使用已解析的符号来处理调用关系
 
-    # 处理调用关系
-    for caller, callee in call_parser.calls:
-        code_graph.add_call(caller, callee)
+        # 输出已定义的符号（调试用）
+        print('-'*50+'\n',f"已定义的符号: {call_parser.defined_symbols}\n",'-'*50+'\n')
+
+        # 处理调用关系
+        for caller, callee in call_parser.calls:
+            code_graph.add_call(caller, callee)
+
+    finally:
+        lsp_client.stop_server()  # 手动停止 LSP 服务器
 
     # 最后，将图导入到 Neo4j 数据库
     neo4j_handler.import_graph(code_graph)
@@ -208,73 +227,81 @@ class CodeGraph:
 --- Start of lsp_client.py ---
 import os
 import logging
-import asyncio
+
+from multilspy import SyncLanguageServer
 from multilspy.multilspy_config import MultilspyConfig
 from multilspy.multilspy_logger import MultilspyLogger
-from multilspy.language_server import LanguageServer
 
 class LspClientWrapper:
-    _instance = None  # 用于确保单例
+    _instance = None  # 单例模式实现
 
     def __new__(cls, project_root):
         if cls._instance is None:
             cls._instance = super(LspClientWrapper, cls).__new__(cls)
-            cls._instance.project_root = os.path.abspath(project_root)
-            cls._instance.config = MultilspyConfig.from_dict({"code_language": "python"})
-            cls._instance.logger = MultilspyLogger()
-            cls._instance.lsp_server = None
-            cls._instance._initialize_server()  # 在构造时初始化 LSP 服务器
+            cls._instance.initialize_server(project_root)
         return cls._instance
 
-    def _initialize_server(self):
-        """
-        启动 LSP 服务器，只执行一次初始化操作
-        """
-        self.logger.log(f"Starting LSP Server for project: {self.project_root}", logging.INFO)
-        # 使用 asyncio.run() 启动异步任务
-        asyncio.run(self._start_lsp_server())
+    def initialize_server(self, project_root):
+        """初始化并启动 LSP 服务器，只在首次调用时运行"""
+        self.project_root = os.path.abspath(project_root)
+        self.config = MultilspyConfig.from_dict({"code_language": "python"})  # 配置语言
+        self.logger = MultilspyLogger()
+        self.slsp = SyncLanguageServer.create(self.config, self.logger, self.project_root)
+        self.active = False  # 标记 LSP 服务器是否活跃
 
-    async def _start_lsp_server(self):
-        self.lsp_server = await LanguageServer.create(self.config, self.logger, self.project_root)
-        self.logger.log(f"LSP Server started for project: {self.project_root}", logging.INFO)
+    def start_server(self):
+        """启动同步的 LSP 服务器，只启动一次"""
+        if not self.active:
+            self.server_context = self.slsp.start_server()  # 获取上下文管理器
+            self.server_context.__enter__()  # 手动进入上下文管理器
+            self.active = True
+            logging.info("LSP server started")
 
-    def stop(self):
-        """
-        停止 LSP 服务器，同步调用
-        """
-        if self.lsp_server:
-            self.logger.log(f"Stopping LSP Server for project: {self.project_root}", logging.INFO)
-            asyncio.run(self._stop_lsp_server())
-
-    async def _stop_lsp_server(self):
-        if self.lsp_server:
-            await self.lsp_server.server.stop()
-            self.logger.log(f"LSP Server stopped for project: {self.project_root}", logging.INFO)
+    def stop_server(self):
+        """停止同步的 LSP 服务器"""
+        if self.active:
+            self.server_context.__exit__(None, None, None)  # 退出上下文管理器
+            self.active = False
+            logging.info("LSP server stopped")
 
     def find_definition(self, file_path, line, character):
-        """
-        同步调用 LSP 服务器的 find_definition 方法，返回定义位置
-        """
-        if not self.lsp_server:
-            raise RuntimeError("LSP server not started")
+        """同步接口，查找定义"""
+        if not self.active:
+            try:
+                self.start_server()
+            except Exception as e:
+                logging.error(f"Failed to start LSP server: {e}")
+                raise RuntimeError("LSP server not started or stopped")
 
-        relative_path = os.path.relpath(file_path, self.project_root)
-        # 使用 asyncio.run() 来执行异步的 find_definition 方法，并以同步方式返回结果
-        result = asyncio.run(self._find_definition(relative_path, line, character))
+        abs_file_path = os.path.abspath(file_path)
+        logging.debug(f"Finding definition in file: {abs_file_path} at line: {line}, character: {character}")
 
-        if result:
-            self.logger.log(f"Definition found at: {result}", logging.DEBUG)
+        try:
+            # 请求 LSP 查找定义
+            result = self.slsp.request_definition(abs_file_path, line, character)
+            if not result:
+                logging.warning(f"No definition found for {abs_file_path} at line {line}, character {character}")
+                return None  # 返回 None 以表示未找到定义
             return result
-        else:
-            self.logger.log(f"No definition found for {file_path} at line {line}, character {character}", logging.WARNING)
-            return None
+        except AssertionError as ae:
+            logging.error(f"LSP request failed with assertion error: {ae}")
+            return None  # 返回 None 表示解析失败
+        except Exception as e:
+            logging.error(f"Error finding definition for {abs_file_path} at line {line}, character {character}: {e}")
+            return None  # 捕获其他异常并返回 None
 
-    async def _find_definition(self, relative_path, line, character):
-        """
-        异步调用 LSP 服务器的 find_definition 方法
-        """
-        return await self.lsp_server.request_definition(relative_path, line, character)
+    def __enter__(self):
+        """支持上下文管理器，进入时启动服务器"""
+        self.start_server()
+        return self
 
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """退出上下文管理器时，停止服务器"""
+        self.stop_server()
+
+    def __del__(self):
+        """对象销毁时确保资源被释放"""
+        self.stop_server()
 
 --- End of lsp_client.py ---
 
@@ -435,7 +462,7 @@ from lsp_client import LspClientWrapper
 import logging
 
 class CallParser:
-    def __init__(self, project_path, repo_name, code_graph, defined_symbols):
+    def __init__(self, project_path, repo_name, code_graph, defined_symbols, lsp_client=None):
         self.project_path = project_path
         self.repo_name = repo_name
         self.code_graph = code_graph
@@ -444,14 +471,15 @@ class CallParser:
 
         # 配置日志记录
         self.logger = logging.getLogger('call_parser')
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
         handler = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
 
         # 初始化LSP客户端
-        self.lsp_client = LspClientWrapper(self.project_path)
+        # self.lsp_client = LspClientWrapper(self.project_path)
+        self.lsp_client = lsp_client 
         self.parser = self._init_parser()
 
     def _init_parser(self):
