@@ -1,5 +1,6 @@
 --- Start of config.py ---
 # 配置文件
+
 PROJECT_PATH = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Source_Code/Internet/Authlib"  # 需要分析的项目路径
 NEO4J_URL = "bolt://localhost:7687"     # Neo4j数据库的URL
 NEO4J_USER = "neo4j"                    # Neo4j数据库的用户名
@@ -226,6 +227,7 @@ class CodeGraph:
 --- Start of lsp_client.py ---
 import os
 import logging
+
 from multilspy import SyncLanguageServer
 from multilspy.multilspy_config import MultilspyConfig
 from multilspy.multilspy_logger import MultilspyLogger
