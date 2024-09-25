@@ -12,7 +12,6 @@ def _set_env(var: str):
         os.environ[var] = getpass.getpass(f"{var}: ")
 
 _set_env("OPENAI_API_KEY")
-
 # First we initialize the model we want to use.
 model = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 tools = [find_anchors , get_related_node]
