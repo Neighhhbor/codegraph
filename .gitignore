@@ -5,5 +5,13 @@
 log
 */*.txt
 DevEval/
+<<<<<<< HEAD
 Agent/key.py
 */results/
+=======
+*/*.pkl
+
+*/*.json
+
+results/
+>>>>>>> 00b9e2c63d7d1f1c190eb810e892b00611ca7cf0

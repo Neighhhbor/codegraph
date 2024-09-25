@@ -8,6 +8,7 @@ from lsp_client import LspClientWrapper  # LSP 客户端包装器
 import config
 import logging
 
+RESULTDIR = "results"
 # 全局日志配置
 logging.basicConfig(level=logging.INFO, format=' %(name)s - %(levelname)s - %(message)s')
 
@@ -60,6 +61,8 @@ def main():
     finally:
         lsp_client.stop_server()  # 手动停止 LSP 服务器
 
+    # 保存代码图
+    code_graph.export_to_gml(f"{RESULTDIR}/code_graph.gml")
     # 最后，将图导入到 Neo4j 数据库
     neo4j_handler.import_graph(code_graph)
 
