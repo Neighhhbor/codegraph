@@ -3,42 +3,41 @@ import networkx as nx
 from langchain.tools import tool
 from typing import List, Dict, Any
 
-
 # 加载 NetworkX 图
 codegraph = nx.read_gml("/home/sxj/Desktop/Workspace/CodeQl/gptgraph/CodeGraph/results/code_graph.gml")
 
-
 @tool
-def find_anchors(node_label: str) -> List[Dict[str, Any]]:
+def find_anchors(node_label: str) -> Any:
     """
-    提供一个工具，用于根据 node_label 查找相关锚点信息。
+    提供一个工具，用于根据 node_label 查找相关锚点信息，逐步返回每个结果。
     查找的信息包括上文、下文、导入模块以及涉及的名称。
     """
-    anchors = []
-
     # 定位目标节点及其父节点（文件）
     target_node, parent_node = find_target_node_and_parent(codegraph, node_label)
 
-    # 获取上文和下文
-    context_above, context_below = get_context_siblings(codegraph, target_node, parent_node)
-    anchors.append({"context_above": context_above})
-    anchors.append({"context_below": context_below})
+    # 逐个获取上文和下文节点并返回
+    for context_node in get_context_siblings(codegraph, target_node, parent_node):
+        yield context_node
 
-    # 提取文件中的导入模块
+    # 获取文件中的导入模块
     file_code = codegraph.nodes[parent_node].get('code', '')
     imported_modules = get_imported_modules(file_code)
-    anchors.append({"imported_modules": imported_modules})
+    yield {"imported_modules": imported_modules}
 
     # 解析 node_label 提取模块、类、方法等名称
     involved_names = parse_node_label(node_label, codegraph)
-    anchors.append({"involved_names": involved_names})
+    yield {"involved_names": involved_names}
 
-    # 暂时的占位符，bm25相关逻辑可以替换成实际实现
+    # 暂时的占位符，bm25 相关逻辑可以替换成实际实现
     bm25_results = get_bm25_results(node_label)
-    anchors.append({"bm25_results": bm25_results})
+    yield {"bm25_results": bm25_results}
 
-    return anchors
-
+@tool 
+def get_related_node(node_label: str) -> Any:
+    """
+    提供一个工具，用于根据 node_label 查找相关依赖节点，逐步返回结果。
+    """
+    pass
 
 # 获取目标节点和父节点的辅助函数
 def find_target_node_and_parent(codegraph, node_label):
@@ -61,15 +60,12 @@ def find_target_node_and_parent(codegraph, node_label):
     
     return target_node, parent_node
 
-
-# 获取上下文节点的辅助函数
+# 获取上下文节点的辅助函数，逐步返回上下文节点
 def get_context_siblings(codegraph, target_node, parent_node):
     """
-    获取目标节点的上下文节点（上文和下文）。
+    获取目标节点的上下文节点（上文和下文），逐步返回节点。
     """
     siblings = []
-    context_above = []
-    context_below = []
     target_found = False
 
     # 遍历父节点的所有子节点（siblings），找到目标节点的上文和下文
@@ -77,12 +73,10 @@ def get_context_siblings(codegraph, target_node, parent_node):
         if edge_data.get('relationship') == 'CONTAINS':
             siblings.append(child)
 
-    # 遍历 siblings，确定上文和下文
+    # 遍历 siblings，逐个返回节点
     for sibling in siblings:
-        sibling_info = {}
         sibling_info = {'node_name': sibling}
-        # 获取节点的属性
-        sibling_info.update(codegraph.nodes[sibling]) 
+        sibling_info.update(codegraph.nodes[sibling])  # 获取节点的属性
 
         if sibling == target_node:
             target_found = True
@@ -90,13 +84,12 @@ def get_context_siblings(codegraph, target_node, parent_node):
         
         if not target_found:
             # 在目标节点之前的所有兄弟节点都是上文
-            context_above.append(sibling_info)
+            sibling_info['context'] = 'above'
         else:
             # 在目标节点之后的所有兄弟节点都是下文
-            context_below.append(sibling_info)
-    
-    return context_above, context_below
+            sibling_info['context'] = 'below'
 
+        yield sibling_info  # 逐步返回每个节点信息
 
 # 提取导入模块的辅助函数
 def get_imported_modules(file_node_code: str) -> List[str]:
@@ -117,7 +110,6 @@ def get_imported_modules(file_node_code: str) -> List[str]:
                 modules.add(module)
     
     return list(modules)
-
 
 # 解析 node_label 的辅助函数
 def parse_node_label(node_label: str, codegraph: nx.DiGraph) -> Dict[str, str]:
@@ -151,13 +143,9 @@ def parse_node_label(node_label: str, codegraph: nx.DiGraph) -> Dict[str, str]:
 
     return result
 
-
-
-
 # 暂时的bm25结果函数，可以替换成实际实现
 def get_bm25_results(node_label: str) -> List[str]:
     return ["result1", "result2"]
-
 
 if __name__ == "__main__":
     # 假设我们已经有 find_anchors 工具和 codegraph 加载完成
