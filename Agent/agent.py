@@ -13,7 +13,7 @@ def _set_env(var: str):
 
 _set_env("OPENAI_API_KEY")
 # First we initialize the model we want to use.
-model = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+model = ChatOpenAI(model="gpt-4o-mini", temperature=0, max_tokens=500)
 tools = [find_anchors , get_related_node]
 
 # We can add "chat memory" to the graph with LangGraph's checkpointer

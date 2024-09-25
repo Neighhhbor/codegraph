@@ -1,6 +1,8 @@
 import igraph as ig
 import leidenalg as la
 import matplotlib.pyplot as plt
+from tqdm import tqdm
+
 import json
 import os
 
@@ -25,6 +27,7 @@ def plot_communities(partition, ig_G):
     plt.savefig(os.path.join(RESULTDIR, "community_detection.png"))
     plt.show()
 
+
 def export_community_info(partition, ig_G, output_filename):
     """导出社区信息到 JSON 文件"""
     community_info = {}
@@ -32,7 +35,9 @@ def export_community_info(partition, ig_G, output_filename):
         community_info[community_id] = {
             "nodes": []
         }
-        for vertex_id in range(len(partition.membership)):
+        
+        # 使用 tqdm 显示进度条
+        for vertex_id in tqdm(range(len(partition.membership)), desc=f"Processing community {community_id}"):
             if partition.membership[vertex_id] == community_id:
                 node_info = {
                     "id": ig_G.vs[vertex_id].index,
@@ -47,6 +52,7 @@ def export_community_info(partition, ig_G, output_filename):
 
     with open(output_filename, 'w') as outfile:
         json.dump(community_info, outfile, indent=4)
+
 
 def analyze_communities(graph_filename):
     """执行社区分析并绘图"""

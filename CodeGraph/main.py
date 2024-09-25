@@ -14,10 +14,10 @@ logging.basicConfig(level=logging.INFO, format=' %(name)s - %(levelname)s - %(me
 
 def main():
     # 连接到 Neo4j 数据库
-    neo4j_handler = Neo4jHandler(config.NEO4J_URL, config.NEO4J_USER, config.NEO4J_PASSWORD)
+    # neo4j_handler = Neo4jHandler(config.NEO4J_URL, config.NEO4J_USER, config.NEO4J_PASSWORD)
     
-    # 清空 Neo4j 数据库
-    neo4j_handler.clean_database()
+    # # 清空 Neo4j 数据库
+    # neo4j_handler.clean_database()
 
     # 获取项目名称
     repo_name = os.path.basename(os.path.normpath(config.PROJECT_PATH))
@@ -64,7 +64,7 @@ def main():
     # 保存代码图
     code_graph.export_to_gml(f"{RESULTDIR}/code_graph.gml")
     # 最后，将图导入到 Neo4j 数据库
-    neo4j_handler.import_graph(code_graph)
+    # neo4j_handler.import_graph(code_graph)
 
 if __name__ == "__main__":
     main()

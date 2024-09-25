@@ -28,17 +28,15 @@ def generate_description_for_community(community_id, community_info):
     try:
         # 准备社区的信息作为输入
         community_nodes = community_info["nodes"]
-        community_description = f"Community {community_id} has the following nodes:\n" + "\n".join(
-            [f"Node ID: {node['id']}, Label: {node['attributes']['label']}, Type: {node['attributes']['type']}, Signature: {node['attributes']['signature']}" for node in community_nodes]
+        community_description = f"Community  has the following nodes:\n" + "\n".join(
+            [f"Label: {node['attributes']['label']}, Type: {node['attributes']['type']}, Code: {node['attributes']['code']}" for node in community_nodes]
         )
 
         # 定义 prompt
         prompt = f'''
-            For the code community described below, please generate a concise description that includes:
-            1. The specific problem or requirement that this code community addresses.
-            2. Key functionalities or features provided by this code, only list out signatures instead of implementation details , as concise as possible.
-            3. how other parts of the code graph may interact with this code community.
-            your description should no longer than 3 sentences.
+            For the code community described below, please generate a concise summary that includes:
+            The specific problem or requirement that this code community addresses.
+            your description should be in one sentence.
             The community information is as follows:
             {community_description}
         '''
@@ -47,7 +45,7 @@ def generate_description_for_community(community_id, community_info):
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": " You are a professional code consultant. You will help me understand the community structure of my repository code graph."},
+                {"role": "system", "content": " You are a professional code consultant. You will help me understand the community structure of my repository code graph by generating code summary."},
                 {"role": "user", "content": prompt}]
         )
 
