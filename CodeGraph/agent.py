@@ -1,19 +1,17 @@
 import json
 import os
-from langchain_openai import ChatOpenAI
-from langchain_community.llms import Tongyi
-from langchain_core.messages import HumanMessage
-from langchain_core.messages import AIMessage
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-os.environ["DASHSCOPE_API_KEY"] = "sk-13c3d5c92dbc45c7a5422095efa61353"
+from openai import OpenAI
+import getpass
 
-from dotenv import find_dotenv, load_dotenv
-load_dotenv(find_dotenv())
-DASHSCOPE_API_KEY=os.environ["DASHSCOPE_API_KEY"]
+# 设置 OpenAI API 密钥
+def _set_env(var: str):
+    if not os.environ.get(var):
+        os.environ[var] = getpass.getpass(f"{var}: ")
 
-#使用通义千问
-model = Tongyi()
+_set_env("OPENAI_API_KEY")
 
+
+client = OpenAI()
 RESULTDIR = "results"
 
 # 检查结果目录是否存在
@@ -25,42 +23,35 @@ def load_community_info(filename):
     with open(filename, 'r') as f:
         return json.load(f)
 
-# 定义为每个社区生成描述的 langchain pipeline
+# 定义为每个社区生成描述的函数
 def generate_description_for_community(community_id, community_info):
     try:
-        # 定义 prompt 模板
-        prompt = ChatPromptTemplate.from_messages(
-            [
-                (
-                    "system",
-                    '''You are a professional code consultant. For the code community described below, please generate a detailed description that includes:
-                        1. The specific problem or requirement that this code addresses.
-                        2. Key functionalities or features provided by this code.
-                        3. Potential modules or sections of a larger project that may utilize this code.
-
-                        The community information is as follows:
-                    ''',
-                ),
-                MessagesPlaceholder(variable_name="messages"),
-            ]
-        )
-
         # 准备社区的信息作为输入
         community_nodes = community_info["nodes"]
         community_description = f"Community {community_id} has the following nodes:\n" + "\n".join(
-            [f"Node ID: {node['id']}, Label: {node['attributes']['label']}, Type: {node['attributes']['type']}, Code: {node['attributes']['code']}" for node in community_nodes]
+            [f"Node ID: {node['id']}, Label: {node['attributes']['label']}, Type: {node['attributes']['type']}, Signature: {node['attributes']['signature']}" for node in community_nodes]
         )
 
-        # 将信息放入 `messages` 变量
-        inputs = {
-            "messages": [HumanMessage(content=community_description)]
-        }
+        # 定义 prompt
+        prompt = f'''
+            For the code community described below, please generate a concise description that includes:
+            1. The specific problem or requirement that this code community addresses.
+            2. Key functionalities or features provided by this code, only list out signatures instead of implementation details , as concise as possible.
+            3. how other parts of the code graph may interact with this code community.
+            your description should no longer than 3 sentences.
+            The community information is as follows:
+            {community_description}
+        '''
 
-        # 执行管道并生成结果
-        chain = prompt | model
-        output = chain.invoke(inputs)
+        # 调用 OpenAI API 生成结果
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": " You are a professional code consultant. You will help me understand the community structure of my repository code graph."},
+                {"role": "user", "content": prompt}]
+        )
 
-        return output
+        return response.choices[0].message.content # 提取返回的内容
 
     except Exception as e:
         print(f"Error generating description for community {community_id}: {e}")
@@ -81,7 +72,7 @@ def process_communities(communities):
 # 将生成的描述保存到新的 JSON 文件中
 def save_descriptions_to_json(results, filename=f"{RESULTDIR}/community_descriptions.json"):
     with open(filename, 'w') as f:
-        json.dump(results, f, indent=4)
+        json.dump(results, f, ensure_ascii=False, indent=4)
 
 def main():
     # 读取社区信息
