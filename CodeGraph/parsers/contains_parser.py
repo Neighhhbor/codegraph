@@ -80,7 +80,7 @@ class ContainsParser:
         for child in node.children:
             if child.type == 'class_definition':
                 class_name = self._get_node_text(child.child_by_field_name('name'), file_path)
-                class_signature = self._get_node_text(child, file_path)
+                class_signature = class_name
                 class_node = Node(class_name, 'class', self._get_code_segment(child, file_path), class_signature, parent_node.fullname)
                 parent_node.add_child(class_node)
 
@@ -92,7 +92,7 @@ class ContainsParser:
 
             elif child.type == 'function_definition':
                 func_name = self._get_node_text(child.child_by_field_name('name'), file_path)
-                func_signature = self._get_node_text(child, file_path)
+                func_signature = self._get_signature(child, file_path)
                 func_node = Node(func_name, 'function', self._get_code_segment(child, file_path), func_signature, parent_node.fullname)
                 parent_node.add_child(func_node)
 
@@ -140,6 +140,39 @@ class ContainsParser:
                 extracted_text.append(file_lines[line].strip())
             extracted_text.append(file_lines[end_line][:end_column].strip())
             return " ".join(extracted_text)
+    
+    def _get_signature(self, node, file_path):
+        """
+        提取函数的 signature，确保格式符合 Python 标准，去掉 body 的部分。
+        """
+        signature = ""
+
+        # 遍历 function_definition 节点的子节点
+        for child in node.children:
+            if child.type == 'block':  # 跳过 body 节点
+                break
+
+            # 根据不同类型的节点，进行精准拼接
+            if child.type == 'def':
+                signature += "def "
+            elif child.type == ':':
+                signature += ":"
+            elif child.type == 'identifier':
+                # 函数名紧跟 'def ' 关键字
+                signature += self._get_node_text(child, file_path)
+            elif child.type == 'parameters':
+                signature += self._get_node_text(child, file_path)
+            else:
+                # 处理其他部分（如修饰符）
+                signature += " "+ self._get_node_text(child, file_path)
+
+        # 确保签名以冒号结尾
+        if not signature.endswith(":"):
+            signature += ":"
+
+        return signature.strip()
+
+
 
     def _get_code_segment(self, node, file_path):
         return self._get_node_text(node, file_path)

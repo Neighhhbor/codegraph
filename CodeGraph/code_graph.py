@@ -93,3 +93,20 @@ class CodeGraph:
 
     def get_graph(self):
         return self.graph
+    
+    def export_to_gml(self, filename):
+        """将图导出为 GML 格式"""
+        # 确保所有节点和边的属性都是字符串
+        for node in self.graph.nodes(data=True):
+            for key, value in node[1].items():
+                if value is None:
+                    node[1][key] = "None"  # 将 None 转换为字符串
+
+        for edge in self.graph.edges(data=True):
+            for key, value in edge[2].items():
+                if value is None:
+                    edge[2][key] = "None"  # 将 None 转换为字符串
+
+        nx.write_gml(self.graph, filename)
+        self.logger.info(f"图已导出为 GML 格式: {filename}")
+

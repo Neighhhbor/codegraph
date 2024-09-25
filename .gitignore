@@ -5,3 +5,14 @@
 log
 */*.txt
 DevEval/
+
+Agent/key.py
+*/results/
+
+*/*.pkl
+
+*/*.json
+
+results/
+
+code-eval/
