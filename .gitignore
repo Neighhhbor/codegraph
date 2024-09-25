@@ -5,3 +5,5 @@
 log
 */*.txt
 DevEval/
+Agent/key.py
+*/results/
