@@ -1,0 +1,1118 @@
+{
+    "0": {
+        "nodes": [
+            {
+                "id": 1,
+                "attributes": {
+                    "id": 1.0,
+                    "label": "stellar.stellar",
+                    "type": "directory",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 2,
+                "attributes": {
+                    "id": 2.0,
+                    "label": "stellar.stellar.app",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 12,
+                "attributes": {
+                    "id": 12.0,
+                    "label": "stellar.stellar.app.Stellar.get_snapshots",
+                    "type": "function",
+                    "code": "def get_snapshots(self): return self.db.session.query(Snapshot).filter( Snapshot.project_name == self.config['project_name'] ).order_by( Snapshot.created_at.desc() ).all()",
+                    "signature": "def get_snapshots(self):"
+                }
+            },
+            {
+                "id": 39,
+                "attributes": {
+                    "id": 39.0,
+                    "label": "stellar.stellar.__main__",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 40,
+                "attributes": {
+                    "id": 40.0,
+                    "label": "stellar.stellar.command",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 44,
+                "attributes": {
+                    "id": 44.0,
+                    "label": "stellar.stellar.command.stellar",
+                    "type": "function",
+                    "code": "def stellar(): &#34;&#34;&#34;Fast database snapshots for development. It's like Git for databases.&#34;&#34;&#34; pass",
+                    "signature": "def stellar():"
+                }
+            },
+            {
+                "id": 45,
+                "attributes": {
+                    "id": 45.0,
+                    "label": "stellar.stellar.command.version",
+                    "type": "function",
+                    "code": "def version(): &#34;&#34;&#34;Shows version number&#34;&#34;&#34; click.echo(&#34;Stellar %s&#34; % __version__)",
+                    "signature": "def version():"
+                }
+            },
+            {
+                "id": 50,
+                "attributes": {
+                    "id": 50.0,
+                    "label": "stellar.stellar.command.list",
+                    "type": "function",
+                    "code": "def list(): &#34;&#34;&#34;Returns a list of snapshots&#34;&#34;&#34; snapshots = get_app().get_snapshots()  click.echo('\\n'.join( '%s: %s' % ( s.snapshot_name, humanize.naturaltime(datetime.utcnow() - s.created_at) ) for s in snapshots ))",
+                    "signature": "def list():"
+                }
+            },
+            {
+                "id": 56,
+                "attributes": {
+                    "id": 56.0,
+                    "label": "stellar.stellar.command.main",
+                    "type": "function",
+                    "code": "def main(): try: stellar() except MissingConfig: click.echo(&#34;You don't have stellar.yaml configuration yet.&#34;) click.echo(&#34;Initialize it by running: stellar init&#34;) sys.exit(1) except InvalidConfig as e: click.echo(&#34;Your stellar.yaml configuration is wrong: %s&#34; % e.message) sys.exit(1) except ImportError as e: libraries = { 'psycopg2': 'PostreSQL', 'pymysql': 'MySQL', } for library, name in libraries.items(): if 'No module named' in str(e) and library in str(e): click.echo( &#34;Python library %s is required for %s support.&#34; % (library, name) ) click.echo(&#34;You can install it with pip:&#34;) click.echo(&#34;pip install %s&#34; % library) sys.exit(1) elif 'No module named' in str(e) and 'MySQLdb' in str(e): click.echo( &#34;MySQLdb binary drivers are required for MySQL support. &#34; &#34;You can try installing it with these instructions: &#34; &#34;http://stackoverflow.com/questions/454854/no-module-named&#34; &#34;-mysqldb&#34; ) click.echo('') click.echo(&#34;Alternatively you can use pymysql instead:&#34;) click.echo(&#34;1. Install it first: pip install pymysql&#34;) click.echo( &#34;2. Specify database url as &#34; &#34;mysql+pymysql://root@localhost/ and not as &#34; &#34;mysql://root@localhost/&#34; ) sys.exit(1) raise",
+                    "signature": "def main():"
+                }
+            },
+            {
+                "id": 57,
+                "attributes": {
+                    "id": 57.0,
+                    "label": "stellar.stellar.__pycache__",
+                    "type": "directory",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 69,
+                "attributes": {
+                    "id": 69.0,
+                    "label": "stellar.stellar.__init__",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 98,
+                "attributes": {
+                    "id": 98.0,
+                    "label": "logging",
+                    "type": "local_module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 99,
+                "attributes": {
+                    "id": 99.0,
+                    "label": "sys",
+                    "type": "standard_library",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 100,
+                "attributes": {
+                    "id": 100.0,
+                    "label": "click",
+                    "type": "unknown",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 104,
+                "attributes": {
+                    "id": 104.0,
+                    "label": "humanize",
+                    "type": "unknown",
+                    "code": "None",
+                    "signature": "None"
+                }
+            }
+        ]
+    },
+    "1": {
+        "nodes": [
+            {
+                "id": 3,
+                "attributes": {
+                    "id": 3.0,
+                    "label": "stellar.stellar.app.Operations",
+                    "type": "class",
+                    "code": "class Operations(object): def __init__(self, raw_connection, config): self.terminate_database_connections = partial( terminate_database_connections, raw_connection ) self.create_database = partial(create_database, raw_connection) self.copy_database = partial(copy_database, raw_connection) self.database_exists = partial(database_exists, raw_connection) self.rename_database = partial(rename_database, raw_connection) self.remove_database = partial(remove_database, raw_connection) self.list_of_databases = partial(list_of_databases, raw_connection)",
+                    "signature": "Operations"
+                }
+            },
+            {
+                "id": 4,
+                "attributes": {
+                    "id": 4.0,
+                    "label": "stellar.stellar.app.Operations.__init__",
+                    "type": "function",
+                    "code": "def __init__(self, raw_connection, config): self.terminate_database_connections = partial( terminate_database_connections, raw_connection ) self.create_database = partial(create_database, raw_connection) self.copy_database = partial(copy_database, raw_connection) self.database_exists = partial(database_exists, raw_connection) self.rename_database = partial(rename_database, raw_connection) self.remove_database = partial(remove_database, raw_connection) self.list_of_databases = partial(list_of_databases, raw_connection)",
+                    "signature": "def __init__(self, raw_connection, config):"
+                }
+            },
+            {
+                "id": 5,
+                "attributes": {
+                    "id": 5.0,
+                    "label": "stellar.stellar.app.Stellar",
+                    "type": "class",
+                    "code": "class Stellar(object): def __init__(self): logger.debug('Initialized Stellar()') self.load_config() self.init_database()  def load_config(self): self.config = load_config() logging.basicConfig(level=self.config['logging'])  def init_database(self): self.raw_db = create_engine(self.config['url'], echo=False) self.raw_conn = self.raw_db.connect() self.operations = Operations(self.raw_conn, self.config)  try: self.raw_conn.connection.set_isolation_level(0) except AttributeError: logger.info('Could not set isolation level to 0')  self.db = create_engine(self.config['stellar_url'], echo=False) self.db.session = sessionmaker(bind=self.db)() self.raw_db.session = sessionmaker(bind=self.raw_db)() tables_missing = self.create_stellar_database()  self.create_stellar_tables()  # logger.getLogger('sqlalchemy.engine').setLevel(logger.WARN)  def create_stellar_database(self): if not self.operations.database_exists('stellar_data'): self.operations.create_database('stellar_data') return True else: return False  def create_stellar_tables(self): Base.metadata.create_all(self.db) self.db.session.commit()  def get_snapshot(self, snapshot_name): return self.db.session.query(Snapshot).filter( Snapshot.snapshot_name == snapshot_name, Snapshot.project_name == self.config['project_name'] ).first()  def get_snapshots(self): return self.db.session.query(Snapshot).filter( Snapshot.project_name == self.config['project_name'] ).order_by( Snapshot.created_at.desc() ).all()  def get_latest_snapshot(self): return self.db.session.query(Snapshot).filter( Snapshot.project_name == self.config['project_name'] ).order_by(Snapshot.created_at.desc()).first()  def create_snapshot(self, snapshot_name, before_copy=None): snapshot = Snapshot( snapshot_name=snapshot_name, project_name=self.config['project_name'] ) self.db.session.add(snapshot) self.db.session.flush()  for table_name in self.config['tracked_databases']: if before_copy: before_copy(table_name) table = Table( table_name=table_name, snapshot=snapshot ) logger.debug('Copying %s to %s' % ( table_name, table.get_table_name('master') )) self.operations.copy_database( table_name, table.get_table_name('master') ) self.db.session.add(table) self.db.session.commit()  self.start_background_slave_copy(snapshot)  def remove_snapshot(self, snapshot): for table in snapshot.tables: try: self.operations.remove_database( table.get_table_name('master') ) except ProgrammingError: pass try: self.operations.remove_database( table.get_table_name('slave') ) except ProgrammingError: pass self.db.session.delete(table) self.db.session.delete(snapshot) self.db.session.commit()  def rename_snapshot(self, snapshot, new_name): snapshot.snapshot_name = new_name self.db.session.commit()  def restore(self, snapshot): for table in snapshot.tables: click.echo(&#34;Restoring database %s&#34; % table.table_name) if not self.operations.database_exists( table.get_table_name('slave') ): click.echo( &#34;Database %s does not exist.&#34; % table.get_table_name('slave') ) sys.exit(1) try: self.operations.remove_database(table.table_name) except ProgrammingError: logger.warn('Database %s does not exist.' % table.table_name) self.operations.rename_database( table.get_table_name('slave'), table.table_name ) snapshot.worker_pid = 1 self.db.session.commit()  self.start_background_slave_copy(snapshot)  def start_background_slave_copy(self, snapshot): logger.debug('Starting background slave copy') snapshot_id = snapshot.id  self.raw_conn.close() self.raw_db.session.close() self.db.session.close()  pid = os.fork() if hasattr(os, 'fork') else None if pid: return  self.init_database() self.operations = Operations(self.raw_conn, self.config)  snapshot = self.db.session.query(Snapshot).get(snapshot_id) snapshot.worker_pid = os.getpid() self.db.session.commit() self.inline_slave_copy(snapshot) sys.exit()  def inline_slave_copy(self, snapshot): for table in snapshot.tables: self.operations.copy_database( table.get_table_name('master'), table.get_table_name('slave') ) snapshot.worker_pid = None self.db.session.commit()  def is_copy_process_running(self, snapshot): return pid_exists(snapshot.worker_pid)  def is_old_database(self): for snapshot in self.db.session.query(Snapshot): for table in snapshot.tables: for postfix in ('master', 'slave'): old_name = table.get_table_name(postfix=postfix, old=True) if self.operations.database_exists(old_name): return True return False  def update_database_names_to_new_version(self, after_rename=None): for snapshot in self.db.session.query(Snapshot): for table in snapshot.tables: for postfix in ('master', 'slave'): old_name = table.get_table_name(postfix=postfix, old=True) new_name = table.get_table_name(postfix=postfix, old=False) if self.operations.database_exists(old_name): self.operations.rename_database(old_name, new_name) if after_rename: after_rename(old_name, new_name)  def delete_orphan_snapshots(self, after_delete=None): stellar_databases = set() for snapshot in self.db.session.query(Snapshot): for table in snapshot.tables: stellar_databases.add(table.get_table_name('master')) stellar_databases.add(table.get_table_name('slave'))  databases = set(self.operations.list_of_databases())  for database in filter( lambda database: ( database.startswith('stellar_') and database != 'stellar_data' ), (databases-stellar_databases) ): self.operations.remove_database(database) if after_delete: after_delete(database)  @property def default_snapshot_name(self): n = 1 while self.db.session.query(Snapshot).filter( Snapshot.snapshot_name == 'snap%d' % n, Snapshot.project_name == self.config['project_name'] ).count(): n += 1 return 'snap%d' % n",
+                    "signature": "Stellar"
+                }
+            },
+            {
+                "id": 6,
+                "attributes": {
+                    "id": 6.0,
+                    "label": "stellar.stellar.app.Stellar.__init__",
+                    "type": "function",
+                    "code": "def __init__(self): logger.debug('Initialized Stellar()') self.load_config() self.init_database()",
+                    "signature": "def __init__(self):"
+                }
+            },
+            {
+                "id": 7,
+                "attributes": {
+                    "id": 7.0,
+                    "label": "stellar.stellar.app.Stellar.load_config",
+                    "type": "function",
+                    "code": "def load_config(self): self.config = load_config() logging.basicConfig(level=self.config['logging'])",
+                    "signature": "def load_config(self):"
+                }
+            },
+            {
+                "id": 8,
+                "attributes": {
+                    "id": 8.0,
+                    "label": "stellar.stellar.app.Stellar.init_database",
+                    "type": "function",
+                    "code": "def init_database(self): self.raw_db = create_engine(self.config['url'], echo=False) self.raw_conn = self.raw_db.connect() self.operations = Operations(self.raw_conn, self.config)  try: self.raw_conn.connection.set_isolation_level(0) except AttributeError: logger.info('Could not set isolation level to 0')  self.db = create_engine(self.config['stellar_url'], echo=False) self.db.session = sessionmaker(bind=self.db)() self.raw_db.session = sessionmaker(bind=self.raw_db)() tables_missing = self.create_stellar_database()  self.create_stellar_tables()  # logger.getLogger('sqlalchemy.engine').setLevel(logger.WARN)",
+                    "signature": "def init_database(self):"
+                }
+            },
+            {
+                "id": 9,
+                "attributes": {
+                    "id": 9.0,
+                    "label": "stellar.stellar.app.Stellar.create_stellar_database",
+                    "type": "function",
+                    "code": "def create_stellar_database(self): if not self.operations.database_exists('stellar_data'): self.operations.create_database('stellar_data') return True else: return False",
+                    "signature": "def create_stellar_database(self):"
+                }
+            },
+            {
+                "id": 10,
+                "attributes": {
+                    "id": 10.0,
+                    "label": "stellar.stellar.app.Stellar.create_stellar_tables",
+                    "type": "function",
+                    "code": "def create_stellar_tables(self): Base.metadata.create_all(self.db) self.db.session.commit()",
+                    "signature": "def create_stellar_tables(self):"
+                }
+            },
+            {
+                "id": 18,
+                "attributes": {
+                    "id": 18.0,
+                    "label": "stellar.stellar.app.Stellar.start_background_slave_copy",
+                    "type": "function",
+                    "code": "def start_background_slave_copy(self, snapshot): logger.debug('Starting background slave copy') snapshot_id = snapshot.id  self.raw_conn.close() self.raw_db.session.close() self.db.session.close()  pid = os.fork() if hasattr(os, 'fork') else None if pid: return  self.init_database() self.operations = Operations(self.raw_conn, self.config)  snapshot = self.db.session.query(Snapshot).get(snapshot_id) snapshot.worker_pid = os.getpid() self.db.session.commit() self.inline_slave_copy(snapshot) sys.exit()",
+                    "signature": "def start_background_slave_copy(self, snapshot):"
+                }
+            },
+            {
+                "id": 19,
+                "attributes": {
+                    "id": 19.0,
+                    "label": "stellar.stellar.app.Stellar.inline_slave_copy",
+                    "type": "function",
+                    "code": "def inline_slave_copy(self, snapshot): for table in snapshot.tables: self.operations.copy_database( table.get_table_name('master'), table.get_table_name('slave') ) snapshot.worker_pid = None self.db.session.commit()",
+                    "signature": "def inline_slave_copy(self, snapshot):"
+                }
+            },
+            {
+                "id": 24,
+                "attributes": {
+                    "id": 24.0,
+                    "label": "stellar.stellar.app.Stellar.default_snapshot_name",
+                    "type": "function",
+                    "code": "def default_snapshot_name(self): n = 1 while self.db.session.query(Snapshot).filter( Snapshot.snapshot_name == 'snap%d' % n, Snapshot.project_name == self.config['project_name'] ).count(): n += 1 return 'snap%d' % n",
+                    "signature": "def default_snapshot_name(self):"
+                }
+            },
+            {
+                "id": 79,
+                "attributes": {
+                    "id": 79.0,
+                    "label": "stellar.tests.test_starts.Test",
+                    "type": "class",
+                    "code": "class Test(TestCase): def test_setup_method_works(self, monkeypatch): monkeypatch.setattr( stellar.app.Stellar, 'create_stellar_database', lambda x: None ) app = stellar.app.Stellar() for key in ( 'TEST', 'stellar_url', 'url', 'project_name', 'tracked_databases', ): assert app.config[key]  def test_shows_not_enough_arguments(self): with pytest.raises(SystemExit) as e: stellar.command.main()  def test_app_context(self, monkeypatch): monkeypatch.setattr( stellar.app.Stellar, 'create_stellar_database', lambda x: None ) app = stellar.app.Stellar()",
+                    "signature": "Test"
+                }
+            },
+            {
+                "id": 80,
+                "attributes": {
+                    "id": 80.0,
+                    "label": "stellar.tests.test_starts.Test.test_setup_method_works",
+                    "type": "function",
+                    "code": "def test_setup_method_works(self, monkeypatch): monkeypatch.setattr( stellar.app.Stellar, 'create_stellar_database', lambda x: None ) app = stellar.app.Stellar() for key in ( 'TEST', 'stellar_url', 'url', 'project_name', 'tracked_databases', ): assert app.config[key]",
+                    "signature": "def test_setup_method_works(self, monkeypatch):"
+                }
+            },
+            {
+                "id": 81,
+                "attributes": {
+                    "id": 81.0,
+                    "label": "stellar.tests.test_starts.Test.test_shows_not_enough_arguments",
+                    "type": "function",
+                    "code": "def test_shows_not_enough_arguments(self): with pytest.raises(SystemExit) as e: stellar.command.main()",
+                    "signature": "def test_shows_not_enough_arguments(self):"
+                }
+            },
+            {
+                "id": 82,
+                "attributes": {
+                    "id": 82.0,
+                    "label": "stellar.tests.test_starts.Test.test_app_context",
+                    "type": "function",
+                    "code": "def test_app_context(self, monkeypatch): monkeypatch.setattr( stellar.app.Stellar, 'create_stellar_database', lambda x: None ) app = stellar.app.Stellar()",
+                    "signature": "def test_app_context(self, monkeypatch):"
+                }
+            }
+        ]
+    },
+    "2": {
+        "nodes": [
+            {
+                "id": 17,
+                "attributes": {
+                    "id": 17.0,
+                    "label": "stellar.stellar.app.Stellar.restore",
+                    "type": "function",
+                    "code": "def restore(self, snapshot): for table in snapshot.tables: click.echo(&#34;Restoring database %s&#34; % table.table_name) if not self.operations.database_exists( table.get_table_name('slave') ): click.echo( &#34;Database %s does not exist.&#34; % table.get_table_name('slave') ) sys.exit(1) try: self.operations.remove_database(table.table_name) except ProgrammingError: logger.warn('Database %s does not exist.' % table.table_name) self.operations.rename_database( table.get_table_name('slave'), table.table_name ) snapshot.worker_pid = 1 self.db.session.commit()  self.start_background_slave_copy(snapshot)",
+                    "signature": "def restore(self, snapshot):"
+                }
+            },
+            {
+                "id": 55,
+                "attributes": {
+                    "id": 55.0,
+                    "label": "stellar.stellar.command.init",
+                    "type": "function",
+                    "code": "def init(): &#34;&#34;&#34;Initializes Stellar configuration.&#34;&#34;&#34; while True: url = click.prompt( &#34;Please enter the url for your database.\\n\\n&#34; &#34;For example:\\n&#34; &#34;PostgreSQL: postgresql://localhost:5432/\\n&#34; &#34;MySQL: mysql+pymysql://root@localhost/&#34; ) if url.count('/') == 2 and not url.endswith('/'): url = url + '/'  if ( url.count('/') == 3 and url.endswith('/') and url.startswith('postgresql://') ): connection_url = url + 'template1' else: connection_url = url  engine = create_engine(connection_url, echo=False) try: conn = engine.connect() except OperationalError as err: click.echo(&#34;Could not connect to database: %s&#34; % url) click.echo(&#34;Error message: %s&#34; % err.message) click.echo('') else: break  if engine.dialect.name not in SUPPORTED_DIALECTS: click.echo(&#34;Your engine dialect %s is not supported.&#34; % ( engine.dialect.name )) click.echo(&#34;Supported dialects: %s&#34; % ( ', '.join(SUPPORTED_DIALECTS) ))  if url.count('/') == 3 and url.endswith('/'): while True: click.echo(&#34;You have the following databases: %s&#34; % ', '.join([ db for db in list_of_databases(conn) if not db.startswith('stellar_') ]))  db_name = click.prompt( &#34;Please enter the name of the database (eg. projectdb)&#34; ) if database_exists(conn, db_name): break else: click.echo(&#34;Could not find database %s&#34; % db_name) click.echo('') else: db_name = url.rsplit('/', 1)[-1] url = url.rsplit('/', 1)[0] + '/'  name = click.prompt( 'Please enter your project name (used internally, eg. %s)' % db_name, default=db_name )  raw_url = url  if engine.dialect.name == 'postgresql': raw_url = raw_url + 'template1'  with open('stellar.yaml', 'w') as project_file: project_file.write( &#34;&#34;&#34; project_name: '%(name)s' tracked_databases: ['%(db_name)s'] url: '%(raw_url)s' stellar_url: '%(url)sstellar_data' &#34;&#34;&#34;.strip() % { 'name': name, 'raw_url': raw_url, 'url': url, 'db_name': db_name } )  click.echo(&#34;Wrote stellar.yaml&#34;) click.echo('') if engine.dialect.name == 'mysql': click.echo(&#34;Warning: MySQL support is still in beta.&#34;) click.echo(&#34;Tip: You probably want to take a snapshot: stellar snapshot&#34;)",
+                    "signature": "def init():"
+                }
+            },
+            {
+                "id": 58,
+                "attributes": {
+                    "id": 58.0,
+                    "label": "stellar.stellar.operations",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 59,
+                "attributes": {
+                    "id": 59.0,
+                    "label": "stellar.stellar.operations.NotSupportedDatabase",
+                    "type": "class",
+                    "code": "class NotSupportedDatabase(Exception): pass",
+                    "signature": "NotSupportedDatabase"
+                }
+            },
+            {
+                "id": 60,
+                "attributes": {
+                    "id": 60.0,
+                    "label": "stellar.stellar.operations.get_engine_url",
+                    "type": "function",
+                    "code": "def get_engine_url(raw_conn, database): url = str(raw_conn.engine.url) if url.count('/') == 3 and url.endswith('/'): return '%s%s' % (url, database) else: if not url.endswith('/'): url += '/' return '%s/%s' % ('/'.join(url.split('/')[0:-2]), database)",
+                    "signature": "def get_engine_url(raw_conn, database):"
+                }
+            },
+            {
+                "id": 62,
+                "attributes": {
+                    "id": 62.0,
+                    "label": "stellar.stellar.operations.terminate_database_connections",
+                    "type": "function",
+                    "code": "def terminate_database_connections(raw_conn, database): logger.debug('terminate_database_connections(%r)', database) if raw_conn.engine.dialect.name == 'postgresql': pid_column = _get_pid_column(raw_conn)  raw_conn.execute( ''' SELECT pg_terminate_backend(pg_stat_activity.%(pid_column)s) FROM pg_stat_activity WHERE pg_stat_activity.datname = '%(database)s' AND %(pid_column)s <> pg_backend_pid(); ''' % {'pid_column': pid_column, 'database': database} ) else: # NotYetImplemented pass",
+                    "signature": "def terminate_database_connections(raw_conn, database):"
+                }
+            },
+            {
+                "id": 63,
+                "attributes": {
+                    "id": 63.0,
+                    "label": "stellar.stellar.operations.create_database",
+                    "type": "function",
+                    "code": "def create_database(raw_conn, database): logger.debug('create_database(%r)', database) return sqlalchemy_utils.functions.create_database( get_engine_url(raw_conn, database) )",
+                    "signature": "def create_database(raw_conn, database):"
+                }
+            },
+            {
+                "id": 64,
+                "attributes": {
+                    "id": 64.0,
+                    "label": "stellar.stellar.operations.copy_database",
+                    "type": "function",
+                    "code": "def copy_database(raw_conn, from_database, to_database): logger.debug('copy_database(%r, %r)', from_database, to_database) terminate_database_connections(raw_conn, from_database)  if raw_conn.engine.dialect.name == 'postgresql': raw_conn.execute( ''' CREATE DATABASE &#34;%s&#34; WITH TEMPLATE &#34;%s&#34;; ''' % ( to_database, from_database ) ) elif raw_conn.engine.dialect.name == 'mysql': # Horribly slow implementation. create_database(raw_conn, to_database) for row in raw_conn.execute('SHOW TABLES in %s;' % from_database): raw_conn.execute(''' CREATE TABLE %s.%s LIKE %s.%s ''' % ( to_database, row[0], from_database, row[0] )) raw_conn.execute('ALTER TABLE %s.%s DISABLE KEYS' % ( to_database, row[0] )) raw_conn.execute(''' INSERT INTO %s.%s SELECT * FROM %s.%s ''' % ( to_database, row[0], from_database, row[0] )) raw_conn.execute('ALTER TABLE %s.%s ENABLE KEYS' % ( to_database, row[0] )) else: raise NotSupportedDatabase()",
+                    "signature": "def copy_database(raw_conn, from_database, to_database):"
+                }
+            },
+            {
+                "id": 65,
+                "attributes": {
+                    "id": 65.0,
+                    "label": "stellar.stellar.operations.database_exists",
+                    "type": "function",
+                    "code": "def database_exists(raw_conn, database): logger.debug('database_exists(%r)', database) return sqlalchemy_utils.functions.database_exists( get_engine_url(raw_conn, database) )",
+                    "signature": "def database_exists(raw_conn, database):"
+                }
+            },
+            {
+                "id": 66,
+                "attributes": {
+                    "id": 66.0,
+                    "label": "stellar.stellar.operations.remove_database",
+                    "type": "function",
+                    "code": "def remove_database(raw_conn, database): logger.debug('remove_database(%r)', database) terminate_database_connections(raw_conn, database) return sqlalchemy_utils.functions.drop_database( get_engine_url(raw_conn, database) )",
+                    "signature": "def remove_database(raw_conn, database):"
+                }
+            },
+            {
+                "id": 67,
+                "attributes": {
+                    "id": 67.0,
+                    "label": "stellar.stellar.operations.rename_database",
+                    "type": "function",
+                    "code": "def rename_database(raw_conn, from_database, to_database): logger.debug('rename_database(%r, %r)', from_database, to_database) terminate_database_connections(raw_conn, from_database) if raw_conn.engine.dialect.name == 'postgresql': raw_conn.execute( ''' ALTER DATABASE &#34;%s&#34; RENAME TO &#34;%s&#34; ''' % ( from_database, to_database ) ) elif raw_conn.engine.dialect.name == 'mysql': create_database(raw_conn, to_database) for row in raw_conn.execute('SHOW TABLES in %s;' % from_database): raw_conn.execute(''' RENAME TABLE %s.%s TO %s.%s; ''' % ( from_database, row[0], to_database, row[0] )) remove_database(raw_conn, from_database) else: raise NotSupportedDatabase()",
+                    "signature": "def rename_database(raw_conn, from_database, to_database):"
+                }
+            },
+            {
+                "id": 68,
+                "attributes": {
+                    "id": 68.0,
+                    "label": "stellar.stellar.operations.list_of_databases",
+                    "type": "function",
+                    "code": "def list_of_databases(raw_conn): logger.debug('list_of_databases()') if raw_conn.engine.dialect.name == 'postgresql': return [ row[0] for row in raw_conn.execute(''' SELECT datname FROM pg_database WHERE datistemplate = false ''') ] elif raw_conn.engine.dialect.name == 'mysql': return [ row[0] for row in raw_conn.execute('''SHOW DATABASES''') ] else: raise NotSupportedDatabase()",
+                    "signature": "def list_of_databases(raw_conn):"
+                }
+            },
+            {
+                "id": 90,
+                "attributes": {
+                    "id": 90.0,
+                    "label": "stellar.tests.test_operations.ConnectionMock.execute",
+                    "type": "function",
+                    "code": "def execute(self, query): return self",
+                    "signature": "def execute(self, query):"
+                }
+            },
+            {
+                "id": 105,
+                "attributes": {
+                    "id": 105.0,
+                    "label": "sqlalchemy_utils",
+                    "type": "unknown",
+                    "code": "None",
+                    "signature": "None"
+                }
+            }
+        ]
+    },
+    "3": {
+        "nodes": [
+            {
+                "id": 31,
+                "attributes": {
+                    "id": 31.0,
+                    "label": "stellar.stellar.models",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 32,
+                "attributes": {
+                    "id": 32.0,
+                    "label": "stellar.stellar.models.get_unique_hash",
+                    "type": "function",
+                    "code": "def get_unique_hash(): return hashlib.md5(str(uuid.uuid4()).encode('utf-8')).hexdigest()",
+                    "signature": "def get_unique_hash():"
+                }
+            },
+            {
+                "id": 33,
+                "attributes": {
+                    "id": 33.0,
+                    "label": "stellar.stellar.models.Snapshot",
+                    "type": "class",
+                    "code": "class Snapshot(Base): __tablename__ = 'snapshot' id = sa.Column( sa.Integer, sa.Sequence('snapshot_id_seq'), primary_key=True ) snapshot_name = sa.Column(sa.String(255), nullable=False) project_name = sa.Column(sa.String(255), nullable=False) hash = sa.Column(sa.String(32), nullable=False, default=get_unique_hash) created_at = sa.Column(sa.DateTime, default=datetime.utcnow) worker_pid = sa.Column(sa.Integer, nullable=True)  @property def slaves_ready(self): return self.worker_pid is None  def __repr__(self): return &#34;<Snapshot(snapshot_name=%r)>&#34; % ( self.snapshot_name )",
+                    "signature": "Snapshot"
+                }
+            },
+            {
+                "id": 34,
+                "attributes": {
+                    "id": 34.0,
+                    "label": "stellar.stellar.models.Snapshot.slaves_ready",
+                    "type": "function",
+                    "code": "def slaves_ready(self): return self.worker_pid is None",
+                    "signature": "def slaves_ready(self):"
+                }
+            },
+            {
+                "id": 35,
+                "attributes": {
+                    "id": 35.0,
+                    "label": "stellar.stellar.models.Snapshot.__repr__",
+                    "type": "function",
+                    "code": "def __repr__(self): return &#34;<Snapshot(snapshot_name=%r)>&#34; % ( self.snapshot_name )",
+                    "signature": "def __repr__(self):"
+                }
+            },
+            {
+                "id": 36,
+                "attributes": {
+                    "id": 36.0,
+                    "label": "stellar.stellar.models.Table",
+                    "type": "class",
+                    "code": "class Table(Base): __tablename__ = 'table' id = sa.Column(sa.Integer, sa.Sequence('table_id_seq'), primary_key=True) table_name = sa.Column(sa.String(255), nullable=False) snapshot_id = sa.Column( sa.Integer, sa.ForeignKey(Snapshot.id), nullable=False ) snapshot = sa.orm.relationship(Snapshot, backref='tables')  def get_table_name(self, postfix, old=False): if not self.snapshot: raise Exception('Table name requires snapshot') if not self.snapshot.hash: raise Exception('Snapshot hash is empty.')  if old: return 'stellar_%s_%s_%s' % ( self.table_name, self.snapshot.hash, postfix ) else: return 'stellar_%s' % hashlib.md5( ('%s|%s|%s' % ( self.table_name, self.snapshot.hash, postfix )).encode('utf-8') ).hexdigest()[0:16]  def __repr__(self): return &#34;<Table(table_name=%r)>&#34; % ( self.table_name, )",
+                    "signature": "Table"
+                }
+            },
+            {
+                "id": 38,
+                "attributes": {
+                    "id": 38.0,
+                    "label": "stellar.stellar.models.Table.__repr__",
+                    "type": "function",
+                    "code": "def __repr__(self): return &#34;<Table(table_name=%r)>&#34; % ( self.table_name, )",
+                    "signature": "def __repr__(self):"
+                }
+            },
+            {
+                "id": 84,
+                "attributes": {
+                    "id": 84.0,
+                    "label": "stellar.tests.test_models",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 85,
+                "attributes": {
+                    "id": 85.0,
+                    "label": "stellar.tests.test_models.test_get_unique_hash",
+                    "type": "function",
+                    "code": "def test_get_unique_hash(): assert get_unique_hash() assert get_unique_hash() != get_unique_hash() assert len(get_unique_hash()) == 32",
+                    "signature": "def test_get_unique_hash():"
+                }
+            },
+            {
+                "id": 86,
+                "attributes": {
+                    "id": 86.0,
+                    "label": "stellar.tests.test_models.test_table",
+                    "type": "function",
+                    "code": "def test_table(): table = Table( table_name='hapsu', snapshot=Snapshot( snapshot_name='snapshot', project_name='myproject', hash='3330484d0a70eecab84554b5576b4553' ) ) assert len(table.get_table_name('master')) == 24",
+                    "signature": "def test_table():"
+                }
+            },
+            {
+                "id": 102,
+                "attributes": {
+                    "id": 102.0,
+                    "label": "hashlib",
+                    "type": "local_module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 103,
+                "attributes": {
+                    "id": 103.0,
+                    "label": "uuid",
+                    "type": "local_module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            }
+        ]
+    },
+    "4": {
+        "nodes": [
+            {
+                "id": 0,
+                "attributes": {
+                    "id": 0.0,
+                    "label": "stellar",
+                    "type": "directory",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 70,
+                "attributes": {
+                    "id": 70.0,
+                    "label": "stellar.stellar.egg-info",
+                    "type": "directory",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 71,
+                "attributes": {
+                    "id": 71.0,
+                    "label": "stellar..pytest_cache",
+                    "type": "directory",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 72,
+                "attributes": {
+                    "id": 72.0,
+                    "label": "stellar..pytest_cache.v",
+                    "type": "directory",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 73,
+                "attributes": {
+                    "id": 73.0,
+                    "label": "stellar..pytest_cache.v.cache",
+                    "type": "directory",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 74,
+                "attributes": {
+                    "id": 74.0,
+                    "label": "stellar.tests",
+                    "type": "directory",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 75,
+                "attributes": {
+                    "id": 75.0,
+                    "label": "stellar.tests.test_starts",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 76,
+                "attributes": {
+                    "id": 76.0,
+                    "label": "stellar.tests.test_starts.TestCase",
+                    "type": "class",
+                    "code": "class TestCase(object): @pytest.yield_fixture(autouse=True) def config(self, monkeypatch): with tempfile.NamedTemporaryFile() as tmp: def load_test_config(self): self.config = { 'stellar_url': 'sqlite:///%s' % tmp.name, 'url': 'sqlite:///%s' % tmp.name, 'project_name': 'test_project', 'tracked_databases': ['test_database'], 'TEST': True } return None monkeypatch.setattr(stellar.app.Stellar, 'load_config', load_test_config) yield",
+                    "signature": "TestCase"
+                }
+            },
+            {
+                "id": 77,
+                "attributes": {
+                    "id": 77.0,
+                    "label": "stellar.tests.test_starts.TestCase.config",
+                    "type": "function",
+                    "code": "def config(self, monkeypatch): with tempfile.NamedTemporaryFile() as tmp: def load_test_config(self): self.config = { 'stellar_url': 'sqlite:///%s' % tmp.name, 'url': 'sqlite:///%s' % tmp.name, 'project_name': 'test_project', 'tracked_databases': ['test_database'], 'TEST': True } return None monkeypatch.setattr(stellar.app.Stellar, 'load_config', load_test_config) yield",
+                    "signature": "def config(self, monkeypatch):"
+                }
+            },
+            {
+                "id": 78,
+                "attributes": {
+                    "id": 78.0,
+                    "label": "stellar.tests.test_starts.TestCase.config.load_test_config",
+                    "type": "function",
+                    "code": "def load_test_config(self): self.config = { 'stellar_url': 'sqlite:///%s' % tmp.name, 'url': 'sqlite:///%s' % tmp.name, 'project_name': 'test_project', 'tracked_databases': ['test_database'], 'TEST': True } return None",
+                    "signature": "def load_test_config(self):"
+                }
+            },
+            {
+                "id": 83,
+                "attributes": {
+                    "id": 83.0,
+                    "label": "stellar.tests.__pycache__",
+                    "type": "directory",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 107,
+                "attributes": {
+                    "id": 107.0,
+                    "label": "tempfile",
+                    "type": "local_module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            }
+        ]
+    },
+    "5": {
+        "nodes": [
+            {
+                "id": 11,
+                "attributes": {
+                    "id": 11.0,
+                    "label": "stellar.stellar.app.Stellar.get_snapshot",
+                    "type": "function",
+                    "code": "def get_snapshot(self, snapshot_name): return self.db.session.query(Snapshot).filter( Snapshot.snapshot_name == snapshot_name, Snapshot.project_name == self.config['project_name'] ).first()",
+                    "signature": "def get_snapshot(self, snapshot_name):"
+                }
+            },
+            {
+                "id": 14,
+                "attributes": {
+                    "id": 14.0,
+                    "label": "stellar.stellar.app.Stellar.create_snapshot",
+                    "type": "function",
+                    "code": "def create_snapshot(self, snapshot_name, before_copy=None): snapshot = Snapshot( snapshot_name=snapshot_name, project_name=self.config['project_name'] ) self.db.session.add(snapshot) self.db.session.flush()  for table_name in self.config['tracked_databases']: if before_copy: before_copy(table_name) table = Table( table_name=table_name, snapshot=snapshot ) logger.debug('Copying %s to %s' % ( table_name, table.get_table_name('master') )) self.operations.copy_database( table_name, table.get_table_name('master') ) self.db.session.add(table) self.db.session.commit()  self.start_background_slave_copy(snapshot)",
+                    "signature": "def create_snapshot(self, snapshot_name, before_copy=None):"
+                }
+            },
+            {
+                "id": 15,
+                "attributes": {
+                    "id": 15.0,
+                    "label": "stellar.stellar.app.Stellar.remove_snapshot",
+                    "type": "function",
+                    "code": "def remove_snapshot(self, snapshot): for table in snapshot.tables: try: self.operations.remove_database( table.get_table_name('master') ) except ProgrammingError: pass try: self.operations.remove_database( table.get_table_name('slave') ) except ProgrammingError: pass self.db.session.delete(table) self.db.session.delete(snapshot) self.db.session.commit()",
+                    "signature": "def remove_snapshot(self, snapshot):"
+                }
+            },
+            {
+                "id": 16,
+                "attributes": {
+                    "id": 16.0,
+                    "label": "stellar.stellar.app.Stellar.rename_snapshot",
+                    "type": "function",
+                    "code": "def rename_snapshot(self, snapshot, new_name): snapshot.snapshot_name = new_name self.db.session.commit()",
+                    "signature": "def rename_snapshot(self, snapshot, new_name):"
+                }
+            },
+            {
+                "id": 20,
+                "attributes": {
+                    "id": 20.0,
+                    "label": "stellar.stellar.app.Stellar.is_copy_process_running",
+                    "type": "function",
+                    "code": "def is_copy_process_running(self, snapshot): return pid_exists(snapshot.worker_pid)",
+                    "signature": "def is_copy_process_running(self, snapshot):"
+                }
+            },
+            {
+                "id": 43,
+                "attributes": {
+                    "id": 43.0,
+                    "label": "stellar.stellar.command.get_app",
+                    "type": "function",
+                    "code": "def get_app(): app = Stellar() upgrade_from_old_version(app) return app",
+                    "signature": "def get_app():"
+                }
+            },
+            {
+                "id": 48,
+                "attributes": {
+                    "id": 48.0,
+                    "label": "stellar.stellar.command.snapshot",
+                    "type": "function",
+                    "code": "def snapshot(name): &#34;&#34;&#34;Takes a snapshot of the database&#34;&#34;&#34; app = get_app() upgrade_from_old_version(app) name = name or app.default_snapshot_name  if app.get_snapshot(name): click.echo(&#34;Snapshot with name %s already exists&#34; % name) sys.exit(1) else: def before_copy(table_name): click.echo(&#34;Snapshotting database %s&#34; % table_name) app.create_snapshot(name, before_copy=before_copy)",
+                    "signature": "def snapshot(name):"
+                }
+            },
+            {
+                "id": 49,
+                "attributes": {
+                    "id": 49.0,
+                    "label": "stellar.stellar.command.snapshot.before_copy",
+                    "type": "function",
+                    "code": "def before_copy(table_name): click.echo(&#34;Snapshotting database %s&#34; % table_name)",
+                    "signature": "def before_copy(table_name):"
+                }
+            },
+            {
+                "id": 51,
+                "attributes": {
+                    "id": 51.0,
+                    "label": "stellar.stellar.command.restore",
+                    "type": "function",
+                    "code": "def restore(name): &#34;&#34;&#34;Restores the database from a snapshot&#34;&#34;&#34; app = get_app()  if not name: snapshot = app.get_latest_snapshot() if not snapshot: click.echo( &#34;Couldn't find any snapshots for project %s&#34; % load_config()['project_name'] ) sys.exit(1) else: snapshot = app.get_snapshot(name) if not snapshot: click.echo( &#34;Couldn't find snapshot with name %s.\\n&#34; &#34;You can list snapshots with 'stellar list'&#34; % name ) sys.exit(1)  # Check if slaves are ready if not snapshot.slaves_ready: if app.is_copy_process_running(snapshot): sys.stdout.write( 'Waiting for background process(%s) to finish' % snapshot.worker_pid ) sys.stdout.flush() while not snapshot.slaves_ready: sys.stdout.write('.') sys.stdout.flush() sleep(1) app.db.session.refresh(snapshot) click.echo('') else: click.echo('Background process missing, doing slow restore.') app.inline_slave_copy(snapshot)  app.restore(snapshot) click.echo('Restore complete.')",
+                    "signature": "def restore(name):"
+                }
+            },
+            {
+                "id": 52,
+                "attributes": {
+                    "id": 52.0,
+                    "label": "stellar.stellar.command.remove",
+                    "type": "function",
+                    "code": "def remove(name): &#34;&#34;&#34;Removes a snapshot&#34;&#34;&#34; app = get_app()  snapshot = app.get_snapshot(name) if not snapshot: click.echo(&#34;Couldn't find snapshot %s&#34; % name) sys.exit(1)  click.echo(&#34;Deleting snapshot %s&#34; % name) app.remove_snapshot(snapshot) click.echo(&#34;Deleted&#34;)",
+                    "signature": "def remove(name):"
+                }
+            },
+            {
+                "id": 53,
+                "attributes": {
+                    "id": 53.0,
+                    "label": "stellar.stellar.command.rename",
+                    "type": "function",
+                    "code": "def rename(old_name, new_name): &#34;&#34;&#34;Renames a snapshot&#34;&#34;&#34; app = get_app()  snapshot = app.get_snapshot(old_name) if not snapshot: click.echo(&#34;Couldn't find snapshot %s&#34; % old_name) sys.exit(1)  new_snapshot = app.get_snapshot(new_name) if new_snapshot: click.echo(&#34;Snapshot with name %s already exists&#34; % new_name) sys.exit(1)  app.rename_snapshot(snapshot, new_name) click.echo(&#34;Renamed snapshot %s to %s&#34; % (old_name, new_name))",
+                    "signature": "def rename(old_name, new_name):"
+                }
+            },
+            {
+                "id": 54,
+                "attributes": {
+                    "id": 54.0,
+                    "label": "stellar.stellar.command.replace",
+                    "type": "function",
+                    "code": "def replace(name): &#34;&#34;&#34;Replaces a snapshot&#34;&#34;&#34; app = get_app()  snapshot = app.get_snapshot(name) if not snapshot: click.echo(&#34;Couldn't find snapshot %s&#34; % name) sys.exit(1)  app.remove_snapshot(snapshot) app.create_snapshot(name) click.echo(&#34;Replaced snapshot %s&#34; % name)",
+                    "signature": "def replace(name):"
+                }
+            }
+        ]
+    },
+    "6": {
+        "nodes": [
+            {
+                "id": 13,
+                "attributes": {
+                    "id": 13.0,
+                    "label": "stellar.stellar.app.Stellar.get_latest_snapshot",
+                    "type": "function",
+                    "code": "def get_latest_snapshot(self): return self.db.session.query(Snapshot).filter( Snapshot.project_name == self.config['project_name'] ).order_by(Snapshot.created_at.desc()).first()",
+                    "signature": "def get_latest_snapshot(self):"
+                }
+            },
+            {
+                "id": 61,
+                "attributes": {
+                    "id": 61.0,
+                    "label": "stellar.stellar.operations._get_pid_column",
+                    "type": "function",
+                    "code": "def _get_pid_column(raw_conn): # Some distros (e.g Debian) may inject their branding into server_version server_version = raw_conn.execute('SHOW server_version;').first()[0] version_string = re.search('^(\\d+\\.\\d+)', server_version).group(0) version = [int(x) for x in version_string.split('.')] return 'pid' if version >= [9, 2] else 'procpid'",
+                    "signature": "def _get_pid_column(raw_conn): # Some distros (e.g Debian) may inject their branding into server_version:"
+                }
+            },
+            {
+                "id": 87,
+                "attributes": {
+                    "id": 87.0,
+                    "label": "stellar.tests.test_operations",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 88,
+                "attributes": {
+                    "id": 88.0,
+                    "label": "stellar.tests.test_operations.ConnectionMock",
+                    "type": "class",
+                    "code": "class ConnectionMock(object): def __init__(self, version): self.version = version  def execute(self, query): return self  def first(self): return [self.version]",
+                    "signature": "ConnectionMock"
+                }
+            },
+            {
+                "id": 89,
+                "attributes": {
+                    "id": 89.0,
+                    "label": "stellar.tests.test_operations.ConnectionMock.__init__",
+                    "type": "function",
+                    "code": "def __init__(self, version): self.version = version",
+                    "signature": "def __init__(self, version):"
+                }
+            },
+            {
+                "id": 91,
+                "attributes": {
+                    "id": 91.0,
+                    "label": "stellar.tests.test_operations.ConnectionMock.first",
+                    "type": "function",
+                    "code": "def first(self): return [self.version]",
+                    "signature": "def first(self):"
+                }
+            },
+            {
+                "id": 92,
+                "attributes": {
+                    "id": 92.0,
+                    "label": "stellar.tests.test_operations.TestGetPidColumn",
+                    "type": "class",
+                    "code": "class TestGetPidColumn(object): @pytest.mark.parametrize('version', ['9.1', '8.9', '9.1.9', '8.9.9']) def test_returns_procpid_for_version_older_than_9_2(self, version): raw_conn = ConnectionMock(version=version) assert _get_pid_column(raw_conn) == 'procpid'  @pytest.mark.parametrize('version', [ '9.2', '9.3', '10.0', '9.2.1', '9.6beta1', '10.1.1', '10.3 (Ubuntu 10.3-1.pgdg16.04+1)' ]) def test_returns_pid_for_version_equal_or_newer_than_9_2(self, version): raw_conn = ConnectionMock(version=version) assert _get_pid_column(raw_conn) == 'pid'",
+                    "signature": "TestGetPidColumn"
+                }
+            },
+            {
+                "id": 93,
+                "attributes": {
+                    "id": 93.0,
+                    "label": "stellar.tests.test_operations.TestGetPidColumn.test_returns_procpid_for_version_older_than_9_2",
+                    "type": "function",
+                    "code": "def test_returns_procpid_for_version_older_than_9_2(self, version): raw_conn = ConnectionMock(version=version) assert _get_pid_column(raw_conn) == 'procpid'",
+                    "signature": "def test_returns_procpid_for_version_older_than_9_2(self, version):"
+                }
+            },
+            {
+                "id": 94,
+                "attributes": {
+                    "id": 94.0,
+                    "label": "stellar.tests.test_operations.TestGetPidColumn.test_returns_pid_for_version_equal_or_newer_than_9_2",
+                    "type": "function",
+                    "code": "def test_returns_pid_for_version_equal_or_newer_than_9_2(self, version): raw_conn = ConnectionMock(version=version) assert _get_pid_column(raw_conn) == 'pid'",
+                    "signature": "def test_returns_pid_for_version_equal_or_newer_than_9_2(self, version):"
+                }
+            },
+            {
+                "id": 106,
+                "attributes": {
+                    "id": 106.0,
+                    "label": "pytest",
+                    "type": "unknown",
+                    "code": "None",
+                    "signature": "None"
+                }
+            }
+        ]
+    },
+    "7": {
+        "nodes": [
+            {
+                "id": 25,
+                "attributes": {
+                    "id": 25.0,
+                    "label": "stellar.stellar.config",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 26,
+                "attributes": {
+                    "id": 26.0,
+                    "label": "stellar.stellar.config.InvalidConfig",
+                    "type": "class",
+                    "code": "class InvalidConfig(Exception): pass",
+                    "signature": "InvalidConfig"
+                }
+            },
+            {
+                "id": 27,
+                "attributes": {
+                    "id": 27.0,
+                    "label": "stellar.stellar.config.MissingConfig",
+                    "type": "class",
+                    "code": "class MissingConfig(Exception): pass",
+                    "signature": "MissingConfig"
+                }
+            },
+            {
+                "id": 28,
+                "attributes": {
+                    "id": 28.0,
+                    "label": "stellar.stellar.config.get_config_path",
+                    "type": "function",
+                    "code": "def get_config_path(): current_directory = os.getcwd() while True: try: with open( os.path.join(current_directory, 'stellar.yaml'), 'rb' ) as fp: return os.path.join(current_directory, 'stellar.yaml') except IOError: pass  current_directory = os.path.abspath( os.path.join(current_directory, '..') ) if current_directory == '/': return None",
+                    "signature": "def get_config_path():"
+                }
+            },
+            {
+                "id": 29,
+                "attributes": {
+                    "id": 29.0,
+                    "label": "stellar.stellar.config.load_config",
+                    "type": "function",
+                    "code": "def load_config(): config = {} current_directory = os.getcwd() while True: try: with open( os.path.join(current_directory, 'stellar.yaml'), 'rb' ) as fp: config = yaml.safe_load(fp) break except IOError: pass current_directory = os.path.abspath( os.path.join(current_directory, '..') )  if current_directory == '/': break  if not config: raise MissingConfig()  for k, v in default_config.items(): if k not in config: config[k] = v  try: return schema.validate(config) except SchemaError as e: raise InvalidConfig(e)",
+                    "signature": "def load_config():"
+                }
+            },
+            {
+                "id": 30,
+                "attributes": {
+                    "id": 30.0,
+                    "label": "stellar.stellar.config.save_config",
+                    "type": "function",
+                    "code": "def save_config(config): logging.getLogger(__name__).debug('save_config()') with open(get_config_path(), &#34;w&#34;) as fp: yaml.dump(config, fp)",
+                    "signature": "def save_config(config):"
+                }
+            },
+            {
+                "id": 95,
+                "attributes": {
+                    "id": 95.0,
+                    "label": "stellar.setup",
+                    "type": "module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 96,
+                "attributes": {
+                    "id": 96.0,
+                    "label": "os",
+                    "type": "local_module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 97,
+                "attributes": {
+                    "id": 97.0,
+                    "label": "re",
+                    "type": "local_module",
+                    "code": "None",
+                    "signature": "None"
+                }
+            },
+            {
+                "id": 101,
+                "attributes": {
+                    "id": 101.0,
+                    "label": "yaml",
+                    "type": "third_party_library",
+                    "code": "None",
+                    "signature": "None"
+                }
+            }
+        ]
+    },
+    "8": {
+        "nodes": [
+            {
+                "id": 21,
+                "attributes": {
+                    "id": 21.0,
+                    "label": "stellar.stellar.app.Stellar.is_old_database",
+                    "type": "function",
+                    "code": "def is_old_database(self): for snapshot in self.db.session.query(Snapshot): for table in snapshot.tables: for postfix in ('master', 'slave'): old_name = table.get_table_name(postfix=postfix, old=True) if self.operations.database_exists(old_name): return True return False",
+                    "signature": "def is_old_database(self):"
+                }
+            },
+            {
+                "id": 22,
+                "attributes": {
+                    "id": 22.0,
+                    "label": "stellar.stellar.app.Stellar.update_database_names_to_new_version",
+                    "type": "function",
+                    "code": "def update_database_names_to_new_version(self, after_rename=None): for snapshot in self.db.session.query(Snapshot): for table in snapshot.tables: for postfix in ('master', 'slave'): old_name = table.get_table_name(postfix=postfix, old=True) new_name = table.get_table_name(postfix=postfix, old=False) if self.operations.database_exists(old_name): self.operations.rename_database(old_name, new_name) if after_rename: after_rename(old_name, new_name)",
+                    "signature": "def update_database_names_to_new_version(self, after_rename=None):"
+                }
+            },
+            {
+                "id": 23,
+                "attributes": {
+                    "id": 23.0,
+                    "label": "stellar.stellar.app.Stellar.delete_orphan_snapshots",
+                    "type": "function",
+                    "code": "def delete_orphan_snapshots(self, after_delete=None): stellar_databases = set() for snapshot in self.db.session.query(Snapshot): for table in snapshot.tables: stellar_databases.add(table.get_table_name('master')) stellar_databases.add(table.get_table_name('slave'))  databases = set(self.operations.list_of_databases())  for database in filter( lambda database: ( database.startswith('stellar_') and database != 'stellar_data' ), (databases-stellar_databases) ): self.operations.remove_database(database) if after_delete: after_delete(database)",
+                    "signature": "def delete_orphan_snapshots(self, after_delete=None):"
+                }
+            },
+            {
+                "id": 37,
+                "attributes": {
+                    "id": 37.0,
+                    "label": "stellar.stellar.models.Table.get_table_name",
+                    "type": "function",
+                    "code": "def get_table_name(self, postfix, old=False): if not self.snapshot: raise Exception('Table name requires snapshot') if not self.snapshot.hash: raise Exception('Snapshot hash is empty.')  if old: return 'stellar_%s_%s_%s' % ( self.table_name, self.snapshot.hash, postfix ) else: return 'stellar_%s' % hashlib.md5( ('%s|%s|%s' % ( self.table_name, self.snapshot.hash, postfix )).encode('utf-8') ).hexdigest()[0:16]",
+                    "signature": "def get_table_name(self, postfix, old=False):"
+                }
+            },
+            {
+                "id": 41,
+                "attributes": {
+                    "id": 41.0,
+                    "label": "stellar.stellar.command.upgrade_from_old_version",
+                    "type": "function",
+                    "code": "def upgrade_from_old_version(app): if app.config['migrate_from_0_3_2']: if app.is_old_database(): click.echo('Upgrading from old Stellar version...') def after_rename(old_name, new_name): click.echo('* Renamed %s to %s' % (old_name, new_name)) app.update_database_names_to_new_version(after_rename=after_rename)  app.config['migrate_from_0_3_2'] = False save_config(app.config)",
+                    "signature": "def upgrade_from_old_version(app):"
+                }
+            },
+            {
+                "id": 42,
+                "attributes": {
+                    "id": 42.0,
+                    "label": "stellar.stellar.command.upgrade_from_old_version.after_rename",
+                    "type": "function",
+                    "code": "def after_rename(old_name, new_name): click.echo('* Renamed %s to %s' % (old_name, new_name))",
+                    "signature": "def after_rename(old_name, new_name):"
+                }
+            },
+            {
+                "id": 46,
+                "attributes": {
+                    "id": 46.0,
+                    "label": "stellar.stellar.command.gc",
+                    "type": "function",
+                    "code": "def gc(): &#34;&#34;&#34;Deletes old stellar tables that are not used anymore&#34;&#34;&#34; def after_delete(database): click.echo(&#34;Deleted table %s&#34; % database)  app = get_app() upgrade_from_old_version(app) app.delete_orphan_snapshots(after_delete)",
+                    "signature": "def gc():"
+                }
+            },
+            {
+                "id": 47,
+                "attributes": {
+                    "id": 47.0,
+                    "label": "stellar.stellar.command.gc.after_delete",
+                    "type": "function",
+                    "code": "def after_delete(database): click.echo(&#34;Deleted table %s&#34; % database)",
+                    "signature": "def after_delete(database):"
+                }
+            }
+        ]
+    }
+}
