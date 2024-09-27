@@ -4,160 +4,175 @@ from langchain.tools import tool
 from typing import List, Dict, Any
 
 # 加载 NetworkX 图
-codegraph = nx.read_gml("/home/sxj/Desktop/Workspace/CodeQl/gptgraph/CodeGraph/results/code_graph.gml")
+def load_and_fix_gml(path):
+    graph = nx.read_gml(path)
+    # 修复节点中的 &#10; 为 \n
+    for node in graph.nodes(data=True):
+        for key, value in node[1].items():
+            if isinstance(value, str):
+                node[1][key] = value.replace('&#10;', '\n')
+    return graph
 
+# 调用这个函数来读取和处理 GML 文件
+codegraph = load_and_fix_gml("/home/sxj/Desktop/Workspace/CodeQl/gptgraph/CodeGraph/results/code_graph.gml")
+
+# 工具1: 获取上文
 @tool
-def find_anchors(node_label: str) -> Any:
+def get_context_above(node_label: str) -> Any:
     """
-    提供一个工具，用于根据 node_label 查找相关锚点信息，逐步返回每个结果。
-    查找的信息包括上文、下文、导入模块以及涉及的名称。
+    根据 node_label 获取该节点的上文（上方的代码上下文）。
     """
-    # 定位目标节点及其父节点（文件）
     target_node, parent_node = find_target_node_and_parent(codegraph, node_label)
+    context_above = []
+    for context_node in get_context_siblings(codegraph, target_node, parent_node, "above"):
+        context_above.append(context_node)
+    return context_above
 
-    # 逐个获取上文和下文节点并返回
-    for context_node in get_context_siblings(codegraph, target_node, parent_node):
-        yield context_node
+# 工具2: 获取下文
+@tool
+def get_context_below(node_label: str) -> Any:
+    """
+    根据 node_label 获取该节点的下文（下方的代码上下文）。
+    """
+    target_node, parent_node = find_target_node_and_parent(codegraph, node_label)
+    context_below = []
+    for context_node in get_context_siblings(codegraph, target_node, parent_node, "below"):
+        context_below.append(context_node)
+    return context_below
 
-    # 获取文件中的导入模块
-    file_code = codegraph.nodes[parent_node].get('code', '')
-    imported_modules = get_imported_modules(file_code)
-    yield {"imported_modules": imported_modules}
+# 工具3: 提取导入语句
+@tool
+def get_import_statements(node_label: str) -> Any:
+    """
+    根据 node_label 提取该节点所属模块中的导入语句（import 部分）。
+    """
+    module_node = find_module_ancestor(codegraph, node_label)
+    import_statements = extract_import_statements(module_node)
+    return {"import_statements": import_statements}
 
-    # 解析 node_label 提取模块、类、方法等名称
+# 工具4: 获取涉及的模块、类、方法等名称
+@tool
+def get_involved_names(node_label: str) -> Any:
+    """
+    根据 node_label 提取模块、类、方法等相关名称。
+    """
     involved_names = parse_node_label(node_label, codegraph)
-    yield {"involved_names": involved_names}
+    return {"involved_names": involved_names}
 
-    # 暂时的占位符，bm25 相关逻辑可以替换成实际实现
+# 工具5: 获取BM25相关结果
+@tool
+def get_bm25_results_tool(node_label: str) -> Any:
+    """
+    根据 node_label 获取 BM25 算法计算的相关结果（占位符实现）。
+    """
     bm25_results = get_bm25_results(node_label)
-    yield {"bm25_results": bm25_results}
-
-@tool 
-def get_related_node(node_label: str) -> Any:
-    """
-    提供一个工具，用于根据 node_label 查找相关依赖节点，逐步返回结果。
-    """
-    pass
+    return {"bm25_results": bm25_results}
 
 # 获取目标节点和父节点的辅助函数
 def find_target_node_and_parent(codegraph, node_label):
-    """
-    定位给定 node_label 的目标函数节点，并找到它的父节点（文件）。
-    """
-    target_node = node_label  # 使用 node_label 直接作为目标节点的 fullname
+    target_node = node_label
     if target_node not in codegraph.nodes:
         raise ValueError(f"未找到指定的目标函数节点: {node_label}")
-    
-    # 查找父节点 (文件)
     parent_node = None
     for parent, child, edge_data in codegraph.edges(data=True):
         if edge_data.get('relationship') == 'CONTAINS' and child == target_node:
             parent_node = parent
             break
-    
     if parent_node is None:
         raise ValueError(f"未找到父节点 (文件) for {node_label}")
-    
     return target_node, parent_node
 
 # 获取上下文节点的辅助函数，逐步返回上下文节点
-def get_context_siblings(codegraph, target_node, parent_node):
-    """
-    获取目标节点的上下文节点（上文和下文），逐步返回节点。
-    """
+def get_context_siblings(codegraph, target_node, parent_node, context_type):
     siblings = []
     target_found = False
-
-    # 遍历父节点的所有子节点（siblings），找到目标节点的上文和下文
     for parent, child, edge_data in codegraph.edges(parent_node, data=True):
         if edge_data.get('relationship') == 'CONTAINS':
             siblings.append(child)
-
-    # 遍历 siblings，逐个返回节点
     for sibling in siblings:
         sibling_info = {'node_name': sibling}
         sibling_info.update(codegraph.nodes[sibling])  # 获取节点的属性
-
         if sibling == target_node:
             target_found = True
             continue
-        
-        if not target_found:
-            # 在目标节点之前的所有兄弟节点都是上文
+        if context_type == "above" and not target_found:
             sibling_info['context'] = 'above'
-        else:
-            # 在目标节点之后的所有兄弟节点都是下文
+            yield sibling_info
+        elif context_type == "below" and target_found:
             sibling_info['context'] = 'below'
+            yield sibling_info
 
-        yield sibling_info  # 逐步返回每个节点信息
-
-# 提取导入模块的辅助函数
-def get_imported_modules(file_node_code: str) -> List[str]:
-    """
-    从文件节点的 code 字段中提取导入的模块信息。
-    """
-    # 正则表达式来匹配 import 语句和 from ... import 语句
-    import_pattern = r'^\s*(?:from\s+([\w\.]+)\s+import|import\s+([\w\.]+))'
-    
-    modules = set()
-    for line in file_node_code.splitlines():
-        match = re.match(import_pattern, line)
-        if match:
-            # from ... import ... 匹配的模块是 match.group(1)
-            # import ... 匹配的模块是 match.group(2)
-            module = match.group(1) or match.group(2)
-            if module:
-                modules.add(module)
-    
-    return list(modules)
-
-# 解析 node_label 的辅助函数
-def parse_node_label(node_label: str, codegraph: nx.DiGraph) -> Dict[str, str]:
-    """
-    解析 node_label，依次向前查找，直到找到第一个模块节点为止。
-    :param node_label: 全局路径，例如 stellar.stellar.app.Stellar.load_config
-    :param codegraph: NetworkX 图对象
-    :return: 包含模块名的字典
-    """
+# 递归查找模块祖先节点
+def find_module_ancestor(codegraph, node_label: str) -> str:
     parts = node_label.split('.')
-    result = {}
-
-    # 从完整路径逐步缩短，依次检查每个前缀
     for i in range(len(parts), 0, -1):
         current_prefix = '.'.join(parts[:i])
+        if current_prefix in codegraph.nodes and codegraph.nodes[current_prefix].get('type') == 'module':
+            return current_prefix
+    raise ValueError(f"未找到模块节点 (module) for {node_label}")
 
-        # 查看当前前缀是否在图中
+# 提取模块导入语句
+def extract_import_statements(module_node: str) -> str:
+    """
+    提取指定模块（文件）中的导入信息，包括import语句、全局变量、常量，直到遇到第一个函数定义。
+    :param module_node: 模块节点的名称
+    :return: 提取到的导入信息
+    """
+    file_code = codegraph.nodes[module_node].get('code', '')
+    
+    # 使用正则匹配所有在第一个函数定义（def）之前的内容
+    import_lines = []
+    inside_import_block = True
+    for line in file_code.splitlines():
+        # 如果遇到函数定义时，停止提取
+        if re.match(r'^\s*def\s+', line):
+            break
+        # 收集所有内容，包括import、全局变量、常量等
+        import_lines.append(line)
+
+    return "\n".join(import_lines)
+
+# 解析 node_label
+def parse_node_label(node_label: str, codegraph: nx.DiGraph) -> Dict[str, str]:
+    parts = node_label.split('.')
+    result = {}
+    for i in range(len(parts), 0, -1):
+        current_prefix = '.'.join(parts[:i])
         if current_prefix in codegraph.nodes:
             node_type = codegraph.nodes[current_prefix].get('type')
-
-            # 找到模块节点后停止
             if node_type == 'module':
                 result['module'] = current_prefix
                 break
-            
-            if node_type == "class" :
+            if node_type == "class":
                 result['class'] = current_prefix
-            
             if node_type == "function":
                 result['function'] = current_prefix
-
     return result
 
-# 暂时的bm25结果函数，可以替换成实际实现
+# 获取BM25相关结果
 def get_bm25_results(node_label: str) -> List[str]:
     return ["result1", "result2"]
 
 if __name__ == "__main__":
-    # 假设我们已经有 find_anchors 工具和 codegraph 加载完成
-    # node_label 是图中的某个节点全局路径
-
-    # 定义一个测试的 node_label
     test_node_label = "stellar.stellar.app.Stellar.load_config"
 
-    # 调用工具进行测试
-    test_result = find_anchors(test_node_label)
+    # 测试获取上文的生成器
+    context_above_generator = get_context_above(test_node_label,0)
+    print("获取上文:")
+    for batch in context_above_generator:
+        print(batch)
 
-    # 打印测试结果
-    print("测试结果:")
-    for anchor in test_result:
-        print(anchor)
+    # 测试获取下文的生成器
+    context_below_generator = get_context_below(test_node_label, 0)
+    print("获取下文:")
+    for batch in context_below_generator:
+        print(batch)
+
+    # 测试提取导入语句
+    print("提取导入语句:", get_import_statements(test_node_label))
+
+    # 测试获取涉及的名称
+    print("获取涉及的名称:", get_involved_names(test_node_label))
+
+    # 测试 BM25 相关结果
+    print("BM25相关结果:", get_bm25_results_tool(test_node_label))
