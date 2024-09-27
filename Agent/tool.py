@@ -14,7 +14,7 @@ def load_and_fix_gml(path: str) -> nx.DiGraph:
     return graph
 
 # 调用这个函数来读取和处理 GML 文件
-codegraph = load_and_fix_gml("/home/sxj/Desktop/Workspace/CodeQl/gptgraph/CodeGraph/results/code_graph.gml")
+codegraph = load_and_fix_gml("/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/sumy_code_graph.gml")
 
 # 全局状态：记录每个 node_label 的上下文索引
 context_index = {}

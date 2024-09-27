@@ -69,26 +69,7 @@ nodelimit = 3
 inputs = {
     "messages": [(
         "user",
-        f'''
-You are currently trying to complete the function `{function}` in a code repository.
-
-The namespace of this function in the code repository if {function_namespace}
-
-You can retrieve some context about the function using the available tools. Analyze this context carefully.
-
-1. If you are **fully confident** that the information you now have is enough to complete the function:
-    Complete the function:
-    {function}:
-    
-
-2. If you are **not fully confident** yet, continue to use tools like `get_context_above`, `get_context_below`, `get_import_statements`, and others to gather more context.
-
-3. If you want to find out calling relationship , you can use tool `find_one_hop_call_nodes` to get related function nodes.
-
-4. Make sure to **only give me the code** , no other informations.
-
-Your decision should be based on whether the gathered information is sufficient to generate a function that integrates seamlessly with the rest of the code in the repository.
-'''
+         "You are tasked with completing the function `_compute_word_freq` in a code repository. \n\n    Here are the key details of this function:\n    - **Namespace**: `sumy.summarizers.sum_basic.SumBasicSummarizer._compute_word_freq`\n    - **Function signature**:\n    ```python\n        def _compute_word_freq(list_of_words):\n\n        \"\"\"\n        This function computes the frequency of each word in the given list of words and returns a dictionary containing the word frequencies.\n        Input-Output Arguments\n        :param list_of_words: List of strings. The list of words for which the frequency needs to be computed.\n        :return: Dictionary. A dictionary containing the frequency of each word in the input list.\n        \"\"\"\n    ```\n\n    You can retrieve some context about the function using the available tools to gather additional information.\n\n    ### Step-by-step process:\n    1. **Analyze the Current Information**:\n        - If you are fully confident that the information currently available (function signature and namespace) is **enough** to complete the function, **directly complete the function**.\n        \n        Complete the function:\n        ```python\n        _compute_word_freq:\n        ```\n\n    2. **Gather Additional Information (if needed)**:\n        - If you are **not fully confident**, you can use the following tools to gather more context:\n          - **`get_context_above`**: Use this tool to get the code context above the current function.\n          - **`get_context_below`**: Use this tool to retrieve the code context below the function.\n          - **`get_import_statements`**: Retrieve the import statements of the module where the function is located.\n          - **`find_one_hop_call_nodes`**: This tool can be used to identify related function nodes by finding one-hop call relationships.\n\n    3. **Call Limit for Tools**:\n        - **Important**: You can only call each tool **up to 10 times** before you must decide whether you have enough information to complete the function.\n\n    ### Important Notes:\n    - Make sure to **only return the complete function's code**.\n    - Use the tools wisely to gather the most relevant information before making a decision to complete the function.\n    - The final goal is to complete a function that seamlessly integrates into the code repository."
     )]
 }
 
