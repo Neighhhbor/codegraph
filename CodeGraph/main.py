@@ -14,7 +14,7 @@ import matplotlib
 matplotlib.use('Agg')  # 设置非交互式后端
 
 # 设置可见的 GPU 设备
-os.environ['CUDA_VISIBLE_DEVICES'] = '7'
+os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 # 全局日志配置
 logging.basicConfig(level=logging.INFO, format=' %(name)s - %(levelname)s - %(message)s')
@@ -93,9 +93,14 @@ def main():
     semantic_analyzer = SemanticAnalyzer()  # 实例化语义分析器
     similar_pairs, similarities = semantic_analyzer.find_similar_nodes(code_graph)  # 查找相似节点对并返回相似度
 
-    # 保存相似度数据为 CSV 和 JSON
-    save_similarity_to_csv(similar_pairs, similarities, filename="similarity_data.csv")
-    save_similarity_to_json(similar_pairs, similarities, filename="similarity_data.json")
+    # 进行自然语言查询，找到与查询最相似的代码节点
+    nl_query = "Find and delete all orphaned snapshots"  # 模拟一个自然语言查询
+    best_node, best_similarity = semantic_analyzer.find_top1_similar_code(code_graph, nl_query)
+    print(f"Top1 similar node for query '{nl_query}' is '{best_node}' with similarity {best_similarity}")
+
+    # 保存相似度数据为 CSV 和 JSON，注意传入 graph 参数
+    save_similarity_to_csv(similar_pairs, similarities, code_graph.get_graph(), filename="similarity_data.csv")
+    save_similarity_to_json(similar_pairs, similarities, code_graph.get_graph(), filename="similarity_data.json")
 
     # 为相似的节点对创建SIMILAR关系的边
     for node1, node2 in similar_pairs:
@@ -111,5 +116,29 @@ def main():
     # 最后，将图导入到 Neo4j 数据库（暂时注释掉）
     # neo4j_handler.import_graph(code_graph)
 
+def manual_nl_code_similarity_test():
+    semantic_analyzer = SemanticAnalyzer()  # 实例化语义分析器
+
+    # 自然语言查询
+    nl_query = "Find and delete all orphaned snapshots"
+    nl_embedding = semantic_analyzer.embed_natural_language(nl_query)
+
+    # 模拟的代码
+    code_snippet = """
+    def delete_orphan_snapshots():
+        for snapshot in list_all_snapshots():
+            if not snapshot.is_used():
+                delete_snapshot(snapshot)
+    """
+    code_embedding = semantic_analyzer.embed_code(code_snippet)
+
+    # 计算相似度
+    similarity = semantic_analyzer.calculate_similarity(nl_embedding, code_embedding)
+    print(f"Similarity between NL and code: {similarity}")
+
+# 在 main 函数的最后添加手动测试
 if __name__ == "__main__":
     main()
+
+    # 手动测试自然语言和代码片段的相似度
+    manual_nl_code_similarity_test()

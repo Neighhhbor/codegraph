@@ -7,14 +7,11 @@ from sentence_transformers import SentenceTransformer
 from sklearn.preprocessing import normalize  # 导入归一化方法
 
 # 设置可见的 GPU 设备
-os.environ['CUDA_VISIBLE_DEVICES'] = '6,7'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 # 1. Specify preffered dimensions
 DIMENSIONS = 512
 
 # 2. load model
-
-
-
 class SemanticAnalyzer:
     def __init__(self, model_path="/home/shixianjie/models"):
         self.logger = logging.getLogger(__name__)
@@ -57,7 +54,7 @@ class SemanticAnalyzer:
         similarity = cosine_similarity(embedding1, embedding2)[0][0]
         return similarity
 
-    def find_similar_nodes(self, code_graph, threshold=0.9):
+    def find_similar_nodes(self, code_graph, threshold=0.90):
         """
         遍历代码图中的所有类和函数节点，计算它们之间的相似性，返回相似的节点对和对应的相似度。
         Args:
@@ -67,7 +64,7 @@ class SemanticAnalyzer:
             List[Tuple]: 相似节点对列表。
             List[float]: 对应的相似度列表。
         """
-        nodes = [(n, d) for n, d in code_graph.get_graph().nodes(data=True) if d['type'] in ['class']]
+        nodes = [(n, d) for n, d in code_graph.get_graph().nodes(data=True) if d['type'] in ['module','class','function']]
         embeddings = {}
 
         # 为每个节点计算 embedding，并归一化
