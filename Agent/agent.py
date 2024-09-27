@@ -32,7 +32,7 @@ tools = [
     get_context_below,
     get_import_statements,
     get_involved_names,
-    # find_one_hop_call_nodes
+    find_one_hop_call_nodes
 ]
 
 # Adding "chat memory" to retain chat context across multiple interactions
@@ -83,7 +83,9 @@ You can retrieve some context about the function using the available tools. Anal
 
 2. If you are **not fully confident** yet, continue to use tools like `get_context_above`, `get_context_below`, `get_import_statements`, and others to gather more context.
 
-3. Make sure to only give me the code , no other informations.
+3. If you want to find out calling relationship , you can use tool `find_one_hop_call_nodes` to get related function nodes.
+
+4. Make sure to **only give me the code** , no other informations.
 
 Your decision should be based on whether the gathered information is sufficient to generate a function that integrates seamlessly with the rest of the code in the repository.
 '''
