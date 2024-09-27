@@ -8,7 +8,7 @@ from tool import (
     get_context_below,
     get_import_statements,
     get_involved_names,
-    get_bm25_results_tool
+    find_one_hop_call_nodes
 )
 from langchain_core.tracers.context import tracing_v2_enabled
 from langchain_core.runnables import RunnableConfig
@@ -32,7 +32,7 @@ tools = [
     get_context_below,
     get_import_statements,
     get_involved_names,
-    get_bm25_results_tool
+    # find_one_hop_call_nodes
 ]
 
 # Adding "chat memory" to retain chat context across multiple interactions
@@ -61,28 +61,29 @@ config = RunnableConfig({
 })
 
 # Define user input prompt
-function = 'stellar.stellar.app.Stellar.create_snapshot'
-function_signature = 'def create_snapshot(self, snapshot_name, before_copy=None)'
-
+function_namespace = 'stellar.stellar.config.save_config'
+function = 'def save_config(config):'
+nodelimit = 3
+# deveval input_code
+ 
 inputs = {
     "messages": [(
         "user",
         f'''
-You are currently trying to complete the function `{function}` in the repository code graph.
+You are currently trying to complete the function `{function}` in a code repository.
+
+The namespace of this function in the code repository if {function_namespace}
 
 You can retrieve some context about the function using the available tools. Analyze this context carefully.
 
-1. If you are **fully confident** that the information you now have is enough to generate the function:
-   - Generate the function:
-     ```
-    {function_signature}:
-         <complete the function based on the context>
-     ```
-   - just give me the code,no other information
+1. If you are **fully confident** that the information you now have is enough to complete the function:
+    Complete the function:
+    {function}:
+    
 
 2. If you are **not fully confident** yet, continue to use tools like `get_context_above`, `get_context_below`, `get_import_statements`, and others to gather more context.
 
-3. If you hit **more than 5 tool calls**, stop using the tools and generate the function based on the collected context.
+3. Make sure to only give me the code , no other informations.
 
 Your decision should be based on whether the gathered information is sufficient to generate a function that integrates seamlessly with the rest of the code in the repository.
 '''
