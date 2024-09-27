@@ -46,10 +46,9 @@ class ContainsParser:
                 self._build_tree(item_path, dir_node)
             elif item.endswith(".py"):
                 # 创建文件模块节点并解析
-                module_node = self._create_node(item, 'module', parent_node)
-                self._parse_file(item_path, module_node)
+                self._parse_file(item_path, parent_node)
 
-    def _create_node(self, name, node_type, parent_node):
+    def _create_node(self, name, node_type, parent_node, code=None):
         # 去掉文件扩展名（仅对模块节点）
         if node_type == 'module' and name.endswith('.py'):
             name = name[:-3]  # 去除 .py 后缀
@@ -61,15 +60,18 @@ class ContainsParser:
             full_name = name
 
         # 创建节点
-        node = Node(name, node_type, parent_fullname=parent_node.fullname)
+        node = Node(name, node_type, code=code, parent_fullname=parent_node.fullname)
         parent_node.add_child(node)
         self.nodes[full_name] = node
 
         return node
 
-    def _parse_file(self, file_path, module_node):
+    def _parse_file(self, file_path, parent_node):
         with open(file_path, "r") as file:
             file_content = file.read()
+
+        # 创建 module 节点，包含文件内容作为 code
+        module_node = self._create_node(os.path.basename(file_path), 'module', parent_node, code=file_content)
 
         tree = self.parser.parse(bytes(file_content, "utf8"))
 
