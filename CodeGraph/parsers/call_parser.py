@@ -5,7 +5,7 @@ from lsp_client import LspClientWrapper
 import logging
 
 class CallParser:
-    def __init__(self, project_path, repo_name, code_graph, defined_symbols):
+    def __init__(self, project_path, repo_name, code_graph, defined_symbols, lsp_client=None):
         self.project_path = project_path
         self.repo_name = repo_name
         self.code_graph = code_graph
@@ -21,7 +21,8 @@ class CallParser:
         self.logger.addHandler(handler)
 
         # 初始化LSP客户端
-        self.lsp_client = LspClientWrapper(self.project_path)
+        # self.lsp_client = LspClientWrapper(self.project_path)
+        self.lsp_client = lsp_client 
         self.parser = self._init_parser()
 
     def _init_parser(self):

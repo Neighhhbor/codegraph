@@ -1,9 +1,20 @@
 # Ignore Python cache directories
-__pycache__/
+**/__pycache__
 *.py[cod]
 
 log
 */*.txt
 DevEval/
-data_process/**
-**.png
+
+Agent/key.py
+*/results/
+
+*/*.pkl
+
+*/*.json
+
+results/
+
+code-eval/
+
+*/graphs/
