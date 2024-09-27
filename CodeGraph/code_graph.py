@@ -8,7 +8,7 @@ class CodeGraph:
     def __init__(self):
         self.graph = nx.DiGraph()
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
 
     def build_graph_from_tree(self, tree_root):
         # 从树的根节点开始构建图
