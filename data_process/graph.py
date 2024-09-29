@@ -2,7 +2,9 @@ import os
 import sys
 import logging
 from tqdm import tqdm  # 导入进度条库
-
+import json
+import networkx as nx
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 # 动态添加模块路径
 sys.path.append('/home/sxj/Desktop/Workspace/CodeQl/gptgraph/CodeGraph')  # 修改为实际路径
@@ -14,12 +16,27 @@ from parsers.call_parser import CallParser
 from lsp_client import LspClientWrapper
 
 RESULTDIR = "./graphs"
+MAX_WORKERS = 8  # 最大并行进程数
 
 # 全局日志配置
 logging.basicConfig(level=logging.INFO, format='%(name)s - %(levelname)s - %(message)s')
 
+
+# 导出为 JSON 的函数
+def export_graph_to_json(graph: nx.DiGraph, output_path: str):
+    """
+    将 NetworkX 图导出为 JSON 格式并保存到文件。
+    :param graph: NetworkX 的 DiGraph 对象
+    :param output_path: 要保存的 JSON 文件路径
+    """
+    graph_data = nx.node_link_data(graph)  # 将图转换为 node-link 格式的字典
+    with open(output_path, 'w') as f:
+        json.dump(graph_data, f, indent=4)  # 将图数据保存为 JSON 文件
+    logging.info(f"Graph saved as JSON to: {output_path}")
+
+
 def generate_code_graph(repo_path):
-    """为给定的代码库生成 GML 文件。"""
+    """为给定的代码库生成 JSON 文件。"""
     repo_name = os.path.basename(os.path.normpath(repo_path))
     logging.info(f"Processing repository: {repo_name}")
 
@@ -51,14 +68,17 @@ def generate_code_graph(repo_path):
     finally:
         lsp_client.stop_server()
 
-    # 保存代码图
+    # 保存代码图为 JSON 文件
     os.makedirs(RESULTDIR, exist_ok=True)
-    gml_path = os.path.join(RESULTDIR, f"{repo_name}_code_graph.gml")
-    code_graph.export_to_gml(gml_path)
-    logging.info(f"Saved GML to: {gml_path}")
+    json_path = os.path.join(RESULTDIR, f"{repo_name}.json")
+
+    # NetworkX graph is stored in the code_graph object; let's assume it has an attribute that holds the DiGraph
+    nx_graph = code_graph.graph  # 假设 code_graph.graph 是 NetworkX 的 DiGraph 对象
+    export_graph_to_json(nx_graph, json_path)
+
 
 def process_repositories(base_dir):
-    """遍历目录并为每个代码库生成 GML 文件。"""
+    """遍历目录并为每个代码库生成 JSON 文件，使用并发处理。"""
     repos = []
     for category in os.listdir(base_dir):
         category_path = os.path.join(base_dir, category)
@@ -68,22 +88,20 @@ def process_repositories(base_dir):
                 if os.path.isdir(repo_path):
                     repos.append(repo_path)
 
-    # 使用 tqdm 显示进度条
-    for repo_path in tqdm(repos, desc="Processing repositories"):
-        generate_code_graph(repo_path)
+    # 使用进程池并发处理每个代码库，限制最大并发数为 MAX_WORKERS
+    with ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        # 提交任务并返回未来对象
+        future_to_repo = {executor.submit(generate_code_graph, repo_path): repo_path for repo_path in repos}
 
-def renamefiles(dir_path):  
-    for file in os.listdir(dir_path):  
-        if file.endswith('_code_graph.gml'):  # 确保只处理以'_code_graph.gml'结尾的文件
-            newname = file.replace('_code_graph', '')  # 去掉'_code_graph'
-            os.rename(os.path.join(dir_path, file), os.path.join(dir_path, newname))  
-            print('已重命名文件：', newname)
+        # 使用 tqdm 显示进度条并处理完成的任务
+        for future in tqdm(as_completed(future_to_repo), total=len(repos), desc="Processing repositories"):
+            repo_path = future_to_repo[future]
+            try:
+                future.result()  # 获取任务的结果，如果有异常则抛出
+            except Exception as exc:
+                logging.error(f"Repo {repo_path} generated an exception: {exc}")
 
-# 示例用法
-# renamefiles('/path/to/your/directory')
 
 if __name__ == "__main__":
-    # base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Source_Code'  # 根据你的实际路径设置
-    # process_repositories(base_dir)
-    dir = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs"
-    renamefiles(dir)
+    base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/Repos'  # 根据你的实际路径设置
+    process_repositories(base_dir)

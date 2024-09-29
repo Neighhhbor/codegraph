@@ -7,9 +7,21 @@ import json
 import os
 
 RESULTDIR = "results"
-def load_graph_from_gml(filename):
-    """从 GML 文件加载图"""
-    return ig.Graph.Read_GML(filename)
+
+def load_graph_from_json(filename):
+    """从 JSON 文件加载图"""
+    with open(filename, 'r') as infile:
+        graph_data = json.load(infile)
+
+    # 使用 igraph 的 Graph.DictList 构造函数从 JSON 数据中构建图
+    ig_G = ig.Graph.DictList(
+        vertices=graph_data['nodes'],
+        edges=graph_data['links'],  # Reference 'links' instead of 'edges'
+        directed=True
+    )
+    
+    return ig_G
+
 
 def plot_communities(partition, ig_G):
     """绘制社区检测图并保存为 PNG 文件"""
@@ -56,14 +68,14 @@ def export_community_info(partition, ig_G, output_filename):
 
 def analyze_communities(graph_filename):
     """执行社区分析并绘图"""
-    ig_G = load_graph_from_gml(graph_filename)
+    ig_G = load_graph_from_json(graph_filename)
     partition = la.find_partition(ig_G, la.ModularityVertexPartition)
 
     print(f"社区数量: {len(partition)}")
     print(f"模块度: {partition.modularity}")
 
     plot_communities(partition, ig_G)
-    export_community_info(partition, ig_G, os.path.join(RESULTDIR, "community_info.json"))
+    export_community_info(partition, ig_G, os.path.join(RESULTDIR, "community_info_autogen.json"))
 
 if __name__ == "__main__":
-    analyze_communities(f"{RESULTDIR}/code_graph.gml")
+    analyze_communities(f"{RESULTDIR}/autogen.json")

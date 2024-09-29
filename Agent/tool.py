@@ -20,7 +20,7 @@ def load_and_fix_gml(path: str) -> nx.DiGraph:
 
 
 # 调用这个函数来读取和处理 GML 文件
-codegraph = load_and_fix_gml("/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/pycoin.gml")
+codegraph = load_and_fix_gml("/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/stellar.gml")
 
 # 辅助函数: 获取目标节点和父节点
 def find_target_node_and_parent(codegraph: nx.DiGraph, node_label: str) -> (str, str):
