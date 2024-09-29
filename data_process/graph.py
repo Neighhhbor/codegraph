@@ -16,7 +16,7 @@ from parsers.call_parser import CallParser
 from lsp_client import LspClientWrapper
 
 RESULTDIR = "./graphs"
-MAX_WORKERS = 8  # 最大并行进程数
+MAX_WORKERS = 32  # 最大并行进程数
 
 # 全局日志配置
 logging.basicConfig(level=logging.INFO, format='%(name)s - %(levelname)s - %(message)s')
@@ -103,5 +103,5 @@ def process_repositories(base_dir):
 
 
 if __name__ == "__main__":
-    base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/Repos'  # 根据你的实际路径设置
+    base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Source_Code'  # 根据你的实际路径设置
     process_repositories(base_dir)
