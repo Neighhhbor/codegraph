@@ -8,7 +8,8 @@ from tool import (
     get_context_below,
     get_import_statements,
     get_involved_names,
-    find_one_hop_call_nodes
+    find_one_hop_call_nodes,
+    get_node_info
 )
 from langchain_core.tracers.context import tracing_v2_enabled
 from langchain_core.runnables import RunnableConfig
@@ -24,15 +25,16 @@ _set_env("LANGCHAIN_TRACING_V2")
 _set_env("OPENAI_API_KEY")
 
 # Initialize the model to use.
-model = ChatOpenAI(model="gpt-4o-mini", temperature=0, max_tokens=500)
+model = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 # Define tools as individual functions instead of find_anchors.
 tools = [
+    get_involved_names,
     get_context_above,
     get_context_below,
     get_import_statements,
-    get_involved_names,
-    find_one_hop_call_nodes
+    find_one_hop_call_nodes,
+    get_node_info
 ]
 
 # Adding "chat memory" to retain chat context across multiple interactions
@@ -61,16 +63,13 @@ config = RunnableConfig({
 })
 
 # Define user input prompt
-function_namespace = 'stellar.stellar.config.save_config'
-function = 'def save_config(config):'
-nodelimit = 3
 # deveval input_code
  
 inputs = {
     "messages": [(
         "user",
-         "You are tasked with completing the function `_compute_word_freq` in a code repository. \n\n    Here are the key details of this function:\n    - **Namespace**: `sumy.summarizers.sum_basic.SumBasicSummarizer._compute_word_freq`\n    - **Function signature**:\n    ```python\n        def _compute_word_freq(list_of_words):\n\n        \"\"\"\n        This function computes the frequency of each word in the given list of words and returns a dictionary containing the word frequencies.\n        Input-Output Arguments\n        :param list_of_words: List of strings. The list of words for which the frequency needs to be computed.\n        :return: Dictionary. A dictionary containing the frequency of each word in the input list.\n        \"\"\"\n    ```\n\n    You can retrieve some context about the function using the available tools to gather additional information.\n\n    ### Step-by-step process:\n    1. **Analyze the Current Information**:\n        - If you are fully confident that the information currently available (function signature and namespace) is **enough** to complete the function, **directly complete the function**.\n        \n        Complete the function:\n        ```python\n        _compute_word_freq:\n        ```\n\n    2. **Gather Additional Information (if needed)**:\n        - If you are **not fully confident**, you can use the following tools to gather more context:\n          - **`get_context_above`**: Use this tool to get the code context above the current function.\n          - **`get_context_below`**: Use this tool to retrieve the code context below the function.\n          - **`get_import_statements`**: Retrieve the import statements of the module where the function is located.\n          - **`find_one_hop_call_nodes`**: This tool can be used to identify related function nodes by finding one-hop call relationships.\n\n    3. **Call Limit for Tools**:\n        - **Important**: You can only call each tool **up to 10 times** before you must decide whether you have enough information to complete the function.\n\n    ### Important Notes:\n    - Make sure to **only return the complete function's code**.\n    - Use the tools wisely to gather the most relevant information before making a decision to complete the function.\n    - The final goal is to complete a function that seamlessly integrates into the code repository."
-    )]
+"Your task is to complete the function `do_OP_HASH256` in a code repository.\n\n    - **Namespace**: `pycoin.pycoin.satoshi.stackops.do_OP_HASH256`\n    - **Function signature**:\n    ```python\n    def do_OP_HASH256(stack):\n\n    \"\"\"\n    Pop the top item from the stack, calculate its sha256 value, and append the result back to the stack.\n\n    Input-Output Arguments\n    :param stack: List, a stack where the operation is performed.\n    :return: No return values.\n\n    \"\"\"\n    ```\n\n    You can use the following tools to gather the necessary context before completing the function:\n    - **`get_context_above`**: Fetch code context above the function.\n    - **`get_context_below`**: Fetch code context below the function.\n    - **`get_import_statements`**: Retrieve module import statements.\n    - **`find_one_hop_call_nodes`**: Find related function call nodes.\n    - **`get_node_info`**: Get detailed information about any node in the graph.\n\n    These tools can be applied to the current function or any other nodes you find in the process to gather necessary information.\n\n    Once you have gathered enough information, complete the function and return **only the function's code**.\n\n    Ensure the response contains only the complete code for the function, formatted correctly for the repository."
+       )]
 }
 
 

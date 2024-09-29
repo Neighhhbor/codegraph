@@ -1,0 +1,112 @@
+================================ Human Message =================================
+
+You are tasked with completing the function `get_table_name` in a code repository. 
+
+    Here are the key details of this function:
+    - **Namespace**: `stellar.stellar.models.Table.get_table_name`
+    - **Function signature**:
+    ```python
+        def get_table_name(self, postfix, old=False):
+
+        """
+        This function generates a table name based on the given postfix and whether it is an old table. It first checks if there is a snapshot available and if the snapshot hash is not empty. If the snapshot is not available, it raises an Exception 'Table name requires snapshot'. If the snapshot hash is empty, it raises an Exception 'Snapshot hash is empty.' Then, it constructs the table name by concatenating the table name, snapshot hash, and postfix. If it is an old table, it returns a table name string formatted as 'stellar_{table name}{snapshot hash}{postfix}'. Otherwise, it returns a table name string generated using the hashlib module. It creates a hash by concatenating the table name, snapshot hash, and postfix with the pipe character ('|') in between. The resulting string is encoded in UTF-8 format and then hashed using MD5. The resulting hash is then converted to a hexadecimal string. The first 16 characters of the hexadecimal string are extracted and returned as the table name as 'stellar_{table name}'.
+        Input-Output Arguments
+        :param self: Table. An instance of the Table class.
+        :param postfix: String. The postfix to be added to the table name.
+        :param old: Bool. Whether it is an old table. Defaults to False.
+        :return: String. The generated table name.
+        """
+    ```
+
+    You can retrieve some context about the function using the available tools to gather additional information.
+    - Make sure to **only return the complete function's code**.
+    - Use the tools wisely to gather the most relevant information before making a decision to complete the function.
+    - The final goal is to complete a function that seamlessly integrates into the code repository.
+    
+    ### Step-by-step process:
+    1. **Analyze the Current Information**:
+        - If you are fully confident that the information currently available (function signature and namespace) is **enough** to complete the function, **directly complete the function**.
+        get_table_name:
+        - **only return the complete function's code**
+
+    2. **Gather Additional Information (if needed)**:
+        - If you are **not fully confident**, you can use the following tools to gather more context:
+          - **`get_context_above`**: Use this tool to get the code context above the current function.
+          - **`get_context_below`**: Use this tool to retrieve the code context below the function.
+          - **`get_import_statements`**: Retrieve the import statements of the module where the function is located.
+          - **`find_one_hop_call_nodes`**: This tool can be used to identify related function nodes by finding one-hop call relationships.
+
+    3. **Call Limit for Tools**:
+        - **Important**: You can only call each tool **up to 10 times** before you must decide whether you have enough information to complete the function.
+================================== Ai Message ==================================
+Tool Calls:
+  get_context_above (call_V38K3hg9Dgez6vtR1nN05GNg)
+ Call ID: call_V38K3hg9Dgez6vtR1nN05GNg
+  Args:
+    node_label: stellar.stellar.models.Table.get_table_name
+  get_context_below (call_gvh2Ko5SD2Ejaw4UPEnzWI3q)
+ Call ID: call_gvh2Ko5SD2Ejaw4UPEnzWI3q
+  Args:
+    node_label: stellar.stellar.models.Table.get_table_name
+  get_import_statements (call_otax4KAFgwLQv4bnIB7VCOX1)
+ Call ID: call_otax4KAFgwLQv4bnIB7VCOX1
+  Args:
+    node_label: stellar.stellar.models.Table.get_table_name
+================================= Tool Message =================================
+Name: get_import_statements
+
+{"import_statements": "import hashlib\nimport uuid\nfrom datetime import datetime\n\nimport sqlalchemy as sa\nfrom sqlalchemy.ext.declarative import declarative_base\n\nBase = declarative_base()\n\n"}
+================================== Ai Message ==================================
+
+Based on the information gathered, here is the complete implementation of the `get_table_name` function:
+
+```python
+import hashlib
+import uuid
+from datetime import datetime
+
+import sqlalchemy as sa
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class Table(Base):
+    # Assuming there are other attributes and methods in the Table class
+    def __init__(self, table_name, snapshot_hash):
+        self.table_name = table_name
+        self.snapshot_hash = snapshot_hash
+
+    def get_table_name(self, postfix, old=False):
+        """
+        This function generates a table name based on the given postfix and whether it is an old table. 
+        It first checks if there is a snapshot available and if the snapshot hash is not empty. 
+        If the snapshot is not available, it raises an Exception 'Table name requires snapshot'. 
+        If the snapshot hash is empty, it raises an Exception 'Snapshot hash is empty.' 
+        Then, it constructs the table name by concatenating the table name, snapshot hash, and postfix. 
+        If it is an old table, it returns a table name string formatted as 
+        'stellar_{table name}{snapshot hash}{postfix}'. 
+        Otherwise, it returns a table name string generated using the hashlib module. 
+        It creates a hash by concatenating the table name, snapshot hash, and postfix with the pipe character ('|') in between. 
+        The resulting string is encoded in UTF-8 format and then hashed using MD5. 
+        The resulting hash is then converted to a hexadecimal string. 
+        The first 16 characters of the hexadecimal string are extracted and returned as the table name as 'stellar_{table name}'.
+        Input-Output Arguments
+        :param self: Table. An instance of the Table class.
+        :param postfix: String. The postfix to be added to the table name.
+        :param old: Bool. Whether it is an old table. Defaults to False.
+        :return: String. The generated table name.
+        """
+        if not self.snapshot_hash:
+            raise Exception('Table name requires snapshot')
+        if self.snapshot_hash == '':
+            raise Exception('Snapshot hash is empty.')
+
+        if old:
+            return f'stellar_{self.table_name}{self.snapshot_hash}{postfix}'
+        else:
+            hash_input = f"{self.table_name}|{self.snapshot_hash}|{postfix}".encode('utf-8')
+            hash_output = hashlib.md5(hash_input).hexdigest()
+            return f'stellar_{hash_output[:16]}'
+```
+
+This implementation includes the necessary checks for the snapshot hash and constructs the table name according to the specified logic.

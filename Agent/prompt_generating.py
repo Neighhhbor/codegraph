@@ -20,49 +20,39 @@ def generate_prompt(data):
     :param data: 包含 namespace, input_code 等关键信息的字典
     :return: 生成的 prompt 字符串
     """
-    call_limit = 10
-    function_namespace = data.get("namespace", "")
+    raw_namespace = data.get("namespace", "")
+    function_namespace = f"{raw_namespace.split('.')[0]}.{raw_namespace}"
     input_code = data.get("input_code", "")
     function_name = data.get("function_name", "")
     
     prompt = f"""
-    You are tasked with completing the function `{function_name}` in a code repository. 
+    Your task is to complete the function `{function_name}` in a code repository.
 
-    Here are the key details of this function:
     - **Namespace**: `{function_namespace}`
     - **Function signature**:
     ```python
     {input_code}
     ```
 
-    You can retrieve some context about the function using the available tools to gather additional information.
+    You can use the following tools to gather the necessary context before completing the function:
+    - **`get_context_above`**: Fetch code context above the function.
+    - **`get_context_below`**: Fetch code context below the function.
+    - **`get_import_statements`**: Retrieve module import statements.
+    - **`find_one_hop_call_nodes`**: Find related function call nodes.
+    - **`get_node_info`**: Get detailed information about any node in the graph.
 
-    ### Step-by-step process:
-    1. **Analyze the Current Information**:
-        - If you are fully confident that the information currently available (function signature and namespace) is **enough** to complete the function, **directly complete the function**.
-        
-        Complete the function:
-        ```python
-        {function_name}:
-        ```
+    These tools can be applied to the current function or any other nodes you find in the process to gather necessary information.
 
-    2. **Gather Additional Information (if needed)**:
-        - If you are **not fully confident**, you can use the following tools to gather more context:
-          - **`get_context_above`**: Use this tool to get the code context above the current function.
-          - **`get_context_below`**: Use this tool to retrieve the code context below the function.
-          - **`get_import_statements`**: Retrieve the import statements of the module where the function is located.
-          - **`find_one_hop_call_nodes`**: This tool can be used to identify related function nodes by finding one-hop call relationships.
+    Once you have gathered enough information, complete the function and return **only the function's code**.
 
-    3. **Call Limit for Tools**:
-        - **Important**: You can only call each tool **up to {call_limit} times** before you must decide whether you have enough information to complete the function.
-
-    ### Important Notes:
-    - Make sure to **only return the complete function's code**.
-    - Use the tools wisely to gather the most relevant information before making a decision to complete the function.
-    - The final goal is to complete a function that seamlessly integrates into the code repository.
+    Ensure the response contains only the complete code for the function, formatted correctly for the repository.
     """
     
     return prompt.strip()
+
+
+
+
 
 def save_prompts_to_jsonl(prompts, output_file):
     """
@@ -92,8 +82,11 @@ def process_data_and_generate_prompts(input_file, output_file):
     # 为每条数据生成 prompt
     for idx, data in enumerate(data_list):
         prompt_text = generate_prompt(data)  # 生成 prompt
+        raw_namespace = data.get("namespace", "")
+        namespace = f"{raw_namespace.split('.')[0]}.{raw_namespace}"
+        
         prompt_data = {
-            "namespace": data.get("namespace", ""),
+            "namespace": raw_namespace ,
             "prompt": prompt_text,
             # "idx": idx
         }

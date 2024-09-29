@@ -1,0 +1,120 @@
+================================ Human Message =================================
+
+You are tasked with completing the function `crossval` in a code repository. 
+
+    Here are the key details of this function:
+    - **Namespace**: `whereami.whereami.predict.crossval`
+    - **Function signature**:
+    ```python
+    def crossval(clf=None, X=None, y=None, folds=10, n=5, path=None):
+
+    """
+    Perform cross-validation on a given classifier using the specified data. First, if the input data X or labels y are not provided, the function will retrieve them from a given path. Then, if the number of samples in X is less than the number of folds, it will raise a ValueError 'There are not enough samples ({length of X}). Need at least {folds number}.'.
+    Next, if no classifier model is provided, it will obtain one from the given path.
+    It then prints "KFold folds={folds number}, running {n} times". The function then performs cross-validation by iterating n times. In each iteration, it  evaluate the performance of the classifier on each fold, and calculates the average accuracy. After each iteration, it prints "{iteration number (starting from 1)}/{n}: {average accuracy of the iteration}". Finally, after all iterations are complete, it prints "-------- total --------" and then prints the total average accuracy obtained from all iterations and returns this value.
+    Input-Output Arguments
+    :param clf: Classifier. The classifier to be used for cross-validation. If not provided, it retrieves the classifier from the specified path.
+    :param X: Array-like. The input data features. If not provided, it retrieves the training data features from the specified path.
+    :param y: Array-like. The target variable. If not provided, it retrieves the training data target variable from the specified path.
+    :param folds: Integer. The number of folds to be used in cross-validation. Defaults to 10.
+    :param n: Integer. The number of times to run cross-validation. Defaults to 5.
+    :param path: String. The path to the training data. If not provided, the data is assumed to be already provided in X and y.
+    :return: Float. The average score obtained from cross-validation.
+    """
+    ```
+
+    You can retrieve some context about the function using the available tools to gather additional information.
+
+    ### Step-by-step process:
+    1. **Analyze the Current Information**:
+        - If you are fully confident that the information currently available (function signature and namespace) is **enough** to complete the function, **directly complete the function**.
+        crossval:
+    
+    2. FORMAT: **Only return the complete function's code**
+
+    2. **Gather Additional Information (if needed)**:
+
+    3. **Call Limit for Tools**:
+        - You can only call each tool **up to 10 times** before you must decide whether you have enough information to complete the function.
+================================== Ai Message ==================================
+Tool Calls:
+  get_context_above (call_JlPYLx3azEYZ5XzJ6G37fbN0)
+ Call ID: call_JlPYLx3azEYZ5XzJ6G37fbN0
+  Args:
+    node_label: whereami.whereami.predict.crossval
+  get_context_below (call_DZTkmilf5TODNAtPWOW9Eilb)
+ Call ID: call_DZTkmilf5TODNAtPWOW9Eilb
+  Args:
+    node_label: whereami.whereami.predict.crossval
+  get_import_statements (call_IHtkBBE8RmtifFR8HI0C0Kw3)
+ Call ID: call_IHtkBBE8RmtifFR8HI0C0Kw3
+  Args:
+    node_label: whereami.whereami.predict.crossval
+  get_involved_names (call_veTZjFsNr0skD2aSrXCJje3b)
+ Call ID: call_veTZjFsNr0skD2aSrXCJje3b
+  Args:
+    node_label: whereami.whereami.predict.crossval
+================================= Tool Message =================================
+Name: get_involved_names
+
+{"function": "whereami.whereami.predict.crossval", "module": "whereami.whereami.predict"}
+================================== Ai Message ==================================
+
+```python
+import json
+from collections import Counter
+from access_points import get_scanner
+from whereami.get_data import get_train_data, get_external_sample, sample
+from whereami.pipeline import get_model
+from whereami.compat import cross_val_score
+from sklearn.model_selection import KFold
+import numpy as np
+
+def crossval(clf=None, X=None, y=None, folds=10, n=5, path=None):
+    """
+    Perform cross-validation on a given classifier using the specified data. First, if the input data X or labels y are not provided, the function will retrieve them from a given path. Then, if the number of samples in X is less than the number of folds, it will raise a ValueError 'There are not enough samples ({length of X}). Need at least {folds number}.'.
+    Next, if no classifier model is provided, it will obtain one from the given path.
+    It then prints "KFold folds={folds number}, running {n} times". The function then performs cross-validation by iterating n times. In each iteration, it evaluate the performance of the classifier on each fold, and calculates the average accuracy. After each iteration, it prints "{iteration number (starting from 1)}/{n}: {average accuracy of the iteration}". Finally, after all iterations are complete, it prints "-------- total --------" and then prints the total average accuracy obtained from all iterations and returns this value.
+    Input-Output Arguments
+    :param clf: Classifier. The classifier to be used for cross-validation. If not provided, it retrieves the classifier from the specified path.
+    :param X: Array-like. The input data features. If not provided, it retrieves the training data features from the specified path.
+    :param y: Array-like. The target variable. If not provided, it retrieves the training data target variable from the specified path.
+    :param folds: Integer. The number of folds to be used in cross-validation. Defaults to 10.
+    :param n: Integer. The number of times to run cross-validation. Defaults to 5.
+    :param path: String. The path to the training data. If not provided, the data is assumed to be already provided in X and y.
+    :return: Float. The average score obtained from cross-validation.
+    """
+    
+    if X is None or y is None:
+        X, y = get_train_data(path)
+
+    if len(X) < folds:
+        raise ValueError(f'There are not enough samples ({len(X)}). Need at least {folds}.')
+
+    if clf is None:
+        clf = get_model(path)
+
+    print(f"KFold folds={folds}, running {n} times")
+    total_accuracy = []
+
+    for iteration in range(n):
+        kf = KFold(n_splits=folds)
+        iteration_accuracy = []
+
+        for train_index, test_index in kf.split(X):
+            X_train, X_test = X[train_index], X[test_index]
+            y_train, y_test = y[train_index], y[test_index]
+
+            clf.fit(X_train, y_train)
+            score = clf.score(X_test, y_test)
+            iteration_accuracy.append(score)
+
+        average_accuracy = np.mean(iteration_accuracy)
+        total_accuracy.append(average_accuracy)
+        print(f"{iteration + 1}/{n}: {average_accuracy}")
+
+    overall_average = np.mean(total_accuracy)
+    print("-------- total --------")
+    print(overall_average)
+    return overall_average
+```

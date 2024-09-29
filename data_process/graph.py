@@ -72,6 +72,18 @@ def process_repositories(base_dir):
     for repo_path in tqdm(repos, desc="Processing repositories"):
         generate_code_graph(repo_path)
 
+def renamefiles(dir_path):  
+    for file in os.listdir(dir_path):  
+        if file.endswith('_code_graph.gml'):  # 确保只处理以'_code_graph.gml'结尾的文件
+            newname = file.replace('_code_graph', '')  # 去掉'_code_graph'
+            os.rename(os.path.join(dir_path, file), os.path.join(dir_path, newname))  
+            print('已重命名文件：', newname)
+
+# 示例用法
+# renamefiles('/path/to/your/directory')
+
 if __name__ == "__main__":
-    base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Source_Code'  # 根据你的实际路径设置
-    process_repositories(base_dir)
+    # base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Source_Code'  # 根据你的实际路径设置
+    # process_repositories(base_dir)
+    dir = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs"
+    renamefiles(dir)
