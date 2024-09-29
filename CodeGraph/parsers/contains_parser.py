@@ -122,28 +122,25 @@ class ContainsParser:
 
     def _get_node_text(self, node, file_path):
         """
-        提取 AST 节点对应的源代码文本，使用行列号而非字节
+        提取 AST 节点对应的源代码文本，使用 Tree-sitter 节点的字节位置信息来提取。
+        :param node: Tree-sitter 的 AST 节点
+        :param file_path: 当前文件路径
+        :return: 提取的代码文本
         """
         if node is None:
             return ""
 
-        start_line, start_column = node.start_point
-        end_line, end_column = node.end_point
+        # 直接使用 start_byte 和 end_byte 提取代码片段
+        start_byte = node.start_byte
+        end_byte = node.end_byte
 
-        with open(file_path, "r") as file:
-            file_lines = file.readlines()
+        with open(file_path, "r", encoding="utf-8") as file:
+            file_content = file.read()
 
-        if start_line == end_line:
-            # 同一行的情况，直接从 start_column 到 end_column
-            return file_lines[start_line][start_column:end_column].strip()
-        else:
-            # 跨多行的情况，处理起始行、中间行和结束行
-            extracted_text = []
-            extracted_text.append(file_lines[start_line][start_column:].strip())
-            for line in range(start_line + 1, end_line):
-                extracted_text.append(file_lines[line].strip())
-            extracted_text.append(file_lines[end_line][:end_column].strip())
-            return " ".join(extracted_text)
+        # 返回文件中从 start_byte 到 end_byte 的代码片段
+        return file_content[start_byte:end_byte]
+
+
     
     def _get_signature(self, node, file_path):
         """
