@@ -147,11 +147,11 @@ def save_json_graph(graph: nx.DiGraph, path: str):
 
 if __name__ == "__main__":
     # 示例：在目标节点中替换代码
-    json_path = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/stellar.json"
+    json_path = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/mistune.json"
     codegraph = load_json_graph(json_path)
 
     # 定义目标函数的名称
-    target_function = "stellar.stellar.models.Table.get_table_name"
+    target_function = "mistune.src.mistune.toc.add_toc_hook"
 
     # 使用 Tree-sitter 替换目标函数的代码
     modified_nodes = replace_groundtruth_code_with_treesitter(codegraph, target_function)
@@ -164,4 +164,4 @@ if __name__ == "__main__":
             print(f"Node {node_id} - Code:\n{node_data['code']}\n")
 
     # 保存修改后的图为新的 JSON 文件
-    save_json_graph(codegraph, "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/stellar_modified.json")
+    save_json_graph(codegraph, "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/mistune_modified.json")

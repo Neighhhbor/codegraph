@@ -148,13 +148,13 @@ def create_tools(graph_path: str, target_function: str):
 
 # 测试
 if __name__ == "__main__":
-    graph_path = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/stellar.json"
-    target_function = "stellar.stellar.models.Table.get_table_name"
+    graph_path = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/mistune.json"
+    target_function = "mistune.src.mistune.toc.add_toc_hook"
     
     tools = create_tools(graph_path, target_function)
 
     # 测试工具
-    test_node_label = "stellar.stellar.models.Table.get_table_name"
+    test_node_label = "mistune.src.mistune.toc.add_toc_hook"
 
     # 测试工具
     print(tools[0](test_node_label))  # 获取上文

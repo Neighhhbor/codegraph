@@ -68,6 +68,7 @@ def generate_agent_outputs(data, graph_data, max_count=5):
 
     for entry in data:
         namespace = entry.get("namespace")
+        target_node_label = entry.get("target_function_node_label")
         prompt = entry.get("prompt")
 
         if not namespace or not prompt:
@@ -81,8 +82,8 @@ def generate_agent_outputs(data, graph_data, max_count=5):
             continue
 
         # 调用 agent 生成补全代码
-        print(f"Running agent for namespace: {namespace} (Entry {count + 1})...")
-        completion = run_agent_for_entry(namespace, prompt, graph_name)
+        print(f"Running agent for namespace: {namespace} target{target_node_label} (Entry {count + 1})...")
+        completion = run_agent_for_entry(target_node_label, prompt, graph_name)
 
         # 移除 markdown 格式，保留纯代码
         clean_completion = clean_code_markdown(completion)
@@ -110,9 +111,11 @@ if __name__ == "__main__":
     graph_data = read_data_jsonl(DATA_FILE)
 
     # 读取 prompt.jsonl 的前 5 条数据用于测试
-    prompt_data = read_prompts_from_jsonl(PROMPT_FILE, max_entries=5)
+    prompt_data = read_prompts_from_jsonl(PROMPT_FILE, max_entries=3)
 
     # 执行 agent 并生成补全代码
-    agent_results = generate_agent_outputs(prompt_data, graph_data, max_count=5)
+    agent_results = generate_agent_outputs(prompt_data, graph_data, max_count=3)
 
     print(f"Generated {len(agent_results)} entries and saved to {OUTPUT_FILE}")
+
+

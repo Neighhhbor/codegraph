@@ -54,21 +54,40 @@ def generate_prompt(data, target_function_node):
     {input_code}
     ```
 
-    You can use the following tools to gather the necessary context before completing the function:
-    - **`get_context_above`**: Fetch code context above the function.
-    - **`get_context_below`**: Fetch code context below the function.
-    - **`get_import_statements`**: Retrieve module import statements.
-    - **`find_one_hop_call_nodes`**: Find related function call nodes.
-    - **`get_node_info`**: Get detailed information about any node in the graph.
+    ### Instructions:
 
-    These tools can be applied to the current function or any other nodes you find in the process to gather necessary information.
+    1. **Attempt to Complete the Function**:
+        - If the current information (function signature and target node name) provides enough context to confidently complete the function, proceed and complete it directly without further investigation.
 
-    Once you have gathered enough information, complete the function and return **only the function's code**.
+        Complete the function in the following format:
+        ```python
+        def {function_name}(...):
+            # complete code
+        ```
 
-    Ensure the response contains only the complete code for the function, formatted correctly for the repository.
-    """
+    2. **Use Tools to Gather Additional Information (If Needed)**:
+        - If the provided information is not enough, use the available tools to gather more context from the code repository graph. These tools will help you fetch relevant parts of the code and its dependencies:
+
+        - **`get_context_above`**: This tool retrieves the code immediately above the target function in the same file/module. Use it to understand preceding definitions or the function's environment.
+        
+        - **`get_context_below`**: This tool retrieves the code immediately following the target function. This could provide insights into subsequent definitions or references to the function.
+        
+        - **`get_import_statements`**: Use this tool to extract all the import statements in the current module. This will help you understand external dependencies or libraries required by the function.
+        
+        - **`find_one_hop_call_nodes`**: This tool identifies functions directly calling or being called by the target function within the code graph. It helps to see how the target function is connected to others.
+        
+        - **`get_node_info`**: Retrieve detailed information (such as attributes or metadata) about any specific node in the code graph, including the target function itself, to gain a deeper understanding of its role.
+
+    3. **Key Objective**:
+        - Your goal is to gather enough information using the tools provided to fully understand the code repository and confidently complete the target function.
+        - **Do not output any explanation or natural language description**. Only return the complete code for the function in a well-formatted Python syntax.
     
+    4. **Final Output**:
+        - Ensure that you **only return the fully completed function** as your final output, without any additional information, comments, or descriptions.
+    """
+
     return prompt.strip()
+
 
 def save_prompts_to_jsonl(prompts, output_file):
     """
@@ -120,6 +139,7 @@ def process_data_and_generate_prompts(input_file, data_json_file, output_file):
         
         prompt_data = {
             "namespace": raw_namespace,
+            "target_function_node_label": target_function_node ,  # 添加真实的 target_function_node_label 字段
             "prompt": prompt_text,
         }
         prompts.append(prompt_data)

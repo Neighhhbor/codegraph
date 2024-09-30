@@ -11,9 +11,9 @@ Agent/key.py
 
 */*.pkl
 
-*/*.json
+**/*.json
 
-*/*.jsonl
+**/*.jsonl
 
 results/
 
