@@ -13,6 +13,8 @@ Agent/key.py
 
 */*.json
 
+*/*.jsonl
+
 results/
 
 code-eval/
