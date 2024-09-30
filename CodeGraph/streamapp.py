@@ -6,6 +6,9 @@ from tqdm import tqdm
 import json
 import os
 
+# 设置页面为宽屏布局
+st.set_page_config(layout="wide")
+
 RESULTDIR = "results"
 
 def load_graph_from_json(filename):
@@ -37,7 +40,7 @@ def plot_community(community_id, partition, ig_G):
     subgraph = ig_G.subgraph(community_nodes)
 
     layout = subgraph.layout("fr")
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(12, 8))  # 调整为更大的尺寸
     ig.plot(subgraph, layout=layout, vertex_label=subgraph.vs['id'], vertex_size=20, target=ax)
 
     plt.title(f"Community {community_id} Structure")
@@ -52,8 +55,19 @@ def display_community_info(community_id, partition, ig_G):
     for node_id in community_nodes:
         node = ig_G.vs[node_id]
         node_id_value = node['id'] if 'id' in node.attributes() else f"node_{node_id}"
+        
+        # 检查是否有 namespace 属性
+        namespace = node['id'] if 'namespace' in node.attributes() else 'No namespace'
+
         st.write(f"Node ID: {node_id_value}")
-        st.json({attr: node[attr] for attr in node.attributes()})
+        st.write(f"Namespace: {namespace}")  # 显示 namespace
+        
+        # 如果节点有 code 属性，将其格式化显示为代码，并处理换行符
+        if 'code' in node.attributes():
+            formatted_code = node['code'].replace('\\n', '\n').replace('\\t', '\t')  # 确保换行符和缩进被正确解析
+            st.code(formatted_code, language="python")  # 使用 st.code 显示代码并处理换行
+        else:
+            st.json({attr: node[attr] for attr in node.attributes()})
 
 def plot_communities(partition, ig_G):
     """绘制社区检测图并保存为 PNG 文件"""
@@ -66,7 +80,7 @@ def plot_communities(partition, ig_G):
 
     # Use 'fr' layout for plotting
     layout = ig_G.layout("fr")
-    fig, ax = plt.subplots(figsize=(10, 8))
+    fig, ax = plt.subplots(figsize=(12, 8))  # 调整为更大的尺寸
     ig.plot(ig_G, layout=layout, vertex_color=vertex_colors, vertex_size=20, vertex_label=None, target=ax)
 
     plt.title("Community Detection using Leiden Algorithm")
