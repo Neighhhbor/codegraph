@@ -1,4 +1,9 @@
 import os
+
+os.environ['http_proxy'] = "http://127.0.0.1:7890"
+os.environ['https_proxy'] = "http://127.0.0.1:7890"
+os.environ['all_proxy'] = "socks5://127.0.0.1:7890"
+
 import json
 import getpass
 from langgraph.checkpoint.memory import MemorySaver
@@ -7,6 +12,7 @@ from langchain_openai import ChatOpenAI
 from tools import create_tools
 from langchain_core.tracers.context import tracing_v2_enabled
 from langchain_core.runnables import RunnableConfig
+
 
 # Helper function to set environment variables
 def _set_env(var: str):

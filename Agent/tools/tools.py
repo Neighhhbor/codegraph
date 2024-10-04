@@ -1,6 +1,9 @@
 import os
 import sys
 # 增加import路径
+os.environ['http_proxy'] = "http://127.0.0.1:7890"
+os.environ['https_proxy'] = "http://127.0.0.1:7890"
+os.environ['all_proxy'] = "socks5://127.0.0.1:7890"
 sys.path.append('/home/sxj/Desktop/Workspace/CodeQl/gptgraph')
 
 import networkx as nx
@@ -10,6 +13,8 @@ from Agent.tools.replace_data import replace_groundtruth_code_with_treesitter
 
 from typing import List, Dict, Any
 from langchain.tools import tool
+from langchain_community.tools import DuckDuckGoSearchRun
+import black
 
 
 class CodeGraphToolsWrapper:
@@ -135,6 +140,25 @@ def create_tools(graph_path: str, target_function: str):
         """获取节点详细信息"""
         return wrapper.get_node_info(node_label)
 
+    # 新增 DuckDuckGo 搜索工具
+    @tool
+    def duckduckgo_search_tool(query: str) -> str:
+        """使用 DuckDuckGo 进行网络搜索"""
+        search = DuckDuckGoSearchRun()
+        result = search.invoke(query)
+        return result if result else "No results found."
+
+    # 新增代码格式化工具
+    @tool
+    def format_code_tool(code: str) -> str:
+        """使用 black 格式化代码"""
+        try:
+            return black.format_str(code, mode=black.FileMode())
+        except black.NothingChanged:
+            return code  # 如果代码已格式化，返回原代码
+        except Exception as e:
+            return f"Error formatting code: {str(e)}"
+
     # 返回所有工具供 agent 使用
     return [
         get_context_above_tool,
@@ -143,6 +167,8 @@ def create_tools(graph_path: str, target_function: str):
         get_involved_names_tool,
         find_one_hop_call_nodes_tool,
         get_node_info_tool,
+        duckduckgo_search_tool,
+        format_code_tool
     ]
 
 
@@ -156,10 +182,15 @@ if __name__ == "__main__":
     # 测试工具
     test_node_label = "mistune.src.mistune.toc.add_toc_hook"
 
-    # 测试工具
+    # 测试原有工具
     print(tools[0](test_node_label))  # 获取上文
     print(tools[1](test_node_label))  # 获取下文
     print(tools[2](test_node_label))  # 获取导入语句
     print(tools[3](test_node_label))  # 获取涉及的名称
     print(tools[4](test_node_label))  # 获取 one-hop 调用节点
     print(tools[5](test_node_label))  # 获取节点详细信息
+
+    # 测试新工具
+    print(tools[6]("What is Python programming?"))  # 测试 DuckDuckGo 搜索
+    unformatted_code = "def hello_world():print('Hello, World!')"
+    print(tools[7](unformatted_code))  # 测试代码格式化

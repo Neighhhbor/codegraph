@@ -35,13 +35,6 @@ def transform_completion_path(completion_path):
     return transformed_path
 
 def generate_prompt(data, target_function_node):
-    """
-    根据给定的数据字典生成相应的 prompt。
-    
-    :param data: 包含 namespace, input_code 等关键信息的字典
-    :param target_function_node: 真实节点名，即 `transformed_path.namespace`
-    :return: 生成的 prompt 字符串
-    """
     input_code = data.get("input_code", "")
     function_name = data.get("function_name", "")
     
@@ -56,36 +49,36 @@ def generate_prompt(data, target_function_node):
 
     ### Instructions:
 
-    1. **Attempt to Complete the Function**:
-        - If the current information (function signature and target node name) provides enough context to confidently complete the function, proceed and complete it directly without further investigation.
-
+    1. **Use DuckDuckGo for Preliminary Research**:
+        - Use the `duckduckgo_search_tool` with relevant keywords to gather any contextual information that may help in understanding the purpose or domain-specific usage of `{function_name}`.
+        
+    2. **Attempt to Complete the Function**:
+        - If the search results and the current information (function signature and target node name) provide enough context, proceed to complete the function without further investigation.
+        
         Complete the function in the following format:
         ```python
         def {function_name}(...):
             # complete code
         ```
 
-    2. **Use Tools to Gather Additional Information (If Needed)**:
-        - If the provided information is not enough, use the available tools to gather more context from the code repository graph. These tools will help you fetch relevant parts of the code and its dependencies:
-
-        - **`get_context_above`**: This tool retrieves the code immediately above the target function in the same file/module. Use it to understand preceding definitions or the function's environment.
+    3. **Use Tools to Gather Additional Information (If Needed)**:
+        - If additional context is still required, use the following tools to gather more information:
         
-        - **`get_context_below`**: This tool retrieves the code immediately following the target function. This could provide insights into subsequent definitions or references to the function.
+        - **`get_context_above`**: Retrieves the code immediately above the target function in the same file/module.
         
-        - **`get_import_statements`**: Use this tool to extract all the import statements in the current module. This will help you understand external dependencies or libraries required by the function.
+        - **`get_context_below`**: Retrieves the code immediately following the target function.
         
-        - **`find_one_hop_call_nodes`**: This tool identifies functions directly calling or being called by the target function within the code graph. It helps to see how the target function is connected to others.
+        - **`get_import_statements`**: Extracts all import statements in the current module.
         
-        - **`get_node_info`**: Retrieve detailed information (such as attributes or metadata) about any specific node in the code graph, including the target function itself, to gain a deeper understanding of its role.
-
-    3. **Key Objective**:
-        - Your goal is to gather enough information using the tools provided to fully understand the code repository and confidently complete the target function.
-        - **Do not output any explanation or natural language description**. Only return the complete code for the function in a well-formatted Python syntax.
-    
-    4. **Final Output**:
-        - Ensure that you **only return the fully completed function** as your final output, without any additional information, comments, or descriptions.
+        - **`find_one_hop_call_nodes`**: Identifies functions directly calling or being called by the target function within the code graph.
+        
+        - **`get_node_info`**: Retrieves detailed information about any specific node in the code graph.
+        
+    4. **Final Output and Black Code Formatting**:
+        - Once you have completed the function, use the `format_code_tool` to format the code using Black to ensure it adheres to Python standards.
+        
+        - Your final output should be the fully completed and formatted function code, without any additional information, comments, or descriptions.
     """
-
     return prompt.strip()
 
 

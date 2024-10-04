@@ -111,10 +111,10 @@ if __name__ == "__main__":
     graph_data = read_data_jsonl(DATA_FILE)
 
     # 读取 prompt.jsonl 的前 5 条数据用于测试
-    prompt_data = read_prompts_from_jsonl(PROMPT_FILE, max_entries=3)
+    prompt_data = read_prompts_from_jsonl(PROMPT_FILE, max_entries=5)
 
     # 执行 agent 并生成补全代码
-    agent_results = generate_agent_outputs(prompt_data, graph_data, max_count=3)
+    agent_results = generate_agent_outputs(prompt_data, graph_data, max_count=5)
 
     print(f"Generated {len(agent_results)} entries and saved to {OUTPUT_FILE}")
 
