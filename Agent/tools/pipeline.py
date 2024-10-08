@@ -91,7 +91,7 @@ def generate_agent_outputs(data, graph_data, max_count=5):
         # 生成 JSONL 格式的输出
         result = {
             "namespace": namespace,
-            "completion": clean_completion  # 使用清理后的代码
+            "completions": clean_completion  # 使用清理后的代码
         }
 
         results.append(result)

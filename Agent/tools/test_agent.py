@@ -23,6 +23,7 @@ def _set_env(var: str):
 _set_env("LANGCHAIN_API_KEY")
 _set_env("LANGCHAIN_TRACING_V2")
 _set_env("OPENAI_API_KEY")
+_set_env("RIZA_API_KEY")
 
 # Initialize the model to use
 model = ChatOpenAI(model="gpt-4o-mini", temperature=0)
@@ -58,8 +59,7 @@ def run_agent_for_entry(target_node_label: str, prompt: str, graph_name: str):
     memory = MemorySaver()
 
     sys_prompt = (
-        "You are a professional code consultant. You will help me understand the community structure "
-        "of my repository code graph and assist in completing code functions with context-based information."
+       "You are an expert python programmer, pay attention to think step by step and reason yourself to the correct decisions to make sure we get it right. You need to implement source code based on the following tools."
     )
 
     # 动态构建图的路径
@@ -84,7 +84,7 @@ def run_agent_for_entry(target_node_label: str, prompt: str, graph_name: str):
     })
 
     # Execute the graph agent and capture results
-    with tracing_v2_enabled(project_name="tool-user"):
+    with tracing_v2_enabled(project_name="pipeline"):
         # print_stream(graph_agent.stream(inputs, config=config, stream_mode="values"))
          agent_output = list(graph_agent.stream(inputs, config=config, stream_mode="values"))[-1]["messages"][-1].content.strip()
 
@@ -92,8 +92,8 @@ def run_agent_for_entry(target_node_label: str, prompt: str, graph_name: str):
 if __name__ == "__main__":
     # Define the namespace and prompt (for example)
 
-    target_node_label = "mistune.mistune.src.mistune.toc.add_toc_hook"
-    prompt ="Your task is to complete the function `add_toc_hook` in a code repository.\n\n    - **Namespace**: `mistune.mistune.src.mistune.toc.add_toc_hook`\n    - **Function signature**:\n    ```python\n    def add_toc_hook(md, min_level=1, max_level=3, heading_id=None):\n\n    \"\"\"\n    This function adds a hook to save table of contents (TOC) items into the state.env. It is usually helpful for doc generator.\n    Input-Output Arguments\n    :param md: Markdown instance. The instance of the Markdown class.\n    :param min_level: Integer. The minimum heading level to include in the TOC.\n    :param max_level: Integer. The maximum heading level to include in the TOC.\n    :param heading_id: Function. A function to generate heading_id.\n    :return: No return values.\n    \"\"\"\n    ```\n\n    You can use the following tools to gather the necessary context before completing the function:\n    - **`get_context_above`**: Fetch code context above the function.\n    - **`get_context_below`**: Fetch code context below the function.\n    - **`get_import_statements`**: Retrieve module import statements.\n    - **`find_one_hop_call_nodes`**: Find related function call nodes.\n    - **`get_node_info`**: Get detailed information about any node in the graph.\n\n    These tools can be applied to the current function or any other nodes you find in the process to gather necessary information.\n\n    Once you have gathered enough information, complete the function and return **only the function's code**.\n\n    Ensure the response contains only the complete code for the function, formatted correctly for the repository."
+    target_node_label = "mistune.src.mistune.toc.add_toc_hook"
+    prompt ="Your task is to complete the function `add_toc_hook` in a code repository.\n\n    - **Target Node Name**: `mistune.src.mistune.toc.add_toc_hook`\n    - **Function signature**:\n    ```python\n    def add_toc_hook(md, min_level=1, max_level=3, heading_id=None):\n\n    \"\"\"\n    This function adds a hook to save table of contents (TOC) items into the state.env. It is usually helpful for doc generator.\n    Input-Output Arguments\n    :param md: Markdown instance. The instance of the Markdown class.\n    :param min_level: Integer. The minimum heading level to include in the TOC.\n    :param max_level: Integer. The maximum heading level to include in the TOC.\n    :param heading_id: Function. A function to generate heading_id.\n    :return: No return values.\n    \"\"\"\n    ```\n\n    ### Instructions:\n\n    1. **Use DuckDuckGo for Preliminary Research**:\n        - Use the `duckduckgo_search_tool` with relevant keywords to gather any contextual information that may help in understanding the purpose or domain-specific usage of `add_toc_hook`.\n        \n    2. **Attempt to Complete the Function**:\n        - If the search results and the current information (function signature and target node name) provide enough context, proceed to complete the function without further investigation.\n        \n        Complete the function in the following format:\n        ```python\n        def add_toc_hook(...):\n            # complete code\n        ```\n\n    3. **Use Tools to Gather Additional Information (If Needed)**:\n        - If additional context is still required, use the following tools to gather more information:\n        \n        - **`get_context_above`**: Retrieves the code immediately above the target function in the same file/module.\n        \n        - **`get_context_below`**: Retrieves the code immediately following the target function.\n        \n        - **`get_import_statements`**: Extracts all import statements in the current module.\n        \n        - **`find_one_hop_call_nodes`**: Identifies functions directly calling or being called by the target function within the code graph.\n        \n        - **`get_node_info`**: Retrieves detailed information about any specific node in the code graph.\n        \n    4. **Final Output and Black Code Formatting**:\n        - Once you have completed the function, use the `format_code_tool` to format the code using Black to ensure it adheres to Python standards.\n        \n        - Your final output should be the fully completed and formatted function code, without any additional information, comments, or descriptions."
     graph_name = "mistune"  # Dynamically determined from project path
 
     # Run the agent for the given entry

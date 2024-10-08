@@ -10,10 +10,11 @@ import networkx as nx
 import json
 from utils import *
 from Agent.tools.replace_data import replace_groundtruth_code_with_treesitter
-
+from langchain_community.tools.riza.command import ExecPython
 from typing import List, Dict, Any
 from langchain.tools import tool
 from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_openai import ChatOpenAI
 import black
 
 
@@ -142,11 +143,35 @@ def create_tools(graph_path: str, target_function: str):
 
     # 新增 DuckDuckGo 搜索工具
     @tool
-    def duckduckgo_search_tool(query: str) -> str:
-        """使用 DuckDuckGo 进行网络搜索"""
+    def duckduckgo_search_tool(query: str) -> str: 
+        """使用 DuckDuckGo 进行网络搜索并总结结果"""
         search = DuckDuckGoSearchRun()
-        result = search.invoke(query)
-        return result if result else "No results found."
+        llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)  # 使用 GPT-4 作为 LLM
+        
+        try:
+            # 使用 DuckDuckGo 进行搜索
+            search_results = search.invoke(query)
+            
+            # 如果没有搜索结果，返回默认信息
+            if not search_results:
+                return "No results found."
+            
+            # 创建用于 LLM 总结的 prompt
+            summary_prompt = f"""
+            Summarize the following search results into a concise and informative summary:
+            
+            {search_results}
+            
+            The summary should capture the most relevant information related to the query: '{query}'.
+            """
+            
+            # 使用 GPT-4 对搜索结果进行总结
+            summary_result = llm.predict(summary_prompt)
+            
+            return summary_result if summary_result else "Failed to summarize the results."
+        
+        except Exception as e:
+            return f"Error searching and summarizing: {str(e)}"
 
     # 新增代码格式化工具
     @tool
@@ -158,6 +183,26 @@ def create_tools(graph_path: str, target_function: str):
             return code  # 如果代码已格式化，返回原代码
         except Exception as e:
             return f"Error formatting code: {str(e)}"
+    
+    @tool
+    def execute_python_code(code: str) -> str:
+        """执行 Python 代码并通过 Riza 返回结果"""
+        try:
+            # 初始化 ExecPython 工具
+            exec_tool = ExecPython()
+            
+            # 调用 Riza 的 ExecPython 工具来执行代码
+            result = exec_tool.invoke({"code": code})
+            
+            # 从 Riza 的响应中提取结果
+            if "output" in result and result["output"]:
+                return result["output"][0]["text"]
+            else:
+                return "Execution completed, but no output was returned."
+        
+        except Exception as e:
+            # 捕获并返回任何异常信息
+            return f"Error during code execution: {str(e)}"
 
     # 返回所有工具供 agent 使用
     return [
@@ -168,7 +213,8 @@ def create_tools(graph_path: str, target_function: str):
         find_one_hop_call_nodes_tool,
         get_node_info_tool,
         duckduckgo_search_tool,
-        format_code_tool
+        format_code_tool,
+        execute_python_code
     ]
 
 
@@ -183,14 +229,4 @@ if __name__ == "__main__":
     test_node_label = "mistune.src.mistune.toc.add_toc_hook"
 
     # 测试原有工具
-    print(tools[0](test_node_label))  # 获取上文
-    print(tools[1](test_node_label))  # 获取下文
-    print(tools[2](test_node_label))  # 获取导入语句
-    print(tools[3](test_node_label))  # 获取涉及的名称
-    print(tools[4](test_node_label))  # 获取 one-hop 调用节点
-    print(tools[5](test_node_label))  # 获取节点详细信息
-
-    # 测试新工具
-    print(tools[6]("What is Python programming?"))  # 测试 DuckDuckGo 搜索
-    unformatted_code = "def hello_world():print('Hello, World!')"
-    print(tools[7](unformatted_code))  # 测试代码格式化
+    print(tools[6](test_node_label))  

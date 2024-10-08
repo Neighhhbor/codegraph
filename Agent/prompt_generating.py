@@ -39,47 +39,62 @@ def generate_prompt(data, target_function_node):
     function_name = data.get("function_name", "")
     
     prompt = f"""
-    Your task is to complete the function `{function_name}` in a code repository.
+    Your task is to complete the function `{function_name}` in a code repository using a ReAct approach (Reasoning + Acting).
 
     - **Target Node Name**: `{target_function_node}`
-    - **Function signature**:
+    - **Function Signature**:
     ```python
     {input_code}
     ```
 
     ### Instructions:
 
-    1. **Use DuckDuckGo for Preliminary Research**:
-        - Use the `duckduckgo_search_tool` with relevant keywords to gather any contextual information that may help in understanding the purpose or domain-specific usage of `{function_name}`.
+    1. **Preliminary Research**:
+        - Start by using the `duckduckgo_search_tool` to gather any contextual information that might help understand the purpose or domain-specific usage of `{function_name}`.
+        - Based on the search results, reason whether you need additional context from the codebase before proceeding.
+
+    2. **Contextual Code Retrieval**:
+        - After gathering preliminary research, use the following tools in the given order to gather context related to the target function:
         
-    2. **Attempt to Complete the Function**:
-        - If the search results and the current information (function signature and target node name) provide enough context, proceed to complete the function without further investigation.
+        - **`get_context_above_tool`**: Retrieves the code immediately above the target function.
         
-        Complete the function in the following format:
+        - **`get_context_below_tool`**: Retrieves the code immediately following the target function.
+        
+        - **`get_import_statements_tool`**: Extracts all import statements in the current module.
+        
+        - **`get_involved_names_tool`**: Identifies all relevant names (classes, variables, etc.) that are involved around `{target_function_node}`.
+
+    3. **Additional Node Exploration**:
+        - If more information is needed about how the target function interacts with other parts of the codebase, use the following tools:
+        
+        - **`find_one_hop_call_nodes_tool`**: Identifies functions directly calling or being called by the target function.
+        
+        - **`get_node_info_tool`**: Retrieves detailed information about specific nodes identified in previous steps.
+
+        - You can use these tools multiple times if necessary, targeting different nodes to gather comprehensive information.
+
+    4. **Reasoning and Acting Process**:
+        - Before proceeding to complete the function, make sure you have gathered all necessary context and information.
+        
+        - Continuously assess whether the gathered information is sufficient to proceed with function completion. If not, use the tools again to gather more information.
+        
+        - Do not proceed to function completion until you are confident that you have all relevant context and information.
+
+    5. **Function Completion**:
+        - Once you have gathered enough information and context, proceed to complete the function in the following format:
         ```python
         def {function_name}(...):
             # complete code
         ```
 
-    3. **Use Tools to Gather Additional Information (If Needed)**:
-        - If additional context is still required, use the following tools to gather more information:
-        
-        - **`get_context_above`**: Retrieves the code immediately above the target function in the same file/module.
-        
-        - **`get_context_below`**: Retrieves the code immediately following the target function.
-        
-        - **`get_import_statements`**: Extracts all import statements in the current module.
-        
-        - **`find_one_hop_call_nodes`**: Identifies functions directly calling or being called by the target function within the code graph.
-        
-        - **`get_node_info`**: Retrieves detailed information about any specific node in the code graph.
-        
-    4. **Final Output and Black Code Formatting**:
-        - Once you have completed the function, use the `format_code_tool` to format the code using Black to ensure it adheres to Python standards.
-        
-        - Your final output should be the fully completed and formatted function code, without any additional information, comments, or descriptions.
+    6. **Formatting**:
+        - After completing the function, use the `format_code_tool` to format the code using Black, ensuring it adheres to Python standards.
+
+    7. **Final Output**:
+        - Your final output should be the fully completed and formatted function code. Do not include any additional information, comments, or descriptions in the output.
     """
     return prompt.strip()
+
 
 
 def save_prompts_to_jsonl(prompts, output_file):

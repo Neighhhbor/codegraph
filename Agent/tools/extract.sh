@@ -1,0 +1,1 @@
+python process_completion.py --model_type gpt --completion_file /home/sxj/Desktop/Workspace/CodeQl/gptgraph/Agent/tools/gpt-4o-mini.jsonl --output_file ./gpt-4o-mini/completion.jsonl  --data_file /home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/data.jsonl
