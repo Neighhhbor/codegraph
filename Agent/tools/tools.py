@@ -166,9 +166,9 @@ def create_tools(graph_path: str, target_function: str):
             """
             
             # 使用 GPT-4 对搜索结果进行总结
-            summary_result = llm.predict(summary_prompt)
+            summary_result = llm.invoke(summary_prompt)
             
-            return summary_result if summary_result else "Failed to summarize the results."
+            return summary_result.content if summary_result else "Failed to summarize the results."
         
         except Exception as e:
             return f"Error searching and summarizing: {str(e)}"

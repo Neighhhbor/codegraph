@@ -1,18 +1,17 @@
 import json
 import os
+from difflib import SequenceMatcher
+from tqdm import tqdm  # 引入 tqdm 用于显示进度条
 
 def read_jsonl(file_path):
     """
     读取 JSONL 文件并将其解析为 Python 对象列表。
-    
-    :param file_path: JSONL 文件的路径
-    :return: 数据列表，每个元素对应 JSONL 文件中的一行
     """
     data = []
     with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
             try:
-                data.append(json.loads(line.strip()))  # 读取每一行，并解析为 JSON 对象
+                data.append(json.loads(line.strip()))
             except json.JSONDecodeError as e:
                 print(f"Error decoding JSON: {e} in line: {line.strip()}")
     return data
@@ -21,18 +20,74 @@ def transform_completion_path(completion_path):
     """
     转换 `completion_path` 为符合 Python 导入规则的路径。
     去掉类别部分，并将 `/` 替换为 `.`。
-    
-    :param completion_path: 文件路径，如 `Text-Processing/xmnlp/xmnlp/utils/__init__.py`
-    :return: 转换后的路径，如 `xmnlp.xmnlp.utils.__init__`
     """
-    # 去掉最前面的类别部分 (Text-Processing)，然后去掉文件扩展名 `.py`
     path_without_category = "/".join(completion_path.split('/')[1:])  # 去掉第一部分
     path_without_extension = path_without_category.replace('.py', '')
-    
-    # 将路径中的 `/` 替换为 `.` 来表示 Python 导入路径
     transformed_path = path_without_extension.replace('/', '.')
-    
     return transformed_path
+
+def generate_target_function_node(namespace, transformed_path):
+    """
+    基于两重循环逐步匹配生成 target_function_node，避免重复部分。
+    """
+    transformed_parts = transformed_path.split('.')
+    namespace_parts = namespace.split('.')
+
+    overlap_length = 0
+    for i in range(len(transformed_parts)):
+        for j in range(len(namespace_parts)):
+            overlap_count = 0
+            while (i + overlap_count < len(transformed_parts) and 
+                   j + overlap_count < len(namespace_parts) and 
+                   transformed_parts[i + overlap_count] == namespace_parts[j + overlap_count]):
+                overlap_count += 1
+            overlap_length = max(overlap_length, overlap_count)
+    
+    result_parts = transformed_parts[:overlap_length]
+    result_parts.extend(namespace_parts[overlap_length:])
+    final_path = '.'.join(result_parts)
+    return final_path
+
+def calculate_edit_distance(s1, s2):
+    """
+    计算字符串之间的编辑距离。
+    """
+    return SequenceMatcher(None, s1, s2).ratio()
+
+def find_closest_function_node(candidate_node, graph_data):
+    """
+    查找与候选节点编辑距离最接近的 function 类型的节点。
+    """
+    closest_node = None
+    best_similarity = 0
+
+    for node in graph_data:
+        if node.get("type") == "function":
+            node_label = node.get("id", "")
+            similarity = calculate_edit_distance(candidate_node, node_label)
+            if similarity > best_similarity:
+                best_similarity = similarity
+                closest_node = node_label
+
+    return closest_node if closest_node else candidate_node
+
+def load_graph_data(graph_path):
+    """
+    加载指定路径下的代码图 JSON 文件，并返回其中的节点列表。
+    """
+    if not os.path.exists(graph_path):
+        print(f"Graph file not found: {graph_path}")
+        return []
+    
+    with open(graph_path, 'r', encoding='utf-8') as file:
+        graph_json = json.load(file)
+        return graph_json.get("nodes", [])
+
+def check_node_in_graph(candidate_node, graph_data):
+    """
+    检查候选节点是否存在于图数据的节点列表中。
+    """
+    return any(item["id"] == candidate_node for item in graph_data if item.get("type") == "function")
 
 def generate_prompt(data, target_function_node):
     input_code = data.get("input_code", "")
@@ -80,57 +135,41 @@ def generate_prompt(data, target_function_node):
         
         - Do not proceed to function completion until you are confident that you have all relevant context and information.
 
-    5. **Function Completion**:
+    5. **Formatting**:
+        - After completing the function, use the `format_code_tool` to format the code using Black, ensuring it adheres to Python standards.    
+        
+    6. **Function Completion**:
         - Once you have gathered enough information and context, proceed to complete the function in the following format:
+        - Your final output should be the fully completed function code. DO NOT include any additional descriptions in the output.
         ```python
         def {function_name}(...):
-            # complete code
+            # completed code
         ```
-
-    6. **Formatting**:
-        - After completing the function, use the `format_code_tool` to format the code using Black, ensuring it adheres to Python standards.
-
-    7. **Final Output**:
-        - Your final output should be the fully completed and formatted function code. Do not include any additional information, comments, or descriptions in the output.
     """
     return prompt.strip()
-
-
 
 def save_prompts_to_jsonl(prompts, output_file):
     """
     将生成的 prompt 列表保存为 JSONL 文件。
-    
-    :param prompts: 生成的 prompt 字典列表
-    :param output_file: 输出 JSONL 文件路径
     """
     with open(output_file, 'w', encoding='utf-8') as file:
         for prompt in prompts:
             json.dump(prompt, file)
             file.write('\n')
 
-def process_data_and_generate_prompts(input_file, data_json_file, output_file):
+def process_data_and_generate_prompts(input_file, data_json_file, graph_directory, output_file):
     """
     读取 JSONL 文件中的数据，并为每一条数据生成对应的 prompt，然后保存为新的 JSONL 文件。
-    
-    :param input_file: 输入的 JSONL 文件路径
-    :param data_json_file: 存储每条数据的图信息的 JSON 文件路径
-    :param output_file: 输出的 JSONL 文件路径
     """
-    # 读取输入文件
     data_list = read_jsonl(input_file)
-    
-    # 读取 data.jsonl 文件中的项，获取 project_path
     project_data = read_jsonl(data_json_file)
 
-    # 存储生成的 prompts
     prompts = []
     
-    # 为每条数据生成 prompt
-    for idx, data in enumerate(data_list):
+    # 使用 tqdm 显示进度条
+    for idx, data in enumerate(tqdm(data_list, desc="Processing Data", unit="entry")):
         raw_namespace = data.get("namespace", "")
         
-        # 根据 data.jsonl 获取 graph_name 和 completion_path
         project_info = next((proj for proj in project_data if proj["namespace"] == raw_namespace), None)
         if project_info:
             completion_path = project_info.get("completion_path", "")
@@ -138,16 +177,26 @@ def process_data_and_generate_prompts(input_file, data_json_file, output_file):
             print(f"No project found for namespace: {raw_namespace}")
             continue
         
-        # 生成真实的 target_function_node
+        # 生成初步的 target_function_node
         transformed_path = transform_completion_path(completion_path)
-        target_function_node = f"{transformed_path}.{raw_namespace.split('.')[-1]}"
+        candidate_node = generate_target_function_node(raw_namespace, transformed_path)
+        
+        # 加载对应的代码图
+        graph_name = transformed_path.split('.')[0]  # 获取代码图的名称
+        graph_path = os.path.join(graph_directory, f"{graph_name}.json")
+        graph_data = load_graph_data(graph_path)
+        
+        # 检查 candidate_node 是否存在于图中
+        if not check_node_in_graph(candidate_node, graph_data):
+            # 如果不存在，查找编辑距离最小的函数节点
+            candidate_node = find_closest_function_node(candidate_node, graph_data)
         
         # 生成 prompt
-        prompt_text = generate_prompt(data, target_function_node)
+        prompt_text = generate_prompt(data, candidate_node)
         
         prompt_data = {
             "namespace": raw_namespace,
-            "target_function_node_label": target_function_node ,  # 添加真实的 target_function_node_label 字段
+            "target_function_node_label": candidate_node,
             "prompt": prompt_text,
         }
         prompts.append(prompt_data)
@@ -156,8 +205,9 @@ def process_data_and_generate_prompts(input_file, data_json_file, output_file):
     save_prompts_to_jsonl(prompts, output_file)
 
 # 调用函数，生成所有的 prompts 并保存到 JSONL 文件
-input_file_path = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Experiments/prompt/LM_prompt_elements.jsonl"  # 替换为你的 JSONL 文件路径
-data_json_path = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/data.jsonl"  # 替换为包含项目路径的 data.jsonl 文件路径
-output_file_path = "./prompt.jsonl"  # 替换为你想要保存的 JSONL 文件路径
+input_file_path = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Experiments/prompt/LM_prompt_elements.jsonl"
+data_json_path = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/data.jsonl"
+graph_directory = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs"
+output_file_path = "./prompt.jsonl"
 
-process_data_and_generate_prompts(input_file_path, data_json_path, output_file_path)
+process_data_and_generate_prompts(input_file_path, data_json_path, graph_directory, output_file_path)

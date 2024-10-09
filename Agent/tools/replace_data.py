@@ -104,10 +104,11 @@ def replace_groundtruth_code_with_treesitter(codegraph: nx.DiGraph, target_funct
 
     # 获取目标函数、类、模块的相关节点
     involved_names = get_involved_names(target_function, codegraph)
-
+    function_name = target_function.split('.')[-1]  # 获取函数名
+    
     # 替换函数节点代码
     if 'function' in involved_names:
-        function_name = involved_names['function'].split('.')[-1]  # 获取函数名
+        # function_name = involved_names['function'].split('.')[-1]  # 获取函数名
         modified_node = replace_code_in_node(involved_names['function'], codegraph.nodes[involved_names['function']], function_name)
         if modified_node:
             modified_nodes.add(modified_node)

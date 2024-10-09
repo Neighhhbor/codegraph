@@ -1,14 +1,18 @@
 import json
 import os
 import re
+import sys
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from openai import OpenAIError
 
 # Import the agent-related functions
 from test_agent import run_agent_for_entry
 
 # 配置文件路径常量
 PROMPT_FILE = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/Agent/prompt.jsonl"  # 替换为你的 prompt.jsonl 文件路径
-DATA_FILE = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/data.jsonl"      # 替换为你的 data.jsonl 文件路径
-OUTPUT_FILE = "gpt-4o-mini.jsonl"                                                # 输出的 jsonl 文件路径
+DATA_FILE = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/data.jsonl"    # 替换为你的 data.jsonl 文件路径
+OUTPUT_FILE = "gpt-4o-mini.jsonl"                                               # 输出的 jsonl 文件路径
 
 def read_prompts_from_jsonl(file_path, max_entries=None):
     """
@@ -43,6 +47,19 @@ def read_data_jsonl(file_path):
 
     return data
 
+def load_existing_completions(file_path):
+    """
+    读取已有的补全结果，返回一个包含所有 `namespace` 的集合。
+    """
+    if not os.path.exists(file_path):
+        return set()
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    existing_namespaces = {json.loads(line.strip()).get("namespace") for line in lines if line.strip()}
+    return existing_namespaces
+
 def write_output_to_jsonl(output_data, file_path):
     """
     将生成的输出数据写入到 JSONL 文件中。
@@ -55,54 +72,74 @@ def clean_code_markdown(md_content):
     """
     移除 markdown 格式，提取出 Python 代码
     """
-    # 使用正则表达式去除 ```python 和 ``` 等标记
     clean_code = re.sub(r'```python\n(.*?)\n```', r'\1', md_content, flags=re.DOTALL)
     return clean_code.strip()
 
-def generate_agent_outputs(data, graph_data, max_count=5):
+def process_single_entry(entry, graph_data, existing_namespaces, retries=3):
     """
-    对每条 `namespace` 和 `prompt` 执行 agent 流程，并将结果保存为 JSONL 格式。
+    处理单个 entry，执行 agent 流程并返回结果。
+    """
+    namespace = entry.get("namespace")
+    target_node_label = entry.get("target_function_node_label")
+    prompt = entry.get("prompt")
+
+    if not namespace or not prompt:
+        return None, f"Skipping entry: Missing namespace or prompt."
+
+    if namespace in existing_namespaces:
+        return None, f"Skipping entry: Namespace {namespace} already has a completion."
+
+    graph_name = graph_data.get(namespace)
+    if not graph_name:
+        return None, f"Skipping entry: Missing graph name for namespace {namespace}."
+
+    print(f"Running agent for namespace: {namespace} target {target_node_label}...")
+
+    for attempt in range(1, retries + 1):
+        try:
+            completion = run_agent_for_entry(target_node_label, prompt, graph_name)
+            clean_completion = clean_code_markdown(completion)
+            result = {
+                "namespace": namespace,
+                "completions": clean_completion
+            }
+            return result, None
+        except OpenAIError as e:
+            wait_time = 10 * attempt
+            print(f"Rate limit reached for {namespace}. Attempt {attempt}/{retries}. Waiting for {wait_time} seconds before retrying...")
+            time.sleep(wait_time)
+        except Exception as e:
+            return None, f"Error in processing {namespace}: {e}"
+
+    return None, f"Failed to process {namespace} after {retries} retries due to rate limit."
+
+def generate_agent_outputs_concurrently(data, graph_data, existing_namespaces, max_workers=2):
+    """
+    使用并发处理每条 `namespace` 和 `prompt`，并将结果保存为 JSONL 格式。
     """
     results = []
-    count = 0
 
-    for entry in data:
-        namespace = entry.get("namespace")
-        target_node_label = entry.get("target_function_node_label")
-        prompt = entry.get("prompt")
-
-        if not namespace or not prompt:
-            print(f"Skipping entry {count}: Missing namespace or prompt.")
-            continue
-
-        # 从 data.jsonl 获取图的名称
-        graph_name = graph_data.get(namespace)
-        if not graph_name:
-            print(f"Skipping entry {count}: Missing graph name for namespace {namespace}.")
-            continue
-
-        # 调用 agent 生成补全代码
-        print(f"Running agent for namespace: {namespace} target{target_node_label} (Entry {count + 1})...")
-        completion = run_agent_for_entry(target_node_label, prompt, graph_name)
-
-        # 移除 markdown 格式，保留纯代码
-        clean_completion = clean_code_markdown(completion)
-
-        # 生成 JSONL 格式的输出
-        result = {
-            "namespace": namespace,
-            "completions": clean_completion  # 使用清理后的代码
+    # 使用线程池执行并发任务
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {
+            executor.submit(process_single_entry, entry, graph_data, existing_namespaces): entry for entry in data
         }
 
-        results.append(result)
-        count += 1
+        for future in as_completed(futures):
+            try:
+                result, error = future.result()
+                if error:
+                    print(error)
+                    continue
 
-        # 每生成一个条目后立即写入到文件中，防止中途程序出错导致数据丢失
-        write_output_to_jsonl([result], OUTPUT_FILE)
+                if result:
+                    # 每生成一个条目后立即写入到文件中，防止中途程序出错导致数据丢失
+                    write_output_to_jsonl([result], OUTPUT_FILE)
+                    results.append(result)
+            except Exception as e:
+                print(f"Error processing entry: {e}")
 
-        # 控制生成数量
-        if count >= max_count:
-            break
+        print("Executor shutdown complete.")
 
     return results
 
@@ -110,12 +147,16 @@ if __name__ == "__main__":
     # 读取 data.jsonl 中的图信息
     graph_data = read_data_jsonl(DATA_FILE)
 
-    # 读取 prompt.jsonl 的前 5 条数据用于测试
-    prompt_data = read_prompts_from_jsonl(PROMPT_FILE, max_entries=5)
+    # 读取 prompt.jsonl 的所有数据用于测试
+    prompt_data = read_prompts_from_jsonl(PROMPT_FILE)
 
-    # 执行 agent 并生成补全代码
-    agent_results = generate_agent_outputs(prompt_data, graph_data, max_count=5)
+    # 加载已有的补全结果
+    existing_namespaces = load_existing_completions(OUTPUT_FILE)
 
-    print(f"Generated {len(agent_results)} entries and saved to {OUTPUT_FILE}")
+    # 使用并发执行 agent 并生成补全代码
+    agent_results = generate_agent_outputs_concurrently(prompt_data, graph_data, existing_namespaces)
 
+    print(f"Generated {len(agent_results)} new entries and saved to {OUTPUT_FILE}")
 
+    # 强制退出，确保所有资源释放
+    sys.exit(0)
