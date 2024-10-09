@@ -1,5 +1,5 @@
 import os
-from semantic_analyzer import SemanticAnalyzer
+from embedding.semantic_analyzer import SemanticAnalyzer
 from code_graph import CodeGraph
 import networkx as nx
 import logging

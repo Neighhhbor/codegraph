@@ -6,8 +6,8 @@ from code_graph import CodeGraph
 from parsers.contains_parser import ContainsParser  # 引入包含关系的解析器
 from parsers.import_parser import ImportParser  # 引入 import 关系的解析器
 from parsers.call_parser import CallParser  # 引入调用关系的解析器
-from semantic_analyzer import SemanticAnalyzer  # 引入语义分析器
-from save_similarity_data import save_similarity_to_csv, save_similarity_to_json  # 保存相似度数据的函数
+from embedding.semantic_analyzer import SemanticAnalyzer  # 引入语义分析器
+from embedding.save_similarity_data import save_similarity_to_csv, save_similarity_to_json  # 保存相似度数据的函数
 import config
 import logging
 import matplotlib
