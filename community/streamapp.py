@@ -114,7 +114,7 @@ def display_community_info(community_id, partition, ig_G):
                 formatted_code = node['code'].replace('\\n', '\n').replace('\\t', '\t')
                 st.code(formatted_code, language="python")
         else:
-            st.write("No code available for this node.")
+            st.write("         ")
 
 def plot_interactive_communities(ig_G, partition):
     """使用 Pyvis 绘制交互式社区检测图"""
@@ -186,23 +186,35 @@ def analyze_communities(graph_filename, algorithm_name):
             plot_community(selected_community, partition, ig_G)
 
 
+def get_json_files(directory):
+    """获取指定目录下的所有 JSON 文件"""
+    return [f for f in os.listdir(directory) if f.endswith('.json')]
+
 if __name__ == "__main__":
-    st.title("Community Detection Analysis")
-    graph_json_path = st.text_input("Enter the graph JSON file path", os.path.join(RESULTDIR, "OpenHands.json"))
+    st.title("社区检测分析")
+    
+    # 获取 results 目录下的所有 JSON 文件
+    json_files = get_json_files(RESULTDIR)
+    
+    # 让用户选择要分析的文件
+    selected_file = st.selectbox("选择要分析的图文件", json_files)
+    
+    graph_json_path = os.path.join(RESULTDIR, selected_file)
+    
     algorithm_name = st.selectbox(
-        "Select Community Detection Algorithm",
+        "选择社区检测算法",
         ["Leiden", "Louvain", "Label Propagation", "Walktrap", "Infomap", "Multilevel (METIS)"]
     )
 
-    if 'ig_G' not in st.session_state or st.session_state.get('algorithm_name') != algorithm_name or st.button("Analyze"):
+    if 'ig_G' not in st.session_state or st.session_state.get('algorithm_name') != algorithm_name or st.button("分析"):
         analyze_communities(graph_json_path, algorithm_name)
     else:
         ig_G = st.session_state['ig_G']
         partition = st.session_state['partition']
-        st.write(f"Community Count: {len(set(partition.membership))}")
-        st.write(f"Modularity: {partition.modularity if hasattr(partition, 'modularity') else 'N/A'}")
-        # plot_interactive_communities(ig_G, partition)
-        selected_community = st.selectbox("Select a community to view details", range(len(set(partition.membership))))
+        st.write(f"社区数量: {len(set(partition.membership))}")
+        st.write(f"模块度: {partition.modularity if hasattr(partition, 'modularity') else 'N/A'}")
+        
+        selected_community = st.selectbox("选择要查看详情的社区", range(len(set(partition.membership))))
         if selected_community is not None:
             display_community_info(selected_community, partition, ig_G)
             plot_community(selected_community, partition, ig_G)
