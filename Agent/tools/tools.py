@@ -16,6 +16,16 @@ from langchain.tools import tool
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
 import black
+from gptgraph.embedding.semantic_analyzer import SemanticAnalyzer
+from gptgraph.code_graph.code_graph import CodeGraph
+from .graph_utils import (
+    find_target_node_and_parent,
+    get_context_siblings,
+    find_module_ancestor,
+    extract_import_statements,
+    get_involved_names,
+    replace_groundtruth_code_with_treesitter
+)
 
 
 class CodeGraphToolsWrapper:
@@ -27,6 +37,7 @@ class CodeGraphToolsWrapper:
         """
         self.graph_path = graph_path
         self.codegraph = self._load_and_process_graph(target_function)
+        self.semantic_analyzer = SemanticAnalyzer()
 
     def _load_and_process_graph(self, target_function: str) -> nx.DiGraph:
         """
@@ -106,6 +117,34 @@ class CodeGraphToolsWrapper:
         node_info = self.codegraph.nodes[node_label]
         return {"node_info": node_info}
 
+    def find_most_similar_function(self, query_function: str):
+        functions = [(n, d) for n, d in self.codegraph.nodes(data=True) if d['type'] == 'function']
+        query_embedding = self.semantic_analyzer.embed_code(query_function)
+        
+        max_similarity = -1
+        most_similar_node = None
+        
+        for node, data in functions:
+            code = data.get('code', '')
+            node_embedding = self.semantic_analyzer.embed_code(code)
+            similarity = self.semantic_analyzer.calculate_similarity(query_embedding, node_embedding)
+            
+            if similarity > max_similarity:
+                max_similarity = similarity
+                most_similar_node = node
+        
+        if most_similar_node:
+            node_data = self.codegraph.nodes[most_similar_node]
+            return {
+                "node_label": most_similar_node,
+                "similarity": max_similarity,
+                "code": node_data.get('code', ''),
+                "type": node_data.get('type', ''),
+                "name": node_data.get('name', '')
+            }
+        else:
+            return {"message": "No similar function found."}
+
 
 # 将工具类包裹成 langchain 的工具
 def create_tools(graph_path: str, target_function: str):
@@ -140,6 +179,11 @@ def create_tools(graph_path: str, target_function: str):
     def get_node_info_tool(node_label: str) -> Dict[str, Any]:
         """获取节点详细信息"""
         return wrapper.get_node_info(node_label)
+
+    @tool
+    def find_most_similar_function_tool(query_function: str) -> Dict[str, Any]:
+        """找到与给定函数最相似的函数"""
+        return wrapper.find_most_similar_function(query_function)
 
     # 新增 DuckDuckGo 搜索工具
     @tool
@@ -214,7 +258,8 @@ def create_tools(graph_path: str, target_function: str):
         get_node_info_tool,
         duckduckgo_search_tool,
         format_code_tool,
-        execute_python_code
+        execute_python_code,
+        find_most_similar_function_tool
     ]
 
 

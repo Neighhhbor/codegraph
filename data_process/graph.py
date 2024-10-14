@@ -80,13 +80,13 @@ def generate_code_graph(repo_path):
 def process_repositories(base_dir):
     """遍历目录并为每个代码库生成 JSON 文件，使用并发处理。"""
     repos = []
-    for category in os.listdir(base_dir):
-        category_path = os.path.join(base_dir, category)
-        if os.path.isdir(category_path):
-            for repo in os.listdir(category_path):
-                repo_path = os.path.join(category_path, repo)
-                if os.path.isdir(repo_path):
-                    repos.append(repo_path)
+    # for category in os.listdir(base_dir):
+    #     category_path = os.path.join(base_dir, category)
+    #     if os.path.isdir(category_path):
+    for repo in os.listdir(base_dir):
+        repo_path = os.path.join(base_dir, repo)
+        if os.path.isdir(repo_path):
+            repos.append(repo_path)
 
     # 使用进程池并发处理每个代码库，限制最大并发数为 MAX_WORKERS
     with ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -103,5 +103,5 @@ def process_repositories(base_dir):
 
 
 if __name__ == "__main__":
-    base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Source_Code'  # 根据你的实际路径设置
+    base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/Repos'  # 根据你的实际路径设置
     process_repositories(base_dir)

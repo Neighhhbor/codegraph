@@ -7,6 +7,7 @@ import json
 import os
 from pyvis.network import Network
 import streamlit.components.v1 as components
+import metis  # 导入 METIS 库
 
 # 设置页面为宽屏布局
 st.set_page_config(layout="wide")
@@ -14,7 +15,7 @@ st.set_page_config(layout="wide")
 RESULTDIR = "results"
 
 def load_graph_from_json(filename):
-    """从 NetworkX 导出的 JSON 文件加载图"""
+    """从 JSON 文件加载图"""
     with open(filename, 'r') as infile:
         graph_data = json.load(infile)
 
@@ -44,11 +45,46 @@ def apply_community_detection(algorithm_name, ig_G):
         partition = ig_G.community_walktrap().as_clustering()
     elif algorithm_name == "Infomap":
         partition = ig_G.community_infomap()
+    elif algorithm_name == "Multilevel (METIS)":
+        partition = apply_multilevel_partitioning(ig_G)
     else:
         st.error(f"Unknown algorithm: {algorithm_name}")
         return None
 
     return partition
+
+def apply_multilevel_partitioning(ig_G):
+    """使用 METIS 进行多级划分"""
+    # 将 igraph 图转换为 NetworkX 图
+    import networkx as nx
+    G_nx = nx.Graph()
+
+    for vertex in ig_G.vs:
+        G_nx.add_node(vertex.index, **vertex.attributes())
+
+    for edge in ig_G.es:
+        source, target = edge.source, edge.target
+        G_nx.add_edge(source, target, weight=edge["weight"] if "weight" in edge.attributes() else 1)
+
+    # 使用 METIS 进行划分，划分为 4 个部分（可根据需要调整）
+    edgecuts, parts = metis.part_graph(G_nx, nparts=4)
+    
+    # 将 METIS 的划分结果转换为 igraph 的格式
+    membership = parts
+    num_communities = max(membership) + 1
+
+    # 创建伪分区对象，兼容 igraph 分区结构
+    class PseudoPartition:
+        def __init__(self, membership):
+            self.membership = membership
+            self.num_communities = len(set(membership))
+        
+        @property
+        def modularity(self):
+            # 计算模块度（简单计算）
+            return ig_G.modularity(membership)
+
+    return PseudoPartition(membership)
 
 def plot_community(community_id, partition, ig_G):
     """绘制单个社区并显示"""
@@ -127,7 +163,7 @@ def plot_interactive_communities(ig_G, partition):
         st.write("Failed to generate HTML file")
 
 def analyze_communities(graph_filename, algorithm_name):
-    """执行社区分析并绘图"""
+    """执行社区分析并显示社区数量和模块度"""
     ig_G = load_graph_from_json(graph_filename)
     partition = apply_community_detection(algorithm_name, ig_G)
 
@@ -136,23 +172,26 @@ def analyze_communities(graph_filename, algorithm_name):
         st.session_state['partition'] = partition
         st.session_state['algorithm_name'] = algorithm_name
 
-        st.write(f"Community Count: {len(partition)}")
-        st.write(f"Modularity: {partition.modularity if hasattr(partition, 'modularity') else 'N/A'}")
+        # 显示社区数量和模块度
+        community_count = len(set(partition.membership))
+        modularity_score = partition.modularity if hasattr(partition, 'modularity') else 'N/A'
+        st.write(f"**Selected Algorithm:** {algorithm_name}")
+        st.write(f"**Community Count:** {community_count}")
+        st.write(f"**Modularity:** {modularity_score}")
 
-        plot_interactive_communities(ig_G, partition)
-
-        selected_community = st.selectbox("Select a community to view details", range(len(set(partition.membership))))
-
+        # 仅在用户选择社区时显示详细信息
+        selected_community = st.selectbox("Select a community to view details", range(community_count))
         if selected_community is not None:
             display_community_info(selected_community, partition, ig_G)
             plot_community(selected_community, partition, ig_G)
 
+
 if __name__ == "__main__":
     st.title("Community Detection Analysis")
-    graph_json_path = st.text_input("Enter the graph JSON file path", os.path.join(RESULTDIR, "autogen.json"))
+    graph_json_path = st.text_input("Enter the graph JSON file path", os.path.join(RESULTDIR, "OpenHands.json"))
     algorithm_name = st.selectbox(
         "Select Community Detection Algorithm",
-        ["Leiden", "Louvain", "Label Propagation", "Walktrap", "Infomap"]
+        ["Leiden", "Louvain", "Label Propagation", "Walktrap", "Infomap", "Multilevel (METIS)"]
     )
 
     if 'ig_G' not in st.session_state or st.session_state.get('algorithm_name') != algorithm_name or st.button("Analyze"):
@@ -160,9 +199,9 @@ if __name__ == "__main__":
     else:
         ig_G = st.session_state['ig_G']
         partition = st.session_state['partition']
-        st.write(f"Community Count: {len(partition)}")
+        st.write(f"Community Count: {len(set(partition.membership))}")
         st.write(f"Modularity: {partition.modularity if hasattr(partition, 'modularity') else 'N/A'}")
-        plot_interactive_communities(ig_G, partition)
+        # plot_interactive_communities(ig_G, partition)
         selected_community = st.selectbox("Select a community to view details", range(len(set(partition.membership))))
         if selected_community is not None:
             display_community_info(selected_community, partition, ig_G)

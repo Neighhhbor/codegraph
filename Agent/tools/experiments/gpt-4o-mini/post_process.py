@@ -31,19 +31,22 @@ def process_jsonl_file(input_file: Path, output_file: Path):
             for line in f:
                 entry = json.loads(line)
                 namespace = entry.get('namespace', 'unknown')
-                completion = entry.get('completions', '')
-                
-                # 提取纯代码
-                code = extract_code(completion)
+                completions = entry.get('completions', [])
+
+                # 提取每个 completion 中的纯代码部分
+                extracted_codes = [extract_code(completion) for completion in completions]
+
+                # 过滤掉空字符串，确保只有有效的代码部分
+                extracted_codes = [code for code in extracted_codes if code]
 
                 # 创建新的 JSON 对象，包含提取后的代码
                 new_entry = {
                     "namespace": namespace,
-                    "completions": code
+                    "completions": extracted_codes
                 }
                 
                 # 将新对象写入输出文件
-                out_f.write(json.dumps(new_entry) + '\n')
+                out_f.write(json.dumps(new_entry, ensure_ascii=False) + '\n')
 
     print(f"提取完成，处理后的数据已保存到 {output_file}")
 
