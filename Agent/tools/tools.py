@@ -16,16 +16,7 @@ from langchain.tools import tool
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
 import black
-from gptgraph.embedding.semantic_analyzer import SemanticAnalyzer
-from gptgraph.code_graph.code_graph import CodeGraph
-from .graph_utils import (
-    find_target_node_and_parent,
-    get_context_siblings,
-    find_module_ancestor,
-    extract_import_statements,
-    get_involved_names,
-    replace_groundtruth_code_with_treesitter
-)
+from embedding.semantic_analyzer import SemanticAnalyzer
 
 
 class CodeGraphToolsWrapper:
@@ -188,7 +179,7 @@ def create_tools(graph_path: str, target_function: str):
     # 新增 DuckDuckGo 搜索工具
     @tool
     def duckduckgo_search_tool(query: str) -> str: 
-        """使用 DuckDuckGo 进行网络搜索并总结结果"""
+        """使用 DuckDuckGo 进��网络搜索并总结结果"""
         search = DuckDuckGoSearchRun()
         llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)  # 使用 GPT-4 作为 LLM
         
@@ -273,5 +264,36 @@ if __name__ == "__main__":
     # 测试工具
     test_node_label = "mistune.src.mistune.toc.add_toc_hook"
 
-    # 测试原有工具
-    print(tools[6](test_node_label))  
+    # 测试所有工具
+    print("测试获取上文工具:")
+    print(tools[0](test_node_label))
+
+    print("\n测试获取下文工具:")
+    print(tools[1](test_node_label))
+
+    print("\n测试获取导入语句工具:")
+    print(tools[2](test_node_label))
+
+    print("\n测试获取涉及的名称工具:")
+    print(tools[3](test_node_label))
+
+    print("\n测试查找 one-hop 调用关系节点工具:")
+    print(tools[4](test_node_label))
+
+    print("\n测试获取节点详细信息工具:")
+    print(tools[5](test_node_label))
+
+    print("\n测试 DuckDuckGo 搜索工具:")
+    print(tools[6]("Python programming"))
+
+    print("\n测试代码格式化工具:")
+    test_code = "def test_function(x,y):\n    return x+y"
+    print(tools[7](test_code))
+
+    print("\n测试执行 Python 代码工具:")
+    test_exec_code = "print('Hello, World!')"
+    print(tools[8](test_exec_code))
+
+    print("\n测试查找最相似函数工具:")
+    test_query_function = "def add_numbers(a, b):\n    return a + b"
+    print(tools[9](test_query_function))
