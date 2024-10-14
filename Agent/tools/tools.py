@@ -1,10 +1,25 @@
 import os
 import sys
-# 增加import路径
+import time
+from tqdm import tqdm
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+import torch
+import torch.nn as nn
+import psutil
+import socket
+
+# 设置可见的 CUDA 设备为 2 和 3
+os.environ['CUDA_VISIBLE_DEVICES'] = '2,3'
+# 设置 HuggingFace 镜像站点
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 os.environ['http_proxy'] = "http://127.0.0.1:7890"
 os.environ['https_proxy'] = "http://127.0.0.1:7890"
 os.environ['all_proxy'] = "socks5://127.0.0.1:7890"
-sys.path.append('/home/sxj/Desktop/Workspace/CodeQl/gptgraph')
+
+# 使用相对路径添加项目根目录到 Python 搜索路径
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(project_root)
 
 import networkx as nx
 import json
@@ -17,7 +32,8 @@ from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
 import black
 from embedding.semantic_analyzer import SemanticAnalyzer
-
+from Agent.tools.model_server import start_model_server, stop_model_server, MODEL_SERVER_PORT
+import atexit
 
 class CodeGraphToolsWrapper:
     def __init__(self, graph_path: str, target_function: str):
@@ -28,7 +44,51 @@ class CodeGraphToolsWrapper:
         """
         self.graph_path = graph_path
         self.codegraph = self._load_and_process_graph(target_function)
-        self.semantic_analyzer = SemanticAnalyzer()
+        self.embeddings_path = self._get_embeddings_path()
+        self.function_embeddings = self._load_or_create_embeddings()
+        
+        # 检查模型服务是否已经运行，如果没有则启动
+        if not self.is_model_server_running():
+            print("模型服务未运行，正在启动...")
+            start_model_server()
+            time.sleep(10)  # 给服务一些启动时间
+        else:
+            print("模型服务已经在运行中")
+
+    def is_model_server_running(self):
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.connect(('localhost', MODEL_SERVER_PORT))
+                s.sendall(b'status')
+                response = s.recv(1024)
+                return response == b'running'
+        except ConnectionRefusedError:
+            return False
+
+    def _get_embeddings_path(self):
+        # 为每个图创建一个唯一的嵌入文件路径
+        base_name = os.path.basename(self.graph_path)
+        return os.path.join(os.path.dirname(self.graph_path), f"{base_name}_embeddings.npz")
+
+    def _load_or_create_embeddings(self):
+        if os.path.exists(self.embeddings_path):
+            print("加载现有的嵌入...")
+            return np.load(self.embeddings_path, allow_pickle=True)
+        else:
+            print("创建新的嵌入...")
+            return self._create_and_save_embeddings()
+
+    def _create_and_save_embeddings(self):
+        functions = [(n, d) for n, d in self.codegraph.nodes(data=True) if d['type'] == 'function']
+        
+        embeddings = {}
+        for node, data in tqdm(functions, desc="生成函数嵌入"):
+            code = data.get('code', '')
+            embedding = self.get_embedding(code)
+            embeddings[node] = embedding
+
+        np.savez(self.embeddings_path, **embeddings)
+        return embeddings
 
     def _load_and_process_graph(self, target_function: str) -> nx.DiGraph:
         """
@@ -108,22 +168,36 @@ class CodeGraphToolsWrapper:
         node_info = self.codegraph.nodes[node_label]
         return {"node_info": node_info}
 
+    def get_embedding(self, text):
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.connect(('localhost', MODEL_SERVER_PORT))
+                s.sendall(f"embed:{text}".encode())
+                response = s.recv(4096)  # 假设嵌入向量不会超过4096字节
+                return np.frombuffer(response, dtype=np.float32)
+        except Exception as e:
+            print(f"获取嵌入向量时出错: {e}")
+            return None
+
     def find_most_similar_function(self, query_function: str):
-        functions = [(n, d) for n, d in self.codegraph.nodes(data=True) if d['type'] == 'function']
-        query_embedding = self.semantic_analyzer.embed_code(query_function)
+        if not self.is_model_server_running():
+            print("模型服务未运行，正在重新启动...")
+            start_model_server()
+            time.sleep(10)  # 给服务一些启动时间
         
+        query_embedding = self.get_embedding(query_function)
+        if query_embedding is None:
+            return {"message": "无法获取查询函数的嵌入向量。"}
+
         max_similarity = -1
         most_similar_node = None
-        
-        for node, data in functions:
-            code = data.get('code', '')
-            node_embedding = self.semantic_analyzer.embed_code(code)
-            similarity = self.semantic_analyzer.calculate_similarity(query_embedding, node_embedding)
-            
+
+        for node, embedding in self.function_embeddings.items():
+            similarity = cosine_similarity([query_embedding], [embedding])[0][0]
             if similarity > max_similarity:
                 max_similarity = similarity
                 most_similar_node = node
-        
+
         if most_similar_node:
             node_data = self.codegraph.nodes[most_similar_node]
             return {
@@ -134,7 +208,7 @@ class CodeGraphToolsWrapper:
                 "name": node_data.get('name', '')
             }
         else:
-            return {"message": "No similar function found."}
+            return {"message": "未找到相似函数。"}
 
 
 # 将工具类包裹成 langchain 的工具
@@ -143,7 +217,7 @@ def create_tools(graph_path: str, target_function: str):
 
     @tool
     def get_context_above_tool(node_label: str) -> Dict[str, Any]:
-        """获取上文"""
+        """取上文"""
         return wrapper.get_context_above(node_label)
 
     @tool
@@ -179,7 +253,7 @@ def create_tools(graph_path: str, target_function: str):
     # 新增 DuckDuckGo 搜索工具
     @tool
     def duckduckgo_search_tool(query: str) -> str: 
-        """使用 DuckDuckGo 进��网络搜索并总结结果"""
+        """使用 DuckDuckGo 进行网络搜索并总结结果"""
         search = DuckDuckGoSearchRun()
         llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)  # 使用 GPT-4 作为 LLM
         
@@ -187,7 +261,7 @@ def create_tools(graph_path: str, target_function: str):
             # 使用 DuckDuckGo 进行搜索
             search_results = search.invoke(query)
             
-            # 如果没有搜索结果，返回默认信息
+            # 如果没有搜索果，返回默认信息
             if not search_results:
                 return "No results found."
             
@@ -215,7 +289,7 @@ def create_tools(graph_path: str, target_function: str):
         try:
             return black.format_str(code, mode=black.FileMode())
         except black.NothingChanged:
-            return code  # 如果代码已格式化，返回原代码
+            return code  # 果代码已格式化，返回原代码
         except Exception as e:
             return f"Error formatting code: {str(e)}"
     
@@ -256,9 +330,15 @@ def create_tools(graph_path: str, target_function: str):
 
 # 测试
 if __name__ == "__main__":
-    graph_path = "/home/sxj/Desktop/Workspace/CodeQl/gptgraph/data_process/graphs/mistune.json"
+    start_time = time.time()
+    
+    print("检查模型服务是否运行...")
+    wrapper = CodeGraphToolsWrapper("/home/shixianjie/codegraph/codegraph/data_process/graphs/mistune.json", "mistune.src.mistune.toc.add_toc_hook")
+    
+    graph_path = "/home/shixianjie/codegraph/codegraph/data_process/graphs/mistune.json"
     target_function = "mistune.src.mistune.toc.add_toc_hook"
     
+    print("开始创建工具")
     tools = create_tools(graph_path, target_function)
 
     # 测试工具
@@ -268,7 +348,7 @@ if __name__ == "__main__":
     print("测试获取上文工具:")
     print(tools[0](test_node_label))
 
-    print("\n测试获取下文工具:")
+    print("\n试获取下文工具:")
     print(tools[1](test_node_label))
 
     print("\n测试获取导入语句工具:")
@@ -283,11 +363,11 @@ if __name__ == "__main__":
     print("\n测试获取节点详细信息工具:")
     print(tools[5](test_node_label))
 
-    print("\n测试 DuckDuckGo 搜索工具:")
-    print(tools[6]("Python programming"))
+    # print("\n测试 DuckDuckGo 搜索工具:")
+    # print(tools[6]("Python programming"))
 
     print("\n测试代码格式化工具:")
-    test_code = "def test_function(x,y):\n    return x+y"
+    test_code = "def test_function(x,y):\n  return x+y"
     print(tools[7](test_code))
 
     print("\n测试执行 Python 代码工具:")
@@ -297,3 +377,17 @@ if __name__ == "__main__":
     print("\n测试查找最相似函数工具:")
     test_query_function = "def add_numbers(a, b):\n    return a + b"
     print(tools[9](test_query_function))
+
+    end_time = time.time()
+    print(f"总执行时间: {end_time - start_time:.2f} 秒")
+
+    print("测试完成，程序即将退出。")
+    print("注意：模型服务仍在后台运行。如需停止，请手动终止 start_model_server.py 进程。")
+
+    # 确保所有资源都被释放
+    import gc
+    gc.collect()
+
+    # 强制退出程序
+    import os
+    os._exit(0)
