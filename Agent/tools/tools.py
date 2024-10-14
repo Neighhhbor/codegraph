@@ -68,7 +68,12 @@ class CodeGraphToolsWrapper:
     def _get_embeddings_path(self):
         # 为每个图创建一个唯一的嵌入文件路径
         base_name = os.path.basename(self.graph_path)
-        return os.path.join(os.path.dirname(self.graph_path), f"{base_name}_embeddings.npz")
+        embeddings_dir = os.path.join(os.path.dirname(os.path.dirname(self.graph_path)), 'embeddings')
+        
+        # 确保 embeddings 目录存在
+        os.makedirs(embeddings_dir, exist_ok=True)
+        
+        return os.path.join(embeddings_dir, f"{base_name}_embeddings.npz")
 
     def _load_or_create_embeddings(self):
         if os.path.exists(self.embeddings_path):
