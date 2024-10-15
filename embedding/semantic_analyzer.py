@@ -5,9 +5,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 import logging
 from sentence_transformers import SentenceTransformer
 from sklearn.preprocessing import normalize  # 导入归一化方法
+from tqdm import tqdm
 
 # 设置可见的 GPU 设备
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
 # 1. Specify preffered dimensions
 DIMENSIONS = 512
 
@@ -94,3 +95,31 @@ class SemanticAnalyzer:
                     similarities.append(similarity)
 
         return similar_pairs, similarities
+
+    def find_most_similar_function(self, query_function: str, functions):
+        query_embedding = self.embed_code(query_function)
+        
+        max_similarity = -1
+        most_similar_node = None
+        
+        # 使用 tqdm 创建进度条
+        for node, data in tqdm(functions, desc="计算相似度", unit="函数"):
+            code = data.get('code', '')
+            node_embedding = self.embed_code(code)
+            similarity = self.calculate_similarity(query_embedding, node_embedding)
+            
+            if similarity > max_similarity:
+                max_similarity = similarity
+                most_similar_node = node
+        
+        if most_similar_node:
+            node_data = self.graph.nodes[most_similar_node]
+            return {
+                "node_label": most_similar_node,
+                "similarity": max_similarity,
+                "code": node_data.get('code', ''),
+                "type": node_data.get('type', ''),
+                "name": node_data.get('name', '')
+            }
+        else:
+            return {"message": "未找到相似函数。"}

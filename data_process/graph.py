@@ -8,7 +8,9 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import glob
 
 # 动态添加模块路径
-sys.path.append('/home/sxj/Desktop/Workspace/CodeQl/gptgraph/CodeGraph')  # 修改为实际路径
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(os.path.join(parent_dir, 'CodeGraph'))
 
 from code_graph import CodeGraph
 from parsers.contains_parser import ContainsParser
@@ -111,5 +113,6 @@ def process_repositories(base_dir):
 
 
 if __name__ == "__main__":
+    base_dir = '/home/shixianjie/codegraph/codegraph/DevEval/Source_Code'  # 根据你的实际路径设置
     base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/Repos/transformers'  # 根据你的实际路径设置
     process_repositories(base_dir)
