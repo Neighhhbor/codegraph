@@ -68,6 +68,8 @@ class CodeGraphToolsWrapper:
     def _get_embeddings_path(self):
         # 为每个图创建一个唯一的嵌入文件路径
         base_name = os.path.basename(self.graph_path)
+        #去掉json后缀
+        base_name = os.path.splitext(base_name)[0]
         embeddings_dir = os.path.join(os.path.dirname(os.path.dirname(self.graph_path)), 'embeddings')
         
         # 确保 embeddings 目录存在
@@ -338,16 +340,16 @@ if __name__ == "__main__":
     start_time = time.time()
     
     print("检查模型服务是否运行...")
-    wrapper = CodeGraphToolsWrapper("/home/shixianjie/codegraph/codegraph/data_process/graphs/mistune.json", "mistune.src.mistune.toc.add_toc_hook")
+    wrapper = CodeGraphToolsWrapper("/home/shixianjie/codegraph/codegraph/data_process/graphs/albumentations.json", "albumentations.tools.make_transforms_docs.make_transforms_targets_table")
     
-    graph_path = "/home/shixianjie/codegraph/codegraph/data_process/graphs/mistune.json"
-    target_function = "mistune.src.mistune.toc.add_toc_hook"
+    graph_path = "/home/shixianjie/codegraph/codegraph/data_process/graphs/albumentations.json"
+    target_function = "albumentations.tools.make_transforms_docs.make_transforms_targets_table"
     
     print("开始创建工具")
     tools = create_tools(graph_path, target_function)
 
     # 测试工具
-    test_node_label = "mistune.src.mistune.toc.add_toc_hook"
+    test_node_label = "albumentations.tools.make_transforms_docs.make_transforms_targets_table"
 
     # 测试所有工具
     print("测试获取上文工具:")
