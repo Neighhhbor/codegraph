@@ -5,6 +5,7 @@ from tqdm import tqdm  # 导入进度条库
 import json
 import networkx as nx
 from concurrent.futures import ProcessPoolExecutor, as_completed
+import glob
 
 # 动态添加模块路径
 sys.path.append('/home/sxj/Desktop/Workspace/CodeQl/gptgraph/CodeGraph')  # 修改为实际路径
@@ -15,7 +16,7 @@ from parsers.import_parser import ImportParser
 from parsers.call_parser import CallParser
 from lsp_client import LspClientWrapper
 
-RESULTDIR = "./graphs"
+RESULTDIR = "./"
 MAX_WORKERS = 32  # 最大并行进程数
 
 # 全局日志配置
@@ -33,6 +34,13 @@ def export_graph_to_json(graph: nx.DiGraph, output_path: str):
     with open(output_path, 'w') as f:
         json.dump(graph_data, f, indent=4)  # 将图数据保存为 JSON 文件
     logging.info(f"Graph saved as JSON to: {output_path}")
+
+
+def safe_glob(pattern):
+    try:
+        return glob.glob(pattern, recursive=True)
+    except Exception:
+        return []
 
 
 def generate_code_graph(repo_path):
@@ -79,7 +87,7 @@ def generate_code_graph(repo_path):
 
 def process_repositories(base_dir):
     """遍历目录并为每个代码库生成 JSON 文件，使用并发处理。"""
-    repos = []
+    repos = ["/home/sxj/Desktop/Workspace/CodeQl/gptgraph/Repos/transformers"]
     # for category in os.listdir(base_dir):
     #     category_path = os.path.join(base_dir, category)
     #     if os.path.isdir(category_path):
@@ -103,5 +111,5 @@ def process_repositories(base_dir):
 
 
 if __name__ == "__main__":
-    base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/Repos'  # 根据你的实际路径设置
+    base_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/Repos/transformers'  # 根据你的实际路径设置
     process_repositories(base_dir)

@@ -32,35 +32,51 @@ class CallParser:
 
     def parse(self):
         """
-        解析项目中的所有 Python 文件，构建函数调用关系。
+        解析项目中的所有 Python 文件,构建函数调用关系。
         """
         py_files = self._get_py_files()
         for file in py_files:
-            self._parse_file(file)
+            try:
+                self._parse_file(file)
+            except Exception as e:
+                self.logger.warning(f"无法解析文件 {file}: {str(e)}")
 
     def _get_py_files(self):
         """
-        获取项目中所有的 Python 文件
+        获取项目中所有的 Python 文件，跳过特定目录
         """
         py_files = []
+        skip_dirs = ['templates', 'cookiecutter-template']
         for root, _, files in os.walk(self.project_path):
+            if any(skip_dir in root for skip_dir in skip_dirs):
+                continue
             for file in files:
                 if file.endswith(".py"):
-                    py_files.append(os.path.join(root, file))
+                    try:
+                        file_path = os.path.join(root, file)
+                        # 尝试打开文件以确保它是可访问的
+                        with open(file_path, "r", encoding="utf-8") as f:
+                            f.read(1)
+                        py_files.append(file_path)
+                    except Exception as e:
+                        self.logger.warning(f"跳过文件 {file_path}: {str(e)}")
         return py_files
 
     def _parse_file(self, file_path):
-        with open(file_path, "r") as file:
-            file_content = file.read()
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                file_content = file.read()
 
-        # 使用 tree-sitter 解析文件
-        tree = self.parser.parse(bytes(file_content, "utf8"))
+            # 使用 tree-sitter 解析文件
+            tree = self.parser.parse(bytes(file_content, "utf8"))
 
-        # 构建模块名称
-        module_name = self._get_module_name(file_path)
+            # 构建模块名称
+            module_name = self._get_module_name(file_path)
 
-        # 递归分析调用关系
-        self._extract_calls(tree.root_node, file_path, module_name)
+            # 递归分析调用关系
+            self._extract_calls(tree.root_node, file_path, module_name)
+        except Exception as e:
+            self.logger.warning(f"解析文件 {file_path} 时出错: {str(e)}")
 
     def _get_module_name(self, file_path):
         """根据文件路径生成模块全名"""
@@ -203,13 +219,13 @@ class CallParser:
         # 使用 tree-sitter 解析文件，生成语法树
         tree = self.parser.parse(bytes(file_content, "utf8"))
 
-        # 根据 LSP 的位置信息找到语法树中的精确节点
+        # 根据 LSP 的位置信息找到语法树中的精确节���
         target_node = tree.root_node.descendant_for_point_range((start_line, start_column), (end_line, end_column))
         if not target_node:
             self.logger.error(f"Could not locate node at ({start_line}, {start_column}) in {def_file_path}")
             return None
 
-        # 构建命名空间路径（包括文件相对项目根路径的模块路径）
+        # 构建命名空间路径（包括文件相对项目根路径的模块径）
         namespace = self._build_namespace_from_node(target_node, def_file_path)
 
         self.logger.debug(f"Resolved full function name: {namespace}")
@@ -249,17 +265,21 @@ class CallParser:
         start_line, start_column = node.start_point
         end_line, end_column = node.end_point
 
-        with open(file_path, "r") as file:
-            file_lines = file.readlines()
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                file_lines = file.readlines()
 
-        if start_line == end_line:
-            # 同一行的情况，直接从 start_column 到 end_column
-            return file_lines[start_line][start_column:end_column].strip()
-        else:
-            # 跨多行的情况，处理起始行、中间行和结束行
-            extracted_text = []
-            extracted_text.append(file_lines[start_line][start_column:].strip())
-            for line in range(start_line + 1, end_line):
-                extracted_text.append(file_lines[line].strip())
-            extracted_text.append(file_lines[end_line][:end_column].strip())
-            return " ".join(extracted_text)
+            if start_line == end_line:
+                # 同一行的情况，直接从 start_column 到 end_column
+                return file_lines[start_line][start_column:end_column].strip()
+            else:
+                # 跨多行的情况，处理起始行、中间行和结束行
+                extracted_text = []
+                extracted_text.append(file_lines[start_line][start_column:].strip())
+                for line in range(start_line + 1, end_line):
+                    extracted_text.append(file_lines[line].strip())
+                extracted_text.append(file_lines[end_line][:end_column].strip())
+                return " ".join(extracted_text)
+        except Exception as e:
+            self.logger.warning(f"无法从文件 {file_path} 提取节点文本: {str(e)}")
+            return ""

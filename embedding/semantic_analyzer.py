@@ -13,14 +13,18 @@ DIMENSIONS = 512
 
 # 2. load model
 class SemanticAnalyzer:
-    def __init__(self, model_path="/home/shixianjie/models"):
+    def __init__(self, model_path="/home/sxj/models"):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # 优先使用GPU
+        # 确保使用 GPU (如果可用)
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         # self.model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", cache_folder=model_path, device=self.device)
         # self.model = SentenceTransformer("mixedbread-ai/mxbai-embed-large-v1", cache_folder=model_path, device=self.device,truncate_dim=DIMENSIONS)
-        self.model = SentenceTransformer("dunzhang/stella_en_400M_v5", trust_remote_code=True,cache_folder=model_path, device=self.device)
+        self.model = SentenceTransformer("dunzhang/stella_en_400M_v5", trust_remote_code=True, cache_folder=model_path, device=self.device)
         # self.model = SentenceTransformer("dunzhang/stella_en_1.5B_v5", trust_remote_code=True,cache_folder=model_path, device=self.device)
+        
+        # 将模型移到指定设备
+        self.model = self.model.to(self.device)
         
         self.logger.info(f"Model loaded on device {self.device}")
 
@@ -32,8 +36,12 @@ class SemanticAnalyzer:
         Returns:
             numpy.ndarray: 代码的归一化嵌入向量。
         """
-        # 获取嵌入向量
-        embedding = self.model.encode(code_snippet)
+        # 将输入转换为 float16 (如果在 GPU 上运行)
+        if self.device.type == 'cuda':
+            with torch.cuda.amp.autocast():
+                embedding = self.model.encode(code_snippet)
+        else:
+            embedding = self.model.encode(code_snippet)
         
         # 对嵌入向量进行 L2 归一化
         normalized_embedding = normalize(embedding.reshape(1, -1), norm='l2')[0]
