@@ -4,7 +4,7 @@ import jedi
 import logging
 
 # Set up logging to help with debugging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Function to parse Python files and find import statements with their coordinates
@@ -56,9 +56,9 @@ def parse_and_resolve_imports(file_path):
         definition_path, code_snippet, docstring = resolve_import_with_jedi(file_path, line, column)
         print(f"导入模块: {name}, 位于行: {line}, 列: {column}")
         if definition_path:
-            print(f"定义位置: {definition_path}\n代码片段:\n{code_snippet}\n")
-            if docstring:
-                print(f"文档字符串:\n{docstring}\n")
+            print(f"定义位置: {definition_path}\n代码片段:\n{code_snippet[:50]}\n")
+            # if docstring:
+            #     print(f"文档字符串:\n{docstring}\n")
         else:
             print("未找到定义位置或已忽略。")
 
@@ -73,18 +73,20 @@ def resolve_import_with_jedi(file_path, line, column):
                 if definition.type == "module":
                     # If the definition is a module, return the entire module path
                     with open(definition.module_path, "r") as f:
-                        code_snippet = f.read()
+                        code_snippet = f.read()  # Limit the snippet to the first 50 characters for brevity
                     return definition.module_path, code_snippet, docstring
                 else:
-                    # If the definition is not a module, return the specific code snippet
-                    start_pos = definition.get_definition_start_position()
-                    end_pos = definition.get_definition_end_position()
-                    if start_pos and end_pos:
-                        with open(definition.module_path, "r") as f:
-                            lines = f.readlines()
-                            code_snippet = "\n".join(lines[start_pos[0] - 1:end_pos[0]]).strip()
-                    else:
-                        code_snippet = ""
+                    # If the definition is not a module, use the definition's start and end positions to extract the code
+                    start_line, start_column = definition.get_definition_start_position()
+                    end_line, end_column = definition.get_definition_end_position()
+
+                    # Extracting the full code for the function/class
+                    with open(definition.module_path, "r") as f:
+                        lines = f.readlines()
+                    start_byte = sum(len(lines[i]) for i in range(start_line - 1)) + start_column
+                    end_byte = sum(len(lines[i]) for i in range(end_line - 1)) + end_column
+                    code_snippet = "".join(lines)[start_byte:end_byte].strip()
+
                     return definition.module_path, code_snippet, docstring
     return None, None, None
 
