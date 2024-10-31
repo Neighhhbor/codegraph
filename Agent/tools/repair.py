@@ -16,8 +16,9 @@ def remove_empty_completions(input_path, output_path=None):
     with open(input_path, 'r', encoding='utf-8') as file:
         for line in file:
             entry = json.loads(line.strip())
-            # 过滤掉 completions 为空的条目
-            if entry.get("completions"):
+            # 过滤掉 completion 为空的条目，并将 completion 变为列表形式的 completions
+            if entry.get("completion"):
+                entry["completions"] = [entry.pop("completion")]
                 data.append(entry)
     
     # 将过滤后的结果写入输出文件
@@ -30,8 +31,8 @@ def remove_empty_completions(input_path, output_path=None):
 
 # 使用示例
 if __name__ == "__main__":
-    input_path = "gpt-4o-mini_without-tools.jsonl"  # 输入文件路径
-    output_path = "gpt-4o-mini_without-tools.jsonl"  # 输出文件路径（可以是同一个路径覆盖原文件）
+    input_path = "/home/shixianjie/codegraph/codegraph/Agent/tools/experiments/gpt-4o/exper1_completion.jsonl"  # 输入文件路径
+    output_path = "/home/shixianjie/codegraph/codegraph/Agent/tools/experiments/gpt-4o/exper1_completion.jsonl"  # 输出文件路径（可以是同一个路径覆盖原文件）
     
     # 调用函数，删除 completions 为空的条目
     remove_empty_completions(input_path, output_path)

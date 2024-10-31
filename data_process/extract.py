@@ -38,14 +38,18 @@ def analyze_repo(repo_path, repo_name, output_path):
     for node_fullname, node in parser.nodes.items():
         # print(node_fullname, node.node_type)
         if node.node_type == 'function':
-            functions.append({'name': node.fullname, 'code': node.code})
+            #path转化为source_code_dir的相对路径
+            node.path = os.path.relpath(node.path, source_code_dir)
+            functions.append({'name': node.fullname, 'code': node.code, 'path': node.path})
             logging.debug(f"Extracted function: {node.fullname}")
         elif node.node_type == 'class':
-            classes.append({'name': node.fullname, 'code': node.code})
+            node.path = os.path.relpath(node.path, source_code_dir)
+            classes.append({'name': node.fullname, 'code': node.code, 'path': node.path})
             logging.debug(f"Extracted class: {node.fullname}")
             for child in node.children:
                 if child.node_type == 'function':
-                    methods.append({'name': child.fullname, 'code': child.code})
+                    child.path = os.path.relpath(child.path, source_code_dir)
+                    methods.append({'name': child.fullname, 'code': child.code, 'path': child.path})
                     logging.debug(f"Extracted method: {child.fullname}")
 
     # Ensure the output directory exists

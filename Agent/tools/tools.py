@@ -33,19 +33,24 @@ from langchain_openai import ChatOpenAI
 import black
 from embedding.semantic_analyzer import SemanticAnalyzer
 from Agent.tools.model_server import start_model_server, stop_model_server, MODEL_SERVER_PORT
+from Agent.tools.import_analyzer import ImportAnalyzer
 import atexit
 
 class CodeGraphToolsWrapper:
-    def __init__(self, graph_path: str, target_function: str):
+    def __init__(self, graph_path: str, target_function: str, analyze_file_path: str, project_root_path: str):
         """
         初始化工具类，加载图数据、替换 ground truth 并存储状态
         :param graph_path: 图数据的路径
         :param target_function: 待替换 ground truth 的目标函数
+        :param analyze_file_path: 要分析的文件路径
+        :param project_root_path: 项目的根路径
         """
         self.graph_path = graph_path
         self.codegraph = self._load_and_process_graph(target_function)
         self.embeddings_path = self._get_embeddings_path()
         self.function_embeddings = self._load_or_create_embeddings()
+        self.project_root = project_root_path  # 通过参数传入的项目根路径
+        self.analyze_file_path = analyze_file_path  # 添加要分析的文件路径
         
         # 检查模型服务是否已经运行，如果没有则启动
         if not self.is_model_server_running():
@@ -68,7 +73,7 @@ class CodeGraphToolsWrapper:
     def _get_embeddings_path(self):
         # 为每个图创建一个唯一的嵌入文件路径
         base_name = os.path.basename(self.graph_path)
-        #去掉json后缀
+        # 去掉json后缀
         base_name = os.path.splitext(base_name)[0]
         embeddings_dir = os.path.join(os.path.dirname(os.path.dirname(self.graph_path)), 'embeddings')
         
@@ -116,7 +121,11 @@ class CodeGraphToolsWrapper:
             raise FileNotFoundError(f"Code graph not found at {self.graph_path}")
 
     def get_context_above(self, node_label: str) -> Dict[str, Any]:
-        """获取目标节点上文"""
+        """
+        获取目标节点上文
+        :param node_label: 目标节点标签
+        :return: 上文信息
+        """
         target_node, parent_node = find_target_node_and_parent(self.codegraph, node_label)
         context_above = get_context_siblings(self.codegraph, target_node, parent_node, "above")
         
@@ -126,7 +135,11 @@ class CodeGraphToolsWrapper:
             return {"message": "No more context above."}
 
     def get_context_below(self, node_label: str) -> Dict[str, Any]:
-        """获取目标节点下文"""
+        """
+        获取目标节点下文
+        :param node_label: 目标节点标签
+        :return: 下文信息
+        """
         target_node, parent_node = find_target_node_and_parent(self.codegraph, node_label)
         context_below = get_context_siblings(self.codegraph, target_node, parent_node, "below")
         
@@ -136,16 +149,28 @@ class CodeGraphToolsWrapper:
             return {"message": "No more context below."}
 
     def get_import_statements(self, node_label: str) -> Dict[str, str]:
-        """提取导入语句"""
+        """
+        提取导入语句
+        :param node_label: 目标节点标签
+        :return: 导入语句信息
+        """
         module_node = find_module_ancestor(self.codegraph, node_label)
         return {"import_statements": extract_import_statements(self.codegraph, module_node)}
 
     def get_involved_names(self, node_label: str) -> Dict[str, str]:
-        """获取涉及的模块、类、方法等名称"""
+        """
+        获取涉及的模块、类、方法等名称
+        :param node_label: 目标节点标签
+        :return: 涉及的名称信息
+        """
         return get_involved_names(node_label, self.codegraph)
 
     def find_one_hop_call_nodes(self, node_label: str) -> List[Dict[str, Any]]:
-        """查找 one-hop 调用关系节点"""
+        """
+        查找 one-hop 调用关系节点
+        :param node_label: 目标节点标签
+        :return: one-hop 调用关系节点信息
+        """
         one_hop_nodes = []
         for parent, child, edge_data in self.codegraph.edges(data=True):
             if edge_data.get('relationship') == 'CALLS':
@@ -168,7 +193,11 @@ class CodeGraphToolsWrapper:
         return one_hop_nodes
 
     def get_node_info(self, node_label: str) -> Dict[str, Any]:
-        """获取节点的详细信息"""
+        """
+        获取节点的详细信息
+        :param node_label: 目标节点标签
+        :return: 节点详细信息
+        """
         if node_label not in self.codegraph.nodes:
             return {"message": f"Node {node_label} not found in the graph."}
         
@@ -176,6 +205,11 @@ class CodeGraphToolsWrapper:
         return {"node_info": node_info}
 
     def get_embedding(self, text):
+        """
+        获取文本的嵌入向量
+        :param text: 要嵌入的文本
+        :return: 文本的嵌入向量
+        """
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect(('localhost', MODEL_SERVER_PORT))
@@ -187,6 +221,11 @@ class CodeGraphToolsWrapper:
             return None
 
     def find_most_similar_function(self, query_function: str):
+        """
+        找到与查询函数最相似的函数
+        :param query_function: 查询的函数代码
+        :return: 最相似的函数信息
+        """
         if not self.is_model_server_running():
             print("模型服务未运行，正在重新启动...")
             start_model_server()
@@ -217,50 +256,89 @@ class CodeGraphToolsWrapper:
         else:
             return {"message": "未找到相似函数。"}
 
+    def analyze_file_imports(self, input: str) -> Dict[str, Any]:
+        """
+        分析指定文件的导入语句
+        :return: 文件的导入语句分析结果
+        """
+        analyzer = ImportAnalyzer(self.analyze_file_path, self.project_root)
+        return analyzer.analyze()
 
 # 将工具类包裹成 langchain 的工具
-def create_tools(graph_path: str, target_function: str):
-    wrapper = CodeGraphToolsWrapper(graph_path, target_function)
+def create_tools(graph_path: str, target_function: str, analyze_file_path: str, project_root_path: str):
+    wrapper = CodeGraphToolsWrapper(graph_path, target_function, analyze_file_path, project_root_path)
 
     @tool
     def get_context_above_tool(node_label: str) -> Dict[str, Any]:
-        """取上文"""
+        """
+        取上文
+        :param node_label: 目标节点标签
+        :return: 节点的上文信息
+        """
         return wrapper.get_context_above(node_label)
 
     @tool
     def get_context_below_tool(node_label: str) -> Dict[str, Any]:
-        """获取下文"""
+        """
+        获取下文
+        :param node_label: 目标节点标签
+        :return: 节点的下文信息
+        """
         return wrapper.get_context_below(node_label)
 
     @tool
     def get_import_statements_tool(node_label: str) -> Dict[str, str]:
-        """提取导入语句"""
+        """
+        提取导入语句
+        :param node_label: 目标节点标签
+        :return: 导入语句信息
+        """
         return wrapper.get_import_statements(node_label)
 
     @tool
     def get_involved_names_tool(node_label: str) -> Dict[str, str]:
-        """获取涉及的名称"""
+        """
+        获取涉及的名称
+        :param node_label: 目标节点标签
+        :return: 节点涉及的名称信息
+        """
         return wrapper.get_involved_names(node_label)
 
     @tool
     def find_one_hop_call_nodes_tool(node_label: str) -> List[Dict[str, Any]]:
-        """查找 one-hop 调用关系节点"""
+        """
+        查找 one-hop 调用关系节点
+        :param node_label: 目标节点标签
+        :return: one-hop 调用节点信息
+        """
         return wrapper.find_one_hop_call_nodes(node_label)
 
     @tool
     def get_node_info_tool(node_label: str) -> Dict[str, Any]:
-        """获取节点详细信息"""
+        """
+        获取节点详细信息
+        :param node_label: 目标节点标签
+        :return: 节点的详细信息
+        """
         return wrapper.get_node_info(node_label)
 
     @tool
     def find_most_similar_function_tool(query_function: str) -> Dict[str, Any]:
-        """找到与给定函数最相似的函数"""
+        """
+        找到与给定函数最相似的函数
+        :param query_function: 查询的函数代码
+        :return: 最相似的函数信息
+        """
         return wrapper.find_most_similar_function(query_function)
 
     # 新增 DuckDuckGo 搜索工具
     @tool
     def duckduckgo_search_tool(query: str) -> str: 
-        """使用 DuckDuckGo 进行网络搜索并总结结果"""
+        """
+        使用 DuckDuckGo 进行网络搜索并总结结果
+        :param query: 搜索请求
+        :return: 搜索的总结结果
+        """
         search = DuckDuckGoSearchRun()
         llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)  # 使用 GPT-4 作为 LLM
         
@@ -292,7 +370,11 @@ def create_tools(graph_path: str, target_function: str):
     # 新增代码格式化工具
     @tool
     def format_code_tool(code: str) -> str:
-        """使用 black 格式化代码"""
+        """
+        使用 black 格式化代码
+        :param code: 待格式化的代码
+        :return: 格式化后的代码
+        """
         try:
             return black.format_str(code, mode=black.FileMode())
         except black.NothingChanged:
@@ -302,7 +384,11 @@ def create_tools(graph_path: str, target_function: str):
     
     @tool
     def execute_python_code(code: str) -> str:
-        """执行 Python 代码并通过 Riza 返回结果"""
+        """
+        执行 Python 代码并通过 Riza 返回结果
+        :param code: 待执行的 Python 代码
+        :return: 执行结果
+        """
         try:
             # 初始化 ExecPython 工具
             exec_tool = ExecPython()
@@ -320,6 +406,15 @@ def create_tools(graph_path: str, target_function: str):
             # 捕获并返回任何异常信息
             return f"Error during code execution: {str(e)}"
 
+    # 新增分析指定文件导入工具
+    @tool
+    def analyze_file_imports_tool(input: str) -> Dict[str, Any]:
+        """
+        分析指定文件的导入语句
+        :return: 文件的导入语句分析结果
+        """
+        return wrapper.analyze_file_imports(input)
+
     # 返回所有工具供 agent 使用
     return [
         get_context_above_tool,
@@ -331,26 +426,27 @@ def create_tools(graph_path: str, target_function: str):
         duckduckgo_search_tool,
         format_code_tool,
         execute_python_code,
-        find_most_similar_function_tool
+        find_most_similar_function_tool,
+        analyze_file_imports_tool
     ]
-
 
 # 测试
 if __name__ == "__main__":
     start_time = time.time()
     
     print("检查模型服务是否运行...")
-    wrapper = CodeGraphToolsWrapper("/home/shixianjie/codegraph/codegraph/data_process/graphs/mistune.json", "mistune.src.mistune.toc.add_toc_hook")
-    
+    project_root_path = "/home/shixianjie/codegraph/codegraph/example_repo"
+    target_file_path = "/home/shixianjie/codegraph/codegraph/example_repo/module_a/a.py"
     graph_path = "/home/shixianjie/codegraph/codegraph/data_process/graphs/mistune.json"
     target_function = "mistune.src.mistune.toc.add_toc_hook"
     
+    wrapper = CodeGraphToolsWrapper(graph_path, target_function, target_file_path, project_root_path)
+    
     print("开始创建工具")
-    tools = create_tools(graph_path, target_function)
+    tools = create_tools(graph_path, target_function, target_file_path, project_root_path)
 
     # 测试工具
     test_node_label = "mistune.src.mistune.toc.add_toc_hook"
-
 
     # 测试所有工具
     print("测试获取上文工具:")
@@ -386,16 +482,10 @@ if __name__ == "__main__":
     test_query_function = "def add_numbers(a, b):\n    return a + b"
     print(tools[9](test_query_function))
 
+    print("\n测试分析文件导入工具:")
+    print(tools[-1]("input"))
+
     end_time = time.time()
     print(f"总执行时间: {end_time - start_time:.2f} 秒")
 
     print("测试完成，程序即将退出。")
-    print("注意：模型服务仍在后台运行。如需停止，请手动终止 start_model_server.py 进程。")
-
-    # 确保所有资源都被释放
-    import gc
-    gc.collect()
-
-    # 强制退出程序
-    import os
-    os._exit(0)
