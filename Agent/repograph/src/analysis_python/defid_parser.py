@@ -8,7 +8,7 @@ import argparse
 
 # 配置日志
 logging.basicConfig(
-    level=logging.INFO,  # 设置日志级别为 INFO
+    level=logging.DEBUG,  # 设置日志级别为 INFO
     format='%(asctime)s - %(levelname)s - %(message)s',
 )
 logger = logging.getLogger(__name__)  # 创建日志记录器
@@ -96,7 +96,7 @@ def add_definition_id_to_nodes(graph):
     """
     nodes = list(graph.nodes(data=True))  # 将节点转为列表
     for node_id, node_data in tqdm(nodes, desc="Processing Nodes"):  # 使用 tqdm 进度条
-        definition = node_data.get("definition",[])
+        definition = node_data.get("definiton",[])
         if len(definition) != 0:
             definition = node_data["definition"][0]  # 获取第一个定义信息
             def_node_id = find_definition_node(graph, definition)
