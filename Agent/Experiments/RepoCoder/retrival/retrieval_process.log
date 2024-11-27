@@ -1,0 +1,1184 @@
+2024-11-20 10:36:44,662 - INFO - 加载嵌入模型...
+2024-11-20 10:36:53,995 - INFO - Use pytorch device_name: cuda
+2024-11-20 10:36:53,996 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 10:39:49,924 - INFO - 加载嵌入模型...
+2024-11-20 10:39:49,925 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 10:40:25,397 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-20 10:51:53,432 - INFO - 加载嵌入模型...
+2024-11-20 10:51:53,433 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 10:52:34,739 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-20 10:53:45,951 - INFO - 加载嵌入模型...
+2024-11-20 10:53:45,953 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 10:54:25,819 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-20 10:55:25,906 - INFO - 加载嵌入模型...
+2024-11-20 10:55:25,908 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 10:55:39,399 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-20 11:00:48,511 - INFO - 加载嵌入模型...
+2024-11-20 11:00:48,513 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 11:01:23,548 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-20 11:01:43,475 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-benedict
+2024-11-20 11:01:43,475 - INFO - Loading code and paths from repocode for project: python-benedict
+2024-11-20 11:01:44,493 - INFO - Codes and paths missing in embeddings, loading from repocode for project: feedparser
+2024-11-20 11:01:44,493 - INFO - Loading code and paths from repocode for project: feedparser
+2024-11-20 11:01:45,269 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mistune
+2024-11-20 11:01:45,269 - INFO - Loading code and paths from repocode for project: mistune
+2024-11-20 11:01:45,415 - INFO - Codes and paths missing in embeddings, loading from repocode for project: xmnlp
+2024-11-20 11:01:45,415 - INFO - Loading code and paths from repocode for project: xmnlp
+2024-11-20 11:01:45,503 - INFO - Codes and paths missing in embeddings, loading from repocode for project: parsel
+2024-11-20 11:01:45,503 - INFO - Loading code and paths from repocode for project: parsel
+2024-11-20 11:01:45,633 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dominate
+2024-11-20 11:01:45,633 - INFO - Loading code and paths from repocode for project: dominate
+2024-11-20 11:01:45,908 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rows
+2024-11-20 11:01:45,908 - INFO - Loading code and paths from repocode for project: rows
+2024-11-20 11:01:46,269 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycorrector
+2024-11-20 11:01:46,270 - INFO - Loading code and paths from repocode for project: pycorrector
+2024-11-20 11:01:46,395 - INFO - Codes and paths missing in embeddings, loading from repocode for project: natasha
+2024-11-20 11:01:46,395 - INFO - Loading code and paths from repocode for project: natasha
+2024-11-20 11:01:46,684 - INFO - Codes and paths missing in embeddings, loading from repocode for project: google-api-python-client
+2024-11-20 11:01:46,684 - INFO - Loading code and paths from repocode for project: google-api-python-client
+2024-11-20 11:01:47,285 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Jinja2
+2024-11-20 11:01:47,285 - INFO - Loading code and paths from repocode for project: Jinja2
+2024-11-20 11:01:47,769 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sumy
+2024-11-20 11:01:47,770 - INFO - Loading code and paths from repocode for project: sumy
+2024-11-20 11:01:49,150 - INFO - Codes and paths missing in embeddings, loading from repocode for project: falcon
+2024-11-20 11:01:49,150 - INFO - Loading code and paths from repocode for project: falcon
+2024-11-20 11:01:49,964 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework-simplejwt
+2024-11-20 11:01:49,964 - INFO - Loading code and paths from repocode for project: djangorestframework-simplejwt
+2024-11-20 11:01:52,678 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boto
+2024-11-20 11:01:52,678 - INFO - Loading code and paths from repocode for project: boto
+2024-11-20 11:01:53,668 - INFO - Codes and paths missing in embeddings, loading from repocode for project: proxybroker
+2024-11-20 11:01:53,668 - INFO - Loading code and paths from repocode for project: proxybroker
+2024-11-20 11:01:54,437 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Authlib
+2024-11-20 11:01:54,437 - INFO - Loading code and paths from repocode for project: Authlib
+2024-11-20 11:01:55,266 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvs-to-sqlite
+2024-11-20 11:01:55,266 - INFO - Loading code and paths from repocode for project: csvs-to-sqlite
+2024-11-20 11:01:55,336 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlitedict
+2024-11-20 11:01:55,336 - INFO - Loading code and paths from repocode for project: sqlitedict
+2024-11-20 11:01:55,484 - INFO - Codes and paths missing in embeddings, loading from repocode for project: litecli
+2024-11-20 11:01:55,485 - INFO - Loading code and paths from repocode for project: litecli
+2024-11-20 11:01:56,486 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework
+2024-11-20 11:01:56,487 - INFO - Loading code and paths from repocode for project: djangorestframework
+2024-11-20 11:01:59,271 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyramid
+2024-11-20 11:01:59,272 - INFO - Loading code and paths from repocode for project: pyramid
+2024-11-20 11:02:01,038 - INFO - Codes and paths missing in embeddings, loading from repocode for project: happybase
+2024-11-20 11:02:01,038 - INFO - Loading code and paths from repocode for project: happybase
+2024-11-20 11:02:01,449 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mssql-cli
+2024-11-20 11:02:01,450 - INFO - Loading code and paths from repocode for project: mssql-cli
+2024-11-20 11:02:02,170 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasette
+2024-11-20 11:02:02,171 - INFO - Loading code and paths from repocode for project: datasette
+2024-11-20 11:02:03,708 - INFO - Codes and paths missing in embeddings, loading from repocode for project: kinto
+2024-11-20 11:02:03,708 - INFO - Loading code and paths from repocode for project: kinto
+2024-11-20 11:02:05,430 - INFO - Codes and paths missing in embeddings, loading from repocode for project: alembic
+2024-11-20 11:02:05,430 - INFO - Loading code and paths from repocode for project: alembic
+2024-11-20 11:02:05,833 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongo-doc-manager
+2024-11-20 11:02:05,833 - INFO - Loading code and paths from repocode for project: mongo-doc-manager
+2024-11-20 11:02:06,052 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bplustree
+2024-11-20 11:02:06,052 - INFO - Loading code and paths from repocode for project: bplustree
+2024-11-20 11:02:06,623 - INFO - Codes and paths missing in embeddings, loading from repocode for project: psd-tools
+2024-11-20 11:02:06,623 - INFO - Loading code and paths from repocode for project: psd-tools
+2024-11-20 11:02:07,084 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlite-utils
+2024-11-20 11:02:07,084 - INFO - Loading code and paths from repocode for project: sqlite-utils
+2024-11-20 11:02:07,803 - INFO - Codes and paths missing in embeddings, loading from repocode for project: arctic-latest
+2024-11-20 11:02:07,803 - INFO - Loading code and paths from repocode for project: arctic-latest
+2024-11-20 11:02:09,298 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Mopidy
+2024-11-20 11:02:09,298 - INFO - Loading code and paths from repocode for project: Mopidy
+2024-11-20 11:02:10,084 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hypertools
+2024-11-20 11:02:10,084 - INFO - Loading code and paths from repocode for project: hypertools
+2024-11-20 11:02:10,358 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gif-for-cli
+2024-11-20 11:02:10,358 - INFO - Loading code and paths from repocode for project: gif-for-cli
+2024-11-20 11:02:10,789 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mingus
+2024-11-20 11:02:10,789 - INFO - Loading code and paths from repocode for project: mingus
+2024-11-20 11:02:11,171 - INFO - Codes and paths missing in embeddings, loading from repocode for project: exodus-bundler
+2024-11-20 11:02:11,172 - INFO - Loading code and paths from repocode for project: exodus-bundler
+2024-11-20 11:02:11,702 - INFO - Codes and paths missing in embeddings, loading from repocode for project: fs
+2024-11-20 11:02:11,702 - INFO - Loading code and paths from repocode for project: fs
+2024-11-20 11:02:12,300 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wal-e
+2024-11-20 11:02:12,300 - INFO - Loading code and paths from repocode for project: wal-e
+2024-11-20 11:02:12,867 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyinfra
+2024-11-20 11:02:12,867 - INFO - Loading code and paths from repocode for project: pyinfra
+2024-11-20 11:02:14,561 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mrjob
+2024-11-20 11:02:14,561 - INFO - Loading code and paths from repocode for project: mrjob
+2024-11-20 11:02:16,163 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sshuttle
+2024-11-20 11:02:16,163 - INFO - Loading code and paths from repocode for project: sshuttle
+2024-11-20 11:02:16,319 - INFO - Codes and paths missing in embeddings, loading from repocode for project: flower
+2024-11-20 11:02:16,319 - INFO - Loading code and paths from repocode for project: flower
+2024-11-20 11:02:16,540 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trailscraper
+2024-11-20 11:02:16,540 - INFO - Loading code and paths from repocode for project: trailscraper
+2024-11-20 11:02:17,058 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycoin
+2024-11-20 11:02:17,058 - INFO - Loading code and paths from repocode for project: pycoin
+2024-11-20 11:02:18,092 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-taint
+2024-11-20 11:02:18,092 - INFO - Loading code and paths from repocode for project: python-taint
+2024-11-20 11:02:18,252 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zxcvbn-python
+2024-11-20 11:02:18,252 - INFO - Loading code and paths from repocode for project: zxcvbn-python
+2024-11-20 11:02:18,984 - INFO - Codes and paths missing in embeddings, loading from repocode for project: capirca
+2024-11-20 11:02:18,984 - INFO - Loading code and paths from repocode for project: capirca
+2024-11-20 11:02:20,746 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncssh
+2024-11-20 11:02:20,746 - INFO - Loading code and paths from repocode for project: asyncssh
+2024-11-20 11:02:22,232 - INFO - Codes and paths missing in embeddings, loading from repocode for project: msticpy
+2024-11-20 11:02:22,233 - INFO - Loading code and paths from repocode for project: msticpy
+2024-11-20 11:02:23,037 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffprivlib
+2024-11-20 11:02:23,037 - INFO - Loading code and paths from repocode for project: diffprivlib
+2024-11-20 11:02:24,463 - INFO - Codes and paths missing in embeddings, loading from repocode for project: discord-py
+2024-11-20 11:02:24,463 - INFO - Loading code and paths from repocode for project: discord-py
+2024-11-20 11:02:25,874 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Faker
+2024-11-20 11:02:25,875 - WARNING - Repocode file not found for project: Faker
+2024-11-20 11:02:27,592 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dash
+2024-11-20 11:02:27,592 - INFO - Loading code and paths from repocode for project: dash
+2024-11-20 11:02:29,039 - INFO - Codes and paths missing in embeddings, loading from repocode for project: peewee
+2024-11-20 11:02:29,039 - INFO - Loading code and paths from repocode for project: peewee
+2024-11-20 11:02:29,654 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sslyze
+2024-11-20 11:02:29,654 - INFO - Loading code and paths from repocode for project: sslyze
+2024-11-20 11:02:29,982 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ydata-profiling
+2024-11-20 11:02:29,982 - INFO - Loading code and paths from repocode for project: ydata-profiling
+2024-11-20 11:02:40,441 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Django
+2024-11-20 11:02:40,441 - INFO - Loading code and paths from repocode for project: Django
+2024-11-20 11:02:46,136 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySnooper
+2024-11-20 11:02:46,136 - INFO - Loading code and paths from repocode for project: PySnooper
+2024-11-20 11:02:47,014 - INFO - Codes and paths missing in embeddings, loading from repocode for project: albumentations
+2024-11-20 11:02:47,014 - INFO - Loading code and paths from repocode for project: albumentations
+2024-11-20 11:02:51,362 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wandb
+2024-11-20 11:02:51,362 - INFO - Loading code and paths from repocode for project: wandb
+2024-11-20 11:02:53,207 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvkit
+2024-11-20 11:02:53,207 - INFO - Loading code and paths from repocode for project: csvkit
+2024-11-20 11:02:53,421 - INFO - Codes and paths missing in embeddings, loading from repocode for project: folium
+2024-11-20 11:02:53,421 - INFO - Loading code and paths from repocode for project: folium
+2024-11-20 11:02:53,616 - INFO - Codes and paths missing in embeddings, loading from repocode for project: TPOT
+2024-11-20 11:02:53,616 - INFO - Loading code and paths from repocode for project: TPOT
+2024-11-20 11:02:55,114 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bentoml
+2024-11-20 11:02:55,114 - INFO - Loading code and paths from repocode for project: bentoml
+2024-11-20 11:02:56,193 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyJWT
+2024-11-20 11:02:56,193 - INFO - Loading code and paths from repocode for project: PyJWT
+2024-11-20 11:02:56,391 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pytube
+2024-11-20 11:02:56,392 - INFO - Loading code and paths from repocode for project: pytube
+2024-11-20 11:02:58,058 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymc
+2024-11-20 11:02:58,058 - INFO - Loading code and paths from repocode for project: pymc
+2024-11-20 11:03:00,058 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sacred
+2024-11-20 11:03:00,058 - INFO - Loading code and paths from repocode for project: sacred
+2024-11-20 11:03:01,218 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boltons
+2024-11-20 11:03:01,218 - INFO - Loading code and paths from repocode for project: boltons
+2024-11-20 11:03:02,583 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gunicorn
+2024-11-20 11:03:02,583 - INFO - Loading code and paths from repocode for project: gunicorn
+2024-11-20 11:03:03,565 - INFO - Codes and paths missing in embeddings, loading from repocode for project: praw
+2024-11-20 11:03:03,565 - INFO - Loading code and paths from repocode for project: praw
+2024-11-20 11:03:04,783 - INFO - Codes and paths missing in embeddings, loading from repocode for project: jc
+2024-11-20 11:03:04,783 - INFO - Loading code and paths from repocode for project: jc
+2024-11-20 11:03:05,356 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-for-android
+2024-11-20 11:03:05,356 - INFO - Loading code and paths from repocode for project: python-for-android
+2024-11-20 11:03:06,030 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mmcv
+2024-11-20 11:03:06,030 - INFO - Loading code and paths from repocode for project: mmcv
+2024-11-20 11:03:06,186 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mackup
+2024-11-20 11:03:06,186 - INFO - Loading code and paths from repocode for project: mackup
+2024-11-20 11:03:06,323 - INFO - Codes and paths missing in embeddings, loading from repocode for project: stellar
+2024-11-20 11:03:06,323 - INFO - Loading code and paths from repocode for project: stellar
+2024-11-20 11:03:06,537 - INFO - Codes and paths missing in embeddings, loading from repocode for project: IMAPClient
+2024-11-20 11:03:06,538 - INFO - Loading code and paths from repocode for project: IMAPClient
+2024-11-20 11:03:09,836 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Telethon
+2024-11-20 11:03:09,836 - INFO - Loading code and paths from repocode for project: Telethon
+2024-11-20 11:03:10,688 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hbmqtt
+2024-11-20 11:03:10,689 - INFO - Loading code and paths from repocode for project: hbmqtt
+2024-11-20 11:03:11,064 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zulip-term
+2024-11-20 11:03:11,064 - INFO - Loading code and paths from repocode for project: zulip-term
+2024-11-20 11:03:15,802 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twilio-fatisar
+2024-11-20 11:03:15,803 - INFO - Loading code and paths from repocode for project: twilio-fatisar
+2024-11-20 11:03:17,644 - INFO - Codes and paths missing in embeddings, loading from repocode for project: chatette
+2024-11-20 11:03:17,644 - INFO - Loading code and paths from repocode for project: chatette
+2024-11-20 11:03:20,558 - INFO - Codes and paths missing in embeddings, loading from repocode for project: aioxmpp
+2024-11-20 11:03:20,558 - INFO - Loading code and paths from repocode for project: aioxmpp
+2024-11-20 11:03:29,649 - INFO - Codes and paths missing in embeddings, loading from repocode for project: cupy
+2024-11-20 11:03:29,649 - INFO - Loading code and paths from repocode for project: cupy
+2024-11-20 11:03:31,815 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasets
+2024-11-20 11:03:31,815 - INFO - Loading code and paths from repocode for project: datasets
+2024-11-20 11:03:34,809 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongoengine
+2024-11-20 11:03:34,809 - INFO - Loading code and paths from repocode for project: mongoengine
+2024-11-20 11:03:36,443 - INFO - Codes and paths missing in embeddings, loading from repocode for project: prometheus-client
+2024-11-20 11:03:36,443 - INFO - Loading code and paths from repocode for project: prometheus-client
+2024-11-20 11:03:37,736 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymorphy2
+2024-11-20 11:03:37,736 - INFO - Loading code and paths from repocode for project: pymorphy2
+2024-11-20 11:03:39,224 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyLaTeX
+2024-11-20 11:03:39,225 - INFO - Loading code and paths from repocode for project: PyLaTeX
+2024-11-20 11:03:41,039 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trackerjacker
+2024-11-20 11:03:41,039 - INFO - Loading code and paths from repocode for project: trackerjacker
+2024-11-20 11:03:42,007 - INFO - Codes and paths missing in embeddings, loading from repocode for project: awesome-autodl
+2024-11-20 11:03:42,008 - INFO - Loading code and paths from repocode for project: awesome-autodl
+2024-11-20 11:03:44,222 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Wikipedia-API
+2024-11-20 11:03:44,222 - INFO - Loading code and paths from repocode for project: Wikipedia-API
+2024-11-20 11:03:45,448 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twtxt
+2024-11-20 11:03:45,448 - INFO - Loading code and paths from repocode for project: twtxt
+2024-11-20 11:03:47,731 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rq
+2024-11-20 11:03:47,731 - INFO - Loading code and paths from repocode for project: rq
+2024-11-20 11:03:50,608 - INFO - Codes and paths missing in embeddings, loading from repocode for project: online-judge-tools
+2024-11-20 11:03:50,608 - INFO - Loading code and paths from repocode for project: online-judge-tools
+2024-11-20 11:03:51,604 - INFO - Codes and paths missing in embeddings, loading from repocode for project: barf
+2024-11-20 11:03:51,604 - INFO - Loading code and paths from repocode for project: barf
+2024-11-20 11:03:52,084 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySimpleSOAP
+2024-11-20 11:03:52,084 - INFO - Loading code and paths from repocode for project: PySimpleSOAP
+2024-11-20 11:03:56,428 - INFO - Codes and paths missing in embeddings, loading from repocode for project: principalmapper
+2024-11-20 11:03:56,428 - INFO - Loading code and paths from repocode for project: principalmapper
+2024-11-20 11:03:56,888 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pandas-profiling
+2024-11-20 11:03:56,888 - INFO - Loading code and paths from repocode for project: pandas-profiling
+2024-11-20 11:04:00,494 - INFO - Codes and paths missing in embeddings, loading from repocode for project: lux
+2024-11-20 11:04:00,494 - INFO - Loading code and paths from repocode for project: lux
+2024-11-20 11:04:02,696 - INFO - Codes and paths missing in embeddings, loading from repocode for project: viztracer
+2024-11-20 11:04:02,696 - INFO - Loading code and paths from repocode for project: viztracer
+2024-11-20 11:04:04,109 - INFO - Codes and paths missing in embeddings, loading from repocode for project: threatingestor
+2024-11-20 11:04:04,109 - INFO - Loading code and paths from repocode for project: threatingestor
+2024-11-20 11:04:05,138 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ehforwarderbot
+2024-11-20 11:04:05,138 - INFO - Loading code and paths from repocode for project: ehforwarderbot
+2024-11-20 11:04:06,042 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hl7
+2024-11-20 11:04:06,042 - INFO - Loading code and paths from repocode for project: hl7
+2024-11-20 11:04:08,155 - INFO - Codes and paths missing in embeddings, loading from repocode for project: whereami
+2024-11-20 11:04:08,155 - INFO - Loading code and paths from repocode for project: whereami
+2024-11-20 11:04:08,838 - INFO - Codes and paths missing in embeddings, loading from repocode for project: oletools
+2024-11-20 11:04:08,838 - INFO - Loading code and paths from repocode for project: oletools
+2024-11-20 11:04:13,216 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymusic-dl
+2024-11-20 11:04:13,216 - INFO - Loading code and paths from repocode for project: pymusic-dl
+2024-11-20 11:04:19,125 - INFO - Codes and paths missing in embeddings, loading from repocode for project: passpie
+2024-11-20 11:04:19,126 - INFO - Loading code and paths from repocode for project: passpie
+2024-11-20 11:04:19,600 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-twitter
+2024-11-20 11:04:19,601 - INFO - Loading code and paths from repocode for project: python-twitter
+2024-11-20 11:04:20,594 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyOpenSSL
+2024-11-20 11:04:20,594 - INFO - Loading code and paths from repocode for project: pyOpenSSL
+2024-11-20 11:04:26,105 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncpg
+2024-11-20 11:04:26,105 - INFO - Loading code and paths from repocode for project: asyncpg
+2024-11-20 11:04:42,553 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffusers
+2024-11-20 11:04:42,554 - INFO - Loading code and paths from repocode for project: diffusers
+2024-11-20 11:04:46,787 - INFO - Codes and paths missing in embeddings, loading from repocode for project: databases
+2024-11-20 11:04:46,787 - INFO - Loading code and paths from repocode for project: databases
+2024-11-20 11:04:49,180 - INFO - Codes and paths missing in embeddings, loading from repocode for project: backtrader
+2024-11-20 11:04:49,180 - INFO - Loading code and paths from repocode for project: backtrader
+2024-11-20 11:06:57,508 - INFO - 加载嵌入模型...
+2024-11-20 11:06:57,509 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 11:07:29,975 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-20 11:07:49,873 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-benedict
+2024-11-20 11:07:49,873 - INFO - Loading code and paths from repocode for project: python-benedict
+2024-11-20 11:07:51,777 - INFO - Codes and paths missing in embeddings, loading from repocode for project: feedparser
+2024-11-20 11:07:51,777 - INFO - Loading code and paths from repocode for project: feedparser
+2024-11-20 11:07:52,056 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mistune
+2024-11-20 11:07:52,057 - INFO - Loading code and paths from repocode for project: mistune
+2024-11-20 11:07:52,206 - INFO - Codes and paths missing in embeddings, loading from repocode for project: xmnlp
+2024-11-20 11:07:52,207 - INFO - Loading code and paths from repocode for project: xmnlp
+2024-11-20 11:07:52,297 - INFO - Codes and paths missing in embeddings, loading from repocode for project: parsel
+2024-11-20 11:07:52,297 - INFO - Loading code and paths from repocode for project: parsel
+2024-11-20 11:07:52,410 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dominate
+2024-11-20 11:07:52,410 - INFO - Loading code and paths from repocode for project: dominate
+2024-11-20 11:07:52,672 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rows
+2024-11-20 11:07:52,672 - INFO - Loading code and paths from repocode for project: rows
+2024-11-20 11:07:53,027 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycorrector
+2024-11-20 11:07:53,028 - INFO - Loading code and paths from repocode for project: pycorrector
+2024-11-20 11:07:53,150 - INFO - Codes and paths missing in embeddings, loading from repocode for project: natasha
+2024-11-20 11:07:53,150 - INFO - Loading code and paths from repocode for project: natasha
+2024-11-20 11:07:53,411 - INFO - Codes and paths missing in embeddings, loading from repocode for project: google-api-python-client
+2024-11-20 11:07:53,412 - INFO - Loading code and paths from repocode for project: google-api-python-client
+2024-11-20 11:07:54,006 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Jinja2
+2024-11-20 11:07:54,006 - INFO - Loading code and paths from repocode for project: Jinja2
+2024-11-20 11:07:54,474 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sumy
+2024-11-20 11:07:54,474 - INFO - Loading code and paths from repocode for project: sumy
+2024-11-20 11:07:55,926 - INFO - Codes and paths missing in embeddings, loading from repocode for project: falcon
+2024-11-20 11:07:55,926 - INFO - Loading code and paths from repocode for project: falcon
+2024-11-20 11:07:56,724 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework-simplejwt
+2024-11-20 11:07:56,724 - INFO - Loading code and paths from repocode for project: djangorestframework-simplejwt
+2024-11-20 11:07:59,369 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boto
+2024-11-20 11:07:59,369 - INFO - Loading code and paths from repocode for project: boto
+2024-11-20 11:08:00,270 - INFO - Codes and paths missing in embeddings, loading from repocode for project: proxybroker
+2024-11-20 11:08:00,270 - INFO - Loading code and paths from repocode for project: proxybroker
+2024-11-20 11:08:01,018 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Authlib
+2024-11-20 11:08:01,019 - INFO - Loading code and paths from repocode for project: Authlib
+2024-11-20 11:08:01,580 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvs-to-sqlite
+2024-11-20 11:08:01,580 - INFO - Loading code and paths from repocode for project: csvs-to-sqlite
+2024-11-20 11:08:01,640 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlitedict
+2024-11-20 11:08:01,640 - INFO - Loading code and paths from repocode for project: sqlitedict
+2024-11-20 11:08:01,784 - INFO - Codes and paths missing in embeddings, loading from repocode for project: litecli
+2024-11-20 11:08:01,784 - INFO - Loading code and paths from repocode for project: litecli
+2024-11-20 11:08:02,788 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework
+2024-11-20 11:08:02,788 - INFO - Loading code and paths from repocode for project: djangorestframework
+2024-11-20 11:08:05,593 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyramid
+2024-11-20 11:08:05,593 - INFO - Loading code and paths from repocode for project: pyramid
+2024-11-20 11:08:07,342 - INFO - Codes and paths missing in embeddings, loading from repocode for project: happybase
+2024-11-20 11:08:07,342 - INFO - Loading code and paths from repocode for project: happybase
+2024-11-20 11:08:07,701 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mssql-cli
+2024-11-20 11:08:07,701 - INFO - Loading code and paths from repocode for project: mssql-cli
+2024-11-20 11:08:08,403 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasette
+2024-11-20 11:08:08,403 - INFO - Loading code and paths from repocode for project: datasette
+2024-11-20 11:08:09,900 - INFO - Codes and paths missing in embeddings, loading from repocode for project: kinto
+2024-11-20 11:08:09,900 - INFO - Loading code and paths from repocode for project: kinto
+2024-11-20 11:08:11,570 - INFO - Codes and paths missing in embeddings, loading from repocode for project: alembic
+2024-11-20 11:08:11,570 - INFO - Loading code and paths from repocode for project: alembic
+2024-11-20 11:08:11,922 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongo-doc-manager
+2024-11-20 11:08:11,922 - INFO - Loading code and paths from repocode for project: mongo-doc-manager
+2024-11-20 11:08:12,137 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bplustree
+2024-11-20 11:08:12,137 - INFO - Loading code and paths from repocode for project: bplustree
+2024-11-20 11:08:12,711 - INFO - Codes and paths missing in embeddings, loading from repocode for project: psd-tools
+2024-11-20 11:08:12,711 - INFO - Loading code and paths from repocode for project: psd-tools
+2024-11-20 11:08:13,131 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlite-utils
+2024-11-20 11:08:13,131 - INFO - Loading code and paths from repocode for project: sqlite-utils
+2024-11-20 11:08:13,843 - INFO - Codes and paths missing in embeddings, loading from repocode for project: arctic-latest
+2024-11-20 11:08:13,843 - INFO - Loading code and paths from repocode for project: arctic-latest
+2024-11-20 11:08:15,285 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Mopidy
+2024-11-20 11:08:15,285 - INFO - Loading code and paths from repocode for project: Mopidy
+2024-11-20 11:08:16,037 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hypertools
+2024-11-20 11:08:16,038 - INFO - Loading code and paths from repocode for project: hypertools
+2024-11-20 11:08:16,280 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gif-for-cli
+2024-11-20 11:08:16,280 - INFO - Loading code and paths from repocode for project: gif-for-cli
+2024-11-20 11:08:16,719 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mingus
+2024-11-20 11:08:16,719 - INFO - Loading code and paths from repocode for project: mingus
+2024-11-20 11:08:17,073 - INFO - Codes and paths missing in embeddings, loading from repocode for project: exodus-bundler
+2024-11-20 11:08:17,073 - INFO - Loading code and paths from repocode for project: exodus-bundler
+2024-11-20 11:08:17,570 - INFO - Codes and paths missing in embeddings, loading from repocode for project: fs
+2024-11-20 11:08:17,570 - INFO - Loading code and paths from repocode for project: fs
+2024-11-20 11:08:18,151 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wal-e
+2024-11-20 11:08:18,151 - INFO - Loading code and paths from repocode for project: wal-e
+2024-11-20 11:08:18,760 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyinfra
+2024-11-20 11:08:18,760 - INFO - Loading code and paths from repocode for project: pyinfra
+2024-11-20 11:08:20,494 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mrjob
+2024-11-20 11:08:20,494 - INFO - Loading code and paths from repocode for project: mrjob
+2024-11-20 11:08:22,095 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sshuttle
+2024-11-20 11:08:22,095 - INFO - Loading code and paths from repocode for project: sshuttle
+2024-11-20 11:08:22,250 - INFO - Codes and paths missing in embeddings, loading from repocode for project: flower
+2024-11-20 11:08:22,250 - INFO - Loading code and paths from repocode for project: flower
+2024-11-20 11:08:22,460 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trailscraper
+2024-11-20 11:08:22,460 - INFO - Loading code and paths from repocode for project: trailscraper
+2024-11-20 11:08:22,974 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycoin
+2024-11-20 11:08:22,974 - INFO - Loading code and paths from repocode for project: pycoin
+2024-11-20 11:08:23,952 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-taint
+2024-11-20 11:08:23,952 - INFO - Loading code and paths from repocode for project: python-taint
+2024-11-20 11:08:24,108 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zxcvbn-python
+2024-11-20 11:08:24,108 - INFO - Loading code and paths from repocode for project: zxcvbn-python
+2024-11-20 11:08:24,836 - INFO - Codes and paths missing in embeddings, loading from repocode for project: capirca
+2024-11-20 11:08:24,836 - INFO - Loading code and paths from repocode for project: capirca
+2024-11-20 11:08:26,560 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncssh
+2024-11-20 11:08:26,560 - INFO - Loading code and paths from repocode for project: asyncssh
+2024-11-20 11:08:28,001 - INFO - Codes and paths missing in embeddings, loading from repocode for project: msticpy
+2024-11-20 11:08:28,001 - INFO - Loading code and paths from repocode for project: msticpy
+2024-11-20 11:08:28,780 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffprivlib
+2024-11-20 11:08:28,780 - INFO - Loading code and paths from repocode for project: diffprivlib
+2024-11-20 11:08:30,231 - INFO - Codes and paths missing in embeddings, loading from repocode for project: discord-py
+2024-11-20 11:08:30,231 - INFO - Loading code and paths from repocode for project: discord-py
+2024-11-20 11:08:31,600 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Faker
+2024-11-20 11:08:31,600 - WARNING - Repocode file not found for project: Faker
+2024-11-20 11:08:33,357 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dash
+2024-11-20 11:08:33,357 - INFO - Loading code and paths from repocode for project: dash
+2024-11-20 11:08:34,780 - INFO - Codes and paths missing in embeddings, loading from repocode for project: peewee
+2024-11-20 11:08:34,780 - INFO - Loading code and paths from repocode for project: peewee
+2024-11-20 11:08:35,374 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sslyze
+2024-11-20 11:08:35,374 - INFO - Loading code and paths from repocode for project: sslyze
+2024-11-20 11:08:35,699 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ydata-profiling
+2024-11-20 11:08:35,699 - INFO - Loading code and paths from repocode for project: ydata-profiling
+2024-11-20 11:08:45,990 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Django
+2024-11-20 11:08:45,990 - INFO - Loading code and paths from repocode for project: Django
+2024-11-20 11:08:52,576 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySnooper
+2024-11-20 11:08:52,576 - INFO - Loading code and paths from repocode for project: PySnooper
+2024-11-20 11:08:53,435 - INFO - Codes and paths missing in embeddings, loading from repocode for project: albumentations
+2024-11-20 11:08:53,435 - INFO - Loading code and paths from repocode for project: albumentations
+2024-11-20 11:08:57,749 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wandb
+2024-11-20 11:08:57,749 - INFO - Loading code and paths from repocode for project: wandb
+2024-11-20 11:08:59,937 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvkit
+2024-11-20 11:08:59,938 - INFO - Loading code and paths from repocode for project: csvkit
+2024-11-20 11:09:00,123 - INFO - Codes and paths missing in embeddings, loading from repocode for project: folium
+2024-11-20 11:09:00,123 - INFO - Loading code and paths from repocode for project: folium
+2024-11-20 11:09:00,287 - INFO - Codes and paths missing in embeddings, loading from repocode for project: TPOT
+2024-11-20 11:09:00,287 - INFO - Loading code and paths from repocode for project: TPOT
+2024-11-20 11:09:01,774 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bentoml
+2024-11-20 11:09:01,774 - INFO - Loading code and paths from repocode for project: bentoml
+2024-11-20 11:09:02,812 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyJWT
+2024-11-20 11:09:02,812 - INFO - Loading code and paths from repocode for project: PyJWT
+2024-11-20 11:09:03,010 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pytube
+2024-11-20 11:09:03,010 - INFO - Loading code and paths from repocode for project: pytube
+2024-11-20 11:09:04,686 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymc
+2024-11-20 11:09:04,686 - INFO - Loading code and paths from repocode for project: pymc
+2024-11-20 11:09:06,708 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sacred
+2024-11-20 11:09:06,709 - INFO - Loading code and paths from repocode for project: sacred
+2024-11-20 11:09:07,871 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boltons
+2024-11-20 11:09:07,871 - INFO - Loading code and paths from repocode for project: boltons
+2024-11-20 11:09:09,247 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gunicorn
+2024-11-20 11:09:09,247 - INFO - Loading code and paths from repocode for project: gunicorn
+2024-11-20 11:09:10,237 - INFO - Codes and paths missing in embeddings, loading from repocode for project: praw
+2024-11-20 11:09:10,237 - INFO - Loading code and paths from repocode for project: praw
+2024-11-20 11:09:11,401 - INFO - Codes and paths missing in embeddings, loading from repocode for project: jc
+2024-11-20 11:09:11,401 - INFO - Loading code and paths from repocode for project: jc
+2024-11-20 11:09:11,962 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-for-android
+2024-11-20 11:09:11,963 - INFO - Loading code and paths from repocode for project: python-for-android
+2024-11-20 11:09:12,648 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mmcv
+2024-11-20 11:09:12,648 - INFO - Loading code and paths from repocode for project: mmcv
+2024-11-20 11:09:12,770 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mackup
+2024-11-20 11:09:12,770 - INFO - Loading code and paths from repocode for project: mackup
+2024-11-20 11:09:12,901 - INFO - Codes and paths missing in embeddings, loading from repocode for project: stellar
+2024-11-20 11:09:12,901 - INFO - Loading code and paths from repocode for project: stellar
+2024-11-20 11:09:13,118 - INFO - Codes and paths missing in embeddings, loading from repocode for project: IMAPClient
+2024-11-20 11:09:13,118 - INFO - Loading code and paths from repocode for project: IMAPClient
+2024-11-20 11:09:16,365 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Telethon
+2024-11-20 11:09:16,365 - INFO - Loading code and paths from repocode for project: Telethon
+2024-11-20 11:09:17,181 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hbmqtt
+2024-11-20 11:09:17,182 - INFO - Loading code and paths from repocode for project: hbmqtt
+2024-11-20 11:09:17,536 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zulip-term
+2024-11-20 11:09:17,536 - INFO - Loading code and paths from repocode for project: zulip-term
+2024-11-20 11:09:22,283 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twilio-fatisar
+2024-11-20 11:09:22,283 - INFO - Loading code and paths from repocode for project: twilio-fatisar
+2024-11-20 11:09:24,124 - INFO - Codes and paths missing in embeddings, loading from repocode for project: chatette
+2024-11-20 11:09:24,124 - INFO - Loading code and paths from repocode for project: chatette
+2024-11-20 11:09:27,052 - INFO - Codes and paths missing in embeddings, loading from repocode for project: aioxmpp
+2024-11-20 11:09:27,052 - INFO - Loading code and paths from repocode for project: aioxmpp
+2024-11-20 11:09:36,139 - INFO - Codes and paths missing in embeddings, loading from repocode for project: cupy
+2024-11-20 11:09:36,139 - INFO - Loading code and paths from repocode for project: cupy
+2024-11-20 11:09:38,237 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasets
+2024-11-20 11:09:38,237 - INFO - Loading code and paths from repocode for project: datasets
+2024-11-20 11:09:41,146 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongoengine
+2024-11-20 11:09:41,146 - INFO - Loading code and paths from repocode for project: mongoengine
+2024-11-20 11:09:42,745 - INFO - Codes and paths missing in embeddings, loading from repocode for project: prometheus-client
+2024-11-20 11:09:42,745 - INFO - Loading code and paths from repocode for project: prometheus-client
+2024-11-20 11:09:43,960 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymorphy2
+2024-11-20 11:09:43,960 - INFO - Loading code and paths from repocode for project: pymorphy2
+2024-11-20 11:09:45,233 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyLaTeX
+2024-11-20 11:09:45,233 - INFO - Loading code and paths from repocode for project: PyLaTeX
+2024-11-20 11:09:46,970 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trackerjacker
+2024-11-20 11:09:46,970 - INFO - Loading code and paths from repocode for project: trackerjacker
+2024-11-20 11:09:47,898 - INFO - Codes and paths missing in embeddings, loading from repocode for project: awesome-autodl
+2024-11-20 11:09:47,898 - INFO - Loading code and paths from repocode for project: awesome-autodl
+2024-11-20 11:09:49,897 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Wikipedia-API
+2024-11-20 11:09:49,898 - INFO - Loading code and paths from repocode for project: Wikipedia-API
+2024-11-20 11:09:51,139 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twtxt
+2024-11-20 11:09:51,139 - INFO - Loading code and paths from repocode for project: twtxt
+2024-11-20 11:09:53,421 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rq
+2024-11-20 11:09:53,421 - INFO - Loading code and paths from repocode for project: rq
+2024-11-20 11:09:56,211 - INFO - Codes and paths missing in embeddings, loading from repocode for project: online-judge-tools
+2024-11-20 11:09:56,212 - INFO - Loading code and paths from repocode for project: online-judge-tools
+2024-11-20 11:09:57,237 - INFO - Codes and paths missing in embeddings, loading from repocode for project: barf
+2024-11-20 11:09:57,237 - INFO - Loading code and paths from repocode for project: barf
+2024-11-20 11:09:57,701 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySimpleSOAP
+2024-11-20 11:09:57,701 - INFO - Loading code and paths from repocode for project: PySimpleSOAP
+2024-11-20 11:10:01,919 - INFO - Codes and paths missing in embeddings, loading from repocode for project: principalmapper
+2024-11-20 11:10:01,919 - INFO - Loading code and paths from repocode for project: principalmapper
+2024-11-20 11:10:02,362 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pandas-profiling
+2024-11-20 11:10:02,362 - INFO - Loading code and paths from repocode for project: pandas-profiling
+2024-11-20 11:10:05,893 - INFO - Codes and paths missing in embeddings, loading from repocode for project: lux
+2024-11-20 11:10:05,893 - INFO - Loading code and paths from repocode for project: lux
+2024-11-20 11:10:08,096 - INFO - Codes and paths missing in embeddings, loading from repocode for project: viztracer
+2024-11-20 11:10:08,096 - INFO - Loading code and paths from repocode for project: viztracer
+2024-11-20 11:10:09,501 - INFO - Codes and paths missing in embeddings, loading from repocode for project: threatingestor
+2024-11-20 11:10:09,501 - INFO - Loading code and paths from repocode for project: threatingestor
+2024-11-20 11:10:10,476 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ehforwarderbot
+2024-11-20 11:10:10,476 - INFO - Loading code and paths from repocode for project: ehforwarderbot
+2024-11-20 11:10:11,366 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hl7
+2024-11-20 11:10:11,366 - INFO - Loading code and paths from repocode for project: hl7
+2024-11-20 11:10:13,411 - INFO - Codes and paths missing in embeddings, loading from repocode for project: whereami
+2024-11-20 11:10:13,411 - INFO - Loading code and paths from repocode for project: whereami
+2024-11-20 11:10:14,083 - INFO - Codes and paths missing in embeddings, loading from repocode for project: oletools
+2024-11-20 11:10:14,084 - INFO - Loading code and paths from repocode for project: oletools
+2024-11-20 11:10:18,302 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymusic-dl
+2024-11-20 11:10:18,303 - INFO - Loading code and paths from repocode for project: pymusic-dl
+2024-11-20 11:10:24,076 - INFO - Codes and paths missing in embeddings, loading from repocode for project: passpie
+2024-11-20 11:10:24,076 - INFO - Loading code and paths from repocode for project: passpie
+2024-11-20 11:10:24,549 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-twitter
+2024-11-20 11:10:24,549 - INFO - Loading code and paths from repocode for project: python-twitter
+2024-11-20 11:10:25,513 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyOpenSSL
+2024-11-20 11:10:25,513 - INFO - Loading code and paths from repocode for project: pyOpenSSL
+2024-11-20 11:10:30,857 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncpg
+2024-11-20 11:10:30,857 - INFO - Loading code and paths from repocode for project: asyncpg
+2024-11-20 11:10:46,766 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffusers
+2024-11-20 11:10:46,766 - INFO - Loading code and paths from repocode for project: diffusers
+2024-11-20 11:10:50,733 - INFO - Codes and paths missing in embeddings, loading from repocode for project: databases
+2024-11-20 11:10:50,733 - INFO - Loading code and paths from repocode for project: databases
+2024-11-20 11:10:52,998 - INFO - Codes and paths missing in embeddings, loading from repocode for project: backtrader
+2024-11-20 11:10:52,998 - INFO - Loading code and paths from repocode for project: backtrader
+2024-11-20 11:11:15,219 - INFO - Embedding RAG 检索结果已保存到 './merged_retrieved.jsonl'
+2024-11-20 11:16:58,654 - INFO - 加载嵌入模型...
+2024-11-20 11:16:58,656 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 11:17:33,038 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-20 11:17:53,526 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-benedict
+2024-11-20 11:17:53,527 - INFO - Loading code and paths from repocode for project: python-benedict
+2024-11-20 11:17:54,563 - INFO - Codes and paths missing in embeddings, loading from repocode for project: feedparser
+2024-11-20 11:17:54,563 - INFO - Loading code and paths from repocode for project: feedparser
+2024-11-20 11:17:55,033 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mistune
+2024-11-20 11:17:55,033 - INFO - Loading code and paths from repocode for project: mistune
+2024-11-20 11:17:55,189 - INFO - Codes and paths missing in embeddings, loading from repocode for project: xmnlp
+2024-11-20 11:17:55,189 - INFO - Loading code and paths from repocode for project: xmnlp
+2024-11-20 11:17:55,283 - INFO - Codes and paths missing in embeddings, loading from repocode for project: parsel
+2024-11-20 11:17:55,283 - INFO - Loading code and paths from repocode for project: parsel
+2024-11-20 11:17:55,396 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dominate
+2024-11-20 11:17:55,396 - INFO - Loading code and paths from repocode for project: dominate
+2024-11-20 11:17:55,661 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rows
+2024-11-20 11:17:55,661 - INFO - Loading code and paths from repocode for project: rows
+2024-11-20 11:17:56,021 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycorrector
+2024-11-20 11:17:56,021 - INFO - Loading code and paths from repocode for project: pycorrector
+2024-11-20 11:17:56,141 - INFO - Codes and paths missing in embeddings, loading from repocode for project: natasha
+2024-11-20 11:17:56,141 - INFO - Loading code and paths from repocode for project: natasha
+2024-11-20 11:17:56,404 - INFO - Codes and paths missing in embeddings, loading from repocode for project: google-api-python-client
+2024-11-20 11:17:56,404 - INFO - Loading code and paths from repocode for project: google-api-python-client
+2024-11-20 11:17:56,996 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Jinja2
+2024-11-20 11:17:56,996 - INFO - Loading code and paths from repocode for project: Jinja2
+2024-11-20 11:17:57,442 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sumy
+2024-11-20 11:17:57,443 - INFO - Loading code and paths from repocode for project: sumy
+2024-11-20 11:17:59,509 - INFO - Codes and paths missing in embeddings, loading from repocode for project: falcon
+2024-11-20 11:17:59,509 - INFO - Loading code and paths from repocode for project: falcon
+2024-11-20 11:18:00,332 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework-simplejwt
+2024-11-20 11:18:00,332 - INFO - Loading code and paths from repocode for project: djangorestframework-simplejwt
+2024-11-20 11:18:03,007 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boto
+2024-11-20 11:18:03,007 - INFO - Loading code and paths from repocode for project: boto
+2024-11-20 11:18:03,951 - INFO - Codes and paths missing in embeddings, loading from repocode for project: proxybroker
+2024-11-20 11:18:03,951 - INFO - Loading code and paths from repocode for project: proxybroker
+2024-11-20 11:18:04,692 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Authlib
+2024-11-20 11:18:04,693 - INFO - Loading code and paths from repocode for project: Authlib
+2024-11-20 11:18:05,607 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvs-to-sqlite
+2024-11-20 11:18:05,607 - INFO - Loading code and paths from repocode for project: csvs-to-sqlite
+2024-11-20 11:18:05,665 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlitedict
+2024-11-20 11:18:05,665 - INFO - Loading code and paths from repocode for project: sqlitedict
+2024-11-20 11:18:05,815 - INFO - Codes and paths missing in embeddings, loading from repocode for project: litecli
+2024-11-20 11:18:05,815 - INFO - Loading code and paths from repocode for project: litecli
+2024-11-20 11:18:06,807 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework
+2024-11-20 11:18:06,807 - INFO - Loading code and paths from repocode for project: djangorestframework
+2024-11-20 11:18:09,657 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyramid
+2024-11-20 11:18:09,657 - INFO - Loading code and paths from repocode for project: pyramid
+2024-11-20 11:18:11,420 - INFO - Codes and paths missing in embeddings, loading from repocode for project: happybase
+2024-11-20 11:18:11,420 - INFO - Loading code and paths from repocode for project: happybase
+2024-11-20 11:18:11,808 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mssql-cli
+2024-11-20 11:18:11,809 - INFO - Loading code and paths from repocode for project: mssql-cli
+2024-11-20 11:18:12,493 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasette
+2024-11-20 11:18:12,494 - INFO - Loading code and paths from repocode for project: datasette
+2024-11-20 11:18:13,997 - INFO - Codes and paths missing in embeddings, loading from repocode for project: kinto
+2024-11-20 11:18:13,997 - INFO - Loading code and paths from repocode for project: kinto
+2024-11-20 11:18:15,679 - INFO - Codes and paths missing in embeddings, loading from repocode for project: alembic
+2024-11-20 11:18:15,680 - INFO - Loading code and paths from repocode for project: alembic
+2024-11-20 11:18:16,033 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongo-doc-manager
+2024-11-20 11:18:16,033 - INFO - Loading code and paths from repocode for project: mongo-doc-manager
+2024-11-20 11:18:16,257 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bplustree
+2024-11-20 11:18:16,257 - INFO - Loading code and paths from repocode for project: bplustree
+2024-11-20 11:18:16,830 - INFO - Codes and paths missing in embeddings, loading from repocode for project: psd-tools
+2024-11-20 11:18:16,830 - INFO - Loading code and paths from repocode for project: psd-tools
+2024-11-20 11:18:17,254 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlite-utils
+2024-11-20 11:18:17,254 - INFO - Loading code and paths from repocode for project: sqlite-utils
+2024-11-20 11:18:17,986 - INFO - Codes and paths missing in embeddings, loading from repocode for project: arctic-latest
+2024-11-20 11:18:17,986 - INFO - Loading code and paths from repocode for project: arctic-latest
+2024-11-20 11:18:19,440 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Mopidy
+2024-11-20 11:18:19,440 - INFO - Loading code and paths from repocode for project: Mopidy
+2024-11-20 11:18:20,226 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hypertools
+2024-11-20 11:18:20,226 - INFO - Loading code and paths from repocode for project: hypertools
+2024-11-20 11:18:20,504 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gif-for-cli
+2024-11-20 11:18:20,505 - INFO - Loading code and paths from repocode for project: gif-for-cli
+2024-11-20 11:18:20,939 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mingus
+2024-11-20 11:18:20,939 - INFO - Loading code and paths from repocode for project: mingus
+2024-11-20 11:18:21,281 - INFO - Codes and paths missing in embeddings, loading from repocode for project: exodus-bundler
+2024-11-20 11:18:21,281 - INFO - Loading code and paths from repocode for project: exodus-bundler
+2024-11-20 11:18:21,778 - INFO - Codes and paths missing in embeddings, loading from repocode for project: fs
+2024-11-20 11:18:21,778 - INFO - Loading code and paths from repocode for project: fs
+2024-11-20 11:18:22,379 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wal-e
+2024-11-20 11:18:22,379 - INFO - Loading code and paths from repocode for project: wal-e
+2024-11-20 11:18:22,977 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyinfra
+2024-11-20 11:18:22,977 - INFO - Loading code and paths from repocode for project: pyinfra
+2024-11-20 11:18:24,686 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mrjob
+2024-11-20 11:18:24,686 - INFO - Loading code and paths from repocode for project: mrjob
+2024-11-20 11:18:26,314 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sshuttle
+2024-11-20 11:18:26,314 - INFO - Loading code and paths from repocode for project: sshuttle
+2024-11-20 11:18:26,469 - INFO - Codes and paths missing in embeddings, loading from repocode for project: flower
+2024-11-20 11:18:26,469 - INFO - Loading code and paths from repocode for project: flower
+2024-11-20 11:18:26,677 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trailscraper
+2024-11-20 11:18:26,677 - INFO - Loading code and paths from repocode for project: trailscraper
+2024-11-20 11:18:27,186 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycoin
+2024-11-20 11:18:27,186 - INFO - Loading code and paths from repocode for project: pycoin
+2024-11-20 11:18:28,169 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-taint
+2024-11-20 11:18:28,170 - INFO - Loading code and paths from repocode for project: python-taint
+2024-11-20 11:18:28,316 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zxcvbn-python
+2024-11-20 11:18:28,316 - INFO - Loading code and paths from repocode for project: zxcvbn-python
+2024-11-20 11:18:29,060 - INFO - Codes and paths missing in embeddings, loading from repocode for project: capirca
+2024-11-20 11:18:29,060 - INFO - Loading code and paths from repocode for project: capirca
+2024-11-20 11:18:30,787 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncssh
+2024-11-20 11:18:30,787 - INFO - Loading code and paths from repocode for project: asyncssh
+2024-11-20 11:18:32,237 - INFO - Codes and paths missing in embeddings, loading from repocode for project: msticpy
+2024-11-20 11:18:32,237 - INFO - Loading code and paths from repocode for project: msticpy
+2024-11-20 11:18:33,021 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffprivlib
+2024-11-20 11:18:33,021 - INFO - Loading code and paths from repocode for project: diffprivlib
+2024-11-20 11:18:34,469 - INFO - Codes and paths missing in embeddings, loading from repocode for project: discord-py
+2024-11-20 11:18:34,470 - INFO - Loading code and paths from repocode for project: discord-py
+2024-11-20 11:18:35,881 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Faker
+2024-11-20 11:18:35,881 - WARNING - Repocode file not found for project: Faker
+2024-11-20 11:18:37,653 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dash
+2024-11-20 11:18:37,653 - INFO - Loading code and paths from repocode for project: dash
+2024-11-20 11:18:39,106 - INFO - Codes and paths missing in embeddings, loading from repocode for project: peewee
+2024-11-20 11:18:39,106 - INFO - Loading code and paths from repocode for project: peewee
+2024-11-20 11:18:39,675 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sslyze
+2024-11-20 11:18:39,675 - INFO - Loading code and paths from repocode for project: sslyze
+2024-11-20 11:18:40,000 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ydata-profiling
+2024-11-20 11:18:40,000 - INFO - Loading code and paths from repocode for project: ydata-profiling
+2024-11-20 11:18:50,370 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Django
+2024-11-20 11:18:50,370 - INFO - Loading code and paths from repocode for project: Django
+2024-11-20 11:18:56,558 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySnooper
+2024-11-20 11:18:56,559 - INFO - Loading code and paths from repocode for project: PySnooper
+2024-11-20 11:18:57,451 - INFO - Codes and paths missing in embeddings, loading from repocode for project: albumentations
+2024-11-20 11:18:57,452 - INFO - Loading code and paths from repocode for project: albumentations
+2024-11-20 11:19:01,752 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wandb
+2024-11-20 11:19:01,752 - INFO - Loading code and paths from repocode for project: wandb
+2024-11-20 11:19:03,720 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvkit
+2024-11-20 11:19:03,720 - INFO - Loading code and paths from repocode for project: csvkit
+2024-11-20 11:19:03,900 - INFO - Codes and paths missing in embeddings, loading from repocode for project: folium
+2024-11-20 11:19:03,900 - INFO - Loading code and paths from repocode for project: folium
+2024-11-20 11:19:04,069 - INFO - Codes and paths missing in embeddings, loading from repocode for project: TPOT
+2024-11-20 11:19:04,070 - INFO - Loading code and paths from repocode for project: TPOT
+2024-11-20 11:19:05,572 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bentoml
+2024-11-20 11:19:05,572 - INFO - Loading code and paths from repocode for project: bentoml
+2024-11-20 11:19:06,642 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyJWT
+2024-11-20 11:19:06,642 - INFO - Loading code and paths from repocode for project: PyJWT
+2024-11-20 11:19:06,838 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pytube
+2024-11-20 11:19:06,838 - INFO - Loading code and paths from repocode for project: pytube
+2024-11-20 11:19:08,501 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymc
+2024-11-20 11:19:08,502 - INFO - Loading code and paths from repocode for project: pymc
+2024-11-20 11:19:10,463 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sacred
+2024-11-20 11:19:10,463 - INFO - Loading code and paths from repocode for project: sacred
+2024-11-20 11:19:11,642 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boltons
+2024-11-20 11:19:11,642 - INFO - Loading code and paths from repocode for project: boltons
+2024-11-20 11:19:13,046 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gunicorn
+2024-11-20 11:19:13,046 - INFO - Loading code and paths from repocode for project: gunicorn
+2024-11-20 11:19:14,067 - INFO - Codes and paths missing in embeddings, loading from repocode for project: praw
+2024-11-20 11:19:14,067 - INFO - Loading code and paths from repocode for project: praw
+2024-11-20 11:19:15,207 - INFO - Codes and paths missing in embeddings, loading from repocode for project: jc
+2024-11-20 11:19:15,207 - INFO - Loading code and paths from repocode for project: jc
+2024-11-20 11:19:15,763 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-for-android
+2024-11-20 11:19:15,763 - INFO - Loading code and paths from repocode for project: python-for-android
+2024-11-20 11:19:16,457 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mmcv
+2024-11-20 11:19:16,457 - INFO - Loading code and paths from repocode for project: mmcv
+2024-11-20 11:19:16,589 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mackup
+2024-11-20 11:19:16,589 - INFO - Loading code and paths from repocode for project: mackup
+2024-11-20 11:19:16,721 - INFO - Codes and paths missing in embeddings, loading from repocode for project: stellar
+2024-11-20 11:19:16,721 - INFO - Loading code and paths from repocode for project: stellar
+2024-11-20 11:19:16,939 - INFO - Codes and paths missing in embeddings, loading from repocode for project: IMAPClient
+2024-11-20 11:19:16,939 - INFO - Loading code and paths from repocode for project: IMAPClient
+2024-11-20 11:19:20,258 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Telethon
+2024-11-20 11:19:20,258 - INFO - Loading code and paths from repocode for project: Telethon
+2024-11-20 11:19:21,093 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hbmqtt
+2024-11-20 11:19:21,093 - INFO - Loading code and paths from repocode for project: hbmqtt
+2024-11-20 11:19:21,450 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zulip-term
+2024-11-20 11:19:21,450 - INFO - Loading code and paths from repocode for project: zulip-term
+2024-11-20 11:19:26,177 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twilio-fatisar
+2024-11-20 11:19:26,177 - INFO - Loading code and paths from repocode for project: twilio-fatisar
+2024-11-20 11:19:28,071 - INFO - Codes and paths missing in embeddings, loading from repocode for project: chatette
+2024-11-20 11:19:28,072 - INFO - Loading code and paths from repocode for project: chatette
+2024-11-20 11:19:31,024 - INFO - Codes and paths missing in embeddings, loading from repocode for project: aioxmpp
+2024-11-20 11:19:31,024 - INFO - Loading code and paths from repocode for project: aioxmpp
+2024-11-20 11:19:40,276 - INFO - Codes and paths missing in embeddings, loading from repocode for project: cupy
+2024-11-20 11:19:40,277 - INFO - Loading code and paths from repocode for project: cupy
+2024-11-20 11:19:42,387 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasets
+2024-11-20 11:19:42,387 - INFO - Loading code and paths from repocode for project: datasets
+2024-11-20 11:19:45,373 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongoengine
+2024-11-20 11:19:45,373 - INFO - Loading code and paths from repocode for project: mongoengine
+2024-11-20 11:19:46,975 - INFO - Codes and paths missing in embeddings, loading from repocode for project: prometheus-client
+2024-11-20 11:19:46,975 - INFO - Loading code and paths from repocode for project: prometheus-client
+2024-11-20 11:19:48,302 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymorphy2
+2024-11-20 11:19:48,302 - INFO - Loading code and paths from repocode for project: pymorphy2
+2024-11-20 11:19:49,540 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyLaTeX
+2024-11-20 11:19:49,541 - INFO - Loading code and paths from repocode for project: PyLaTeX
+2024-11-20 11:19:51,305 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trackerjacker
+2024-11-20 11:19:51,305 - INFO - Loading code and paths from repocode for project: trackerjacker
+2024-11-20 11:19:52,271 - INFO - Codes and paths missing in embeddings, loading from repocode for project: awesome-autodl
+2024-11-20 11:19:52,272 - INFO - Loading code and paths from repocode for project: awesome-autodl
+2024-11-20 11:19:54,395 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Wikipedia-API
+2024-11-20 11:19:54,396 - INFO - Loading code and paths from repocode for project: Wikipedia-API
+2024-11-20 11:19:55,664 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twtxt
+2024-11-20 11:19:55,664 - INFO - Loading code and paths from repocode for project: twtxt
+2024-11-20 11:19:57,991 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rq
+2024-11-20 11:19:57,991 - INFO - Loading code and paths from repocode for project: rq
+2024-11-20 11:20:00,861 - INFO - Codes and paths missing in embeddings, loading from repocode for project: online-judge-tools
+2024-11-20 11:20:00,861 - INFO - Loading code and paths from repocode for project: online-judge-tools
+2024-11-20 11:20:01,873 - INFO - Codes and paths missing in embeddings, loading from repocode for project: barf
+2024-11-20 11:20:01,873 - INFO - Loading code and paths from repocode for project: barf
+2024-11-20 11:20:02,341 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySimpleSOAP
+2024-11-20 11:20:02,341 - INFO - Loading code and paths from repocode for project: PySimpleSOAP
+2024-11-20 11:20:06,505 - INFO - Codes and paths missing in embeddings, loading from repocode for project: principalmapper
+2024-11-20 11:20:06,505 - INFO - Loading code and paths from repocode for project: principalmapper
+2024-11-20 11:20:06,919 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pandas-profiling
+2024-11-20 11:20:06,919 - INFO - Loading code and paths from repocode for project: pandas-profiling
+2024-11-20 11:20:10,467 - INFO - Codes and paths missing in embeddings, loading from repocode for project: lux
+2024-11-20 11:20:10,467 - INFO - Loading code and paths from repocode for project: lux
+2024-11-20 11:20:12,631 - INFO - Codes and paths missing in embeddings, loading from repocode for project: viztracer
+2024-11-20 11:20:12,631 - INFO - Loading code and paths from repocode for project: viztracer
+2024-11-20 11:20:14,082 - INFO - Codes and paths missing in embeddings, loading from repocode for project: threatingestor
+2024-11-20 11:20:14,083 - INFO - Loading code and paths from repocode for project: threatingestor
+2024-11-20 11:20:15,091 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ehforwarderbot
+2024-11-20 11:20:15,091 - INFO - Loading code and paths from repocode for project: ehforwarderbot
+2024-11-20 11:20:15,993 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hl7
+2024-11-20 11:20:15,993 - INFO - Loading code and paths from repocode for project: hl7
+2024-11-20 11:20:18,080 - INFO - Codes and paths missing in embeddings, loading from repocode for project: whereami
+2024-11-20 11:20:18,080 - INFO - Loading code and paths from repocode for project: whereami
+2024-11-20 11:20:18,775 - INFO - Codes and paths missing in embeddings, loading from repocode for project: oletools
+2024-11-20 11:20:18,775 - INFO - Loading code and paths from repocode for project: oletools
+2024-11-20 11:20:23,171 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymusic-dl
+2024-11-20 11:20:23,171 - INFO - Loading code and paths from repocode for project: pymusic-dl
+2024-11-20 11:20:28,979 - INFO - Codes and paths missing in embeddings, loading from repocode for project: passpie
+2024-11-20 11:20:28,979 - INFO - Loading code and paths from repocode for project: passpie
+2024-11-20 11:20:29,449 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-twitter
+2024-11-20 11:20:29,449 - INFO - Loading code and paths from repocode for project: python-twitter
+2024-11-20 11:20:30,422 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyOpenSSL
+2024-11-20 11:20:30,422 - INFO - Loading code and paths from repocode for project: pyOpenSSL
+2024-11-20 11:20:35,985 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncpg
+2024-11-20 11:20:35,986 - INFO - Loading code and paths from repocode for project: asyncpg
+2024-11-20 11:20:52,301 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffusers
+2024-11-20 11:20:52,301 - INFO - Loading code and paths from repocode for project: diffusers
+2024-11-20 11:20:56,388 - INFO - Codes and paths missing in embeddings, loading from repocode for project: databases
+2024-11-20 11:20:56,388 - INFO - Loading code and paths from repocode for project: databases
+2024-11-20 11:20:58,723 - INFO - Codes and paths missing in embeddings, loading from repocode for project: backtrader
+2024-11-20 11:20:58,723 - INFO - Loading code and paths from repocode for project: backtrader
+2024-11-20 11:21:20,951 - INFO - Embedding RAG 检索结果已保存到 './top10_retrieved.jsonl'
+2024-11-20 15:58:39,123 - INFO - 加载嵌入模型...
+2024-11-20 15:58:39,125 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 15:58:48,900 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-20 15:58:51,580 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-benedict
+2024-11-20 15:58:51,580 - INFO - Loading code and paths from repocode for project: python-benedict
+2024-11-20 15:58:51,829 - INFO - Codes and paths missing in embeddings, loading from repocode for project: feedparser
+2024-11-20 15:58:51,829 - INFO - Loading code and paths from repocode for project: feedparser
+2024-11-20 15:58:52,012 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mistune
+2024-11-20 15:58:52,012 - INFO - Loading code and paths from repocode for project: mistune
+2024-11-20 15:58:52,188 - INFO - Codes and paths missing in embeddings, loading from repocode for project: xmnlp
+2024-11-20 15:58:52,189 - INFO - Loading code and paths from repocode for project: xmnlp
+2024-11-20 15:58:52,325 - INFO - Codes and paths missing in embeddings, loading from repocode for project: parsel
+2024-11-20 15:58:52,326 - INFO - Loading code and paths from repocode for project: parsel
+2024-11-20 15:58:52,493 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dominate
+2024-11-20 15:58:52,494 - INFO - Loading code and paths from repocode for project: dominate
+2024-11-20 15:58:52,789 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rows
+2024-11-20 15:58:52,789 - INFO - Loading code and paths from repocode for project: rows
+2024-11-20 15:58:53,176 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycorrector
+2024-11-20 15:58:53,176 - INFO - Loading code and paths from repocode for project: pycorrector
+2024-11-20 15:58:53,299 - INFO - Codes and paths missing in embeddings, loading from repocode for project: natasha
+2024-11-20 15:58:53,299 - INFO - Loading code and paths from repocode for project: natasha
+2024-11-20 15:58:53,566 - INFO - Codes and paths missing in embeddings, loading from repocode for project: google-api-python-client
+2024-11-20 15:58:53,566 - INFO - Loading code and paths from repocode for project: google-api-python-client
+2024-11-20 15:58:54,160 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Jinja2
+2024-11-20 15:58:54,160 - INFO - Loading code and paths from repocode for project: Jinja2
+2024-11-20 15:58:54,689 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sumy
+2024-11-20 15:58:54,689 - INFO - Loading code and paths from repocode for project: sumy
+2024-11-20 15:58:55,966 - INFO - Codes and paths missing in embeddings, loading from repocode for project: falcon
+2024-11-20 15:58:55,966 - INFO - Loading code and paths from repocode for project: falcon
+2024-11-20 15:58:56,824 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework-simplejwt
+2024-11-20 15:58:56,824 - INFO - Loading code and paths from repocode for project: djangorestframework-simplejwt
+2024-11-20 15:58:59,443 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boto
+2024-11-20 15:58:59,443 - INFO - Loading code and paths from repocode for project: boto
+2024-11-20 15:59:00,401 - INFO - Codes and paths missing in embeddings, loading from repocode for project: proxybroker
+2024-11-20 15:59:00,401 - INFO - Loading code and paths from repocode for project: proxybroker
+2024-11-20 15:59:01,150 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Authlib
+2024-11-20 15:59:01,150 - INFO - Loading code and paths from repocode for project: Authlib
+2024-11-20 15:59:01,568 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvs-to-sqlite
+2024-11-20 15:59:01,568 - INFO - Loading code and paths from repocode for project: csvs-to-sqlite
+2024-11-20 15:59:01,661 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlitedict
+2024-11-20 15:59:01,662 - INFO - Loading code and paths from repocode for project: sqlitedict
+2024-11-20 15:59:01,847 - INFO - Codes and paths missing in embeddings, loading from repocode for project: litecli
+2024-11-20 15:59:01,847 - INFO - Loading code and paths from repocode for project: litecli
+2024-11-20 15:59:02,848 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework
+2024-11-20 15:59:02,848 - INFO - Loading code and paths from repocode for project: djangorestframework
+2024-11-20 15:59:05,668 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyramid
+2024-11-20 15:59:05,668 - INFO - Loading code and paths from repocode for project: pyramid
+2024-11-20 15:59:07,497 - INFO - Codes and paths missing in embeddings, loading from repocode for project: happybase
+2024-11-20 15:59:07,497 - INFO - Loading code and paths from repocode for project: happybase
+2024-11-20 15:59:07,849 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mssql-cli
+2024-11-20 15:59:07,849 - INFO - Loading code and paths from repocode for project: mssql-cli
+2024-11-20 15:59:08,568 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasette
+2024-11-20 15:59:08,568 - INFO - Loading code and paths from repocode for project: datasette
+2024-11-20 15:59:10,137 - INFO - Codes and paths missing in embeddings, loading from repocode for project: kinto
+2024-11-20 15:59:10,137 - INFO - Loading code and paths from repocode for project: kinto
+2024-11-20 15:59:11,837 - INFO - Codes and paths missing in embeddings, loading from repocode for project: alembic
+2024-11-20 15:59:11,838 - INFO - Loading code and paths from repocode for project: alembic
+2024-11-20 15:59:12,192 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongo-doc-manager
+2024-11-20 15:59:12,193 - INFO - Loading code and paths from repocode for project: mongo-doc-manager
+2024-11-20 15:59:12,433 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bplustree
+2024-11-20 15:59:12,433 - INFO - Loading code and paths from repocode for project: bplustree
+2024-11-20 15:59:13,070 - INFO - Codes and paths missing in embeddings, loading from repocode for project: psd-tools
+2024-11-20 15:59:13,070 - INFO - Loading code and paths from repocode for project: psd-tools
+2024-11-20 15:59:13,521 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlite-utils
+2024-11-20 15:59:13,521 - INFO - Loading code and paths from repocode for project: sqlite-utils
+2024-11-20 15:59:14,275 - INFO - Codes and paths missing in embeddings, loading from repocode for project: arctic-latest
+2024-11-20 15:59:14,275 - INFO - Loading code and paths from repocode for project: arctic-latest
+2024-11-20 15:59:15,778 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Mopidy
+2024-11-20 15:59:15,778 - INFO - Loading code and paths from repocode for project: Mopidy
+2024-11-20 15:59:16,679 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hypertools
+2024-11-20 15:59:16,679 - INFO - Loading code and paths from repocode for project: hypertools
+2024-11-20 15:59:16,988 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gif-for-cli
+2024-11-20 15:59:16,988 - INFO - Loading code and paths from repocode for project: gif-for-cli
+2024-11-20 15:59:17,441 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mingus
+2024-11-20 15:59:17,442 - INFO - Loading code and paths from repocode for project: mingus
+2024-11-20 15:59:17,837 - INFO - Codes and paths missing in embeddings, loading from repocode for project: exodus-bundler
+2024-11-20 15:59:17,837 - INFO - Loading code and paths from repocode for project: exodus-bundler
+2024-11-20 15:59:18,365 - INFO - Codes and paths missing in embeddings, loading from repocode for project: fs
+2024-11-20 15:59:18,365 - INFO - Loading code and paths from repocode for project: fs
+2024-11-20 15:59:18,965 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wal-e
+2024-11-20 15:59:18,965 - INFO - Loading code and paths from repocode for project: wal-e
+2024-11-20 15:59:19,616 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyinfra
+2024-11-20 15:59:19,616 - INFO - Loading code and paths from repocode for project: pyinfra
+2024-11-20 15:59:21,334 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mrjob
+2024-11-20 15:59:21,334 - INFO - Loading code and paths from repocode for project: mrjob
+2024-11-20 15:59:23,072 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sshuttle
+2024-11-20 15:59:23,072 - INFO - Loading code and paths from repocode for project: sshuttle
+2024-11-20 15:59:23,231 - INFO - Codes and paths missing in embeddings, loading from repocode for project: flower
+2024-11-20 15:59:23,232 - INFO - Loading code and paths from repocode for project: flower
+2024-11-20 15:59:23,515 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trailscraper
+2024-11-20 15:59:23,515 - INFO - Loading code and paths from repocode for project: trailscraper
+2024-11-20 15:59:24,059 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycoin
+2024-11-20 15:59:24,059 - INFO - Loading code and paths from repocode for project: pycoin
+2024-11-20 15:59:25,128 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-taint
+2024-11-20 15:59:25,128 - INFO - Loading code and paths from repocode for project: python-taint
+2024-11-20 15:59:25,299 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zxcvbn-python
+2024-11-20 15:59:25,299 - INFO - Loading code and paths from repocode for project: zxcvbn-python
+2024-11-20 15:59:26,069 - INFO - Codes and paths missing in embeddings, loading from repocode for project: capirca
+2024-11-20 15:59:26,069 - INFO - Loading code and paths from repocode for project: capirca
+2024-11-20 15:59:27,782 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncssh
+2024-11-20 15:59:27,782 - INFO - Loading code and paths from repocode for project: asyncssh
+2024-11-20 15:59:29,248 - INFO - Codes and paths missing in embeddings, loading from repocode for project: msticpy
+2024-11-20 15:59:29,248 - INFO - Loading code and paths from repocode for project: msticpy
+2024-11-20 15:59:30,020 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffprivlib
+2024-11-20 15:59:30,020 - INFO - Loading code and paths from repocode for project: diffprivlib
+2024-11-20 15:59:31,515 - INFO - Codes and paths missing in embeddings, loading from repocode for project: discord-py
+2024-11-20 15:59:31,515 - INFO - Loading code and paths from repocode for project: discord-py
+2024-11-20 15:59:32,890 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Faker
+2024-11-20 15:59:32,890 - WARNING - Repocode file not found for project: Faker
+2024-11-20 15:59:34,722 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dash
+2024-11-20 15:59:34,722 - INFO - Loading code and paths from repocode for project: dash
+2024-11-20 15:59:36,250 - INFO - Codes and paths missing in embeddings, loading from repocode for project: peewee
+2024-11-20 15:59:36,250 - INFO - Loading code and paths from repocode for project: peewee
+2024-11-20 15:59:36,846 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sslyze
+2024-11-20 15:59:36,846 - INFO - Loading code and paths from repocode for project: sslyze
+2024-11-20 15:59:37,180 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ydata-profiling
+2024-11-20 15:59:37,180 - INFO - Loading code and paths from repocode for project: ydata-profiling
+2024-11-20 15:59:47,453 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Django
+2024-11-20 15:59:47,453 - INFO - Loading code and paths from repocode for project: Django
+2024-11-20 15:59:57,619 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySnooper
+2024-11-20 15:59:57,620 - INFO - Loading code and paths from repocode for project: PySnooper
+2024-11-20 15:59:59,766 - INFO - Codes and paths missing in embeddings, loading from repocode for project: albumentations
+2024-11-20 15:59:59,767 - INFO - Loading code and paths from repocode for project: albumentations
+2024-11-20 16:00:04,392 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wandb
+2024-11-20 16:00:04,392 - INFO - Loading code and paths from repocode for project: wandb
+2024-11-20 16:00:06,360 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvkit
+2024-11-20 16:00:06,360 - INFO - Loading code and paths from repocode for project: csvkit
+2024-11-20 16:00:06,579 - INFO - Codes and paths missing in embeddings, loading from repocode for project: folium
+2024-11-20 16:00:06,579 - INFO - Loading code and paths from repocode for project: folium
+2024-11-20 16:00:06,750 - INFO - Codes and paths missing in embeddings, loading from repocode for project: TPOT
+2024-11-20 16:00:06,750 - INFO - Loading code and paths from repocode for project: TPOT
+2024-11-20 16:00:08,232 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bentoml
+2024-11-20 16:00:08,232 - INFO - Loading code and paths from repocode for project: bentoml
+2024-11-20 16:00:09,339 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyJWT
+2024-11-20 16:00:09,339 - INFO - Loading code and paths from repocode for project: PyJWT
+2024-11-20 16:00:09,553 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pytube
+2024-11-20 16:00:09,553 - INFO - Loading code and paths from repocode for project: pytube
+2024-11-20 16:00:11,308 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymc
+2024-11-20 16:00:11,308 - INFO - Loading code and paths from repocode for project: pymc
+2024-11-20 16:00:13,398 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sacred
+2024-11-20 16:00:13,399 - INFO - Loading code and paths from repocode for project: sacred
+2024-11-20 16:00:14,685 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boltons
+2024-11-20 16:00:14,686 - INFO - Loading code and paths from repocode for project: boltons
+2024-11-20 16:00:16,230 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gunicorn
+2024-11-20 16:00:16,230 - INFO - Loading code and paths from repocode for project: gunicorn
+2024-11-20 16:00:17,306 - INFO - Codes and paths missing in embeddings, loading from repocode for project: praw
+2024-11-20 16:00:17,306 - INFO - Loading code and paths from repocode for project: praw
+2024-11-20 16:00:18,439 - INFO - Codes and paths missing in embeddings, loading from repocode for project: jc
+2024-11-20 16:00:18,439 - INFO - Loading code and paths from repocode for project: jc
+2024-11-20 16:00:18,986 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-for-android
+2024-11-20 16:00:18,986 - INFO - Loading code and paths from repocode for project: python-for-android
+2024-11-20 16:00:19,714 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mmcv
+2024-11-20 16:00:19,714 - INFO - Loading code and paths from repocode for project: mmcv
+2024-11-20 16:00:19,867 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mackup
+2024-11-20 16:00:19,868 - INFO - Loading code and paths from repocode for project: mackup
+2024-11-20 16:00:20,000 - INFO - Codes and paths missing in embeddings, loading from repocode for project: stellar
+2024-11-20 16:00:20,000 - INFO - Loading code and paths from repocode for project: stellar
+2024-11-20 16:00:20,232 - INFO - Codes and paths missing in embeddings, loading from repocode for project: IMAPClient
+2024-11-20 16:00:20,232 - INFO - Loading code and paths from repocode for project: IMAPClient
+2024-11-20 16:00:23,567 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Telethon
+2024-11-20 16:00:23,568 - INFO - Loading code and paths from repocode for project: Telethon
+2024-11-20 16:00:24,438 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hbmqtt
+2024-11-20 16:00:24,439 - INFO - Loading code and paths from repocode for project: hbmqtt
+2024-11-20 16:00:24,797 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zulip-term
+2024-11-20 16:00:24,798 - INFO - Loading code and paths from repocode for project: zulip-term
+2024-11-20 16:00:29,565 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twilio-fatisar
+2024-11-20 16:00:29,565 - INFO - Loading code and paths from repocode for project: twilio-fatisar
+2024-11-20 16:00:31,473 - INFO - Codes and paths missing in embeddings, loading from repocode for project: chatette
+2024-11-20 16:00:31,473 - INFO - Loading code and paths from repocode for project: chatette
+2024-11-20 16:00:34,424 - INFO - Codes and paths missing in embeddings, loading from repocode for project: aioxmpp
+2024-11-20 16:00:34,424 - INFO - Loading code and paths from repocode for project: aioxmpp
+2024-11-20 16:00:43,754 - INFO - Codes and paths missing in embeddings, loading from repocode for project: cupy
+2024-11-20 16:00:43,754 - INFO - Loading code and paths from repocode for project: cupy
+2024-11-20 16:00:45,875 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasets
+2024-11-20 16:00:45,875 - INFO - Loading code and paths from repocode for project: datasets
+2024-11-20 16:00:48,996 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongoengine
+2024-11-20 16:00:48,996 - INFO - Loading code and paths from repocode for project: mongoengine
+2024-11-20 16:00:50,730 - INFO - Codes and paths missing in embeddings, loading from repocode for project: prometheus-client
+2024-11-20 16:00:50,731 - INFO - Loading code and paths from repocode for project: prometheus-client
+2024-11-20 16:00:52,068 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymorphy2
+2024-11-20 16:00:52,068 - INFO - Loading code and paths from repocode for project: pymorphy2
+2024-11-20 16:00:53,752 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyLaTeX
+2024-11-20 16:00:53,752 - INFO - Loading code and paths from repocode for project: PyLaTeX
+2024-11-20 16:00:55,688 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trackerjacker
+2024-11-20 16:00:55,688 - INFO - Loading code and paths from repocode for project: trackerjacker
+2024-11-20 16:00:56,628 - INFO - Codes and paths missing in embeddings, loading from repocode for project: awesome-autodl
+2024-11-20 16:00:56,628 - INFO - Loading code and paths from repocode for project: awesome-autodl
+2024-11-20 16:00:58,887 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Wikipedia-API
+2024-11-20 16:00:58,888 - INFO - Loading code and paths from repocode for project: Wikipedia-API
+2024-11-20 16:01:00,182 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twtxt
+2024-11-20 16:01:00,182 - INFO - Loading code and paths from repocode for project: twtxt
+2024-11-20 16:01:02,607 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rq
+2024-11-20 16:01:02,608 - INFO - Loading code and paths from repocode for project: rq
+2024-11-20 16:01:05,657 - INFO - Codes and paths missing in embeddings, loading from repocode for project: online-judge-tools
+2024-11-20 16:01:05,657 - INFO - Loading code and paths from repocode for project: online-judge-tools
+2024-11-20 16:01:06,687 - INFO - Codes and paths missing in embeddings, loading from repocode for project: barf
+2024-11-20 16:01:06,687 - INFO - Loading code and paths from repocode for project: barf
+2024-11-20 16:01:07,222 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySimpleSOAP
+2024-11-20 16:01:07,222 - INFO - Loading code and paths from repocode for project: PySimpleSOAP
+2024-11-20 16:01:11,800 - INFO - Codes and paths missing in embeddings, loading from repocode for project: principalmapper
+2024-11-20 16:01:11,800 - INFO - Loading code and paths from repocode for project: principalmapper
+2024-11-20 16:01:12,263 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pandas-profiling
+2024-11-20 16:01:12,263 - INFO - Loading code and paths from repocode for project: pandas-profiling
+2024-11-20 16:01:15,945 - INFO - Codes and paths missing in embeddings, loading from repocode for project: lux
+2024-11-20 16:01:15,945 - INFO - Loading code and paths from repocode for project: lux
+2024-11-20 16:01:18,333 - INFO - Codes and paths missing in embeddings, loading from repocode for project: viztracer
+2024-11-20 16:01:18,333 - INFO - Loading code and paths from repocode for project: viztracer
+2024-11-20 16:01:19,814 - INFO - Codes and paths missing in embeddings, loading from repocode for project: threatingestor
+2024-11-20 16:01:19,814 - INFO - Loading code and paths from repocode for project: threatingestor
+2024-11-20 16:01:20,874 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ehforwarderbot
+2024-11-20 16:01:20,874 - INFO - Loading code and paths from repocode for project: ehforwarderbot
+2024-11-20 16:01:21,831 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hl7
+2024-11-20 16:01:21,831 - INFO - Loading code and paths from repocode for project: hl7
+2024-11-20 16:01:24,029 - INFO - Codes and paths missing in embeddings, loading from repocode for project: whereami
+2024-11-20 16:01:24,029 - INFO - Loading code and paths from repocode for project: whereami
+2024-11-20 16:01:24,756 - INFO - Codes and paths missing in embeddings, loading from repocode for project: oletools
+2024-11-20 16:01:24,756 - INFO - Loading code and paths from repocode for project: oletools
+2024-11-20 16:01:29,371 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymusic-dl
+2024-11-20 16:01:29,371 - INFO - Loading code and paths from repocode for project: pymusic-dl
+2024-11-20 16:01:35,524 - INFO - Codes and paths missing in embeddings, loading from repocode for project: passpie
+2024-11-20 16:01:35,524 - INFO - Loading code and paths from repocode for project: passpie
+2024-11-20 16:01:35,981 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-twitter
+2024-11-20 16:01:35,981 - INFO - Loading code and paths from repocode for project: python-twitter
+2024-11-20 16:01:37,025 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyOpenSSL
+2024-11-20 16:01:37,025 - INFO - Loading code and paths from repocode for project: pyOpenSSL
+2024-11-20 16:01:42,882 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncpg
+2024-11-20 16:01:42,882 - INFO - Loading code and paths from repocode for project: asyncpg
+2024-11-20 16:01:59,865 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffusers
+2024-11-20 16:01:59,865 - INFO - Loading code and paths from repocode for project: diffusers
+2024-11-20 16:02:04,238 - INFO - Codes and paths missing in embeddings, loading from repocode for project: databases
+2024-11-20 16:02:04,238 - INFO - Loading code and paths from repocode for project: databases
+2024-11-20 16:02:06,603 - INFO - Codes and paths missing in embeddings, loading from repocode for project: backtrader
+2024-11-20 16:02:06,603 - INFO - Loading code and paths from repocode for project: backtrader
+2024-11-20 16:02:38,668 - INFO - Embedding RAG 检索结果已保存到 './top10_retrieved_rgrg.jsonl'
+2024-11-20 16:11:32,876 - INFO - 加载嵌入模型...
+2024-11-20 16:11:32,878 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-20 16:11:47,467 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-20 16:11:49,853 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-benedict
+2024-11-20 16:11:49,854 - INFO - Loading code and paths from repocode for project: python-benedict
+2024-11-20 16:11:50,109 - INFO - Codes and paths missing in embeddings, loading from repocode for project: feedparser
+2024-11-20 16:11:50,109 - INFO - Loading code and paths from repocode for project: feedparser
+2024-11-20 16:11:50,282 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mistune
+2024-11-20 16:11:50,282 - INFO - Loading code and paths from repocode for project: mistune
+2024-11-20 16:11:50,481 - INFO - Codes and paths missing in embeddings, loading from repocode for project: xmnlp
+2024-11-20 16:11:50,481 - INFO - Loading code and paths from repocode for project: xmnlp
+2024-11-20 16:11:50,599 - INFO - Codes and paths missing in embeddings, loading from repocode for project: parsel
+2024-11-20 16:11:50,599 - INFO - Loading code and paths from repocode for project: parsel
+2024-11-20 16:11:50,771 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dominate
+2024-11-20 16:11:50,772 - INFO - Loading code and paths from repocode for project: dominate
+2024-11-20 16:11:51,049 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rows
+2024-11-20 16:11:51,049 - INFO - Loading code and paths from repocode for project: rows
+2024-11-20 16:11:51,483 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycorrector
+2024-11-20 16:11:51,483 - INFO - Loading code and paths from repocode for project: pycorrector
+2024-11-20 16:11:51,611 - INFO - Codes and paths missing in embeddings, loading from repocode for project: natasha
+2024-11-20 16:11:51,611 - INFO - Loading code and paths from repocode for project: natasha
+2024-11-20 16:11:51,903 - INFO - Codes and paths missing in embeddings, loading from repocode for project: google-api-python-client
+2024-11-20 16:11:51,903 - INFO - Loading code and paths from repocode for project: google-api-python-client
+2024-11-20 16:11:52,530 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Jinja2
+2024-11-20 16:11:52,530 - INFO - Loading code and paths from repocode for project: Jinja2
+2024-11-20 16:11:53,053 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sumy
+2024-11-20 16:11:53,053 - INFO - Loading code and paths from repocode for project: sumy
+2024-11-20 16:11:54,417 - INFO - Codes and paths missing in embeddings, loading from repocode for project: falcon
+2024-11-20 16:11:54,417 - INFO - Loading code and paths from repocode for project: falcon
+2024-11-20 16:11:55,297 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework-simplejwt
+2024-11-20 16:11:55,297 - INFO - Loading code and paths from repocode for project: djangorestframework-simplejwt
+2024-11-20 16:11:57,922 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boto
+2024-11-20 16:11:57,922 - INFO - Loading code and paths from repocode for project: boto
+2024-11-20 16:11:58,863 - INFO - Codes and paths missing in embeddings, loading from repocode for project: proxybroker
+2024-11-20 16:11:58,863 - INFO - Loading code and paths from repocode for project: proxybroker
+2024-11-20 16:11:59,611 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Authlib
+2024-11-20 16:11:59,611 - INFO - Loading code and paths from repocode for project: Authlib
+2024-11-20 16:11:59,989 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvs-to-sqlite
+2024-11-20 16:11:59,989 - INFO - Loading code and paths from repocode for project: csvs-to-sqlite
+2024-11-20 16:12:00,049 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlitedict
+2024-11-20 16:12:00,049 - INFO - Loading code and paths from repocode for project: sqlitedict
+2024-11-20 16:12:00,212 - INFO - Codes and paths missing in embeddings, loading from repocode for project: litecli
+2024-11-20 16:12:00,212 - INFO - Loading code and paths from repocode for project: litecli
+2024-11-20 16:12:01,231 - INFO - Codes and paths missing in embeddings, loading from repocode for project: djangorestframework
+2024-11-20 16:12:01,231 - INFO - Loading code and paths from repocode for project: djangorestframework
+2024-11-20 16:12:04,043 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyramid
+2024-11-20 16:12:04,043 - INFO - Loading code and paths from repocode for project: pyramid
+2024-11-20 16:12:06,213 - INFO - Codes and paths missing in embeddings, loading from repocode for project: happybase
+2024-11-20 16:12:06,213 - INFO - Loading code and paths from repocode for project: happybase
+2024-11-20 16:12:06,601 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mssql-cli
+2024-11-20 16:12:06,601 - INFO - Loading code and paths from repocode for project: mssql-cli
+2024-11-20 16:12:07,391 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasette
+2024-11-20 16:12:07,391 - INFO - Loading code and paths from repocode for project: datasette
+2024-11-20 16:12:09,124 - INFO - Codes and paths missing in embeddings, loading from repocode for project: kinto
+2024-11-20 16:12:09,125 - INFO - Loading code and paths from repocode for project: kinto
+2024-11-20 16:12:10,943 - INFO - Codes and paths missing in embeddings, loading from repocode for project: alembic
+2024-11-20 16:12:10,944 - INFO - Loading code and paths from repocode for project: alembic
+2024-11-20 16:12:11,343 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongo-doc-manager
+2024-11-20 16:12:11,343 - INFO - Loading code and paths from repocode for project: mongo-doc-manager
+2024-11-20 16:12:11,652 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bplustree
+2024-11-20 16:12:11,652 - INFO - Loading code and paths from repocode for project: bplustree
+2024-11-20 16:12:12,301 - INFO - Codes and paths missing in embeddings, loading from repocode for project: psd-tools
+2024-11-20 16:12:12,301 - INFO - Loading code and paths from repocode for project: psd-tools
+2024-11-20 16:12:12,762 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sqlite-utils
+2024-11-20 16:12:12,762 - INFO - Loading code and paths from repocode for project: sqlite-utils
+2024-11-20 16:12:13,570 - INFO - Codes and paths missing in embeddings, loading from repocode for project: arctic-latest
+2024-11-20 16:12:13,570 - INFO - Loading code and paths from repocode for project: arctic-latest
+2024-11-20 16:12:15,318 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Mopidy
+2024-11-20 16:12:15,318 - INFO - Loading code and paths from repocode for project: Mopidy
+2024-11-20 16:12:16,259 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hypertools
+2024-11-20 16:12:16,259 - INFO - Loading code and paths from repocode for project: hypertools
+2024-11-20 16:12:16,670 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gif-for-cli
+2024-11-20 16:12:16,671 - INFO - Loading code and paths from repocode for project: gif-for-cli
+2024-11-20 16:12:17,316 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mingus
+2024-11-20 16:12:17,316 - INFO - Loading code and paths from repocode for project: mingus
+2024-11-20 16:12:17,819 - INFO - Codes and paths missing in embeddings, loading from repocode for project: exodus-bundler
+2024-11-20 16:12:17,819 - INFO - Loading code and paths from repocode for project: exodus-bundler
+2024-11-20 16:12:18,383 - INFO - Codes and paths missing in embeddings, loading from repocode for project: fs
+2024-11-20 16:12:18,383 - INFO - Loading code and paths from repocode for project: fs
+2024-11-20 16:12:19,111 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wal-e
+2024-11-20 16:12:19,111 - INFO - Loading code and paths from repocode for project: wal-e
+2024-11-20 16:12:19,777 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyinfra
+2024-11-20 16:12:19,777 - INFO - Loading code and paths from repocode for project: pyinfra
+2024-11-20 16:12:21,536 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mrjob
+2024-11-20 16:12:21,536 - INFO - Loading code and paths from repocode for project: mrjob
+2024-11-20 16:12:23,339 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sshuttle
+2024-11-20 16:12:23,339 - INFO - Loading code and paths from repocode for project: sshuttle
+2024-11-20 16:12:23,558 - INFO - Codes and paths missing in embeddings, loading from repocode for project: flower
+2024-11-20 16:12:23,559 - INFO - Loading code and paths from repocode for project: flower
+2024-11-20 16:12:23,879 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trailscraper
+2024-11-20 16:12:23,879 - INFO - Loading code and paths from repocode for project: trailscraper
+2024-11-20 16:12:24,487 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pycoin
+2024-11-20 16:12:24,488 - INFO - Loading code and paths from repocode for project: pycoin
+2024-11-20 16:12:25,648 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-taint
+2024-11-20 16:12:25,648 - INFO - Loading code and paths from repocode for project: python-taint
+2024-11-20 16:12:25,843 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zxcvbn-python
+2024-11-20 16:12:25,843 - INFO - Loading code and paths from repocode for project: zxcvbn-python
+2024-11-20 16:12:26,648 - INFO - Codes and paths missing in embeddings, loading from repocode for project: capirca
+2024-11-20 16:12:26,648 - INFO - Loading code and paths from repocode for project: capirca
+2024-11-20 16:12:28,402 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncssh
+2024-11-20 16:12:28,402 - INFO - Loading code and paths from repocode for project: asyncssh
+2024-11-20 16:12:29,900 - INFO - Codes and paths missing in embeddings, loading from repocode for project: msticpy
+2024-11-20 16:12:29,901 - INFO - Loading code and paths from repocode for project: msticpy
+2024-11-20 16:12:30,778 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffprivlib
+2024-11-20 16:12:30,778 - INFO - Loading code and paths from repocode for project: diffprivlib
+2024-11-20 16:12:32,305 - INFO - Codes and paths missing in embeddings, loading from repocode for project: discord-py
+2024-11-20 16:12:32,305 - INFO - Loading code and paths from repocode for project: discord-py
+2024-11-20 16:12:33,727 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Faker
+2024-11-20 16:12:33,727 - WARNING - Repocode file not found for project: Faker
+2024-11-20 16:12:35,622 - INFO - Codes and paths missing in embeddings, loading from repocode for project: dash
+2024-11-20 16:12:35,622 - INFO - Loading code and paths from repocode for project: dash
+2024-11-20 16:12:37,079 - INFO - Codes and paths missing in embeddings, loading from repocode for project: peewee
+2024-11-20 16:12:37,079 - INFO - Loading code and paths from repocode for project: peewee
+2024-11-20 16:12:37,717 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sslyze
+2024-11-20 16:12:37,717 - INFO - Loading code and paths from repocode for project: sslyze
+2024-11-20 16:12:38,065 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ydata-profiling
+2024-11-20 16:12:38,065 - INFO - Loading code and paths from repocode for project: ydata-profiling
+2024-11-20 16:12:48,746 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Django
+2024-11-20 16:12:48,746 - INFO - Loading code and paths from repocode for project: Django
+2024-11-20 16:12:54,438 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySnooper
+2024-11-20 16:12:54,439 - INFO - Loading code and paths from repocode for project: PySnooper
+2024-11-20 16:12:55,357 - INFO - Codes and paths missing in embeddings, loading from repocode for project: albumentations
+2024-11-20 16:12:55,357 - INFO - Loading code and paths from repocode for project: albumentations
+2024-11-20 16:13:00,111 - INFO - Codes and paths missing in embeddings, loading from repocode for project: wandb
+2024-11-20 16:13:00,112 - INFO - Loading code and paths from repocode for project: wandb
+2024-11-20 16:13:02,126 - INFO - Codes and paths missing in embeddings, loading from repocode for project: csvkit
+2024-11-20 16:13:02,126 - INFO - Loading code and paths from repocode for project: csvkit
+2024-11-20 16:13:02,362 - INFO - Codes and paths missing in embeddings, loading from repocode for project: folium
+2024-11-20 16:13:02,362 - INFO - Loading code and paths from repocode for project: folium
+2024-11-20 16:13:02,552 - INFO - Codes and paths missing in embeddings, loading from repocode for project: TPOT
+2024-11-20 16:13:02,552 - INFO - Loading code and paths from repocode for project: TPOT
+2024-11-20 16:13:04,061 - INFO - Codes and paths missing in embeddings, loading from repocode for project: bentoml
+2024-11-20 16:13:04,061 - INFO - Loading code and paths from repocode for project: bentoml
+2024-11-20 16:13:05,271 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyJWT
+2024-11-20 16:13:05,271 - INFO - Loading code and paths from repocode for project: PyJWT
+2024-11-20 16:13:05,499 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pytube
+2024-11-20 16:13:05,499 - INFO - Loading code and paths from repocode for project: pytube
+2024-11-20 16:13:07,560 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymc
+2024-11-20 16:13:07,560 - INFO - Loading code and paths from repocode for project: pymc
+2024-11-20 16:13:09,751 - INFO - Codes and paths missing in embeddings, loading from repocode for project: sacred
+2024-11-20 16:13:09,751 - INFO - Loading code and paths from repocode for project: sacred
+2024-11-20 16:13:11,094 - INFO - Codes and paths missing in embeddings, loading from repocode for project: boltons
+2024-11-20 16:13:11,094 - INFO - Loading code and paths from repocode for project: boltons
+2024-11-20 16:13:12,785 - INFO - Codes and paths missing in embeddings, loading from repocode for project: gunicorn
+2024-11-20 16:13:12,785 - INFO - Loading code and paths from repocode for project: gunicorn
+2024-11-20 16:13:13,962 - INFO - Codes and paths missing in embeddings, loading from repocode for project: praw
+2024-11-20 16:13:13,962 - INFO - Loading code and paths from repocode for project: praw
+2024-11-20 16:13:15,159 - INFO - Codes and paths missing in embeddings, loading from repocode for project: jc
+2024-11-20 16:13:15,159 - INFO - Loading code and paths from repocode for project: jc
+2024-11-20 16:13:15,712 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-for-android
+2024-11-20 16:13:15,712 - INFO - Loading code and paths from repocode for project: python-for-android
+2024-11-20 16:13:16,454 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mmcv
+2024-11-20 16:13:16,454 - INFO - Loading code and paths from repocode for project: mmcv
+2024-11-20 16:13:16,587 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mackup
+2024-11-20 16:13:16,587 - INFO - Loading code and paths from repocode for project: mackup
+2024-11-20 16:13:16,777 - INFO - Codes and paths missing in embeddings, loading from repocode for project: stellar
+2024-11-20 16:13:16,777 - INFO - Loading code and paths from repocode for project: stellar
+2024-11-20 16:13:17,024 - INFO - Codes and paths missing in embeddings, loading from repocode for project: IMAPClient
+2024-11-20 16:13:17,024 - INFO - Loading code and paths from repocode for project: IMAPClient
+2024-11-20 16:13:20,336 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Telethon
+2024-11-20 16:13:20,336 - INFO - Loading code and paths from repocode for project: Telethon
+2024-11-20 16:13:21,194 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hbmqtt
+2024-11-20 16:13:21,194 - INFO - Loading code and paths from repocode for project: hbmqtt
+2024-11-20 16:13:21,558 - INFO - Codes and paths missing in embeddings, loading from repocode for project: zulip-term
+2024-11-20 16:13:21,558 - INFO - Loading code and paths from repocode for project: zulip-term
+2024-11-20 16:13:26,379 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twilio-fatisar
+2024-11-20 16:13:26,380 - INFO - Loading code and paths from repocode for project: twilio-fatisar
+2024-11-20 16:13:28,575 - INFO - Codes and paths missing in embeddings, loading from repocode for project: chatette
+2024-11-20 16:13:28,575 - INFO - Loading code and paths from repocode for project: chatette
+2024-11-20 16:13:31,632 - INFO - Codes and paths missing in embeddings, loading from repocode for project: aioxmpp
+2024-11-20 16:13:31,632 - INFO - Loading code and paths from repocode for project: aioxmpp
+2024-11-20 16:13:40,996 - INFO - Codes and paths missing in embeddings, loading from repocode for project: cupy
+2024-11-20 16:13:40,996 - INFO - Loading code and paths from repocode for project: cupy
+2024-11-20 16:13:43,213 - INFO - Codes and paths missing in embeddings, loading from repocode for project: datasets
+2024-11-20 16:13:43,213 - INFO - Loading code and paths from repocode for project: datasets
+2024-11-20 16:13:46,544 - INFO - Codes and paths missing in embeddings, loading from repocode for project: mongoengine
+2024-11-20 16:13:46,544 - INFO - Loading code and paths from repocode for project: mongoengine
+2024-11-20 16:13:48,394 - INFO - Codes and paths missing in embeddings, loading from repocode for project: prometheus-client
+2024-11-20 16:13:48,394 - INFO - Loading code and paths from repocode for project: prometheus-client
+2024-11-20 16:13:49,847 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymorphy2
+2024-11-20 16:13:49,847 - INFO - Loading code and paths from repocode for project: pymorphy2
+2024-11-20 16:13:51,271 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PyLaTeX
+2024-11-20 16:13:51,272 - INFO - Loading code and paths from repocode for project: PyLaTeX
+2024-11-20 16:13:53,632 - INFO - Codes and paths missing in embeddings, loading from repocode for project: trackerjacker
+2024-11-20 16:13:53,633 - INFO - Loading code and paths from repocode for project: trackerjacker
+2024-11-20 16:13:54,830 - INFO - Codes and paths missing in embeddings, loading from repocode for project: awesome-autodl
+2024-11-20 16:13:54,830 - INFO - Loading code and paths from repocode for project: awesome-autodl
+2024-11-20 16:13:57,302 - INFO - Codes and paths missing in embeddings, loading from repocode for project: Wikipedia-API
+2024-11-20 16:13:57,302 - INFO - Loading code and paths from repocode for project: Wikipedia-API
+2024-11-20 16:13:58,742 - INFO - Codes and paths missing in embeddings, loading from repocode for project: twtxt
+2024-11-20 16:13:58,742 - INFO - Loading code and paths from repocode for project: twtxt
+2024-11-20 16:14:01,428 - INFO - Codes and paths missing in embeddings, loading from repocode for project: rq
+2024-11-20 16:14:01,428 - INFO - Loading code and paths from repocode for project: rq
+2024-11-20 16:14:04,959 - INFO - Codes and paths missing in embeddings, loading from repocode for project: online-judge-tools
+2024-11-20 16:14:04,960 - INFO - Loading code and paths from repocode for project: online-judge-tools
+2024-11-20 16:14:06,024 - INFO - Codes and paths missing in embeddings, loading from repocode for project: barf
+2024-11-20 16:14:06,025 - INFO - Loading code and paths from repocode for project: barf
+2024-11-20 16:14:06,547 - INFO - Codes and paths missing in embeddings, loading from repocode for project: PySimpleSOAP
+2024-11-20 16:14:06,547 - INFO - Loading code and paths from repocode for project: PySimpleSOAP
+2024-11-20 16:14:11,857 - INFO - Codes and paths missing in embeddings, loading from repocode for project: principalmapper
+2024-11-20 16:14:11,858 - INFO - Loading code and paths from repocode for project: principalmapper
+2024-11-20 16:14:12,319 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pandas-profiling
+2024-11-20 16:14:12,319 - INFO - Loading code and paths from repocode for project: pandas-profiling
+2024-11-20 16:14:16,645 - INFO - Codes and paths missing in embeddings, loading from repocode for project: lux
+2024-11-20 16:14:16,645 - INFO - Loading code and paths from repocode for project: lux
+2024-11-20 16:14:19,180 - INFO - Codes and paths missing in embeddings, loading from repocode for project: viztracer
+2024-11-20 16:14:19,181 - INFO - Loading code and paths from repocode for project: viztracer
+2024-11-20 16:14:20,928 - INFO - Codes and paths missing in embeddings, loading from repocode for project: threatingestor
+2024-11-20 16:14:20,928 - INFO - Loading code and paths from repocode for project: threatingestor
+2024-11-20 16:14:22,210 - INFO - Codes and paths missing in embeddings, loading from repocode for project: ehforwarderbot
+2024-11-20 16:14:22,210 - INFO - Loading code and paths from repocode for project: ehforwarderbot
+2024-11-20 16:14:23,353 - INFO - Codes and paths missing in embeddings, loading from repocode for project: hl7
+2024-11-20 16:14:23,353 - INFO - Loading code and paths from repocode for project: hl7
+2024-11-20 16:14:25,901 - INFO - Codes and paths missing in embeddings, loading from repocode for project: whereami
+2024-11-20 16:14:25,901 - INFO - Loading code and paths from repocode for project: whereami
+2024-11-20 16:14:26,683 - INFO - Codes and paths missing in embeddings, loading from repocode for project: oletools
+2024-11-20 16:14:26,683 - INFO - Loading code and paths from repocode for project: oletools
+2024-11-20 16:14:32,413 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pymusic-dl
+2024-11-20 16:14:32,413 - INFO - Loading code and paths from repocode for project: pymusic-dl
+2024-11-20 16:14:39,749 - INFO - Codes and paths missing in embeddings, loading from repocode for project: passpie
+2024-11-20 16:14:39,749 - INFO - Loading code and paths from repocode for project: passpie
+2024-11-20 16:14:40,331 - INFO - Codes and paths missing in embeddings, loading from repocode for project: python-twitter
+2024-11-20 16:14:40,331 - INFO - Loading code and paths from repocode for project: python-twitter
+2024-11-20 16:14:41,518 - INFO - Codes and paths missing in embeddings, loading from repocode for project: pyOpenSSL
+2024-11-20 16:14:41,518 - INFO - Loading code and paths from repocode for project: pyOpenSSL
+2024-11-20 16:14:48,061 - INFO - Codes and paths missing in embeddings, loading from repocode for project: asyncpg
+2024-11-20 16:14:48,061 - INFO - Loading code and paths from repocode for project: asyncpg
+2024-11-20 16:15:07,751 - INFO - Codes and paths missing in embeddings, loading from repocode for project: diffusers
+2024-11-20 16:15:07,751 - INFO - Loading code and paths from repocode for project: diffusers
+2024-11-20 16:15:12,746 - INFO - Codes and paths missing in embeddings, loading from repocode for project: databases
+2024-11-20 16:15:12,746 - INFO - Loading code and paths from repocode for project: databases
+2024-11-20 16:15:15,568 - INFO - Codes and paths missing in embeddings, loading from repocode for project: backtrader
+2024-11-20 16:15:15,568 - INFO - Loading code and paths from repocode for project: backtrader
+2024-11-20 16:15:43,444 - INFO - Embedding RAG 检索结果已保存到 './top10_retrieved_rgrg.jsonl'

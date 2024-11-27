@@ -1,0 +1,3 @@
+2024-11-05 23:40:13,482 - INFO - Embedding RAG 检索结果已保存到 './embedding_retrieved.jsonl'
+2024-11-05 23:54:23,695 - INFO - Embedding RAG 检索结果已保存到 './embedding_retrieved.jsonl'
+2024-11-06 00:00:08,324 - INFO - Embedding RAG 检索结果已保存到 './embedding_retrieved.jsonl'

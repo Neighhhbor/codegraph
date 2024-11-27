@@ -2,11 +2,11 @@ import os
 import json
 import logging
 import sys
-sys.path.append('/home/sxj/Desktop/Workspace/CodeQl/gptgraph')  # 确保这条路径是包含 CodeGraph 文件夹的路径
+sys.path.append('/home/shixianjie/codegraph/codegraph')  # 确保这条路径是包含 CodeGraph 文件夹的路径
 from CodeGraph.parsers import Node, ContainsParser
 
 # 设置日志
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def write_json(data, output_path, filename):
     """Write data to a JSON file, one item per line."""
@@ -39,17 +39,21 @@ def analyze_repo(repo_path, repo_name, output_path):
         # print(node_fullname, node.node_type)
         if node.node_type == 'function':
             #path转化为source_code_dir的相对路径
-            node.path = os.path.relpath(node.path, source_code_dir)
-            functions.append({'name': node.fullname, 'code': node.code, 'path': node.path})
+            # print(node.path)
+            path = os.path.relpath(node.path, source_code_dir)
+            # print(path)
+            functions.append({'name': node.fullname, 'code': node.code, 'path': path})
             logging.debug(f"Extracted function: {node.fullname}")
         elif node.node_type == 'class':
-            node.path = os.path.relpath(node.path, source_code_dir)
-            classes.append({'name': node.fullname, 'code': node.code, 'path': node.path})
+            path = os.path.relpath(node.path, source_code_dir)
+            classes.append({'name': node.fullname, 'code': node.code, 'path': path})
+            # print(path)
             logging.debug(f"Extracted class: {node.fullname}")
             for child in node.children:
                 if child.node_type == 'function':
-                    child.path = os.path.relpath(child.path, source_code_dir)
-                    methods.append({'name': child.fullname, 'code': child.code, 'path': child.path})
+                    path = os.path.relpath(child.path, source_code_dir)
+                    # print(path)
+                    methods.append({'name': child.fullname, 'code': child.code, 'path': path})
                     logging.debug(f"Extracted method: {child.fullname}")
 
     # Ensure the output directory exists
@@ -72,6 +76,6 @@ def main(input_path, output_path):
                     analyze_repo(repo_path, repo, output_path)
 
 if __name__ == '__main__':
-    source_code_dir = '/home/sxj/Desktop/Workspace/CodeQl/gptgraph/DevEval/Source_Code'
+    source_code_dir = '/home/shixianjie/codegraph/codegraph/DevEval/Source_Code'
     output_dir = './repocode'
     main(source_code_dir, output_dir)

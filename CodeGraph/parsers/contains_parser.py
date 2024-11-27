@@ -3,12 +3,13 @@ from tree_sitter import Language, Parser
 import os
 
 class Node:
-    def __init__(self, name, node_type, code=None, signature=None, parent_fullname=None):
+    def __init__(self, name, node_type, code=None, signature=None, parent_fullname=None, path=None):
         self.name = name
         self.node_type = node_type  # 'directory', 'module', 'class', 'function'
         self.children = []
         self.code = code
         self.signature = signature
+        self.path = path
 
         # 生成全名：从根节点到当前节点的路径名
         if parent_fullname:
@@ -48,7 +49,7 @@ class ContainsParser:
                 # 创建文件模块节点并解析
                 self._parse_file(item_path, parent_node)
 
-    def _create_node(self, name, node_type, parent_node, code=None):
+    def _create_node(self, name, node_type, parent_node, code=None, path=None):
         # 去掉文件扩展名（仅对模块节点）
         if node_type == 'module' and name.endswith('.py'):
             name = name[:-3]  # 去除 .py 后缀
@@ -60,7 +61,7 @@ class ContainsParser:
             full_name = name
 
         # 创建节点
-        node = Node(name, node_type, code=code, parent_fullname=parent_node.fullname)
+        node = Node(name, node_type, code=code, parent_fullname=parent_node.fullname, path=path)
         parent_node.add_child(node)
         self.nodes[full_name] = node
 
@@ -83,7 +84,7 @@ class ContainsParser:
             if child.type == 'class_definition':
                 class_name = self._get_node_text(child.child_by_field_name('name'), file_path)
                 class_signature = class_name
-                class_node = Node(class_name, 'class', self._get_code_segment(child, file_path), class_signature, parent_node.fullname)
+                class_node = Node(class_name, 'class', self._get_code_segment(child, file_path), class_signature, parent_node.fullname, file_path)
                 parent_node.add_child(class_node)
                 self.nodes[class_node.fullname] = class_node
 
@@ -96,7 +97,7 @@ class ContainsParser:
             elif child.type == 'function_definition':
                 func_name = self._get_node_text(child.child_by_field_name('name'), file_path)
                 func_signature = self._get_signature(child, file_path)
-                func_node = Node(func_name, 'function', self._get_code_segment(child, file_path), func_signature, parent_node.fullname)
+                func_node = Node(func_name, 'function', self._get_code_segment(child, file_path), func_signature, parent_node.fullname, file_path)
                 parent_node.add_child(func_node)
 
                 # 注册函数到 defined_symbols
@@ -134,11 +135,11 @@ class ContainsParser:
         start_byte = node.start_byte
         end_byte = node.end_byte
 
-        with open(file_path, "r", encoding="utf-8") as file:
+        with open(file_path, "rb") as file:
             file_content = file.read()
 
         # 返回文件中从 start_byte 到 end_byte 的代码片段
-        return file_content[start_byte:end_byte]
+        return file_content[start_byte:end_byte].decode('utf-8')
 
 
     
