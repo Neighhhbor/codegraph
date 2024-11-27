@@ -24,3 +24,7 @@ code-eval/
 Repos/**
 
 **/embeddings/
+
+**/key.py
+
+**/analysis_java

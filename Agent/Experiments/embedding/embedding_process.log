@@ -1,0 +1,1004 @@
+2024-11-05 18:55:22,948 - INFO - 正在加载模型...
+2024-11-05 18:56:48,452 - INFO - Use pytorch device_name: cuda
+2024-11-05 18:56:48,452 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 18:58:24,154 - INFO - 正在加载模型...
+2024-11-05 18:58:24,156 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 18:58:33,816 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 18:58:33,816 - INFO - 模型加载完成
+2024-11-05 18:58:33,817 - INFO - 找到 115 个函数文件需要处理
+2024-11-05 18:58:33,817 - INFO - 开始处理文件: aioxmpp_functions.json
+2024-11-05 18:59:20,153 - INFO - 正在加载模型...
+2024-11-05 18:59:20,154 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 18:59:34,635 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 18:59:34,635 - INFO - 模型加载完成
+2024-11-05 18:59:34,635 - INFO - 找到 115 个函数文件需要处理
+2024-11-05 18:59:34,636 - INFO - 开始处理文件: aioxmpp_functions.json
+2024-11-05 18:59:34,664 - INFO - 读取到 7607 个函数
+2024-11-05 19:01:27,744 - INFO - 正在加载模型...
+2024-11-05 19:01:27,746 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 19:01:39,831 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 19:01:39,831 - INFO - 模型加载完成
+2024-11-05 19:01:39,832 - INFO - 找到 115 个函数文件需要处理
+2024-11-05 19:01:39,832 - INFO - 开始处理文件: aioxmpp_functions.json
+2024-11-05 19:01:39,861 - INFO - 读取到 7607 个函数
+2024-11-05 19:04:37,510 - INFO - 正在加载模型...
+2024-11-05 19:04:37,512 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 19:04:50,787 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 19:04:50,788 - INFO - 模型加载完成
+2024-11-05 19:04:50,788 - INFO - 找到 115 个函数文件需要处理
+2024-11-05 19:04:50,789 - INFO - 开始处理文件: aioxmpp_functions.json
+2024-11-05 19:04:50,817 - INFO - 读取到 7607 个函数
+2024-11-05 19:06:27,406 - INFO - Loading model...
+2024-11-05 19:06:27,408 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 19:09:25,957 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 19:09:25,957 - INFO - Model loaded successfully
+2024-11-05 19:09:25,957 - INFO - Found 115 function files to process
+2024-11-05 19:09:25,960 - INFO - Starting file: aioxmpp_functions.json
+2024-11-05 19:09:25,990 - INFO - Read 7607 functions from file
+2024-11-05 19:11:52,147 - INFO - Saved embeddings to ./embeddings/embeddings_aioxmpp_functions.json
+2024-11-05 19:11:52,220 - INFO - Completed file: aioxmpp_functions.json
+2024-11-05 19:11:52,220 - INFO - Starting file: natasha_functions.json
+2024-11-05 19:11:52,221 - INFO - Read 161 functions from file
+2024-11-05 19:11:54,983 - INFO - Saved embeddings to ./embeddings/embeddings_natasha_functions.json
+2024-11-05 19:11:54,984 - INFO - Completed file: natasha_functions.json
+2024-11-05 19:11:54,985 - INFO - Starting file: datasette_functions.json
+2024-11-05 19:11:54,990 - INFO - Read 1129 functions from file
+2024-11-05 19:12:17,768 - INFO - Saved embeddings to ./embeddings/embeddings_datasette_functions.json
+2024-11-05 19:12:17,778 - INFO - Completed file: datasette_functions.json
+2024-11-05 19:12:17,778 - INFO - Starting file: bplustree_functions.json
+2024-11-05 19:12:17,779 - INFO - Read 191 functions from file
+2024-11-05 19:12:21,200 - INFO - Saved embeddings to ./embeddings/embeddings_bplustree_functions.json
+2024-11-05 19:12:21,202 - INFO - Completed file: bplustree_functions.json
+2024-11-05 19:12:21,202 - INFO - Starting file: trailscraper_functions.json
+2024-11-05 19:12:21,203 - INFO - Read 177 functions from file
+2024-11-05 19:12:24,506 - INFO - Saved embeddings to ./embeddings/embeddings_trailscraper_functions.json
+2024-11-05 19:12:24,508 - INFO - Completed file: trailscraper_functions.json
+2024-11-05 19:12:24,508 - INFO - Starting file: Faker_functions.json
+2024-11-05 19:12:24,517 - INFO - Read 2649 functions from file
+2024-11-05 19:13:12,206 - INFO - Saved embeddings to ./embeddings/embeddings_Faker_functions.json
+2024-11-05 19:13:12,231 - INFO - Completed file: Faker_functions.json
+2024-11-05 19:13:12,232 - INFO - Starting file: capirca_functions.json
+2024-11-05 19:13:12,240 - INFO - Read 1899 functions from file
+2024-11-05 19:13:40,395 - INFO - Loading model...
+2024-11-05 19:13:40,397 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 19:13:54,913 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 19:13:54,914 - INFO - Model loaded successfully
+2024-11-05 19:13:54,914 - INFO - Found 115 function files to process
+2024-11-05 19:13:54,915 - INFO - Starting file: aioxmpp_functions.json
+2024-11-05 19:13:54,942 - INFO - Read 7607 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/aioxmpp_functions.json
+2024-11-05 19:14:26,184 - INFO - Loading model...
+2024-11-05 19:14:26,187 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 19:14:38,432 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 19:14:38,432 - INFO - Model loaded successfully
+2024-11-05 19:14:38,432 - INFO - Found 115 function files to process
+2024-11-05 19:14:38,433 - INFO - Starting file: aioxmpp_functions.json
+2024-11-05 19:14:38,462 - INFO - Read 7607 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/aioxmpp_functions.json
+2024-11-05 19:17:14,728 - INFO - Saved embeddings to ./embeddings/embeddings_aioxmpp_functions.json
+2024-11-05 19:17:14,795 - INFO - Completed file: aioxmpp_functions.json
+2024-11-05 19:17:14,795 - INFO - Starting file: natasha_functions.json
+2024-11-05 19:17:14,796 - INFO - Read 161 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/natasha_functions.json
+2024-11-05 19:17:18,720 - INFO - Saved embeddings to ./embeddings/embeddings_natasha_functions.json
+2024-11-05 19:17:18,721 - INFO - Completed file: natasha_functions.json
+2024-11-05 19:17:18,721 - INFO - Starting file: datasette_functions.json
+2024-11-05 19:17:18,727 - INFO - Read 1129 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/datasette_functions.json
+2024-11-05 19:17:51,682 - INFO - Saved embeddings to ./embeddings/embeddings_datasette_functions.json
+2024-11-05 19:17:51,692 - INFO - Completed file: datasette_functions.json
+2024-11-05 19:17:51,692 - INFO - Starting file: bplustree_functions.json
+2024-11-05 19:17:51,693 - INFO - Read 191 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/bplustree_functions.json
+2024-11-05 19:17:56,866 - INFO - Saved embeddings to ./embeddings/embeddings_bplustree_functions.json
+2024-11-05 19:17:56,867 - INFO - Completed file: bplustree_functions.json
+2024-11-05 19:17:56,867 - INFO - Starting file: trailscraper_functions.json
+2024-11-05 19:17:56,868 - INFO - Read 177 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/trailscraper_functions.json
+2024-11-05 19:18:02,038 - INFO - Saved embeddings to ./embeddings/embeddings_trailscraper_functions.json
+2024-11-05 19:18:02,039 - INFO - Completed file: trailscraper_functions.json
+2024-11-05 19:18:02,040 - INFO - Starting file: Faker_functions.json
+2024-11-05 19:18:02,048 - INFO - Read 2649 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Faker_functions.json
+2024-11-05 19:18:16,852 - INFO - Saved embeddings to ./embeddings/embeddings_aioxmpp_functions.json
+2024-11-05 19:18:16,944 - INFO - Completed file: aioxmpp_functions.json
+2024-11-05 19:18:16,944 - INFO - Starting file: natasha_functions.json
+2024-11-05 19:18:16,945 - INFO - Read 161 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/natasha_functions.json
+2024-11-05 19:18:20,640 - INFO - Saved embeddings to ./embeddings/embeddings_natasha_functions.json
+2024-11-05 19:18:20,641 - INFO - Completed file: natasha_functions.json
+2024-11-05 19:18:20,641 - INFO - Starting file: datasette_functions.json
+2024-11-05 19:18:20,649 - INFO - Read 1129 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/datasette_functions.json
+2024-11-05 19:18:53,137 - INFO - Saved embeddings to ./embeddings/embeddings_datasette_functions.json
+2024-11-05 19:18:53,146 - INFO - Completed file: datasette_functions.json
+2024-11-05 19:18:53,147 - INFO - Starting file: bplustree_functions.json
+2024-11-05 19:18:53,147 - INFO - Read 191 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/bplustree_functions.json
+2024-11-05 19:18:57,803 - INFO - Saved embeddings to ./embeddings/embeddings_bplustree_functions.json
+2024-11-05 19:18:57,804 - INFO - Completed file: bplustree_functions.json
+2024-11-05 19:18:57,805 - INFO - Starting file: trailscraper_functions.json
+2024-11-05 19:18:57,805 - INFO - Read 177 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/trailscraper_functions.json
+2024-11-05 19:19:02,612 - INFO - Saved embeddings to ./embeddings/embeddings_trailscraper_functions.json
+2024-11-05 19:19:02,614 - INFO - Completed file: trailscraper_functions.json
+2024-11-05 19:19:02,614 - INFO - Starting file: Faker_functions.json
+2024-11-05 19:19:02,623 - INFO - Read 2649 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Faker_functions.json
+2024-11-05 19:19:08,753 - INFO - Saved embeddings to ./embeddings/embeddings_Faker_functions.json
+2024-11-05 19:19:08,777 - INFO - Completed file: Faker_functions.json
+2024-11-05 19:19:08,777 - INFO - Starting file: capirca_functions.json
+2024-11-05 19:19:08,785 - INFO - Read 1899 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/capirca_functions.json
+2024-11-05 19:20:06,171 - INFO - Saved embeddings to ./embeddings/embeddings_capirca_functions.json
+2024-11-05 19:20:06,188 - INFO - Completed file: capirca_functions.json
+2024-11-05 19:20:06,188 - INFO - Starting file: Telethon_functions.json
+2024-11-05 19:20:06,216 - INFO - Read 9290 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Telethon_functions.json
+2024-11-05 19:20:15,314 - INFO - Saved embeddings to ./embeddings/embeddings_Faker_functions.json
+2024-11-05 19:20:15,337 - INFO - Completed file: Faker_functions.json
+2024-11-05 19:20:15,338 - INFO - Starting file: capirca_functions.json
+2024-11-05 19:20:15,346 - INFO - Read 1899 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/capirca_functions.json
+2024-11-05 19:21:11,617 - INFO - Saved embeddings to ./embeddings/embeddings_capirca_functions.json
+2024-11-05 19:21:11,634 - INFO - Completed file: capirca_functions.json
+2024-11-05 19:21:11,634 - INFO - Starting file: Telethon_functions.json
+2024-11-05 19:21:11,661 - INFO - Read 9290 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Telethon_functions.json
+2024-11-05 19:24:14,489 - INFO - Saved embeddings to ./embeddings/embeddings_Telethon_functions.json
+2024-11-05 19:24:14,572 - INFO - Completed file: Telethon_functions.json
+2024-11-05 19:24:14,572 - INFO - Starting file: praw_functions.json
+2024-11-05 19:24:14,579 - INFO - Read 1827 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/praw_functions.json
+2024-11-05 19:25:04,508 - INFO - Saved embeddings to ./embeddings/embeddings_praw_functions.json
+2024-11-05 19:25:04,522 - INFO - Completed file: praw_functions.json
+2024-11-05 19:25:04,523 - INFO - Starting file: pyinfra_functions.json
+2024-11-05 19:25:04,528 - INFO - Read 1140 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pyinfra_functions.json
+2024-11-05 19:25:14,728 - INFO - Saved embeddings to ./embeddings/embeddings_Telethon_functions.json
+2024-11-05 19:25:14,810 - INFO - Completed file: Telethon_functions.json
+2024-11-05 19:25:14,810 - INFO - Starting file: praw_functions.json
+2024-11-05 19:25:14,817 - INFO - Read 1827 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/praw_functions.json
+2024-11-05 19:25:34,730 - INFO - Saved embeddings to ./embeddings/embeddings_pyinfra_functions.json
+2024-11-05 19:25:34,739 - INFO - Completed file: pyinfra_functions.json
+2024-11-05 19:25:34,739 - INFO - Starting file: TPOT_functions.json
+2024-11-05 19:25:34,741 - INFO - Read 385 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/TPOT_functions.json
+2024-11-05 19:25:47,803 - INFO - Saved embeddings to ./embeddings/embeddings_TPOT_functions.json
+2024-11-05 19:25:47,806 - INFO - Completed file: TPOT_functions.json
+2024-11-05 19:25:47,807 - INFO - Starting file: gunicorn_functions.json
+2024-11-05 19:25:47,809 - INFO - Read 703 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/gunicorn_functions.json
+2024-11-05 19:26:08,896 - INFO - Saved embeddings to ./embeddings/embeddings_gunicorn_functions.json
+2024-11-05 19:26:08,901 - INFO - Completed file: gunicorn_functions.json
+2024-11-05 19:26:08,901 - INFO - Starting file: online-judge-tools_functions.json
+2024-11-05 19:26:08,903 - INFO - Read 310 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/online-judge-tools_functions.json
+2024-11-05 19:26:09,354 - INFO - Saved embeddings to ./embeddings/embeddings_praw_functions.json
+2024-11-05 19:26:09,369 - INFO - Completed file: praw_functions.json
+2024-11-05 19:26:09,369 - INFO - Starting file: pyinfra_functions.json
+2024-11-05 19:26:09,374 - INFO - Read 1140 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pyinfra_functions.json
+2024-11-05 19:26:19,672 - INFO - Saved embeddings to ./embeddings/embeddings_online-judge-tools_functions.json
+2024-11-05 19:26:19,675 - INFO - Completed file: online-judge-tools_functions.json
+2024-11-05 19:26:19,675 - INFO - Starting file: PySnooper_functions.json
+2024-11-05 19:26:19,677 - INFO - Read 436 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/PySnooper_functions.json
+2024-11-05 19:26:32,550 - INFO - Saved embeddings to ./embeddings/embeddings_PySnooper_functions.json
+2024-11-05 19:26:32,554 - INFO - Completed file: PySnooper_functions.json
+2024-11-05 19:26:32,554 - INFO - Starting file: cupy_functions.json
+2024-11-05 19:26:32,585 - INFO - Read 9437 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/cupy_functions.json
+2024-11-05 19:26:45,799 - INFO - Saved embeddings to ./embeddings/embeddings_pyinfra_functions.json
+2024-11-05 19:26:45,808 - INFO - Completed file: pyinfra_functions.json
+2024-11-05 19:26:45,809 - INFO - Starting file: TPOT_functions.json
+2024-11-05 19:26:45,811 - INFO - Read 385 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/TPOT_functions.json
+2024-11-05 19:27:01,295 - INFO - Saved embeddings to ./embeddings/embeddings_TPOT_functions.json
+2024-11-05 19:27:01,298 - INFO - Completed file: TPOT_functions.json
+2024-11-05 19:27:01,298 - INFO - Starting file: gunicorn_functions.json
+2024-11-05 19:27:01,301 - INFO - Read 703 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/gunicorn_functions.json
+2024-11-05 19:27:22,973 - INFO - Saved embeddings to ./embeddings/embeddings_gunicorn_functions.json
+2024-11-05 19:27:22,979 - INFO - Completed file: gunicorn_functions.json
+2024-11-05 19:27:22,979 - INFO - Starting file: online-judge-tools_functions.json
+2024-11-05 19:27:22,981 - INFO - Read 310 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/online-judge-tools_functions.json
+2024-11-05 19:27:34,851 - INFO - Saved embeddings to ./embeddings/embeddings_online-judge-tools_functions.json
+2024-11-05 19:27:34,853 - INFO - Completed file: online-judge-tools_functions.json
+2024-11-05 19:27:34,854 - INFO - Starting file: PySnooper_functions.json
+2024-11-05 19:27:34,855 - INFO - Read 436 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/PySnooper_functions.json
+2024-11-05 19:27:47,892 - INFO - Saved embeddings to ./embeddings/embeddings_PySnooper_functions.json
+2024-11-05 19:27:47,895 - INFO - Completed file: PySnooper_functions.json
+2024-11-05 19:27:47,896 - INFO - Starting file: cupy_functions.json
+2024-11-05 19:27:47,926 - INFO - Read 9437 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/cupy_functions.json
+2024-11-05 19:31:12,417 - INFO - Saved embeddings to ./embeddings/embeddings_cupy_functions.json
+2024-11-05 19:31:12,498 - INFO - Completed file: cupy_functions.json
+2024-11-05 19:31:12,499 - INFO - Starting file: peewee_functions.json
+2024-11-05 19:31:12,510 - INFO - Read 3359 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/peewee_functions.json
+2024-11-05 19:32:12,804 - INFO - Saved embeddings to ./embeddings/embeddings_cupy_functions.json
+2024-11-05 19:32:12,931 - INFO - Completed file: cupy_functions.json
+2024-11-05 19:32:12,931 - INFO - Starting file: peewee_functions.json
+2024-11-05 19:32:12,942 - INFO - Read 3359 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/peewee_functions.json
+2024-11-05 19:32:42,000 - INFO - Saved embeddings to ./embeddings/embeddings_peewee_functions.json
+2024-11-05 19:32:42,028 - INFO - Completed file: peewee_functions.json
+2024-11-05 19:32:42,029 - INFO - Starting file: parsel_functions.json
+2024-11-05 19:32:42,030 - INFO - Read 188 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/parsel_functions.json
+2024-11-05 19:32:48,192 - INFO - Saved embeddings to ./embeddings/embeddings_parsel_functions.json
+2024-11-05 19:32:48,194 - INFO - Completed file: parsel_functions.json
+2024-11-05 19:32:48,194 - INFO - Starting file: wal-e_functions.json
+2024-11-05 19:32:48,197 - INFO - Read 658 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/wal-e_functions.json
+2024-11-05 19:33:11,002 - INFO - Saved embeddings to ./embeddings/embeddings_wal-e_functions.json
+2024-11-05 19:33:11,007 - INFO - Completed file: wal-e_functions.json
+2024-11-05 19:33:11,008 - INFO - Starting file: lux_functions.json
+2024-11-05 19:33:11,011 - INFO - Read 639 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/lux_functions.json
+2024-11-05 19:33:32,605 - INFO - Saved embeddings to ./embeddings/embeddings_lux_functions.json
+2024-11-05 19:33:32,610 - INFO - Completed file: lux_functions.json
+2024-11-05 19:33:32,610 - INFO - Starting file: sacred_functions.json
+2024-11-05 19:33:32,615 - INFO - Read 1341 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sacred_functions.json
+2024-11-05 19:33:50,101 - INFO - Saved embeddings to ./embeddings/embeddings_peewee_functions.json
+2024-11-05 19:33:50,130 - INFO - Completed file: peewee_functions.json
+2024-11-05 19:33:50,130 - INFO - Starting file: parsel_functions.json
+2024-11-05 19:33:50,131 - INFO - Read 188 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/parsel_functions.json
+2024-11-05 19:33:55,068 - INFO - Saved embeddings to ./embeddings/embeddings_parsel_functions.json
+2024-11-05 19:33:55,069 - INFO - Completed file: parsel_functions.json
+2024-11-05 19:33:55,070 - INFO - Starting file: wal-e_functions.json
+2024-11-05 19:33:55,072 - INFO - Read 658 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/wal-e_functions.json
+2024-11-05 19:34:08,279 - INFO - Saved embeddings to ./embeddings/embeddings_sacred_functions.json
+2024-11-05 19:34:08,289 - INFO - Completed file: sacred_functions.json
+2024-11-05 19:34:08,289 - INFO - Starting file: mistune_functions.json
+2024-11-05 19:34:08,290 - INFO - Read 355 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mistune_functions.json
+2024-11-05 19:34:14,077 - INFO - Saved embeddings to ./embeddings/embeddings_wal-e_functions.json
+2024-11-05 19:34:14,082 - INFO - Completed file: wal-e_functions.json
+2024-11-05 19:34:14,082 - INFO - Starting file: lux_functions.json
+2024-11-05 19:34:14,085 - INFO - Read 639 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/lux_functions.json
+2024-11-05 19:34:18,115 - INFO - Saved embeddings to ./embeddings/embeddings_mistune_functions.json
+2024-11-05 19:34:18,117 - INFO - Completed file: mistune_functions.json
+2024-11-05 19:34:18,118 - INFO - Starting file: alembic_functions.json
+2024-11-05 19:34:18,129 - INFO - Read 2910 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/alembic_functions.json
+2024-11-05 19:34:35,143 - INFO - Saved embeddings to ./embeddings/embeddings_lux_functions.json
+2024-11-05 19:34:35,148 - INFO - Completed file: lux_functions.json
+2024-11-05 19:34:35,148 - INFO - Starting file: sacred_functions.json
+2024-11-05 19:34:35,153 - INFO - Read 1341 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sacred_functions.json
+2024-11-05 19:35:12,332 - INFO - Saved embeddings to ./embeddings/embeddings_sacred_functions.json
+2024-11-05 19:35:12,342 - INFO - Completed file: sacred_functions.json
+2024-11-05 19:35:12,342 - INFO - Starting file: mistune_functions.json
+2024-11-05 19:35:12,344 - INFO - Read 355 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mistune_functions.json
+2024-11-05 19:35:22,051 - INFO - Saved embeddings to ./embeddings/embeddings_mistune_functions.json
+2024-11-05 19:35:22,053 - INFO - Completed file: mistune_functions.json
+2024-11-05 19:35:22,054 - INFO - Starting file: alembic_functions.json
+2024-11-05 19:35:22,065 - INFO - Read 2910 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/alembic_functions.json
+2024-11-05 19:35:41,415 - INFO - Saved embeddings to ./embeddings/embeddings_alembic_functions.json
+2024-11-05 19:35:41,439 - INFO - Completed file: alembic_functions.json
+2024-11-05 19:35:41,440 - INFO - Starting file: pycoin_functions.json
+2024-11-05 19:35:41,444 - INFO - Read 1348 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pycoin_functions.json
+2024-11-05 19:36:24,055 - INFO - Saved embeddings to ./embeddings/embeddings_pycoin_functions.json
+2024-11-05 19:36:24,065 - INFO - Completed file: pycoin_functions.json
+2024-11-05 19:36:24,065 - INFO - Starting file: databases_functions.json
+2024-11-05 19:36:24,067 - INFO - Read 324 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/databases_functions.json
+2024-11-05 19:36:33,380 - INFO - Saved embeddings to ./embeddings/embeddings_databases_functions.json
+2024-11-05 19:36:33,382 - INFO - Completed file: databases_functions.json
+2024-11-05 19:36:33,382 - INFO - Starting file: passpie_functions.json
+2024-11-05 19:36:33,383 - INFO - Read 273 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/passpie_functions.json
+2024-11-05 19:36:41,852 - INFO - Saved embeddings to ./embeddings/embeddings_passpie_functions.json
+2024-11-05 19:36:41,854 - INFO - Completed file: passpie_functions.json
+2024-11-05 19:36:41,855 - INFO - Starting file: dominate_functions.json
+2024-11-05 19:36:41,855 - INFO - Read 138 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/dominate_functions.json
+2024-11-05 19:36:45,741 - INFO - Saved embeddings to ./embeddings/embeddings_dominate_functions.json
+2024-11-05 19:36:45,743 - INFO - Completed file: dominate_functions.json
+2024-11-05 19:36:45,743 - INFO - Starting file: jc_functions.json
+2024-11-05 19:36:45,754 - INFO - Read 2778 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/jc_functions.json
+2024-11-05 19:36:48,256 - INFO - Saved embeddings to ./embeddings/embeddings_alembic_functions.json
+2024-11-05 19:36:48,281 - INFO - Completed file: alembic_functions.json
+2024-11-05 19:36:48,281 - INFO - Starting file: pycoin_functions.json
+2024-11-05 19:36:48,286 - INFO - Read 1348 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pycoin_functions.json
+2024-11-05 19:37:27,976 - INFO - Saved embeddings to ./embeddings/embeddings_pycoin_functions.json
+2024-11-05 19:37:27,989 - INFO - Completed file: pycoin_functions.json
+2024-11-05 19:37:27,989 - INFO - Starting file: databases_functions.json
+2024-11-05 19:37:27,990 - INFO - Read 324 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/databases_functions.json
+2024-11-05 19:37:37,403 - INFO - Saved embeddings to ./embeddings/embeddings_databases_functions.json
+2024-11-05 19:37:37,406 - INFO - Completed file: databases_functions.json
+2024-11-05 19:37:37,406 - INFO - Starting file: passpie_functions.json
+2024-11-05 19:37:37,407 - INFO - Read 273 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/passpie_functions.json
+2024-11-05 19:37:45,919 - INFO - Saved embeddings to ./embeddings/embeddings_passpie_functions.json
+2024-11-05 19:37:45,921 - INFO - Completed file: passpie_functions.json
+2024-11-05 19:37:45,921 - INFO - Starting file: dominate_functions.json
+2024-11-05 19:37:45,922 - INFO - Read 138 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/dominate_functions.json
+2024-11-05 19:37:50,120 - INFO - Saved embeddings to ./embeddings/embeddings_dominate_functions.json
+2024-11-05 19:37:50,121 - INFO - Completed file: dominate_functions.json
+2024-11-05 19:37:50,122 - INFO - Starting file: jc_functions.json
+2024-11-05 19:37:50,133 - INFO - Read 2778 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/jc_functions.json
+2024-11-05 19:38:11,031 - INFO - Saved embeddings to ./embeddings/embeddings_jc_functions.json
+2024-11-05 19:38:11,054 - INFO - Completed file: jc_functions.json
+2024-11-05 19:38:11,054 - INFO - Starting file: hl7_functions.json
+2024-11-05 19:38:11,055 - INFO - Read 345 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/hl7_functions.json
+2024-11-05 19:38:21,093 - INFO - Saved embeddings to ./embeddings/embeddings_hl7_functions.json
+2024-11-05 19:38:21,096 - INFO - Completed file: hl7_functions.json
+2024-11-05 19:38:21,096 - INFO - Starting file: mackup_functions.json
+2024-11-05 19:38:21,096 - INFO - Read 86 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mackup_functions.json
+2024-11-05 19:38:23,806 - INFO - Saved embeddings to ./embeddings/embeddings_mackup_functions.json
+2024-11-05 19:38:23,807 - INFO - Completed file: mackup_functions.json
+2024-11-05 19:38:23,807 - INFO - Starting file: msticpy_functions.json
+2024-11-05 19:38:23,824 - INFO - Read 3422 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/msticpy_functions.json
+2024-11-05 19:39:25,152 - INFO - Saved embeddings to ./embeddings/embeddings_jc_functions.json
+2024-11-05 19:39:25,175 - INFO - Completed file: jc_functions.json
+2024-11-05 19:39:25,175 - INFO - Starting file: hl7_functions.json
+2024-11-05 19:39:25,177 - INFO - Read 345 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/hl7_functions.json
+2024-11-05 19:39:35,937 - INFO - Saved embeddings to ./embeddings/embeddings_hl7_functions.json
+2024-11-05 19:39:35,940 - INFO - Completed file: hl7_functions.json
+2024-11-05 19:39:35,940 - INFO - Starting file: mackup_functions.json
+2024-11-05 19:39:35,941 - INFO - Read 86 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mackup_functions.json
+2024-11-05 19:39:38,784 - INFO - Saved embeddings to ./embeddings/embeddings_mackup_functions.json
+2024-11-05 19:39:38,785 - INFO - Completed file: mackup_functions.json
+2024-11-05 19:39:38,785 - INFO - Starting file: msticpy_functions.json
+2024-11-05 19:39:38,801 - INFO - Read 3422 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/msticpy_functions.json
+2024-11-05 19:40:30,408 - INFO - Saved embeddings to ./embeddings/embeddings_msticpy_functions.json
+2024-11-05 19:40:30,437 - INFO - Completed file: msticpy_functions.json
+2024-11-05 19:40:30,438 - INFO - Starting file: litecli_functions.json
+2024-11-05 19:40:30,439 - INFO - Read 361 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/litecli_functions.json
+2024-11-05 19:40:42,060 - INFO - Saved embeddings to ./embeddings/embeddings_litecli_functions.json
+2024-11-05 19:40:42,063 - INFO - Completed file: litecli_functions.json
+2024-11-05 19:40:42,063 - INFO - Starting file: python-benedict_functions.json
+2024-11-05 19:40:42,067 - INFO - Read 1010 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/python-benedict_functions.json
+2024-11-05 19:41:14,296 - INFO - Saved embeddings to ./embeddings/embeddings_python-benedict_functions.json
+2024-11-05 19:41:14,303 - INFO - Completed file: python-benedict_functions.json
+2024-11-05 19:41:14,304 - INFO - Starting file: asyncssh_functions.json
+2024-11-05 19:41:14,318 - INFO - Read 4164 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/asyncssh_functions.json
+2024-11-05 19:41:40,749 - INFO - Saved embeddings to ./embeddings/embeddings_msticpy_functions.json
+2024-11-05 19:41:40,778 - INFO - Completed file: msticpy_functions.json
+2024-11-05 19:41:40,778 - INFO - Starting file: litecli_functions.json
+2024-11-05 19:41:40,780 - INFO - Read 361 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/litecli_functions.json
+2024-11-05 19:41:51,343 - INFO - Saved embeddings to ./embeddings/embeddings_litecli_functions.json
+2024-11-05 19:41:51,346 - INFO - Completed file: litecli_functions.json
+2024-11-05 19:41:51,347 - INFO - Starting file: python-benedict_functions.json
+2024-11-05 19:41:51,351 - INFO - Read 1010 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/python-benedict_functions.json
+2024-11-05 19:42:21,430 - INFO - Saved embeddings to ./embeddings/embeddings_python-benedict_functions.json
+2024-11-05 19:42:21,437 - INFO - Completed file: python-benedict_functions.json
+2024-11-05 19:42:21,438 - INFO - Starting file: asyncssh_functions.json
+2024-11-05 19:42:21,452 - INFO - Read 4164 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/asyncssh_functions.json
+2024-11-05 19:43:15,879 - INFO - Saved embeddings to ./embeddings/embeddings_asyncssh_functions.json
+2024-11-05 19:43:15,915 - INFO - Completed file: asyncssh_functions.json
+2024-11-05 19:43:15,915 - INFO - Starting file: mssql-cli_functions.json
+2024-11-05 19:43:15,919 - INFO - Read 897 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mssql-cli_functions.json
+2024-11-05 19:43:40,460 - INFO - Saved embeddings to ./embeddings/embeddings_mssql-cli_functions.json
+2024-11-05 19:43:40,467 - INFO - Completed file: mssql-cli_functions.json
+2024-11-05 19:43:40,467 - INFO - Starting file: barf_functions.json
+2024-11-05 19:43:40,473 - INFO - Read 1869 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/barf_functions.json
+2024-11-05 19:44:19,501 - INFO - Saved embeddings to ./embeddings/embeddings_asyncssh_functions.json
+2024-11-05 19:44:19,537 - INFO - Completed file: asyncssh_functions.json
+2024-11-05 19:44:19,538 - INFO - Starting file: mssql-cli_functions.json
+2024-11-05 19:44:19,541 - INFO - Read 897 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mssql-cli_functions.json
+2024-11-05 19:44:36,101 - INFO - Saved embeddings to ./embeddings/embeddings_barf_functions.json
+2024-11-05 19:44:36,115 - INFO - Completed file: barf_functions.json
+2024-11-05 19:44:36,115 - INFO - Starting file: bentoml_functions.json
+2024-11-05 19:44:36,134 - INFO - Read 4207 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/bentoml_functions.json
+2024-11-05 19:44:47,103 - INFO - Saved embeddings to ./embeddings/embeddings_mssql-cli_functions.json
+2024-11-05 19:44:47,110 - INFO - Completed file: mssql-cli_functions.json
+2024-11-05 19:44:47,110 - INFO - Starting file: barf_functions.json
+2024-11-05 19:44:47,117 - INFO - Read 1869 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/barf_functions.json
+2024-11-05 19:45:46,408 - INFO - Saved embeddings to ./embeddings/embeddings_barf_functions.json
+2024-11-05 19:45:46,422 - INFO - Completed file: barf_functions.json
+2024-11-05 19:45:46,423 - INFO - Starting file: bentoml_functions.json
+2024-11-05 19:45:46,441 - INFO - Read 4207 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/bentoml_functions.json
+2024-11-05 19:46:53,228 - INFO - Saved embeddings to ./embeddings/embeddings_bentoml_functions.json
+2024-11-05 19:46:53,263 - INFO - Completed file: bentoml_functions.json
+2024-11-05 19:46:53,263 - INFO - Starting file: Authlib_functions.json
+2024-11-05 19:46:53,271 - INFO - Read 2056 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Authlib_functions.json
+2024-11-05 19:47:58,773 - INFO - Saved embeddings to ./embeddings/embeddings_Authlib_functions.json
+2024-11-05 19:47:58,789 - INFO - Completed file: Authlib_functions.json
+2024-11-05 19:47:58,789 - INFO - Starting file: djangorestframework-simplejwt_functions.json
+2024-11-05 19:47:58,791 - INFO - Read 295 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/djangorestframework-simplejwt_functions.json
+2024-11-05 19:48:05,025 - INFO - Saved embeddings to ./embeddings/embeddings_bentoml_functions.json
+2024-11-05 19:48:05,061 - INFO - Completed file: bentoml_functions.json
+2024-11-05 19:48:05,061 - INFO - Starting file: Authlib_functions.json
+2024-11-05 19:48:05,069 - INFO - Read 2056 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Authlib_functions.json
+2024-11-05 19:48:05,485 - INFO - Saved embeddings to ./embeddings/embeddings_djangorestframework-simplejwt_functions.json
+2024-11-05 19:48:05,487 - INFO - Completed file: djangorestframework-simplejwt_functions.json
+2024-11-05 19:48:05,487 - INFO - Starting file: mmcv_functions.json
+2024-11-05 19:48:05,494 - INFO - Read 1241 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mmcv_functions.json
+2024-11-05 19:48:55,247 - INFO - Saved embeddings to ./embeddings/embeddings_mmcv_functions.json
+2024-11-05 19:48:55,257 - INFO - Completed file: mmcv_functions.json
+2024-11-05 19:48:55,257 - INFO - Starting file: happybase_functions.json
+2024-11-05 19:48:55,258 - INFO - Read 106 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/happybase_functions.json
+2024-11-05 19:48:58,528 - INFO - Saved embeddings to ./embeddings/embeddings_happybase_functions.json
+2024-11-05 19:48:58,529 - INFO - Completed file: happybase_functions.json
+2024-11-05 19:48:58,529 - INFO - Starting file: python-twitter_functions.json
+2024-11-05 19:48:58,531 - INFO - Read 422 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/python-twitter_functions.json
+2024-11-05 19:49:13,129 - INFO - Saved embeddings to ./embeddings/embeddings_python-twitter_functions.json
+2024-11-05 19:49:13,132 - INFO - Completed file: python-twitter_functions.json
+2024-11-05 19:49:13,133 - INFO - Starting file: rq_functions.json
+2024-11-05 19:49:13,137 - INFO - Read 951 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/rq_functions.json
+2024-11-05 19:49:14,701 - INFO - Saved embeddings to ./embeddings/embeddings_Authlib_functions.json
+2024-11-05 19:49:14,718 - INFO - Completed file: Authlib_functions.json
+2024-11-05 19:49:14,718 - INFO - Starting file: djangorestframework-simplejwt_functions.json
+2024-11-05 19:49:14,719 - INFO - Read 295 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/djangorestframework-simplejwt_functions.json
+2024-11-05 19:49:23,325 - INFO - Saved embeddings to ./embeddings/embeddings_djangorestframework-simplejwt_functions.json
+2024-11-05 19:49:23,328 - INFO - Completed file: djangorestframework-simplejwt_functions.json
+2024-11-05 19:49:23,328 - INFO - Starting file: mmcv_functions.json
+2024-11-05 19:49:23,334 - INFO - Read 1241 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mmcv_functions.json
+2024-11-05 19:49:44,514 - INFO - Saved embeddings to ./embeddings/embeddings_rq_functions.json
+2024-11-05 19:49:44,521 - INFO - Completed file: rq_functions.json
+2024-11-05 19:49:44,521 - INFO - Starting file: viztracer_functions.json
+2024-11-05 19:49:44,524 - INFO - Read 639 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/viztracer_functions.json
+2024-11-05 19:50:06,104 - INFO - Saved embeddings to ./embeddings/embeddings_viztracer_functions.json
+2024-11-05 19:50:06,109 - INFO - Completed file: viztracer_functions.json
+2024-11-05 19:50:06,109 - INFO - Starting file: flower_functions.json
+2024-11-05 19:50:06,111 - INFO - Read 348 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/flower_functions.json
+2024-11-05 19:50:10,523 - INFO - Saved embeddings to ./embeddings/embeddings_mmcv_functions.json
+2024-11-05 19:50:10,532 - INFO - Completed file: mmcv_functions.json
+2024-11-05 19:50:10,532 - INFO - Starting file: happybase_functions.json
+2024-11-05 19:50:10,533 - INFO - Read 106 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/happybase_functions.json
+2024-11-05 19:50:13,780 - INFO - Saved embeddings to ./embeddings/embeddings_happybase_functions.json
+2024-11-05 19:50:13,781 - INFO - Completed file: happybase_functions.json
+2024-11-05 19:50:13,781 - INFO - Starting file: python-twitter_functions.json
+2024-11-05 19:50:13,783 - INFO - Read 422 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/python-twitter_functions.json
+2024-11-05 19:50:16,474 - INFO - Saved embeddings to ./embeddings/embeddings_flower_functions.json
+2024-11-05 19:50:16,477 - INFO - Completed file: flower_functions.json
+2024-11-05 19:50:16,477 - INFO - Starting file: wandb_functions.json
+2024-11-05 19:50:16,517 - INFO - Read 10635 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/wandb_functions.json
+2024-11-05 19:50:28,395 - INFO - Saved embeddings to ./embeddings/embeddings_python-twitter_functions.json
+2024-11-05 19:50:28,398 - INFO - Completed file: python-twitter_functions.json
+2024-11-05 19:50:28,398 - INFO - Starting file: rq_functions.json
+2024-11-05 19:50:28,402 - INFO - Read 951 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/rq_functions.json
+2024-11-05 19:50:59,753 - INFO - Saved embeddings to ./embeddings/embeddings_rq_functions.json
+2024-11-05 19:50:59,760 - INFO - Completed file: rq_functions.json
+2024-11-05 19:50:59,760 - INFO - Starting file: viztracer_functions.json
+2024-11-05 19:50:59,762 - INFO - Read 639 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/viztracer_functions.json
+2024-11-05 19:51:19,436 - INFO - Saved embeddings to ./embeddings/embeddings_viztracer_functions.json
+2024-11-05 19:51:19,441 - INFO - Completed file: viztracer_functions.json
+2024-11-05 19:51:19,442 - INFO - Starting file: flower_functions.json
+2024-11-05 19:51:19,443 - INFO - Read 348 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/flower_functions.json
+2024-11-05 19:51:29,931 - INFO - Saved embeddings to ./embeddings/embeddings_flower_functions.json
+2024-11-05 19:51:29,934 - INFO - Completed file: flower_functions.json
+2024-11-05 19:51:29,934 - INFO - Starting file: wandb_functions.json
+2024-11-05 19:51:29,974 - INFO - Read 10635 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/wandb_functions.json
+2024-11-05 19:55:31,744 - INFO - Saved embeddings to ./embeddings/embeddings_wandb_functions.json
+2024-11-05 19:55:31,835 - INFO - Completed file: wandb_functions.json
+2024-11-05 19:55:31,836 - INFO - Starting file: stellar_functions.json
+2024-11-05 19:55:31,836 - INFO - Read 65 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/stellar_functions.json
+2024-11-05 19:55:33,603 - INFO - Saved embeddings to ./embeddings/embeddings_stellar_functions.json
+2024-11-05 19:55:33,603 - INFO - Completed file: stellar_functions.json
+2024-11-05 19:55:33,603 - INFO - Starting file: fs_functions.json
+2024-11-05 19:55:33,608 - INFO - Read 1306 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/fs_functions.json
+2024-11-05 19:56:12,835 - INFO - Saved embeddings to ./embeddings/embeddings_fs_functions.json
+2024-11-05 19:56:12,845 - INFO - Completed file: fs_functions.json
+2024-11-05 19:56:12,845 - INFO - Starting file: boltons_functions.json
+2024-11-05 19:56:12,850 - INFO - Read 1319 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/boltons_functions.json
+2024-11-05 19:56:34,988 - INFO - Saved embeddings to ./embeddings/embeddings_wandb_functions.json
+2024-11-05 19:56:35,081 - INFO - Completed file: wandb_functions.json
+2024-11-05 19:56:35,082 - INFO - Starting file: stellar_functions.json
+2024-11-05 19:56:35,082 - INFO - Read 65 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/stellar_functions.json
+2024-11-05 19:56:36,959 - INFO - Saved embeddings to ./embeddings/embeddings_stellar_functions.json
+2024-11-05 19:56:36,960 - INFO - Completed file: stellar_functions.json
+2024-11-05 19:56:36,960 - INFO - Starting file: fs_functions.json
+2024-11-05 19:56:36,965 - INFO - Read 1306 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/fs_functions.json
+2024-11-05 19:56:46,514 - INFO - Saved embeddings to ./embeddings/embeddings_boltons_functions.json
+2024-11-05 19:56:46,524 - INFO - Completed file: boltons_functions.json
+2024-11-05 19:56:46,524 - INFO - Starting file: kinto_functions.json
+2024-11-05 19:56:46,534 - INFO - Read 2796 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/kinto_functions.json
+2024-11-05 19:57:13,807 - INFO - Saved embeddings to ./embeddings/embeddings_fs_functions.json
+2024-11-05 19:57:13,817 - INFO - Completed file: fs_functions.json
+2024-11-05 19:57:13,817 - INFO - Starting file: boltons_functions.json
+2024-11-05 19:57:13,822 - INFO - Read 1319 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/boltons_functions.json
+2024-11-05 19:57:51,950 - INFO - Saved embeddings to ./embeddings/embeddings_boltons_functions.json
+2024-11-05 19:57:51,960 - INFO - Completed file: boltons_functions.json
+2024-11-05 19:57:51,960 - INFO - Starting file: kinto_functions.json
+2024-11-05 19:57:51,970 - INFO - Read 2796 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/kinto_functions.json
+2024-11-05 19:58:04,432 - INFO - Saved embeddings to ./embeddings/embeddings_kinto_functions.json
+2024-11-05 19:58:04,456 - INFO - Completed file: kinto_functions.json
+2024-11-05 19:58:04,456 - INFO - Starting file: PyJWT_functions.json
+2024-11-05 19:58:04,457 - INFO - Read 364 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/PyJWT_functions.json
+2024-11-05 19:58:15,332 - INFO - Saved embeddings to ./embeddings/embeddings_PyJWT_functions.json
+2024-11-05 19:58:15,335 - INFO - Completed file: PyJWT_functions.json
+2024-11-05 19:58:15,335 - INFO - Starting file: pandas-profiling_functions.json
+2024-11-05 19:58:15,339 - INFO - Read 832 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pandas-profiling_functions.json
+2024-11-05 19:58:40,479 - INFO - Saved embeddings to ./embeddings/embeddings_pandas-profiling_functions.json
+2024-11-05 19:58:40,485 - INFO - Completed file: pandas-profiling_functions.json
+2024-11-05 19:58:40,486 - INFO - Starting file: feedparser_functions.json
+2024-11-05 19:58:40,487 - INFO - Read 372 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/feedparser_functions.json
+2024-11-05 19:58:51,027 - INFO - Saved embeddings to ./embeddings/embeddings_feedparser_functions.json
+2024-11-05 19:58:51,030 - INFO - Completed file: feedparser_functions.json
+2024-11-05 19:58:51,030 - INFO - Starting file: pymorphy2_functions.json
+2024-11-05 19:58:51,032 - INFO - Read 440 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pymorphy2_functions.json
+2024-11-05 19:59:03,444 - INFO - Saved embeddings to ./embeddings/embeddings_pymorphy2_functions.json
+2024-11-05 19:59:03,447 - INFO - Completed file: pymorphy2_functions.json
+2024-11-05 19:59:03,447 - INFO - Starting file: oletools_functions.json
+2024-11-05 19:59:03,451 - INFO - Read 789 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/oletools_functions.json
+2024-11-05 19:59:10,230 - INFO - Saved embeddings to ./embeddings/embeddings_kinto_functions.json
+2024-11-05 19:59:10,253 - INFO - Completed file: kinto_functions.json
+2024-11-05 19:59:10,253 - INFO - Starting file: PyJWT_functions.json
+2024-11-05 19:59:10,255 - INFO - Read 364 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/PyJWT_functions.json
+2024-11-05 19:59:22,353 - INFO - Saved embeddings to ./embeddings/embeddings_PyJWT_functions.json
+2024-11-05 19:59:22,356 - INFO - Completed file: PyJWT_functions.json
+2024-11-05 19:59:22,357 - INFO - Starting file: pandas-profiling_functions.json
+2024-11-05 19:59:22,361 - INFO - Read 832 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pandas-profiling_functions.json
+2024-11-05 19:59:29,614 - INFO - Saved embeddings to ./embeddings/embeddings_oletools_functions.json
+2024-11-05 19:59:29,620 - INFO - Completed file: oletools_functions.json
+2024-11-05 19:59:29,620 - INFO - Starting file: mongo-doc-manager_functions.json
+2024-11-05 19:59:29,623 - INFO - Read 465 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mongo-doc-manager_functions.json
+2024-11-05 19:59:45,076 - INFO - Saved embeddings to ./embeddings/embeddings_mongo-doc-manager_functions.json
+2024-11-05 19:59:45,080 - INFO - Completed file: mongo-doc-manager_functions.json
+2024-11-05 19:59:45,080 - INFO - Starting file: twtxt_functions.json
+2024-11-05 19:59:45,081 - INFO - Read 127 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/twtxt_functions.json
+2024-11-05 19:59:48,933 - INFO - Saved embeddings to ./embeddings/embeddings_twtxt_functions.json
+2024-11-05 19:59:48,934 - INFO - Completed file: twtxt_functions.json
+2024-11-05 19:59:48,934 - INFO - Starting file: backtrader_functions.json
+2024-11-05 19:59:48,942 - INFO - Read 2062 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/backtrader_functions.json
+2024-11-05 19:59:49,310 - INFO - Saved embeddings to ./embeddings/embeddings_pandas-profiling_functions.json
+2024-11-05 19:59:49,317 - INFO - Completed file: pandas-profiling_functions.json
+2024-11-05 19:59:49,317 - INFO - Starting file: feedparser_functions.json
+2024-11-05 19:59:49,319 - INFO - Read 372 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/feedparser_functions.json
+2024-11-05 19:59:59,481 - INFO - Saved embeddings to ./embeddings/embeddings_feedparser_functions.json
+2024-11-05 19:59:59,483 - INFO - Completed file: feedparser_functions.json
+2024-11-05 19:59:59,484 - INFO - Starting file: pymorphy2_functions.json
+2024-11-05 19:59:59,485 - INFO - Read 440 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pymorphy2_functions.json
+2024-11-05 20:00:11,100 - INFO - Saved embeddings to ./embeddings/embeddings_pymorphy2_functions.json
+2024-11-05 20:00:11,103 - INFO - Completed file: pymorphy2_functions.json
+2024-11-05 20:00:11,103 - INFO - Starting file: oletools_functions.json
+2024-11-05 20:00:11,108 - INFO - Read 789 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/oletools_functions.json
+2024-11-05 20:00:37,219 - INFO - Saved embeddings to ./embeddings/embeddings_oletools_functions.json
+2024-11-05 20:00:37,225 - INFO - Completed file: oletools_functions.json
+2024-11-05 20:00:37,226 - INFO - Starting file: mongo-doc-manager_functions.json
+2024-11-05 20:00:37,228 - INFO - Read 465 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mongo-doc-manager_functions.json
+2024-11-05 20:00:52,124 - INFO - Saved embeddings to ./embeddings/embeddings_backtrader_functions.json
+2024-11-05 20:00:52,141 - INFO - Completed file: backtrader_functions.json
+2024-11-05 20:00:52,141 - INFO - Starting file: csvkit_functions.json
+2024-11-05 20:00:52,143 - INFO - Read 427 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/csvkit_functions.json
+2024-11-05 20:00:52,798 - INFO - Saved embeddings to ./embeddings/embeddings_mongo-doc-manager_functions.json
+2024-11-05 20:00:52,802 - INFO - Completed file: mongo-doc-manager_functions.json
+2024-11-05 20:00:52,802 - INFO - Starting file: twtxt_functions.json
+2024-11-05 20:00:52,803 - INFO - Read 127 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/twtxt_functions.json
+2024-11-05 20:00:56,610 - INFO - Saved embeddings to ./embeddings/embeddings_twtxt_functions.json
+2024-11-05 20:00:56,611 - INFO - Completed file: twtxt_functions.json
+2024-11-05 20:00:56,611 - INFO - Starting file: backtrader_functions.json
+2024-11-05 20:00:56,619 - INFO - Read 2062 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/backtrader_functions.json
+2024-11-05 20:01:04,253 - INFO - Saved embeddings to ./embeddings/embeddings_csvkit_functions.json
+2024-11-05 20:01:04,257 - INFO - Completed file: csvkit_functions.json
+2024-11-05 20:01:04,257 - INFO - Starting file: xmnlp_functions.json
+2024-11-05 20:01:04,257 - INFO - Read 103 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/xmnlp_functions.json
+2024-11-05 20:01:07,495 - INFO - Saved embeddings to ./embeddings/embeddings_xmnlp_functions.json
+2024-11-05 20:01:07,496 - INFO - Completed file: xmnlp_functions.json
+2024-11-05 20:01:07,496 - INFO - Starting file: gif-for-cli_functions.json
+2024-11-05 20:01:07,496 - INFO - Read 96 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/gif-for-cli_functions.json
+2024-11-05 20:01:10,886 - INFO - Saved embeddings to ./embeddings/embeddings_gif-for-cli_functions.json
+2024-11-05 20:01:10,887 - INFO - Completed file: gif-for-cli_functions.json
+2024-11-05 20:01:10,887 - INFO - Starting file: pytube_functions.json
+2024-11-05 20:01:10,889 - INFO - Read 483 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pytube_functions.json
+2024-11-05 20:01:24,886 - INFO - Saved embeddings to ./embeddings/embeddings_pytube_functions.json
+2024-11-05 20:01:24,890 - INFO - Completed file: pytube_functions.json
+2024-11-05 20:01:24,890 - INFO - Starting file: zxcvbn-python_functions.json
+2024-11-05 20:01:24,891 - INFO - Read 88 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/zxcvbn-python_functions.json
+2024-11-05 20:01:28,217 - INFO - Saved embeddings to ./embeddings/embeddings_zxcvbn-python_functions.json
+2024-11-05 20:01:28,218 - INFO - Completed file: zxcvbn-python_functions.json
+2024-11-05 20:01:28,218 - INFO - Starting file: pyramid_functions.json
+2024-11-05 20:01:28,241 - INFO - Read 7249 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pyramid_functions.json
+2024-11-05 20:01:57,723 - INFO - Saved embeddings to ./embeddings/embeddings_backtrader_functions.json
+2024-11-05 20:01:57,740 - INFO - Completed file: backtrader_functions.json
+2024-11-05 20:01:57,740 - INFO - Starting file: csvkit_functions.json
+2024-11-05 20:01:57,742 - INFO - Read 427 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/csvkit_functions.json
+2024-11-05 20:02:09,066 - INFO - Saved embeddings to ./embeddings/embeddings_csvkit_functions.json
+2024-11-05 20:02:09,070 - INFO - Completed file: csvkit_functions.json
+2024-11-05 20:02:09,071 - INFO - Starting file: xmnlp_functions.json
+2024-11-05 20:02:09,071 - INFO - Read 103 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/xmnlp_functions.json
+2024-11-05 20:02:12,015 - INFO - Saved embeddings to ./embeddings/embeddings_xmnlp_functions.json
+2024-11-05 20:02:12,015 - INFO - Completed file: xmnlp_functions.json
+2024-11-05 20:02:12,016 - INFO - Starting file: gif-for-cli_functions.json
+2024-11-05 20:02:12,016 - INFO - Read 96 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/gif-for-cli_functions.json
+2024-11-05 20:02:14,908 - INFO - Saved embeddings to ./embeddings/embeddings_gif-for-cli_functions.json
+2024-11-05 20:02:14,908 - INFO - Completed file: gif-for-cli_functions.json
+2024-11-05 20:02:14,909 - INFO - Starting file: pytube_functions.json
+2024-11-05 20:02:14,911 - INFO - Read 483 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pytube_functions.json
+2024-11-05 20:02:27,891 - INFO - Saved embeddings to ./embeddings/embeddings_pytube_functions.json
+2024-11-05 20:02:27,895 - INFO - Completed file: pytube_functions.json
+2024-11-05 20:02:27,895 - INFO - Starting file: zxcvbn-python_functions.json
+2024-11-05 20:02:27,896 - INFO - Read 88 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/zxcvbn-python_functions.json
+2024-11-05 20:02:30,975 - INFO - Saved embeddings to ./embeddings/embeddings_zxcvbn-python_functions.json
+2024-11-05 20:02:30,976 - INFO - Completed file: zxcvbn-python_functions.json
+2024-11-05 20:02:30,976 - INFO - Starting file: pyramid_functions.json
+2024-11-05 20:02:30,999 - INFO - Read 7249 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pyramid_functions.json
+2024-11-05 20:04:37,255 - INFO - Saved embeddings to ./embeddings/embeddings_pyramid_functions.json
+2024-11-05 20:04:37,319 - INFO - Completed file: pyramid_functions.json
+2024-11-05 20:04:37,319 - INFO - Starting file: falcon_functions.json
+2024-11-05 20:04:37,329 - INFO - Read 2872 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/falcon_functions.json
+2024-11-05 20:05:36,942 - INFO - Saved embeddings to ./embeddings/embeddings_pyramid_functions.json
+2024-11-05 20:05:37,005 - INFO - Completed file: pyramid_functions.json
+2024-11-05 20:05:37,006 - INFO - Starting file: falcon_functions.json
+2024-11-05 20:05:37,016 - INFO - Read 2872 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/falcon_functions.json
+2024-11-05 20:05:54,221 - INFO - Saved embeddings to ./embeddings/embeddings_falcon_functions.json
+2024-11-05 20:05:54,255 - INFO - Completed file: falcon_functions.json
+2024-11-05 20:05:54,255 - INFO - Starting file: discord-py_functions.json
+2024-11-05 20:05:54,268 - INFO - Read 3550 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/discord-py_functions.json
+2024-11-05 20:06:57,916 - INFO - Saved embeddings to ./embeddings/embeddings_falcon_functions.json
+2024-11-05 20:06:57,940 - INFO - Completed file: falcon_functions.json
+2024-11-05 20:06:57,941 - INFO - Starting file: discord-py_functions.json
+2024-11-05 20:06:57,954 - INFO - Read 3550 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/discord-py_functions.json
+2024-11-05 20:07:36,181 - INFO - Saved embeddings to ./embeddings/embeddings_discord-py_functions.json
+2024-11-05 20:07:36,211 - INFO - Completed file: discord-py_functions.json
+2024-11-05 20:07:36,211 - INFO - Starting file: mongoengine_functions.json
+2024-11-05 20:07:36,220 - INFO - Read 1864 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mongoengine_functions.json
+2024-11-05 20:08:36,307 - INFO - Saved embeddings to ./embeddings/embeddings_mongoengine_functions.json
+2024-11-05 20:08:36,321 - INFO - Completed file: mongoengine_functions.json
+2024-11-05 20:08:36,322 - INFO - Starting file: python-taint_functions.json
+2024-11-05 20:08:36,324 - INFO - Read 758 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/python-taint_functions.json
+2024-11-05 20:08:43,058 - INFO - Saved embeddings to ./embeddings/embeddings_discord-py_functions.json
+2024-11-05 20:08:43,092 - INFO - Completed file: discord-py_functions.json
+2024-11-05 20:08:43,092 - INFO - Starting file: mongoengine_functions.json
+2024-11-05 20:08:43,100 - INFO - Read 1864 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mongoengine_functions.json
+2024-11-05 20:08:57,584 - INFO - Saved embeddings to ./embeddings/embeddings_python-taint_functions.json
+2024-11-05 20:08:57,590 - INFO - Completed file: python-taint_functions.json
+2024-11-05 20:08:57,590 - INFO - Starting file: asyncpg_functions.json
+2024-11-05 20:08:57,594 - INFO - Read 902 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/asyncpg_functions.json
+2024-11-05 20:09:27,579 - INFO - Saved embeddings to ./embeddings/embeddings_asyncpg_functions.json
+2024-11-05 20:09:27,586 - INFO - Completed file: asyncpg_functions.json
+2024-11-05 20:09:27,586 - INFO - Starting file: sqlite-utils_functions.json
+2024-11-05 20:09:27,590 - INFO - Read 725 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sqlite-utils_functions.json
+2024-11-05 20:09:44,007 - INFO - Saved embeddings to ./embeddings/embeddings_mongoengine_functions.json
+2024-11-05 20:09:44,022 - INFO - Completed file: mongoengine_functions.json
+2024-11-05 20:09:44,022 - INFO - Starting file: python-taint_functions.json
+2024-11-05 20:09:44,025 - INFO - Read 758 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/python-taint_functions.json
+2024-11-05 20:09:49,919 - INFO - Saved embeddings to ./embeddings/embeddings_sqlite-utils_functions.json
+2024-11-05 20:09:49,924 - INFO - Completed file: sqlite-utils_functions.json
+2024-11-05 20:09:49,925 - INFO - Starting file: IMAPClient_functions.json
+2024-11-05 20:09:49,927 - INFO - Read 593 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/IMAPClient_functions.json
+2024-11-05 20:10:05,791 - INFO - Saved embeddings to ./embeddings/embeddings_python-taint_functions.json
+2024-11-05 20:10:05,797 - INFO - Completed file: python-taint_functions.json
+2024-11-05 20:10:05,797 - INFO - Starting file: asyncpg_functions.json
+2024-11-05 20:10:05,801 - INFO - Read 902 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/asyncpg_functions.json
+2024-11-05 20:10:06,648 - INFO - Saved embeddings to ./embeddings/embeddings_IMAPClient_functions.json
+2024-11-05 20:10:06,652 - INFO - Completed file: IMAPClient_functions.json
+2024-11-05 20:10:06,653 - INFO - Starting file: prometheus-client_functions.json
+2024-11-05 20:10:06,655 - INFO - Read 636 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/prometheus-client_functions.json
+2024-11-05 20:10:25,845 - INFO - Saved embeddings to ./embeddings/embeddings_prometheus-client_functions.json
+2024-11-05 20:10:25,850 - INFO - Completed file: prometheus-client_functions.json
+2024-11-05 20:10:25,850 - INFO - Starting file: zulip-term_functions.json
+2024-11-05 20:10:25,855 - INFO - Read 904 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/zulip-term_functions.json
+2024-11-05 20:10:33,492 - INFO - Saved embeddings to ./embeddings/embeddings_asyncpg_functions.json
+2024-11-05 20:10:33,499 - INFO - Completed file: asyncpg_functions.json
+2024-11-05 20:10:33,499 - INFO - Starting file: sqlite-utils_functions.json
+2024-11-05 20:10:33,503 - INFO - Read 725 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sqlite-utils_functions.json
+2024-11-05 20:10:57,282 - INFO - Saved embeddings to ./embeddings/embeddings_zulip-term_functions.json
+2024-11-05 20:10:57,289 - INFO - Completed file: zulip-term_functions.json
+2024-11-05 20:10:57,289 - INFO - Starting file: diffusers_functions.json
+2024-11-05 20:10:57,333 - INFO - Read 7279 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/diffusers_functions.json
+2024-11-05 20:10:58,978 - INFO - Saved embeddings to ./embeddings/embeddings_sqlite-utils_functions.json
+2024-11-05 20:10:58,983 - INFO - Completed file: sqlite-utils_functions.json
+2024-11-05 20:10:58,984 - INFO - Starting file: IMAPClient_functions.json
+2024-11-05 20:10:58,986 - INFO - Read 593 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/IMAPClient_functions.json
+2024-11-05 20:11:18,239 - INFO - Saved embeddings to ./embeddings/embeddings_IMAPClient_functions.json
+2024-11-05 20:11:18,243 - INFO - Completed file: IMAPClient_functions.json
+2024-11-05 20:11:18,244 - INFO - Starting file: prometheus-client_functions.json
+2024-11-05 20:11:18,246 - INFO - Read 636 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/prometheus-client_functions.json
+2024-11-05 20:11:38,820 - INFO - Saved embeddings to ./embeddings/embeddings_prometheus-client_functions.json
+2024-11-05 20:11:38,825 - INFO - Completed file: prometheus-client_functions.json
+2024-11-05 20:11:38,825 - INFO - Starting file: zulip-term_functions.json
+2024-11-05 20:11:38,829 - INFO - Read 904 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/zulip-term_functions.json
+2024-11-05 20:12:12,320 - INFO - Saved embeddings to ./embeddings/embeddings_zulip-term_functions.json
+2024-11-05 20:12:12,326 - INFO - Completed file: zulip-term_functions.json
+2024-11-05 20:12:12,327 - INFO - Starting file: diffusers_functions.json
+2024-11-05 20:12:12,370 - INFO - Read 7279 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/diffusers_functions.json
+2024-11-05 20:15:45,254 - INFO - Saved embeddings to ./embeddings/embeddings_diffusers_functions.json
+2024-11-05 20:15:45,326 - INFO - Completed file: diffusers_functions.json
+2024-11-05 20:15:45,326 - INFO - Starting file: proxybroker_functions.json
+2024-11-05 20:15:45,328 - INFO - Read 216 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/proxybroker_functions.json
+2024-11-05 20:15:53,504 - INFO - Saved embeddings to ./embeddings/embeddings_proxybroker_functions.json
+2024-11-05 20:15:53,506 - INFO - Completed file: proxybroker_functions.json
+2024-11-05 20:15:53,506 - INFO - Starting file: PyLaTeX_functions.json
+2024-11-05 20:15:53,508 - INFO - Read 286 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/PyLaTeX_functions.json
+2024-11-05 20:16:04,092 - INFO - Saved embeddings to ./embeddings/embeddings_PyLaTeX_functions.json
+2024-11-05 20:16:04,094 - INFO - Completed file: PyLaTeX_functions.json
+2024-11-05 20:16:04,095 - INFO - Starting file: boto_functions.json
+2024-11-05 20:16:04,125 - INFO - Read 7544 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/boto_functions.json
+2024-11-05 20:16:58,976 - INFO - Saved embeddings to ./embeddings/embeddings_diffusers_functions.json
+2024-11-05 20:16:59,067 - INFO - Completed file: diffusers_functions.json
+2024-11-05 20:16:59,067 - INFO - Starting file: proxybroker_functions.json
+2024-11-05 20:16:59,068 - INFO - Read 216 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/proxybroker_functions.json
+2024-11-05 20:17:05,614 - INFO - Saved embeddings to ./embeddings/embeddings_proxybroker_functions.json
+2024-11-05 20:17:05,616 - INFO - Completed file: proxybroker_functions.json
+2024-11-05 20:17:05,617 - INFO - Starting file: PyLaTeX_functions.json
+2024-11-05 20:17:05,618 - INFO - Read 286 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/PyLaTeX_functions.json
+2024-11-05 20:17:14,990 - INFO - Saved embeddings to ./embeddings/embeddings_PyLaTeX_functions.json
+2024-11-05 20:17:14,992 - INFO - Completed file: PyLaTeX_functions.json
+2024-11-05 20:17:14,993 - INFO - Starting file: boto_functions.json
+2024-11-05 20:17:15,023 - INFO - Read 7544 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/boto_functions.json
+2024-11-05 20:20:07,714 - INFO - Saved embeddings to ./embeddings/embeddings_boto_functions.json
+2024-11-05 20:20:07,779 - INFO - Completed file: boto_functions.json
+2024-11-05 20:20:07,779 - INFO - Starting file: Mopidy_functions.json
+2024-11-05 20:20:07,786 - INFO - Read 2128 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Mopidy_functions.json
+2024-11-05 20:21:07,430 - INFO - Saved embeddings to ./embeddings/embeddings_Mopidy_functions.json
+2024-11-05 20:21:07,447 - INFO - Completed file: Mopidy_functions.json
+2024-11-05 20:21:07,447 - INFO - Starting file: chatette_functions.json
+2024-11-05 20:21:07,450 - INFO - Read 636 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/chatette_functions.json
+2024-11-05 20:21:10,622 - INFO - Saved embeddings to ./embeddings/embeddings_boto_functions.json
+2024-11-05 20:21:10,687 - INFO - Completed file: boto_functions.json
+2024-11-05 20:21:10,687 - INFO - Starting file: Mopidy_functions.json
+2024-11-05 20:21:10,694 - INFO - Read 2128 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Mopidy_functions.json
+2024-11-05 20:21:24,434 - INFO - Saved embeddings to ./embeddings/embeddings_chatette_functions.json
+2024-11-05 20:21:24,439 - INFO - Completed file: chatette_functions.json
+2024-11-05 20:21:24,439 - INFO - Starting file: albumentations_functions.json
+2024-11-05 20:21:24,444 - INFO - Read 1270 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/albumentations_functions.json
+2024-11-05 20:21:59,178 - INFO - Saved embeddings to ./embeddings/embeddings_albumentations_functions.json
+2024-11-05 20:21:59,187 - INFO - Completed file: albumentations_functions.json
+2024-11-05 20:21:59,187 - INFO - Starting file: python-for-android_functions.json
+2024-11-05 20:21:59,192 - INFO - Read 1039 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/python-for-android_functions.json
+2024-11-05 20:22:07,201 - INFO - Saved embeddings to ./embeddings/embeddings_Mopidy_functions.json
+2024-11-05 20:22:07,218 - INFO - Completed file: Mopidy_functions.json
+2024-11-05 20:22:07,218 - INFO - Starting file: chatette_functions.json
+2024-11-05 20:22:07,221 - INFO - Read 636 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/chatette_functions.json
+2024-11-05 20:22:26,252 - INFO - Saved embeddings to ./embeddings/embeddings_chatette_functions.json
+2024-11-05 20:22:26,257 - INFO - Completed file: chatette_functions.json
+2024-11-05 20:22:26,257 - INFO - Starting file: albumentations_functions.json
+2024-11-05 20:22:26,262 - INFO - Read 1270 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/albumentations_functions.json
+2024-11-05 20:22:29,449 - INFO - Saved embeddings to ./embeddings/embeddings_python-for-android_functions.json
+2024-11-05 20:22:29,457 - INFO - Completed file: python-for-android_functions.json
+2024-11-05 20:22:29,457 - INFO - Starting file: threatingestor_functions.json
+2024-11-05 20:22:29,459 - INFO - Read 302 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/threatingestor_functions.json
+2024-11-05 20:22:38,991 - INFO - Saved embeddings to ./embeddings/embeddings_threatingestor_functions.json
+2024-11-05 20:22:38,993 - INFO - Completed file: threatingestor_functions.json
+2024-11-05 20:22:38,993 - INFO - Starting file: pyOpenSSL_functions.json
+2024-11-05 20:22:38,997 - INFO - Read 914 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pyOpenSSL_functions.json
+2024-11-05 20:23:03,494 - INFO - Saved embeddings to ./embeddings/embeddings_albumentations_functions.json
+2024-11-05 20:23:03,503 - INFO - Completed file: albumentations_functions.json
+2024-11-05 20:23:03,503 - INFO - Starting file: python-for-android_functions.json
+2024-11-05 20:23:03,508 - INFO - Read 1039 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/python-for-android_functions.json
+2024-11-05 20:23:05,320 - INFO - Saved embeddings to ./embeddings/embeddings_pyOpenSSL_functions.json
+2024-11-05 20:23:05,328 - INFO - Completed file: pyOpenSSL_functions.json
+2024-11-05 20:23:05,328 - INFO - Starting file: mingus_functions.json
+2024-11-05 20:23:05,331 - INFO - Read 854 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mingus_functions.json
+2024-11-05 20:23:30,411 - INFO - Saved embeddings to ./embeddings/embeddings_mingus_functions.json
+2024-11-05 20:23:30,417 - INFO - Completed file: mingus_functions.json
+2024-11-05 20:23:30,417 - INFO - Starting file: psd-tools_functions.json
+2024-11-05 20:23:30,421 - INFO - Read 1278 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/psd-tools_functions.json
+2024-11-05 20:23:33,634 - INFO - Saved embeddings to ./embeddings/embeddings_python-for-android_functions.json
+2024-11-05 20:23:33,642 - INFO - Completed file: python-for-android_functions.json
+2024-11-05 20:23:33,643 - INFO - Starting file: threatingestor_functions.json
+2024-11-05 20:23:33,644 - INFO - Read 302 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/threatingestor_functions.json
+2024-11-05 20:23:42,543 - INFO - Saved embeddings to ./embeddings/embeddings_threatingestor_functions.json
+2024-11-05 20:23:42,546 - INFO - Completed file: threatingestor_functions.json
+2024-11-05 20:23:42,546 - INFO - Starting file: pyOpenSSL_functions.json
+2024-11-05 20:23:42,549 - INFO - Read 914 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pyOpenSSL_functions.json
+2024-11-05 20:24:03,878 - INFO - Saved embeddings to ./embeddings/embeddings_psd-tools_functions.json
+2024-11-05 20:24:03,888 - INFO - Completed file: psd-tools_functions.json
+2024-11-05 20:24:03,888 - INFO - Starting file: Jinja2_functions.json
+2024-11-05 20:24:03,894 - INFO - Read 1517 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Jinja2_functions.json
+2024-11-05 20:24:06,442 - INFO - Saved embeddings to ./embeddings/embeddings_pyOpenSSL_functions.json
+2024-11-05 20:24:06,448 - INFO - Completed file: pyOpenSSL_functions.json
+2024-11-05 20:24:06,449 - INFO - Starting file: mingus_functions.json
+2024-11-05 20:24:06,452 - INFO - Read 854 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mingus_functions.json
+2024-11-05 20:24:30,121 - INFO - Saved embeddings to ./embeddings/embeddings_mingus_functions.json
+2024-11-05 20:24:30,128 - INFO - Completed file: mingus_functions.json
+2024-11-05 20:24:30,128 - INFO - Starting file: psd-tools_functions.json
+2024-11-05 20:24:30,132 - INFO - Read 1278 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/psd-tools_functions.json
+2024-11-05 20:24:45,126 - INFO - Saved embeddings to ./embeddings/embeddings_Jinja2_functions.json
+2024-11-05 20:24:45,137 - INFO - Completed file: Jinja2_functions.json
+2024-11-05 20:24:45,138 - INFO - Starting file: sqlitedict_functions.json
+2024-11-05 20:24:45,138 - INFO - Read 118 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sqlitedict_functions.json
+2024-11-05 20:24:48,085 - INFO - Saved embeddings to ./embeddings/embeddings_sqlitedict_functions.json
+2024-11-05 20:24:48,086 - INFO - Completed file: sqlitedict_functions.json
+2024-11-05 20:24:48,087 - INFO - Starting file: PySimpleSOAP_functions.json
+2024-11-05 20:24:48,088 - INFO - Read 229 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/PySimpleSOAP_functions.json
+2024-11-05 20:24:55,059 - INFO - Saved embeddings to ./embeddings/embeddings_PySimpleSOAP_functions.json
+2024-11-05 20:24:55,061 - INFO - Completed file: PySimpleSOAP_functions.json
+2024-11-05 20:24:55,061 - INFO - Starting file: hbmqtt_functions.json
+2024-11-05 20:24:55,063 - INFO - Read 561 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/hbmqtt_functions.json
+2024-11-05 20:25:03,558 - INFO - Saved embeddings to ./embeddings/embeddings_psd-tools_functions.json
+2024-11-05 20:25:03,567 - INFO - Completed file: psd-tools_functions.json
+2024-11-05 20:25:03,567 - INFO - Starting file: Jinja2_functions.json
+2024-11-05 20:25:03,573 - INFO - Read 1517 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Jinja2_functions.json
+2024-11-05 20:25:10,273 - INFO - Saved embeddings to ./embeddings/embeddings_hbmqtt_functions.json
+2024-11-05 20:25:10,277 - INFO - Completed file: hbmqtt_functions.json
+2024-11-05 20:25:10,277 - INFO - Starting file: ydata-profiling_functions.json
+2024-11-05 20:25:10,281 - INFO - Read 832 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/ydata-profiling_functions.json
+2024-11-05 20:25:35,798 - INFO - Saved embeddings to ./embeddings/embeddings_ydata-profiling_functions.json
+2024-11-05 20:25:35,804 - INFO - Completed file: ydata-profiling_functions.json
+2024-11-05 20:25:35,804 - INFO - Starting file: csvs-to-sqlite_functions.json
+2024-11-05 20:25:35,805 - INFO - Read 48 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/csvs-to-sqlite_functions.json
+2024-11-05 20:25:37,788 - INFO - Saved embeddings to ./embeddings/embeddings_csvs-to-sqlite_functions.json
+2024-11-05 20:25:37,788 - INFO - Completed file: csvs-to-sqlite_functions.json
+2024-11-05 20:25:37,788 - INFO - Starting file: principalmapper_functions.json
+2024-11-05 20:25:37,790 - INFO - Read 260 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/principalmapper_functions.json
+2024-11-05 20:25:48,422 - INFO - Saved embeddings to ./embeddings/embeddings_principalmapper_functions.json
+2024-11-05 20:25:48,424 - INFO - Completed file: principalmapper_functions.json
+2024-11-05 20:25:48,424 - INFO - Starting file: Django_functions.json
+2024-11-05 20:25:48,492 - INFO - Saved embeddings to ./embeddings/embeddings_Jinja2_functions.json
+2024-11-05 20:25:48,503 - INFO - Completed file: Jinja2_functions.json
+2024-11-05 20:25:48,503 - INFO - Starting file: sqlitedict_functions.json
+2024-11-05 20:25:48,504 - INFO - Read 118 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sqlitedict_functions.json
+2024-11-05 20:25:48,526 - INFO - Read 27943 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Django_functions.json
+2024-11-05 20:25:51,738 - INFO - Saved embeddings to ./embeddings/embeddings_sqlitedict_functions.json
+2024-11-05 20:25:51,739 - INFO - Completed file: sqlitedict_functions.json
+2024-11-05 20:25:51,739 - INFO - Starting file: PySimpleSOAP_functions.json
+2024-11-05 20:25:51,740 - INFO - Read 229 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/PySimpleSOAP_functions.json
+2024-11-05 20:25:59,616 - INFO - Saved embeddings to ./embeddings/embeddings_PySimpleSOAP_functions.json
+2024-11-05 20:25:59,618 - INFO - Completed file: PySimpleSOAP_functions.json
+2024-11-05 20:25:59,618 - INFO - Starting file: hbmqtt_functions.json
+2024-11-05 20:25:59,620 - INFO - Read 561 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/hbmqtt_functions.json
+2024-11-05 20:26:15,846 - INFO - Saved embeddings to ./embeddings/embeddings_hbmqtt_functions.json
+2024-11-05 20:26:15,851 - INFO - Completed file: hbmqtt_functions.json
+2024-11-05 20:26:15,851 - INFO - Starting file: ydata-profiling_functions.json
+2024-11-05 20:26:15,855 - INFO - Read 832 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/ydata-profiling_functions.json
+2024-11-05 20:26:42,379 - INFO - Saved embeddings to ./embeddings/embeddings_ydata-profiling_functions.json
+2024-11-05 20:26:42,386 - INFO - Completed file: ydata-profiling_functions.json
+2024-11-05 20:26:42,387 - INFO - Starting file: csvs-to-sqlite_functions.json
+2024-11-05 20:26:42,387 - INFO - Read 48 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/csvs-to-sqlite_functions.json
+2024-11-05 20:26:44,108 - INFO - Saved embeddings to ./embeddings/embeddings_csvs-to-sqlite_functions.json
+2024-11-05 20:26:44,108 - INFO - Completed file: csvs-to-sqlite_functions.json
+2024-11-05 20:26:44,108 - INFO - Starting file: principalmapper_functions.json
+2024-11-05 20:26:44,110 - INFO - Read 260 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/principalmapper_functions.json
+2024-11-05 20:26:54,954 - INFO - Saved embeddings to ./embeddings/embeddings_principalmapper_functions.json
+2024-11-05 20:26:54,956 - INFO - Completed file: principalmapper_functions.json
+2024-11-05 20:26:54,956 - INFO - Starting file: Django_functions.json
+2024-11-05 20:26:55,060 - INFO - Read 27943 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Django_functions.json
+2024-11-05 20:39:44,622 - INFO - Saved embeddings to ./embeddings/embeddings_Django_functions.json
+2024-11-05 20:39:44,965 - INFO - Completed file: Django_functions.json
+2024-11-05 20:39:44,965 - INFO - Starting file: datasets_functions.json
+2024-11-05 20:39:44,981 - INFO - Read 3467 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/datasets_functions.json
+2024-11-05 20:40:28,982 - INFO - Saved embeddings to ./embeddings/embeddings_Django_functions.json
+2024-11-05 20:40:29,223 - INFO - Completed file: Django_functions.json
+2024-11-05 20:40:29,223 - INFO - Starting file: datasets_functions.json
+2024-11-05 20:40:29,239 - INFO - Read 3467 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/datasets_functions.json
+2024-11-05 20:41:33,332 - INFO - Saved embeddings to ./embeddings/embeddings_datasets_functions.json
+2024-11-05 20:41:33,361 - INFO - Completed file: datasets_functions.json
+2024-11-05 20:41:33,361 - INFO - Starting file: Wikipedia-API_functions.json
+2024-11-05 20:41:33,362 - INFO - Read 130 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Wikipedia-API_functions.json
+2024-11-05 20:41:37,115 - INFO - Saved embeddings to ./embeddings/embeddings_Wikipedia-API_functions.json
+2024-11-05 20:41:37,116 - INFO - Completed file: Wikipedia-API_functions.json
+2024-11-05 20:41:37,116 - INFO - Starting file: rows_functions.json
+2024-11-05 20:41:37,119 - INFO - Read 524 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/rows_functions.json
+2024-11-05 20:41:54,312 - INFO - Saved embeddings to ./embeddings/embeddings_rows_functions.json
+2024-11-05 20:41:54,315 - INFO - Completed file: rows_functions.json
+2024-11-05 20:41:54,316 - INFO - Starting file: trackerjacker_functions.json
+2024-11-05 20:41:54,316 - INFO - Read 138 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/trackerjacker_functions.json
+2024-11-05 20:41:59,036 - INFO - Saved embeddings to ./embeddings/embeddings_trackerjacker_functions.json
+2024-11-05 20:41:59,037 - INFO - Completed file: trackerjacker_functions.json
+2024-11-05 20:41:59,038 - INFO - Starting file: diffprivlib_functions.json
+2024-11-05 20:41:59,041 - INFO - Read 1158 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/diffprivlib_functions.json
+2024-11-05 20:42:29,652 - INFO - Saved embeddings to ./embeddings/embeddings_datasets_functions.json
+2024-11-05 20:42:29,681 - INFO - Completed file: datasets_functions.json
+2024-11-05 20:42:29,681 - INFO - Starting file: Wikipedia-API_functions.json
+2024-11-05 20:42:29,682 - INFO - Read 130 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/Wikipedia-API_functions.json
+2024-11-05 20:42:32,685 - INFO - Saved embeddings to ./embeddings/embeddings_diffprivlib_functions.json
+2024-11-05 20:42:32,694 - INFO - Completed file: diffprivlib_functions.json
+2024-11-05 20:42:32,694 - INFO - Starting file: folium_functions.json
+2024-11-05 20:42:32,696 - INFO - Read 301 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/folium_functions.json
+2024-11-05 20:42:32,834 - INFO - Saved embeddings to ./embeddings/embeddings_Wikipedia-API_functions.json
+2024-11-05 20:42:32,835 - INFO - Completed file: Wikipedia-API_functions.json
+2024-11-05 20:42:32,835 - INFO - Starting file: rows_functions.json
+2024-11-05 20:42:32,837 - INFO - Read 524 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/rows_functions.json
+2024-11-05 20:42:43,262 - INFO - Saved embeddings to ./embeddings/embeddings_folium_functions.json
+2024-11-05 20:42:43,264 - INFO - Completed file: folium_functions.json
+2024-11-05 20:42:43,264 - INFO - Starting file: google-api-python-client_functions.json
+2024-11-05 20:42:43,268 - INFO - Read 707 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/google-api-python-client_functions.json
+2024-11-05 20:42:50,573 - INFO - Saved embeddings to ./embeddings/embeddings_rows_functions.json
+2024-11-05 20:42:50,577 - INFO - Completed file: rows_functions.json
+2024-11-05 20:42:50,578 - INFO - Starting file: trackerjacker_functions.json
+2024-11-05 20:42:50,578 - INFO - Read 138 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/trackerjacker_functions.json
+2024-11-05 20:42:55,244 - INFO - Saved embeddings to ./embeddings/embeddings_trackerjacker_functions.json
+2024-11-05 20:42:55,245 - INFO - Completed file: trackerjacker_functions.json
+2024-11-05 20:42:55,245 - INFO - Starting file: diffprivlib_functions.json
+2024-11-05 20:42:55,249 - INFO - Read 1158 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/diffprivlib_functions.json
+2024-11-05 20:43:06,896 - INFO - Saved embeddings to ./embeddings/embeddings_google-api-python-client_functions.json
+2024-11-05 20:43:06,901 - INFO - Completed file: google-api-python-client_functions.json
+2024-11-05 20:43:06,901 - INFO - Starting file: whereami_functions.json
+2024-11-05 20:43:06,902 - INFO - Read 34 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/whereami_functions.json
+2024-11-05 20:43:07,735 - INFO - Saved embeddings to ./embeddings/embeddings_whereami_functions.json
+2024-11-05 20:43:07,735 - INFO - Completed file: whereami_functions.json
+2024-11-05 20:43:07,735 - INFO - Starting file: djangorestframework_functions.json
+2024-11-05 20:43:07,745 - INFO - Read 2774 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/djangorestframework_functions.json
+2024-11-05 20:43:27,506 - INFO - Saved embeddings to ./embeddings/embeddings_diffprivlib_functions.json
+2024-11-05 20:43:27,515 - INFO - Completed file: diffprivlib_functions.json
+2024-11-05 20:43:27,515 - INFO - Starting file: folium_functions.json
+2024-11-05 20:43:27,517 - INFO - Read 301 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/folium_functions.json
+2024-11-05 20:43:37,501 - INFO - Saved embeddings to ./embeddings/embeddings_folium_functions.json
+2024-11-05 20:43:37,503 - INFO - Completed file: folium_functions.json
+2024-11-05 20:43:37,503 - INFO - Starting file: google-api-python-client_functions.json
+2024-11-05 20:43:37,507 - INFO - Read 707 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/google-api-python-client_functions.json
+2024-11-05 20:43:59,746 - INFO - Saved embeddings to ./embeddings/embeddings_google-api-python-client_functions.json
+2024-11-05 20:43:59,751 - INFO - Completed file: google-api-python-client_functions.json
+2024-11-05 20:43:59,752 - INFO - Starting file: whereami_functions.json
+2024-11-05 20:43:59,752 - INFO - Read 34 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/whereami_functions.json
+2024-11-05 20:44:00,612 - INFO - Saved embeddings to ./embeddings/embeddings_whereami_functions.json
+2024-11-05 20:44:00,612 - INFO - Completed file: whereami_functions.json
+2024-11-05 20:44:00,613 - INFO - Starting file: djangorestframework_functions.json
+2024-11-05 20:44:00,622 - INFO - Read 2774 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/djangorestframework_functions.json
+2024-11-05 20:44:24,650 - INFO - Saved embeddings to ./embeddings/embeddings_djangorestframework_functions.json
+2024-11-05 20:44:24,674 - INFO - Completed file: djangorestframework_functions.json
+2024-11-05 20:44:24,674 - INFO - Starting file: sslyze_functions.json
+2024-11-05 20:44:24,677 - INFO - Read 471 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sslyze_functions.json
+2024-11-05 20:44:40,995 - INFO - Saved embeddings to ./embeddings/embeddings_sslyze_functions.json
+2024-11-05 20:44:40,998 - INFO - Completed file: sslyze_functions.json
+2024-11-05 20:44:40,999 - INFO - Starting file: pycorrector_functions.json
+2024-11-05 20:44:41,001 - INFO - Read 498 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pycorrector_functions.json
+2024-11-05 20:44:57,400 - INFO - Saved embeddings to ./embeddings/embeddings_pycorrector_functions.json
+2024-11-05 20:44:57,404 - INFO - Completed file: pycorrector_functions.json
+2024-11-05 20:44:57,404 - INFO - Starting file: dash_functions.json
+2024-11-05 20:44:57,415 - INFO - Read 2294 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/dash_functions.json
+2024-11-05 20:45:19,309 - INFO - Saved embeddings to ./embeddings/embeddings_djangorestframework_functions.json
+2024-11-05 20:45:19,333 - INFO - Completed file: djangorestframework_functions.json
+2024-11-05 20:45:19,333 - INFO - Starting file: sslyze_functions.json
+2024-11-05 20:45:19,335 - INFO - Read 471 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sslyze_functions.json
+2024-11-05 20:45:37,918 - INFO - Saved embeddings to ./embeddings/embeddings_sslyze_functions.json
+2024-11-05 20:45:37,923 - INFO - Completed file: sslyze_functions.json
+2024-11-05 20:45:37,923 - INFO - Starting file: pycorrector_functions.json
+2024-11-05 20:45:37,926 - INFO - Read 498 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pycorrector_functions.json
+2024-11-05 20:45:55,906 - INFO - Saved embeddings to ./embeddings/embeddings_pycorrector_functions.json
+2024-11-05 20:45:55,909 - INFO - Completed file: pycorrector_functions.json
+2024-11-05 20:45:55,910 - INFO - Starting file: dash_functions.json
+2024-11-05 20:45:55,921 - INFO - Read 2294 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/dash_functions.json
+2024-11-05 20:46:16,279 - INFO - Saved embeddings to ./embeddings/embeddings_dash_functions.json
+2024-11-05 20:46:16,298 - INFO - Completed file: dash_functions.json
+2024-11-05 20:46:16,299 - INFO - Starting file: arctic-latest_functions.json
+2024-11-05 20:46:16,305 - INFO - Read 1462 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/arctic-latest_functions.json
+2024-11-05 20:47:08,538 - INFO - Saved embeddings to ./embeddings/embeddings_arctic-latest_functions.json
+2024-11-05 20:47:08,550 - INFO - Completed file: arctic-latest_functions.json
+2024-11-05 20:47:08,550 - INFO - Starting file: sshuttle_functions.json
+2024-11-05 20:47:08,552 - INFO - Read 335 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sshuttle_functions.json
+2024-11-05 20:47:16,848 - INFO - Saved embeddings to ./embeddings/embeddings_dash_functions.json
+2024-11-05 20:47:16,875 - INFO - Completed file: dash_functions.json
+2024-11-05 20:47:16,875 - INFO - Starting file: arctic-latest_functions.json
+2024-11-05 20:47:16,882 - INFO - Read 1462 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/arctic-latest_functions.json
+2024-11-05 20:47:18,460 - INFO - Saved embeddings to ./embeddings/embeddings_sshuttle_functions.json
+2024-11-05 20:47:18,463 - INFO - Completed file: sshuttle_functions.json
+2024-11-05 20:47:18,463 - INFO - Starting file: mrjob_functions.json
+2024-11-05 20:47:18,478 - INFO - Read 4487 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mrjob_functions.json
+2024-11-05 20:48:07,922 - INFO - Saved embeddings to ./embeddings/embeddings_arctic-latest_functions.json
+2024-11-05 20:48:07,934 - INFO - Completed file: arctic-latest_functions.json
+2024-11-05 20:48:07,935 - INFO - Starting file: sshuttle_functions.json
+2024-11-05 20:48:07,936 - INFO - Read 335 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sshuttle_functions.json
+2024-11-05 20:48:18,014 - INFO - Saved embeddings to ./embeddings/embeddings_sshuttle_functions.json
+2024-11-05 20:48:18,017 - INFO - Completed file: sshuttle_functions.json
+2024-11-05 20:48:18,017 - INFO - Starting file: mrjob_functions.json
+2024-11-05 20:48:18,033 - INFO - Read 4487 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/mrjob_functions.json
+2024-11-05 20:49:38,856 - INFO - Saved embeddings to ./embeddings/embeddings_mrjob_functions.json
+2024-11-05 20:49:38,906 - INFO - Completed file: mrjob_functions.json
+2024-11-05 20:49:38,906 - INFO - Starting file: sumy_functions.json
+2024-11-05 20:49:38,908 - INFO - Read 485 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sumy_functions.json
+2024-11-05 20:49:52,616 - INFO - Saved embeddings to ./embeddings/embeddings_sumy_functions.json
+2024-11-05 20:49:52,620 - INFO - Completed file: sumy_functions.json
+2024-11-05 20:49:52,620 - INFO - Starting file: twilio-fatisar_functions.json
+2024-11-05 20:49:52,675 - INFO - Read 13282 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/twilio-fatisar_functions.json
+2024-11-05 20:50:30,602 - INFO - Saved embeddings to ./embeddings/embeddings_mrjob_functions.json
+2024-11-05 20:50:30,640 - INFO - Completed file: mrjob_functions.json
+2024-11-05 20:50:30,641 - INFO - Starting file: sumy_functions.json
+2024-11-05 20:50:30,643 - INFO - Read 485 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/sumy_functions.json
+2024-11-05 20:50:44,444 - INFO - Saved embeddings to ./embeddings/embeddings_sumy_functions.json
+2024-11-05 20:50:44,448 - INFO - Completed file: sumy_functions.json
+2024-11-05 20:50:44,448 - INFO - Starting file: twilio-fatisar_functions.json
+2024-11-05 20:50:44,505 - INFO - Read 13282 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/twilio-fatisar_functions.json
+2024-11-05 20:57:06,671 - INFO - Saved embeddings to ./embeddings/embeddings_twilio-fatisar_functions.json
+2024-11-05 20:57:06,790 - INFO - Completed file: twilio-fatisar_functions.json
+2024-11-05 20:57:06,790 - INFO - Starting file: exodus-bundler_functions.json
+2024-11-05 20:57:06,791 - INFO - Read 118 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/exodus-bundler_functions.json
+2024-11-05 20:57:10,844 - INFO - Saved embeddings to ./embeddings/embeddings_exodus-bundler_functions.json
+2024-11-05 20:57:10,845 - INFO - Completed file: exodus-bundler_functions.json
+2024-11-05 20:57:10,846 - INFO - Starting file: pymc_functions.json
+2024-11-05 20:57:10,860 - INFO - Read 3681 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pymc_functions.json
+2024-11-05 20:57:52,910 - INFO - Saved embeddings to ./embeddings/embeddings_twilio-fatisar_functions.json
+2024-11-05 20:57:53,026 - INFO - Completed file: twilio-fatisar_functions.json
+2024-11-05 20:57:53,027 - INFO - Starting file: exodus-bundler_functions.json
+2024-11-05 20:57:53,027 - INFO - Read 118 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/exodus-bundler_functions.json
+2024-11-05 20:57:57,192 - INFO - Saved embeddings to ./embeddings/embeddings_exodus-bundler_functions.json
+2024-11-05 20:57:57,193 - INFO - Completed file: exodus-bundler_functions.json
+2024-11-05 20:57:57,193 - INFO - Starting file: pymc_functions.json
+2024-11-05 20:57:57,208 - INFO - Read 3681 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pymc_functions.json
+2024-11-05 20:59:05,593 - INFO - Saved embeddings to ./embeddings/embeddings_pymc_functions.json
+2024-11-05 20:59:05,624 - INFO - Completed file: pymc_functions.json
+2024-11-05 20:59:05,625 - INFO - Starting file: ehforwarderbot_functions.json
+2024-11-05 20:59:05,626 - INFO - Read 480 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/ehforwarderbot_functions.json
+2024-11-05 20:59:19,893 - INFO - Saved embeddings to ./embeddings/embeddings_ehforwarderbot_functions.json
+2024-11-05 20:59:19,897 - INFO - Completed file: ehforwarderbot_functions.json
+2024-11-05 20:59:19,897 - INFO - Starting file: awesome-autodl_functions.json
+2024-11-05 20:59:19,897 - INFO - Read 38 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/awesome-autodl_functions.json
+2024-11-05 20:59:21,240 - INFO - Saved embeddings to ./embeddings/embeddings_awesome-autodl_functions.json
+2024-11-05 20:59:21,240 - INFO - Completed file: awesome-autodl_functions.json
+2024-11-05 20:59:21,240 - INFO - Starting file: pymusic-dl_functions.json
+2024-11-05 20:59:21,241 - INFO - Read 78 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pymusic-dl_functions.json
+2024-11-05 20:59:24,028 - INFO - Saved embeddings to ./embeddings/embeddings_pymusic-dl_functions.json
+2024-11-05 20:59:24,028 - INFO - Completed file: pymusic-dl_functions.json
+2024-11-05 20:59:24,029 - INFO - Starting file: hypertools_functions.json
+2024-11-05 20:59:24,030 - INFO - Read 253 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/hypertools_functions.json
+2024-11-05 20:59:31,964 - INFO - Saved embeddings to ./embeddings/embeddings_hypertools_functions.json
+2024-11-05 20:59:31,966 - INFO - Completed file: hypertools_functions.json
+2024-11-05 20:59:49,829 - INFO - Saved embeddings to ./embeddings/embeddings_pymc_functions.json
+2024-11-05 20:59:49,860 - INFO - Completed file: pymc_functions.json
+2024-11-05 20:59:49,861 - INFO - Starting file: ehforwarderbot_functions.json
+2024-11-05 20:59:49,862 - INFO - Read 480 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/ehforwarderbot_functions.json
+2024-11-05 20:59:58,672 - INFO - Saved embeddings to ./embeddings/embeddings_ehforwarderbot_functions.json
+2024-11-05 20:59:58,676 - INFO - Completed file: ehforwarderbot_functions.json
+2024-11-05 20:59:58,676 - INFO - Starting file: awesome-autodl_functions.json
+2024-11-05 20:59:58,676 - INFO - Read 38 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/awesome-autodl_functions.json
+2024-11-05 20:59:59,398 - INFO - Saved embeddings to ./embeddings/embeddings_awesome-autodl_functions.json
+2024-11-05 20:59:59,398 - INFO - Completed file: awesome-autodl_functions.json
+2024-11-05 20:59:59,398 - INFO - Starting file: pymusic-dl_functions.json
+2024-11-05 20:59:59,399 - INFO - Read 78 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/pymusic-dl_functions.json
+2024-11-05 21:00:01,088 - INFO - Saved embeddings to ./embeddings/embeddings_pymusic-dl_functions.json
+2024-11-05 21:00:01,088 - INFO - Completed file: pymusic-dl_functions.json
+2024-11-05 21:00:01,089 - INFO - Starting file: hypertools_functions.json
+2024-11-05 21:00:01,090 - INFO - Read 253 functions from file /home/shixianjie/codegraph/codegraph/Agent/tools/experiments/EmbeddingRAG/repocode/hypertools_functions.json
+2024-11-05 21:00:06,204 - INFO - Saved embeddings to ./embeddings/embeddings_hypertools_functions.json
+2024-11-05 21:00:06,206 - INFO - Completed file: hypertools_functions.json
+2024-11-05 22:38:21,738 - INFO - Loading model...
+2024-11-05 22:38:21,740 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 22:39:22,360 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 22:39:22,361 - INFO - Model loaded successfully
+2024-11-05 22:54:29,246 - INFO - Loading model...
+2024-11-05 22:54:29,248 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 22:54:41,835 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 22:54:41,836 - INFO - Model loaded successfully
+2024-11-05 23:03:26,768 - INFO - Loading model...
+2024-11-05 23:03:26,771 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_400M_v5
+2024-11-05 23:03:46,402 - INFO - 2 prompts are loaded, with the keys: ['s2p_query', 's2s_query']
+2024-11-05 23:03:46,403 - INFO - Model loaded successfully
+2024-11-05 23:04:22,448 - INFO - Input code embeddings saved to ./input_code_embeddings.json

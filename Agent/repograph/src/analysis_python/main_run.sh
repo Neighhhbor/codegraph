@@ -1,0 +1,5 @@
+python main.py \
+            "/home/shixianjie/codegraph/codegraph/DevEval/Source_Code" \
+            "/home/shixianjie/codegraph/codegraph/data_process/relations" \
+            --start_port 3000 \
+            --max_workers 4
