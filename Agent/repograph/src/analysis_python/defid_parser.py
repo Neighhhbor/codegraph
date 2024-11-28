@@ -8,7 +8,7 @@ import argparse
 
 # 配置日志
 logging.basicConfig(
-    level=logging.DEBUG,  # 设置日志级别为 INFO
+    level=logging.INFO,  # 设置日志级别为 INFO
     format='%(asctime)s - %(levelname)s - %(message)s',
 )
 logger = logging.getLogger(__name__)  # 创建日志记录器
@@ -73,8 +73,8 @@ def find_identifier_in_subtree(graph, node_id, start_line, start_char, end_line,
 
     # 如果节点类型是 identifier，检查它的位置是否匹配
     if node_data.get("type") == "identifier":
-        start_point = node_data.get("start_point", [None, None])
-        end_point = node_data.get("end_point", [None, None])
+        start_point = node_data.get("sp", [None, None])
+        end_point = node_data.get("ep", [None, None])
 
         if (start_point[0] == start_line and start_point[1] == start_char
                 and end_point[0] == end_line and end_point[1] == end_char):
@@ -96,7 +96,7 @@ def add_definition_id_to_nodes(graph):
     """
     nodes = list(graph.nodes(data=True))  # 将节点转为列表
     for node_id, node_data in tqdm(nodes, desc="Processing Nodes"):  # 使用 tqdm 进度条
-        definition = node_data.get("definiton",[])
+        definition = node_data.get("definition",[])
         if len(definition) != 0:
             definition = node_data["definition"][0]  # 获取第一个定义信息
             def_node_id = find_definition_node(graph, definition)
@@ -156,7 +156,7 @@ def main():
 
     add_definition_id_to_nodes(graph)
     save_graph(graph, output_path)
-    # os.remove(input_path)
+    os.remove(input_path)
 
 if __name__ == "__main__":
     main()

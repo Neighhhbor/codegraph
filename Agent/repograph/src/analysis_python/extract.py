@@ -57,16 +57,15 @@ def extract_skeleton(graph):
                 node_data["name"] = _get_node_name(code,node_type)
                 node_data["path"] = file_path
                 node_data = {key: node_data[key] for key in ["id", "file_id","name", "code", "type", "path", "ignored"] if key in node_data}
-            else:
                 # 对于其他类型的节点（如 directory, file），保留原始数据并检查是否自动生成
-                file_path = node_data.get("path")
+                # file_path = node_data.get("path")
                 # is_ignored = any(file_path.endswith(suffix) for suffix in AUTO_GENERATED_SUFFIXES) if file_path else False
                 # node_data["ignored"] = is_ignored  # 添加 ignored 标签
-                if node_type == "file": 
-                    if file_path:
-                        with open(file_path, "r") as f:
-                            code = f.read()
-                        node_data["code"] = code
+                # if node_type == "file": 
+                #     if file_path:
+                #         with open(file_path, "r") as f:
+                #             code = f.read()
+                #         node_data["code"] = code
             skeleton.add_node(node_id, **node_data)
     
     # 构建骨架图中的 contains 层级关系
@@ -90,8 +89,8 @@ def _get_node_text(node_data, file_path):
         return ""
 
     # 直接使用 start_byte 和 end_byte 提取代码片段
-    start_byte = node_data.get("start_byte")
-    end_byte = node_data.get("end_byte")
+    start_byte = node_data.get("sb")
+    end_byte = node_data.get("eb")
 
     if start_byte is None or end_byte is None:
         return ""
@@ -287,9 +286,14 @@ def generate_namespaces(graph, repo_root_node_id="d_0"):
         # 为当前节点添加命名空间
         graph.nodes[node_id]["namespace"] = current_namespace
         
-        # 遍历当前节点的所有子节点，并递归生成它们的命名空间
-        for neighbor in graph.neighbors(node_id):
-            dfs(neighbor, current_namespace)
+        # 遍历当前节点的所有出边，查找 "CONTAINS" 关系的子节点
+        for u, v, edge_data in graph.edges(node_id, data=True):
+            # 检查边的关系是否是 "CONTAINS"
+            if edge_data.get("relationship") == "CONTAINS":
+                # 获取目标节点
+                target_node = v
+                # 获取目标节点数据并继续递归
+                dfs(target_node, current_namespace)
 
     # 从根节点开始生成命名空间
     dfs(repo_root_node_id)
@@ -333,6 +337,23 @@ def change_path_to_relative(graph, repo_path):
             # 将当前路径转换为相对于 repo_path 的父目录的路径
             node_data["path"] = os.path.relpath(current_path, parent_repo_path)
 
+
+
+def update_edges_with_namespaces(graph):
+    """
+    更新图中的所有边，将边的目标节点和源节点的 id 替换为命名空间。
+    """
+    for u, v, data in graph.edges(data=True):
+        u_namespace = graph.nodes[u].get('namespace', '')
+        v_namespace = graph.nodes[v].get('namespace', '')
+        
+        if u_namespace and v_namespace:
+            # 用命名空间替换边的 ID
+            data['source_namespace'] = u_namespace
+            data['target_namespace'] = v_namespace
+            logger.debug(f"更新边: {u} -> {v} -> {u_namespace} -> {v_namespace}")
+        else:
+            logger.debug(f"节点 {u} 或 {v} 缺少命名空间")
 def main():
     """
     主程序入口，加载图数据，提取子图，并保存结果。
@@ -345,8 +366,9 @@ def main():
     repo_path = args.repo_path
     results_dir = os.path.join(args.output_dir, os.path.basename(repo_path))
     os.makedirs(results_dir, exist_ok=True)
+    reponame = os.path.basename(repo_path)
     input_path = os.path.join(results_dir, 'relation_graph.json')
-    output_path = os.path.join(results_dir, 'subgraph.json')
+    output_path = os.path.join(results_dir, f'{reponame}.json')
 
     graph = load_graph(input_path)
     if graph is None:
@@ -362,8 +384,10 @@ def main():
     change_path_to_relative(skeleton, repo_path)
     # 保存最终的子图    
     generate_namespaces(skeleton)
-    
+    update_edges_with_namespaces(skeleton)
     save_graph(skeleton, output_path)
-
+    # os.remove(input_path)
+    
+    
 if __name__ == "__main__":
     main()

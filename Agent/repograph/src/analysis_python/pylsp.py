@@ -94,6 +94,9 @@ def receive_response(sock):
         except socket.timeout as e:
             logging.warning(f"Socket timeout while receiving response: {e}")
             continue  # 发生 timeout 后继续监听
+        except (socket.error, ConnectionError) as e:
+            logging.info(f"connection closed")
+            break  # 发生 socket 错误或连接关闭时退出
 
 
 
@@ -194,14 +197,14 @@ def process_ast_nodes(sock, graph):
 
     with tqdm(total=total_nodes, desc="Processing AST Nodes", unit="node") as pbar:
         for i, (node_id, node_data) in enumerate(graph.nodes(data=True)):
-            if node_data["type"] in ['identifier']:
+            if node_data["type"] in ['identifier'] and node_data.get("field_name") in ['function', 'attribute']:
                 file_id = node_data["file_id"]
                 file_path = graph.nodes[file_id]["path"]
                 file_uri = f"file://{file_path}"
 
                 position = {
-                    "line": node_data["start_point"][0],
-                    "character": node_data["start_point"][1]
+                    "line": node_data["sp"][0],
+                    "character": node_data["sp"][1]
                 }
 
                 if file_uri not in opened_files:
@@ -223,7 +226,7 @@ def process_ast_nodes(sock, graph):
             pbar.update(1)
 
 
-def connect_with_exponential_backoff(sock, host, port, max_retries=5, initial_delay=1, max_delay=30):
+def connect_with_exponential_backoff(sock, host, port, max_retries=5, initial_delay=2, max_delay=30):
     """
     尝试连接到 LSP 服务器，并实现指数回退机制。
     
@@ -295,7 +298,7 @@ def main():
         with open(output_path, 'w') as f:
             json.dump(nx.node_link_data(graph), f, indent=4)
         #从文件系统里删除 repo_parser.json
-        # os.remove(graph_path)
+        os.remove(graph_path)
             # 结束 pylsp 进程
         pylsp_process.terminate()  # 停止 pylsp 子进程
         pylsp_process.wait()  # 等待 pylsp 进程退出

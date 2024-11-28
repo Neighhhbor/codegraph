@@ -146,11 +146,11 @@ class RepoParser:
                 'file_id': file_node_id,
                 'field_name': cursor.field_name,
                 'type': node.type,
-                'start_byte': node.start_byte,
-                'end_byte': node.end_byte,
-                'start_point': node.start_point,
-                'end_point': node.end_point,
-                'is_named': node.is_named,
+                'sb': node.start_byte,
+                'eb': node.end_byte,
+                'sp': node.start_point,
+                'ep': node.end_point,
+                # 'is_named': node.is_named,
                 'parent': parent_id,
                 'children': []
             }

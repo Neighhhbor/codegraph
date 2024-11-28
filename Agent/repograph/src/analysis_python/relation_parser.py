@@ -170,7 +170,7 @@ def main():
     builder.build_contains_relationship()
     builder.build_calls_relationship()
     save_graph(graph, output_path)
-    # os.remove(graph_path)
+    os.remove(graph_path)
 
 
 if __name__ == "__main__":
