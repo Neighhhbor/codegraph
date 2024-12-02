@@ -36,11 +36,10 @@ def run_repo_parser(repo_path, result_dir):
 def run_pylsp(repo_path, result_dir, ports):
     """运行 pylsp.py 脚本"""
     print(f"Running pylsp.py for {repo_path} on ports {ports}")
-    for port in ports:
-        cmd = [
-            "python", "pylsp.py", repo_path, "--output_dir", result_dir, "--port", str(port)
-        ]
-        subprocess.run(cmd, check=True)
+    cmd = [
+        "python", "pylsp.py", repo_path, "--output_dir", result_dir, "--ports", *map(str, ports)
+    ]
+    subprocess.run(cmd, check=True)
 
 def run_defid_parser(repo_path, result_dir):
     """运行 defid_parser.py 脚本"""
@@ -99,7 +98,7 @@ def process_repo(repo_path, result_dir, ports):
     except subprocess.CalledProcessError as e:
         print(f"Error processing {repo_path}: {e}")
 
-def assign_ports_and_process_repos(dev_eval_path, result_dir, start_port, max_workers, ports_per_repo=6):
+def assign_ports_and_process_repos(dev_eval_path, result_dir, start_port, max_workers, ports_per_repo=4):
     """遍历 DevEval 目录下的每个 repo，并为每个 repo 分配端口进行并行处理"""
     categories = [os.path.join(dev_eval_path, category) for category in os.listdir(dev_eval_path) if os.path.isdir(os.path.join(dev_eval_path, category))]
     
@@ -132,7 +131,7 @@ def assign_ports_and_process_repos(dev_eval_path, result_dir, start_port, max_wo
         # 等待所有任务完成
         pool.close()  # 关闭进程池，防止继续添加任务
         pool.join()   # 等待所有任务完成
-
+ 
     print("Finished processing all repos.")
 
 if __name__ == "__main__":
@@ -141,6 +140,7 @@ if __name__ == "__main__":
     parser.add_argument("result_dir", type=str, help="Directory to store the result outputs.")
     parser.add_argument("--start_port", type=int, default=4001, help="Starting port number for pylsp servers.")
     parser.add_argument("--max_workers", type=int, default=4, help="Maximum number of parallel tasks to run at once.")
+    parser.add_argument("--ports_per_repo", type=int, default=4, help="Number of ports to assign to each repo.")
     
     args = parser.parse_args()
 
@@ -148,4 +148,4 @@ if __name__ == "__main__":
     os.makedirs(args.result_dir, exist_ok=True)
 
     # 处理所有的 repo，并分配端口
-    assign_ports_and_process_repos(args.dev_eval_path, args.result_dir, args.start_port, args.max_workers)
+    assign_ports_and_process_repos(args.dev_eval_path, args.result_dir, args.start_port, args.max_workers, args.ports_per_repo)

@@ -15,6 +15,7 @@ import argparse
 import subprocess
 import select
 import asyncio
+import multiprocessing
 
 
 # Configure logging
@@ -70,7 +71,7 @@ def read_exact(sock, nbytes):
 
 def receive_response(sock, reponame, stop_event=None):
     """接收 LSP 响应，如果超时或者连接失败，进行重试或跳过。"""
-    sock.settimeout(5.0)  # 设置套接字超时
+    sock.settimeout(2.0)  # 设置套接字超时
     while True:
         try:
             # 使用 select 处理非阻塞
@@ -99,7 +100,7 @@ def receive_response(sock, reponame, stop_event=None):
                     logging.error(f"JSON Decode Error: {content} - {e}")
                     continue  # 如果解析错误，继续等待下一条消息
             else:
-                time.sleep(0.1)
+                time.sleep(2)
 
         except (socket.error, EOFError, ConnectionError) as e:
             logging.info(f"{reponame} connection closed or error: {e}")
@@ -190,18 +191,18 @@ def request_definition(sock, file_uri, position):
         return response["result"]
     return None
 
-def process_ast_nodes(socks, graph, stop_event):
+def process_ast_nodes(socks, graph, stop_event, nodes_per_process=50000):
     total_nodes = len(graph.nodes)
     batch_size = 500  # 每批处理的节点数
 
     # 缓存已打开的文件，避免多次 didOpen 请求
     opened_files = set()
 
-    # 随机选择LSP并处理节点
+    # 处理 AST 节点
     def process_node(node_id, node_data, pbar):
         """处理每个节点的定义请求"""
         if stop_event.is_set():
-            logging.info("Stopping AST node processing due to timeout.")
+            logging.debug("Stopping AST node processing due to timeout.")
             return
 
         if node_data["type"] in ['identifier'] and node_data.get("field_name") in ['function', 'attribute']:
@@ -222,6 +223,7 @@ def process_ast_nodes(socks, graph, stop_event):
                 for sock in socks:
                     did_open_file(sock, file_uri, content)
                 opened_files.add(file_uri)
+                time.sleep(0.1)
 
             # 随机选择一个LSP来处理当前请求
             sock = random.choice(socks)  # 随机选择一个 LSP
@@ -234,21 +236,24 @@ def process_ast_nodes(socks, graph, stop_event):
 
         pbar.update(1)  # 更新进度条
 
-    # 使用 ThreadPoolExecutor 并行处理 AST 节点
-    with concurrent.futures.ThreadPoolExecutor(max_workers=len(socks)) as executor:
-        futures = []
+    # 使用进程池并行处理 AST 节点
+    with multiprocessing.Pool(processes=len(socks)) as pool:
+        results = []
         with tqdm(total=total_nodes, desc="Processing AST Nodes", unit="node", ncols=100) as pbar:
-            # 提交任务
+            # 每5000个节点重启LSP进程
             for i, (node_id, node_data) in enumerate(graph.nodes(data=True)):
-                futures.append(executor.submit(process_node, node_id, node_data, pbar))
-                
-                # 每处理一定数量的节点，暂停0.1秒，避免CPU占用过高
-                if i % batch_size == 0:
-                    time.sleep(0.1)
+                results.append(pool.apply_async(process_node, (node_id, node_data, pbar)))
 
-            # 等待所有任务完成
-            for future in concurrent.futures.as_completed(futures):
-                future.result()  # 等待每个任务的结果
+                if i % nodes_per_process == 0:
+                    pool.terminate()
+                    pool.join()  # 等待当前的进程池结束
+                    logging.info(f"Restarting LSP processes after processing {i} nodes.")
+                    pool = multiprocessing.Pool(processes=len(socks))  # 重新启动进程池
+
+        # 等待所有任务完成
+        for result in results:
+            result.get()
+
 
 
 def connect_with_exponential_backoff(sock, host, port, max_retries=5, initial_delay=2, max_delay=30):
@@ -281,14 +286,6 @@ def main():
     socks = []
     initialized_events = []  # 用于存储每个 LSP 实例的初始化事件
 
-    # 启动多个 pylsp 进程
-    for port in args.ports:
-        pylsp_process = start_pylsp(port)
-        pylsp_processes.append(pylsp_process)
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        socks.append(sock)
-        initialized_events.append(threading.Event())  # 为每个 LSP 创建一个独立的事件
-
     repo_path = args.repo_path
     results_dir = os.path.join(args.output_dir, os.path.basename(repo_path))
     os.makedirs(results_dir, exist_ok=True)
@@ -297,6 +294,15 @@ def main():
     if os.path.exists(output_path):
         logging.info(f"Output file already exists: {output_path}. Skipping processing.")
         return
+
+     # 启动多个 pylsp 进程
+    for port in args.ports:
+        pylsp_process = start_pylsp(port)
+        pylsp_processes.append(pylsp_process)
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socks.append(sock)
+        initialized_events.append(threading.Event())  # 为每个 LSP 创建一个独立的事件
+
 
     root_uri = f"file://{repo_path}"
     graph_path = os.path.join(results_dir, 'repoparser.json')
@@ -337,24 +343,24 @@ def main():
 
     # 处理 AST 节点
     process_ast_nodes(socks, graph, stop_event)
+    stop_event.set()
 
-    # 等待所有响应线程结束
-    for thread in threading.enumerate():
-        if thread != threading.main_thread():
-            thread.join()
 
-    # 保存结果
     os.makedirs(results_dir, exist_ok=True)
     output_path = os.path.join(results_dir, 'definitiongraph.json')
     with open(output_path, 'w') as f:
         json.dump(nx.node_link_data(graph), f, indent=4)
-
-    os.remove(graph_path)
-
-    # 终止 pylsp 进程
+        
+    try:
+        os.remove(graph_path)
+    except FileNotFoundError:
+        logging.debug(f"Graph file not found: {graph_path}")
+        
     for pylsp_process in pylsp_processes:
         pylsp_process.terminate()
         pylsp_process.wait()
 
+
+    
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
 REPO_PATH="/home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py"
 RESULTDIR="./output"
-PORT="3000 3001 3002 3003 3004 3005 3006 "
+PORT="3000 3001 3002 3003 3004 3005"
 
-# python repo_parser.py $REPO_PATH --output_dir $RESULTDIR
+python repo_parser.py $REPO_PATH --output_dir $RESULTDIR
 python pylsp.py $REPO_PATH --output_dir $RESULTDIR --ports $PORT
 python defid_parser.py $REPO_PATH --output_dir $RESULTDIR
 #     语言无关
