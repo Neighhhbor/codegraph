@@ -1,5 +1,5 @@
 python main.py \
             "/home/shixianjie/codegraph/codegraph/DevEval/Source_Code" \
-            "/home/shixianjie/codegraph/codegraph/data_process/relations" \
-            --start_port 3001 \
-            --max_workers 24
+            "/home/shixianjie/codegraph/codegraph/data_process/repograph" \
+            --start_port 4001 \
+            --max_workers 36

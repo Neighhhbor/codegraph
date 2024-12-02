@@ -386,7 +386,7 @@ def main():
     generate_namespaces(skeleton)
     update_edges_with_namespaces(skeleton)
     save_graph(skeleton, output_path)
-    # os.remove(input_path)
+    os.remove(input_path)
     
     
 if __name__ == "__main__":
