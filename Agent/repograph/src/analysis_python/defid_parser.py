@@ -231,7 +231,7 @@ def main():
 
     add_definition_id_to_nodes(graph)
     save_graph(graph, output_path)
-    # os.remove(input_path)
+    os.remove(input_path)
 
 if __name__ == "__main__":
     main()

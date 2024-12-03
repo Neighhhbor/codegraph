@@ -3,142 +3,142 @@ import json
 import os
 import time
 import networkx as nx
-import logging
-import concurrent.futures
-import random
 import re
-import threading
-import queue
-from tqdm import tqdm
-import sys
-import argparse
-import subprocess
-import select
 import asyncio
+import logging
+import subprocess
+import argparse
+from tqdm import tqdm
 
+# Configure logger
+logger = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='oldpylsp.log',
+    filemode='w'
+)
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+LSP_HOST = 'localhost'
+MAX_OPEN_FILES = 10
+opened_files = set()
 
+# Define LSPConnection class
+class LSPConnection:
+    def __init__(self, host, port, connection_id):
+        self.host = host
+        self.port = port
+        self.connection_id = connection_id
+        self.reader = None
+        self.writer = None
+        self.request_id = 1
+        self.pending_requests = {}
+        self.response_queue = asyncio.Queue()
+        self.initialized = asyncio.Event()
+        self.logger = logging.getLogger(f"LSPConnection-{self.connection_id}")
+    
+    async def connect(self):
+        self.reader, self.writer = await asyncio.open_connection(self.host, self.port)
+        asyncio.create_task(self.receive_response())
+        self.logger.info(f"Connected to LSP server at {self.host}:{self.port}")
+    
+    async def send_request(self, message):
+        message["id"] = self.request_id
+        current_id = self.request_id
+        self.pending_requests[current_id] = asyncio.Event()
+        self.request_id += 1
+
+        message_str = json.dumps(message)
+        content_length = len(message_str)
+        header = f"Content-Length: {content_length}\r\n\r\n"
+        full_message = header + message_str
+        self.logger.debug(f"Sending Request (ID: {current_id}):\n{message_str}...")
+
+        try:
+            self.writer.write(full_message.encode('utf-8'))
+            await self.writer.drain()
+        except Exception as e:
+            self.logger.error(f"Error while sending request ID {current_id}: {e}")
+            del self.pending_requests[current_id]
+            return None
+        return current_id
+
+    async def receive_response(self):
+        while True:
+            try:
+                header = ""
+                while "\r\n\r\n" not in header:
+                    char = await self.reader.read(1)
+                    if not char:
+                        raise EOFError("Connection closed while reading header")
+                    header += char.decode('utf-8')
+
+                match = re.search(r"Content-Length: (\d+)", header)
+                if not match:
+                    self.logger.error(f"Malformed header: {header}")
+                    continue
+
+                content_length = int(match.group(1))
+                content = await self.reader.readexactly(content_length)
+                message = json.loads(content.decode('utf-8'))
+                self.logger.debug(f"Received Message:\n{json.dumps(message, indent=2)}")
+
+                if "id" in message:
+                    await self.response_queue.put(message)
+                    if message["id"] in self.pending_requests:
+                        self.pending_requests[message["id"]].set()
+            except asyncio.IncompleteReadError as e:
+                self.logger.error(f"Incomplete read error: {e}")
+                break
+            except EOFError as e:
+                self.logger.error(f"EOFError: {e}")
+                break
+            except Exception as e:
+                self.logger.error(f"Error while receiving response: {e}")
+                break
+
+    async def send_request_and_wait(self, message, retries=3):
+        for attempt in range(retries):
+            req_id = await self.send_request(message)
+            if req_id is None:
+                continue
+            try:
+                await asyncio.wait_for(self.pending_requests[req_id].wait(), timeout=10)
+            except asyncio.TimeoutError:
+                self.logger.warning(f"Request ID {req_id} timed out on attempt {attempt + 1}")
+                del self.pending_requests[req_id]
+                if attempt < retries - 1:
+                    await asyncio.sleep(2 ** attempt)  # Exponential backoff
+                continue
+
+            while not self.response_queue.empty():
+                msg = await self.response_queue.get()
+                if msg.get("id") == req_id:
+                    if "result" in msg:
+                        del self.pending_requests[req_id]
+                        return msg["result"]
+                    else:
+                        del self.pending_requests[req_id]
+                        return None
+        self.logger.error(f"Failed to get a response after {retries} attempts for message: {message}")
+        return None
+
+    async def close(self):
+        if self.writer:
+            self.writer.close()
+            await self.writer.wait_closed()
+        self.logger.info(f"Closed connection to LSP server at {self.host}:{self.port}")
+
+# Start pylsp server
 def start_pylsp(port):
     """启动 pylsp 进程，并为其指定端口"""
     cmd = ['pylsp', '--tcp', '--host', '127.0.0.1', '--port', str(port)]
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-    logging.info(f"Started pylsp process on port {port}")
+    logger.info(f"Started pylsp process on port {port}")
     return process
 
-LSP_HOST = 'localhost'
-# 定义最大打开文件数量限制
-MAX_OPEN_FILES = 10
-CLOSE_FILES_COUNT = 5  # 移除最早打开的前 10 个文件
-
-# 使用一个锁来保护对 opened_files 的访问
-opened_files_lock = threading.Lock()
-opened_files = set()
-request_id = 1
-pending_requests = {}
-response_queue = queue.Queue()
-initialized = threading.Event()
-pending_requests_lock = threading.Lock()
-
-def send_request(sock, message):
-    global request_id
-    message["id"] = request_id
-    with pending_requests_lock:
-        pending_requests[request_id] = message
-    request_id += 1
-
-    message_str = json.dumps(message)
-    content_length = len(message_str)
-    header = f"Content-Length: {content_length}\r\n\r\n"
-    full_message = header + message_str
-
-    logging.debug(f"Sending Request (ID: {message['id']}):\n{full_message[:100]}...")
-
-    try:
-        sock.sendall(full_message.encode('utf-8'))
-    except socket.error as e:
-        logging.error(f"Socket error while sending request ID {message['id']}: {e}")
-        with pending_requests_lock:
-            del pending_requests[message["id"]]
-        return False
-    return True
-
-def read_exact(sock, nbytes):
-    data = b''
-    while len(data) < nbytes:
-        more = sock.recv(nbytes - len(data))
-        if not more:
-            raise EOFError(f'Expected {nbytes} bytes but only received {len(data)} bytes before the connection closed.')
-        data += more
-    return data
-
-def receive_response(sock, reponame, stop_event=None):
-    """接收 LSP 响应，如果超时或者连接失败，进行重试或跳过。"""
-    sock.settimeout(2.0)  # 设置套接字超时
-    while True:
-        try:
-            # 使用 select 处理非阻塞
-            rlist, _, _ = select.select([sock], [], [], 0.1)
-            if rlist:
-                header = ""
-                while "\r\n\r\n" not in header:
-                    data = sock.recv(1)
-                    if not data:
-                        raise EOFError(f"Connection closed during header reading.")
-                    header += data.decode('utf-8')
-
-                match = re.search(r"Content-Length: (\d+)", header)
-                if not match:
-                    logging.error(f"Malformed header: {header}")
-                    continue
-
-                content_length = int(match.group(1))
-                content = read_exact(sock, content_length).decode('utf-8')
-
-                try:
-                    message = json.loads(content)
-                    logging.debug(f"{reponame} Received Message:\n{json.dumps(message, indent=2)}")
-                    response_queue.put(message)
-                except json.JSONDecodeError as e:
-                    logging.error(f"JSON Decode Error: {content} - {e}")
-                    continue  # 如果解析错误，继续等待下一条消息
-            else:
-                time.sleep(2)
-
-        except (socket.error, EOFError, ConnectionError) as e:
-            logging.info(f"{reponame} connection closed or error: {e}")
-            if stop_event:
-                stop_event.set()  # 设置停止事件，通知主进程结束
-            return
-
-def send_request_and_wait(sock, message, timeout=5, retries=3):
-    """发送请求并等待响应，如果超时达到最大重试次数则返回 None"""
-    send_request(sock, message)
-
-    attempts = 0
-    while attempts < retries:
-        try:
-            response = response_queue.get(timeout=timeout)
-            logging.debug(f"Processing response: {json.dumps(response, indent=2)}")
-
-            if "id" in response and response["id"] == message["id"]:
-                logging.debug(f"Received response for request ID {message['id']}")
-                with pending_requests_lock:
-                    if message["id"] in pending_requests:
-                        del pending_requests[message["id"]]
-                return response
-            else:
-                response_queue.put(response)
-
-        except queue.Empty:
-            logging.warning(f"Timeout waiting for response to request ID {message['id']}. Retrying...")
-            attempts += 1
-
-    logging.info(f"Request ID {message['id']} timed out after {retries} attempts. Returning None.")
-    return None
-
-def initialize(sock, root_uri, initialized_event):
+# Initialize a single LSP connection
+async def initialize_connection(connection, root_uri):
     message = {
         "jsonrpc": "2.0",
         "method": "initialize",
@@ -146,74 +146,56 @@ def initialize(sock, root_uri, initialized_event):
             "processId": os.getpid(),
             "rootUri": root_uri,
             "capabilities": {},
-            "workspaceFolders": [{"uri": root_uri, "name": "Workspace"}]
+            "workspaceFolders": [{"uri": root_uri, "name": "Workspace"}],
         }
     }
-    response = send_request_and_wait(sock, message, timeout=10, retries=3)
-    if response and "result" in response:
-        logging.info("PythonLanguage Server initialized successfully.")
-        send_initialized_notification(sock)
-        initialized_event.set()  # 设置当前 LSP 实例的初始化完成标志
+    response = await connection.send_request_and_wait(message, retries=5)
+    if response:
+        connection.logger.info("Python Language Server initialized successfully.")
+        await send_initialized_notification(connection)
+        connection.initialized.set()
     else:
-        logging.error("Failed to initialize Python Language Server.")
+        connection.logger.error("Failed to initialize Python Language Server.")
 
-def send_initialized_notification(sock):
+# Send initialized notification
+async def send_initialized_notification(connection):
     message = {
         "jsonrpc": "2.0",
         "method": "initialized",
         "params": {}
     }
-    send_request(sock, message)
+    await connection.send_request(message)
 
-def did_open_file(sock, file_uri, content):
-    message = {
-        "jsonrpc": "2.0",
-        "method": "textDocument/didOpen",
-        "params": {
-            "textDocument": {
-                "uri": file_uri,
-                "languageId": "Python",
-                "version": 1,
-                "text": content
+# Handle a single node
+async def handle_node(connection, node_data, file_uri, position, progress_bar, semaphore):
+    async with semaphore:
+        result = await connection.send_request_and_wait({
+            "jsonrpc": "2.0",
+            "method": "textDocument/definition",
+            "params": {
+                "textDocument": {"uri": file_uri},
+                "position": position
             }
-        }
-    }
-    send_request(sock, message)
+        }, retries=3)
+        if result is not None:
+            node_data["definition"] = result
+        else:
+            connection.logger.info(f"Skipping node {node_data} due to repeated timeouts.")
+        progress_bar.update(1)
 
-def did_close_file(sock, file_uri):
-    message = {
-        "jsonrpc": "2.0",
-        "method": "textDocument/didClose",
-        "params": {"uri": file_uri}
-    }
-    send_request(sock, message)
-
-def request_definition(sock, file_uri, position):
-    message = {
-        "jsonrpc": "2.0",
-        "method": "textDocument/definition",
-        "params": {
-            "textDocument": {"uri": file_uri},
-            "position": position
-        }
-    }
-    response = send_request_and_wait(sock, message, timeout=5, retries=3)
-    logging.debug(f"Definition request response: {response}")
-    if response and "result" in response:
-        return response["result"]
-    return None
-
-def process_ast_nodes(socks, graph, stop_event):
+# Process AST nodes with multiple LSP connections
+async def process_ast_nodes(lsp_connections, graph):
     total_nodes = len(graph.nodes)
-    batch_size = 500  # 每批处理的节点数
+    batch_size = 500  # 每批处理的节点数量
+    max_concurrent = 100  # 最大并发任务数
+    num_connections = len(lsp_connections)
+    current_connection = 0  # 轮询索引
 
-    # 随机选择LSP并处理节点
-    def process_node(node_id, node_data, pbar):
-        """处理每个节点的定义请求"""
-        if stop_event.is_set():
-            logging.debug("Stopping AST node processing due to timeout.")
-            return
+    progress_bar = tqdm(total=total_nodes, desc="Processing nodes", ncols=100)
+    semaphore = asyncio.Semaphore(max_concurrent)
+    tasks = []
 
+    for i, (node_id, node_data) in enumerate(graph.nodes(data=True)):
         if node_data["type"] in ['identifier'] and node_data.get("field_name") in ['function', 'attribute']:
             file_id = node_data["file_id"]
             file_path = graph.nodes[file_id]["path"]
@@ -224,161 +206,106 @@ def process_ast_nodes(socks, graph, stop_event):
                 "character": node_data["sp"][1]
             }
 
-            # 缓存文件，减少 didOpen 请求的频繁发送
-            if file_uri not in opened_files:
-                # 检查当前打开文件数量，如果超过最大限制，则关闭最早打开的文件
-                if len(opened_files) >= MAX_OPEN_FILES:
-                    for n in range(CLOSE_FILES_COUNT):  # 移除最早打开的文件
-                        with opened_files_lock:  # 确保访问 opened_files 时加锁
-                            file_to_close = opened_files.pop()  # 移除最早打开的文件
-                        logging.info(f"Closing file due to max open file limit: {file_to_close}")
-                        for sock in socks:
-                            did_close_file(sock, file_to_close)
-                        time.sleep(0.1)
+            # 选择一个 LSP 连接（轮询）
+            connection = lsp_connections[current_connection]
+            current_connection = (current_connection + 1) % num_connections
 
+            # 打开文件（如果尚未打开）
+            if file_uri not in opened_files:
                 with open(file_path, 'r') as f:
                     content = f.read()
+                await connection.send_request({
+                    "jsonrpc": "2.0",
+                    "method": "textDocument/didOpen",
+                    "params": {
+                        "textDocument": {
+                            "uri": file_uri,
+                            "languageId": "python",
+                            "version": 1,
+                            "text": content
+                        }
+                    }
+                })
+                opened_files.add(file_uri)
 
-                # 向所有LSP发送didOpen请求
-                for sock in socks:
-                    did_open_file(sock, file_uri, content)
-                with opened_files_lock:  # 确保访问 opened_files 时加锁
-                    opened_files.add(file_uri)  # 添加当前文件到已打开集合
-                time.sleep(0.1)
+            # 创建处理节点的任务
+            task = asyncio.create_task(handle_node(connection, node_data, file_uri, position, progress_bar, semaphore))
+            tasks.append(task)
 
-            # 随机选择一个LSP来处理当前请求
-            sock = random.choice(socks)  # 随机选择一个 LSP
-            result = request_definition(sock, file_uri, position)
+            if len(tasks) >= batch_size:
+                await asyncio.gather(*tasks)
+                tasks = []
+                await asyncio.sleep(0.1)  # 轻微的暂停，防止服务器过载
 
-            if result is not None:
-                node_data["definition"] = result
-            else:
-                logging.info(f"Skipping node {node_id} due to repeated timeouts.")
+    if tasks:
+        await asyncio.gather(*tasks)
 
-        pbar.update(1)  # 更新进度条
+    progress_bar.close()
 
-    # 使用 ThreadPoolExecutor 并行处理 AST 节点
-    with concurrent.futures.ThreadPoolExecutor(max_workers=len(socks)) as executor:
-        futures = []
-        with tqdm(total=total_nodes, desc="Processing AST Nodes", unit="node", ncols=100) as pbar:
-            # 提交任务
-            for i, (node_id, node_data) in enumerate(graph.nodes(data=True)):
-                futures.append(executor.submit(process_node, node_id, node_data, pbar))
-                
-                # 每处理一定数量的节点，暂停0.1秒，避免CPU占用过高
-                if i % batch_size == 0:
-                    time.sleep(0.1)
-
-            # 等待所有任务完成
-            for future in concurrent.futures.as_completed(futures):
-                future.result()  # 等待每个任务的结果
-
-
-def connect_with_exponential_backoff(sock, host, port, max_retries=5, initial_delay=2, max_delay=30):
-    attempt = 0
-    delay = initial_delay
-    
-    while attempt < max_retries:
-        try:
-            sock.connect((host, port))
-            logging.info(f"Successfully connected to LSP server at {host}:{port}")
-            return True
-        except ConnectionRefusedError:
-            logging.error(f"Connection failed on attempt {attempt + 1}. Retrying in {delay} seconds...")
-            attempt += 1
-            time.sleep(delay)
-            delay = min(delay * 2, max_delay)
-
-    logging.error(f"Failed to connect to LSP server at {host}:{port} after {max_retries} attempts.")
-    return False
-
-def main():
+# Main function
+async def main():
     parser = argparse.ArgumentParser(description="Parse a source code repository and generate its representation graph.")
     parser.add_argument('repo_path', type=str, help="Path to the repository to be parsed.")
     parser.add_argument('--output_dir', type=str, default="./output", help="Directory where the output will be saved.")
-    parser.add_argument('--ports', type=int, nargs='+', required=True, help="Ports for the multiple pylsp servers.")
-    
+    parser.add_argument('--ports', type=int, nargs='+', default=[3000], help="Ports of the LSP servers.")
     args = parser.parse_args()
-
-    pylsp_processes = []
-    socks = []
-    initialized_events = []  # 用于存储每个 LSP 实例的初始化事件
 
     repo_path = args.repo_path
     results_dir = os.path.join(args.output_dir, os.path.basename(repo_path))
     os.makedirs(results_dir, exist_ok=True)
-    
-    output_path = os.path.join(results_dir, 'definitiongraph.json')
-    if os.path.exists(output_path):
-        logging.info(f"Output file already exists: {output_path}. Skipping processing.")
-        return
-
-     # 启动多个 pylsp 进程
-    for port in args.ports:
-        pylsp_process = start_pylsp(port)
-        pylsp_processes.append(pylsp_process)
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        socks.append(sock)
-        initialized_events.append(threading.Event())  # 为每个 LSP 创建一个独立的事件
-
-
     root_uri = f"file://{repo_path}"
     graph_path = os.path.join(results_dir, 'repoparser.json')
+
     try:
         with open(graph_path, 'r') as f:
             graph = nx.node_link_graph(json.load(f))
     except FileNotFoundError:
-        logging.debug(f"{repo_path} Graph file not found: {graph_path}")
+        logger.debug(f"Graph file not found: {graph_path}")
         return
 
-    stop_event = threading.Event()
+    # 启动多个 pylsp 进程
+    # "3001 3002"
+    lsp_ports = list(map(int, args.ports))
 
-    # 连接到所有 LSP 服务器并初始化
-    for i, sock in enumerate(socks):
-        lspport = args.ports[i]
-        logging.info(f"Connecting to LSP server on port {lspport}")
-        if not connect_with_exponential_backoff(sock, LSP_HOST, lspport):
-            logging.error(f"Cannot connect to LSP server on port {lspport}.")
-            return
+    lsp_processes = []
+    for port in lsp_ports:
+        process = start_pylsp(port)
+        lsp_processes.append(process)
+    await asyncio.sleep(2)  # 等待所有 pylsp 启动
 
-        sock.settimeout(5.0)
-        response_thread = threading.Thread(target=receive_response, args=(sock, repo_path, stop_event))
-        response_thread.daemon = True
-        response_thread.start()
+    # 创建多个 LSP 连接
+    lsp_connections = []
+    for idx, port in enumerate(lsp_ports):
+        connection = LSPConnection(LSP_HOST, port, connection_id=idx)
+        await connection.connect()
+        lsp_connections.append(connection)
 
-        initialize(sock, root_uri, initialized_events[i])
-
-    # 等待所有 LSP 完成初始化
-    for event in initialized_events:
-        event.wait()
-
-    if stop_event.is_set():
-        logging.error("Stopping due to response timeouts.")
-        for pylsp_process in pylsp_processes:
-            pylsp_process.terminate()
-            pylsp_process.wait()
-        return
-
-    # 处理 AST 节点
-    process_ast_nodes(socks, graph, stop_event)
-    stop_event.set()
-
-
-    os.makedirs(results_dir, exist_ok=True)
-    output_path = os.path.join(results_dir, 'definitiongraph.json')
-    with open(output_path, 'w') as f:
-        json.dump(nx.node_link_data(graph), f, indent=4)
-        
     try:
-        os.remove(graph_path)
-    except FileNotFoundError:
-        logging.debug(f"Graph file not found: {graph_path}")
-        
-    for pylsp_process in pylsp_processes:
-        pylsp_process.terminate()
-        pylsp_process.wait()
+        # 初始化所有 LSP 连接
+        initialize_tasks = [initialize_connection(connection, root_uri) for connection in lsp_connections]
+        await asyncio.gather(*initialize_tasks)
 
+        # 处理 AST 节点，分配给不同的 LSP 连接
+        await process_ast_nodes(lsp_connections, graph)
 
-    
+        # 保存最终结果
+        output_path = os.path.join(results_dir, 'definitiongraph.json')
+        with open(output_path, 'w') as f:
+            json.dump(nx.node_link_data(graph), f, indent=4)
+        logger.info(f"Definition graph saved to {output_path}")
+
+    except Exception as e:
+        logger.error(f"Error occurred: {e}")
+    finally:
+        # 关闭所有 LSP 连接
+        close_tasks = [connection.close() for connection in lsp_connections]
+        await asyncio.gather(*close_tasks)
+
+        # 终止所有 pylsp 进程
+        for process in lsp_processes:
+            process.terminate()
+            process.wait()
+            logger.info(f"Terminated pylsp process on port {process.args[-1]}")
+
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

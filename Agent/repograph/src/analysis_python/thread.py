@@ -37,7 +37,7 @@ def run_pylsp(repo_path, result_dir, port):
     """运行 pylsp.py 脚本"""
     print(f"Running pylsp.py for {repo_path} on port {port}")
     cmd = [
-        "python", "pylsp.py", repo_path, "--output_dir", result_dir, "--port", str(port)
+        "python", "pylsp.py", repo_path, "--output_dir", result_dir
     ]
     subprocess.run(cmd, check=True)
 
