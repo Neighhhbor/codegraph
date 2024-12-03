@@ -16,11 +16,16 @@ import subprocess
 import select
 import asyncio
 
+import threading
+import time
+import random
 
+# 最大等待时间，避免锁被长时间占用
+LOCK_TIMEOUT = 2.0
 # Configure logging
 logger = logging.getLogger(__name__)
 #log into file
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', filename='pylsp.log')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def start_pylsp(port):
     """启动 pylsp 进程，并为其指定端口"""
@@ -31,18 +36,20 @@ def start_pylsp(port):
 
 LSP_HOST = 'localhost'
 # 定义最大打开文件数量限制
-MAX_OPEN_FILES = 10
-CLOSE_FILES_COUNT = 5  # 移除最早打开的前 10 个文件
-MAX_REQUEST_COUNT = 500
+MAX_OPEN_FILES = 40
+CLOSE_FILES_COUNT = 20  # 移除最早打开的前 10 个文件
+MAX_REQUEST_COUNT = 1000
 
 # 使用一个锁来保护对 opened_files 的访问
 opened_files_lock = threading.Lock()
 opened_files = set()
 request_id = 1
 pending_requests = {}
-response_queue = queue.Queue()
+
+# response_queue = queue.Queue()
 initialized = threading.Event()
 pending_requests_lock = threading.Lock()
+
 
 def send_request(sock, message):
     global request_id
@@ -76,50 +83,9 @@ def read_exact(sock, nbytes):
         data += more
     return data
 
-def receive_response(sock, reponame, stop_event=None):
-    """接收 LSP 响应，如果超时或者连接失败，进行重试或跳过。"""
-    sock.settimeout(2.0)  # 设置套接字超时
-    first_def = False
-    while True:
-        try:
-            # 使用 select 处理非阻塞
-            rlist, _, _ = select.select([sock], [], [], 0.1)
-            if rlist:
-                header = ""
-                while "\r\n\r\n" not in header:
-                    data = sock.recv(1)
-                    if not data:
-                        raise EOFError(f"Connection closed during header reading.")
-                    header += data.decode('utf-8')
 
-                match = re.search(r"Content-Length: (\d+)", header)
-                if not match:
-                    logger.error(f"Malformed header: {header}")
-                    continue
 
-                content_length = int(match.group(1))
-                content = read_exact(sock, content_length).decode('utf-8')
-
-                try:
-                    message = json.loads(content)
-                    
-                    response_queue.put(message)
-            
-                    if response_queue.qsize() > MAX_REQUEST_COUNT:
-                        logger.info(f"{reponame} Received too many requests, clearing first 500 requests")
-                        for _ in range(100):
-                            response_queue.get()
-                    
-                except json.JSONDecodeError as e:
-                    logger.error(f"JSON Decode Error: {content} - {e}")
-                    continue  # 如果解析错误，继续等待下一条消息
-        except (socket.error, EOFError, ConnectionError) as e:
-            logging.info(f"{reponame} connection closed or error: {e}")
-            if stop_event:
-                stop_event.set()  # 设置停止事件，通知主进程结束
-            return
-
-def send_request_and_wait(sock, message, timeout=3, retries=3):
+def send_request_and_wait(sock, message, timeout=3, retries=3,response_queue=None):
     """发送请求并等待响应，如果超时达到最大重试次数则返回 None"""
     send_request(sock, message)
 
@@ -136,8 +102,8 @@ def send_request_and_wait(sock, message, timeout=3, retries=3):
                     if message["id"] in pending_requests:
                         del pending_requests[message["id"]]
                 return response
-            else:
-                response_queue.put(response)
+            # else:
+            #     response_queue.put(response)
 
         except queue.Empty:
             logger.warning(f"Timeout waiting for response to request ID {message['id']}. Retrying...")
@@ -146,7 +112,7 @@ def send_request_and_wait(sock, message, timeout=3, retries=3):
     logger.info(f"Request ID {message['id']} timed out after {retries} attempts. Returning None.")
     return None
 
-def initialize(sock, root_uri, initialized_event):
+def initialize(sock, root_uri, initialized_event,response_queue):
     message = {
         "jsonrpc": "2.0",
         "method": "initialize",
@@ -157,7 +123,7 @@ def initialize(sock, root_uri, initialized_event):
             "workspaceFolders": [{"uri": root_uri, "name": "Workspace"}]
         }
     }
-    response = send_request_and_wait(sock, message, timeout=10, retries=3)
+    response = send_request_and_wait(sock, message, timeout=10, retries=3,response_queue=response_queue)
     if response and "result" in response:
         logger.info("PythonLanguage Server initialized successfully.")
         send_initialized_notification(sock)
@@ -196,7 +162,7 @@ def did_close_file(sock, file_uri):
     }
     send_request(sock, message)
 
-def request_definition(sock, file_uri, position):
+def request_definition(sock, file_uri, position,response_queue):
     message = {
         "jsonrpc": "2.0",
         "method": "textDocument/definition",
@@ -205,17 +171,26 @@ def request_definition(sock, file_uri, position):
             "position": position
         }
     }
-    response = send_request_and_wait(sock, message, timeout=5, retries=3)
-    # logger.debug(f"Definition request response: {response}")
+    response = send_request_and_wait(sock, message, timeout=5, retries=3,response_queue=response_queue)
     if response and "result" in response:
         return response["result"]
+    else:
+        logger.warning(f"Request definition failed for {file_uri} at position {position}.")
     return None
 
-def process_ast_nodes(socks, graph, stop_event):
+
+
+def acquire_lock_with_timeout(lock, timeout=LOCK_TIMEOUT):
+    """尝试获取锁，并增加超时机制"""
+    lock_acquired = lock.acquire(timeout=timeout)
+    if not lock_acquired:
+        logger.error(f"Failed to acquire lock within {timeout} seconds.")
+    return lock_acquired
+
+def process_ast_nodes(socks, graph, stop_event,response_queues):
     total_nodes = len(graph.nodes)
     batch_size = 500  # 每批处理的节点数
 
-    # 随机选择LSP并处理节点
     def process_node(node_id, node_data, pbar):
         """处理每个节点的定义请求"""
         if stop_event.is_set():
@@ -236,7 +211,7 @@ def process_ast_nodes(socks, graph, stop_event):
             if file_uri not in opened_files:
                 # 检查当前打开文件数量，如果超过最大限制，则关闭最早打开的文件
                 if len(opened_files) >= MAX_OPEN_FILES:
-                    for n in range(CLOSE_FILES_COUNT):  # 移除最早打开的文件
+                    for _ in range(CLOSE_FILES_COUNT):  # 移除最早打开的文件
                         with opened_files_lock:  # 确保访问 opened_files 时加锁
                             file_to_close = opened_files.pop()  # 移除最早打开的文件
                         logger.info(f"Closing file due to max open file limit: {file_to_close}")
@@ -244,19 +219,21 @@ def process_ast_nodes(socks, graph, stop_event):
                             did_close_file(sock, file_to_close)
                         time.sleep(0.1)
 
+                # 使用非阻塞的方式打开文件
                 with open(file_path, 'r') as f:
                     content = f.read()
 
                 # 向所有LSP发送didOpen请求
                 for sock in socks:
                     did_open_file(sock, file_uri, content)
-                with opened_files_lock:  # 确保访问 opened_files 时加锁
-                    opened_files.add(file_uri)  # 添加当前文件到已打开集合
-            
+
+                with opened_files_lock:
+                    opened_files.add(file_uri)
 
             # 随机选择一个LSP来处理当前请求
             sock = random.choice(socks)  # 随机选择一个 LSP
-            result = request_definition(sock, file_uri, position)
+            response_queue = response_queues[socks.index(sock)]
+            result = request_definition(sock, file_uri, position,response_queue)
 
             if result is not None:
                 node_data["definition"] = result
@@ -265,7 +242,6 @@ def process_ast_nodes(socks, graph, stop_event):
 
         pbar.update(1)  # 更新进度条
 
-    # 使用 ThreadPoolExecutor 并行处理 AST 节点
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(socks)) as executor:
         futures = []
         with tqdm(total=total_nodes, desc="Processing AST Nodes", unit="node", ncols=100) as pbar:
@@ -280,6 +256,49 @@ def process_ast_nodes(socks, graph, stop_event):
             # 等待所有任务完成
             for future in concurrent.futures.as_completed(futures):
                 future.result()  # 等待每个任务的结果
+
+def receive_response(sock, reponame, stop_event=None,response_queue=None):
+    """接收 LSP 响应，如果超时或者连接失败，进行重试或跳过。"""
+    sock.settimeout(2.0)  # 设置套接字超时
+    first_def = False
+    while True:
+        try:
+            # 使用 select 处理非阻塞
+            rlist, _, _ = select.select([sock], [], [], 0.1)
+            if rlist:
+                header = ""
+                while "\r\n\r\n" not in header:
+                    data = sock.recv(1)
+                    if not data:
+                        raise EOFError(f"Connection closed during header reading.")
+                    header += data.decode('utf-8')
+
+                match = re.search(r"Content-Length: (\d+)", header)
+                if not match:
+                    logger.error(f"Malformed header: {header}")
+                    continue
+
+                content_length = int(match.group(1))
+                content = read_exact(sock, content_length).decode('utf-8')
+
+                try:
+                    message = json.loads(content)
+                    response_queue.put(message)
+
+                    # if response_queue.qsize() > MAX_REQUEST_COUNT:
+                    #     logger.info(f"{reponame} Received too many requests, clearing first 500 requests")
+                    #     for _ in range(200):
+                    #         response_queue.get()
+
+                except json.JSONDecodeError as e:
+                    logger.error(f"JSON Decode Error: {content} - {e}")
+                    continue
+        except (socket.error, EOFError, ConnectionError) as e:
+            logger.error(f"{reponame} connection error: {e}")
+            if stop_event:
+                stop_event.set()  # Signal to stop processing
+            return
+
 
 
 def connect_with_exponential_backoff(sock, host, port, max_retries=5, initial_delay=2, max_delay=30):
@@ -301,11 +320,15 @@ def connect_with_exponential_backoff(sock, host, port, max_retries=5, initial_de
     return False
 
 def main():
+    
+      # REPO_PATH="/home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py"
+    # RESULTDIR="./output"
+    # PORT="3000 3001 3002 3003"
     parser = argparse.ArgumentParser(description="Parse a source code repository and generate its representation graph.")
     parser.add_argument('repo_path', type=str, help="Path to the repository to be parsed.")
     parser.add_argument('--output_dir', type=str, default="./output", help="Directory where the output will be saved.")
     parser.add_argument('--ports', type=int, nargs='+', required=True, help="Ports for the multiple pylsp servers.")
-    
+  
     args = parser.parse_args()
 
     pylsp_processes = []
@@ -340,7 +363,8 @@ def main():
         return
 
     stop_event = threading.Event()
-
+    response_queues = [queue.Queue() for _ in range(len(socks))]
+    
     # 连接到所有 LSP 服务器并初始化
     for i, sock in enumerate(socks):
         lspport = args.ports[i]
@@ -349,12 +373,12 @@ def main():
             logger.error(f"Cannot connect to LSP server on port {lspport}.")
             return
 
+        
         sock.settimeout(5.0)
-        response_thread = threading.Thread(target=receive_response, args=(sock, repo_path, stop_event))
+        response_thread = threading.Thread(target=receive_response, args=(sock, repo_path, stop_event, response_queues[i]))
         response_thread.daemon = True
         response_thread.start()
-
-        initialize(sock, root_uri, initialized_events[i])
+        initialize(sock, root_uri, initialized_events[i],response_queues[i])
 
     # 等待所有 LSP 完成初始化
     for event in initialized_events:
@@ -368,7 +392,7 @@ def main():
         return
 
     # 处理 AST 节点
-    process_ast_nodes(socks, graph, stop_event)
+    process_ast_nodes(socks, graph, stop_event,response_queues)
     stop_event.set()
 
 

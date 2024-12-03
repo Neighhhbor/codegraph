@@ -34,7 +34,7 @@ def extract_skeleton(graph):
     skeleton = nx.DiGraph()
 
     # 遍历所有节点，提取源代码并加入节点属性
-    for node_id, node_data in graph.nodes(data=True):
+    for node_id, node_data in tqdm(graph.nodes(data=True), desc="提取骨架图"):
         node_type = node_data.get("type")
         
         if node_type in VALID_TYPES:
@@ -121,13 +121,26 @@ def add_valid_edges(graph, skeleton):
     为骨架图中保留的节点建立直接的 CONTAINS 层级关系。
     使用单源最短路径优化复杂度。
     """
-    # 创建节点列表副本，避免迭代期间的结构修改
-    skeleton_nodes = list(skeleton.nodes())
+    # 预处理图中的边，提前标记哪些边是 CONTAINS 类型
+    contains_edges = set()
+    for u, v, data in graph.edges(data=True):
+        if data.get("relationship") == "CONTAINS":
+            contains_edges.add((u, v))  # 只记录有向的 CONTAINS 边
+
+    # 骨架节点集合，用于快速判断一个节点是否是骨架节点
+    skeleton_nodes = set(skeleton.nodes())
     
-    for source in skeleton_nodes:
-        # 获取从 source 到所有节点的最短路径
-        all_paths = nx.single_source_shortest_path(graph, source)
-        
+    # 缓存每对节点之间的最短路径
+    shortest_paths_cache = {}
+
+    for source in tqdm(skeleton_nodes, desc="添加 CONTAINS 关系"):
+        # 检查源节点的最短路径缓存是否存在
+        if source not in shortest_paths_cache:
+            all_paths = nx.single_source_shortest_path(graph, source)
+            shortest_paths_cache[source] = all_paths
+        else:
+            all_paths = shortest_paths_cache[source]
+
         for target, path in all_paths.items():
             if source != target and target in skeleton_nodes:
                 # 验证路径上的每一段边是否符合要求
@@ -136,10 +149,9 @@ def add_valid_edges(graph, skeleton):
 
                 for i in range(len(path) - 1):
                     u, v = path[i], path[i + 1]
-                    edge_data = graph.get_edge_data(u, v)
                     
-                    # 检查是否存在 CONTAINS 类型的边
-                    if not any(data.get("relationship") == "CONTAINS" for data in edge_data.values()):
+                    # 检查边 (u, v) 是否是 CONTAINS 类型
+                    if (u, v) not in contains_edges:
                         is_contains_path = False
                         logger.debug(f"边 {u} -> {v} 不是 CONTAINS 类型。")
                         break
@@ -159,7 +171,7 @@ def merge_module_into_file(graph, skeleton):
     """
     将 module 节点的关系合并到其 file 节点，并移除 module 节点。
     """
-    for node_id, node_data in list(skeleton.nodes(data=True)):
+    for node_id, node_data in tqdm(list(skeleton.nodes(data=True)), desc="合并 module 节点"):
         if node_data["type"] == "module":
             # 使用 file_id 字段找到 module 节点的 file 父节点
             parent_id = node_data.get("file_id")

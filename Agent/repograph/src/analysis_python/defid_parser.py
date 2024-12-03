@@ -13,8 +13,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)  # 创建日志记录器
 
-# 定义一个全局缓存字典
-file_id_cache = {}
+# 全局缓存字典
+file_id_cache = {}  # 缓存 file_id
+file_tree_cache = {}  # 缓存每个文件的 identifier 节点
 
 def find_definition_node(graph, definition):
     """
@@ -52,20 +53,29 @@ def find_file_id_by_uri(graph, uri):
 
 def find_node_in_file(graph, file_id, start_line, start_char, end_line, end_char):
     """
-    递归地遍历给定文件的子树，查找类型为 identifier 且位置匹配的 AST 节点。
+    查找文件节点中符合条件的 identifier 节点。
     """
+    # 检查文件节点缓存
+    if file_id in file_tree_cache:
+        # 如果缓存中有这个文件的标识符节点，直接查找
+        return find_identifier_from_cache(graph,file_tree_cache[file_id], start_line, start_char, end_line, end_char)
+
+    file_tree_cache[file_id] = []
+    # 如果缓存中没有，开始递归查找
     file_node = graph.nodes[file_id]
     children_ids = file_node.get("children", [])
+    identifiers = []
 
-    # 在子树中递归查找符合条件的 identifier 节点
+    # 递归查找子树中的 identifier 节点
     for child_id in children_ids:
-        result = find_identifier_in_subtree(graph, child_id, start_line, start_char, end_line, end_char)
+        result = find_identifier_in_subtree(graph, child_id, start_line, start_char, end_line, end_char,identifiers)
+        file_tree_cache[file_id] +=identifiers
         if result:
-            return result  # 找到匹配节点后立即返回其 ID
+            return result
 
-    return None  # 未找到匹配的节点
+    return None
 
-def find_identifier_in_subtree(graph, node_id, start_line, start_char, end_line, end_char):
+def find_identifier_in_subtree(graph, node_id, start_line, start_char, end_line, end_char,identifiers):
     """
     递归地在子树中查找类型为 identifier 且位置匹配的节点。
     """
@@ -73,6 +83,7 @@ def find_identifier_in_subtree(graph, node_id, start_line, start_char, end_line,
 
     # 如果节点类型是 identifier，检查它的位置是否匹配
     if node_data.get("type") == "identifier":
+        identifiers.append(node_id)
         start_point = node_data.get("sp", [None, None])
         end_point = node_data.get("ep", [None, None])
 
@@ -83,12 +94,26 @@ def find_identifier_in_subtree(graph, node_id, start_line, start_char, end_line,
     # 递归地检查子节点
     children_ids = node_data.get("children", [])
     for child_id in children_ids:
-        result = find_identifier_in_subtree(graph, child_id, start_line, start_char, end_line, end_char)
+        result = find_identifier_in_subtree(graph, child_id, start_line, start_char, end_line, end_char,identifiers)
         if result:
             return result  # 找到匹配节点后立即返回其 ID
 
     return None  # 未找到匹配的节点
 
+def find_identifier_from_cache(graph,identifiers, start_line, start_char, end_line, end_char):
+    """
+    从缓存的标识符节点列表中查找符合位置条件的节点。
+    """
+    for identifier in identifiers:
+        node_data = graph.nodes[identifier]
+        start_point = node_data.get("sp", [None, None])
+        end_point = node_data.get("ep", [None, None])
+
+        if (start_point[0] == start_line and start_point[1] == start_char
+                and end_point[0] == end_line and end_point[1] == end_char):
+            return identifier  # 找到匹配的节点，返回其 ID
+    
+    return None  # 未找到匹配的节点
 
 def add_definition_id_to_nodes(graph):
     """
@@ -96,15 +121,16 @@ def add_definition_id_to_nodes(graph):
     """
     nodes = list(graph.nodes(data=True))  # 将节点转为列表
     for node_id, node_data in tqdm(nodes, desc="Processing Nodes"):  # 使用 tqdm 进度条
-        definition = node_data.get("definition",[])
-        if len(definition) != 0:
-            definition = node_data["definition"][0]  # 获取第一个定义信息
-            def_node_id = find_definition_node(graph, definition)
-            if def_node_id:
-                node_data["defid"] = def_node_id
-                logger.debug(f"节点 {node_id} 的定义节点 ID 为 {def_node_id}")
-            else:
-                logger.debug(f"未找到定义节点: {definition['uri']}")
+        if node_data["type"] in ['identifier'] and node_data.get("field_name") in ['function', 'attribute']:
+            definition = node_data.get("definition",[])
+            if len(definition) != 0:
+                definition = node_data["definition"][0]  # 获取第一个定义信息
+                def_node_id = find_definition_node(graph, definition)
+                if def_node_id:
+                    node_data["defid"] = def_node_id
+                    logger.debug(f"节点 {node_id} 的定义节点 ID 为 {def_node_id}")
+                else:
+                    logger.debug(f"未找到定义节点: {definition['uri']}")
 
 def load_graph(input_path):
     """
@@ -156,7 +182,7 @@ def main():
 
     add_definition_id_to_nodes(graph)
     save_graph(graph, output_path)
-    os.remove(input_path)
+    # os.remove(input_path)
 
 if __name__ == "__main__":
     main()
