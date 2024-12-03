@@ -1,6 +1,6 @@
-REPO_PATH="/home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Communications/Telethon"
-RESULTDIR="./output"
-PORT="3000 3001 3002 3003"
+REPO_PATH="/home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Utilities/stellar"
+RESULTDIR="./testout"
+PORT="5004 5005"
 
 python repo_parser.py $REPO_PATH --output_dir $RESULTDIR
 python pylsp.py $REPO_PATH --output_dir $RESULTDIR --ports $PORT

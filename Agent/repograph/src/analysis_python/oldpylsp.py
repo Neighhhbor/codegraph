@@ -33,7 +33,7 @@ initialized = asyncio.Event()
 # Start pylsp server
 def start_pylsp(port):
     """启动 pylsp 进程，并为其指定端口"""
-    cmd = ['pylsp', '--tcp', '--host', '127.0.0.1', '--port', str(port)]
+    cmd = ['jedi-language-server', '--tcp', '--host', '127.0.0.1', '--port', str(port)]
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
     logger.info(f"Started pylsp process on port {port}")
     return process
@@ -227,32 +227,41 @@ async def process_ast_nodes(writer, graph):
     batch_size = 500  # 每批处理的节点数量
     max_concurrent = 100  # 最大并发任务数
 
+    target_nodes = [(node_id, data) for node_id, data in graph.nodes(data=True)
+                    if data.get("type") == 'identifier' and data.get("field_name") in ['function', 'attribute']]
+    total_nodes = len(target_nodes)
     progress_bar = tqdm(total=total_nodes, desc="Processing nodes", ncols=100)
     semaphore = asyncio.Semaphore(max_concurrent)
     tasks = []
 
-    for i, (node_id, node_data) in enumerate(graph.nodes(data=True)):
-        if node_data["type"] in ['identifier'] and node_data.get("field_name") in ['function', 'attribute']:
-            file_id = node_data["file_id"]
+    file_uri_map = {}
+    for node_id, node_data in target_nodes:
+        file_id = node_data["file_id"]
+        if file_id not in file_uri_map:
             file_path = graph.nodes[file_id]["path"]
             file_uri = f"file://{file_path}"
+            file_uri_map[file_id] = file_uri
+            
+    for i, (node_id, node_data) in enumerate(target_nodes):
+        file_id = node_data["file_id"]
+        file_uri = file_uri_map[file_id]
 
-            position = {
-                "line": node_data["sp"][0],
-                "character": node_data["sp"][1]
-            }
-            if file_uri not in opened_files:
-                with open(file_path, 'r') as f:
-                    content = f.read()
-                await did_open_file(writer, file_uri, content)
-                opened_files.add(file_uri)
+        position = {
+            "line": node_data["sp"][0],
+            "character": node_data["sp"][1]
+        }
+        if file_uri not in opened_files:
+            with open(file_path, 'r') as f:
+                content = f.read()
+            await did_open_file(writer, file_uri, content)
+            opened_files.add(file_uri)
 
-            tasks.append(handle_node(writer, node_data, file_uri, position, progress_bar, semaphore))
+        tasks.append(handle_node(writer, node_data, file_uri, position, progress_bar, semaphore))
 
-            if len(tasks) >= batch_size:
-                await asyncio.gather(*tasks)
-                tasks = []
-                await asyncio.sleep(0.1)  # 轻微的暂停，防止服务器过载
+        if len(tasks) >= batch_size:
+            await asyncio.gather(*tasks)
+            tasks = []
+            await asyncio.sleep(0.1)  # 轻微的暂停，防止服务器过载
 
     if tasks:
         await asyncio.gather(*tasks)

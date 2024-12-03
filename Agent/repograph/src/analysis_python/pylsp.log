@@ -1,12 +1,763 @@
-2024-12-03 21:49:50,132 - INFO - Started pylsp process on port 3000
-2024-12-03 21:49:50,133 - INFO - Started pylsp process on port 3001
-2024-12-03 21:49:50,134 - INFO - Started pylsp process on port 3002
-2024-12-03 21:49:50,134 - INFO - Started pylsp process on port 3003
-2024-12-03 21:49:52,143 - INFO - Connected to LSP server at localhost:3000
-2024-12-03 21:49:52,144 - INFO - Connected to LSP server at localhost:3001
-2024-12-03 21:49:52,145 - INFO - Connected to LSP server at localhost:3002
-2024-12-03 21:49:52,146 - INFO - Connected to LSP server at localhost:3003
-2024-12-03 21:49:52,171 - INFO - Python Language Server initialized successfully.
-2024-12-03 21:49:53,366 - INFO - Python Language Server initialized successfully.
-2024-12-03 21:49:53,372 - INFO - Python Language Server initialized successfully.
-2024-12-03 21:49:53,516 - INFO - Python Language Server initialized successfully.
+2024-12-04 01:07:22,386 - INFO - Started pylsp process on port 4006
+2024-12-04 01:07:22,388 - INFO - Started pylsp process on port 4007
+2024-12-04 01:07:22,389 - INFO - Started pylsp process on port 4008
+2024-12-04 01:07:22,390 - INFO - Started pylsp process on port 4009
+2024-12-04 01:07:24,401 - INFO - Connected to LSP server at localhost:4006
+2024-12-04 01:07:24,402 - INFO - Connected to LSP server at localhost:4007
+2024-12-04 01:07:24,403 - INFO - Connected to LSP server at localhost:4008
+2024-12-04 01:07:24,404 - INFO - Connected to LSP server at localhost:4009
+2024-12-04 01:07:24,404 - INFO - Initializing 4 LSP connections...
+2024-12-04 01:07:24,430 - INFO - Python Language Server initialized successfully.
+2024-12-04 01:07:24,431 - INFO - Python Language Server initialized successfully.
+2024-12-04 01:07:24,431 - INFO - Python Language Server initialized successfully.
+2024-12-04 01:07:24,432 - INFO - Python Language Server initialized successfully.
+2024-12-04 01:07:24,914 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'attribute', 'type': 'identifier', 'sb': 164, 'eb': 173, 'sp': [7, 31], 'ep': [7, 40], 'parent': 'a_475', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,915 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'attribute', 'type': 'identifier', 'sb': 556, 'eb': 567, 'sp': [20, 26], 'ep': [20, 37], 'parent': 'a_579', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,917 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'attribute', 'type': 'identifier', 'sb': 660, 'eb': 664, 'sp': [21, 75], 'ep': [21, 79], 'parent': 'a_597', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,920 - INFO - Skipping node {'file_id': 'f_2', 'field_name': 'function', 'type': 'identifier', 'sb': 484, 'eb': 489, 'sp': [15, 8], 'ep': [15, 13], 'parent': 'a_1025', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,923 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'function', 'type': 'identifier', 'sb': 309, 'eb': 331, 'sp': [12, 20], 'ep': [12, 42], 'parent': 'a_1106', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,926 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 449, 'eb': 456, 'sp': [19, 4], 'ep': [19, 11], 'parent': 'a_1242', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,926 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 779, 'eb': 784, 'sp': [35, 4], 'ep': [35, 9], 'parent': 'a_1365', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,927 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 889, 'eb': 901, 'sp': [38, 25], 'ep': [38, 37], 'parent': 'a_1412', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,948 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'attribute', 'type': 'identifier', 'sb': 249, 'eb': 254, 'sp': [8, 57], 'ep': [8, 62], 'parent': 'a_503', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,949 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'attribute', 'type': 'identifier', 'sb': 126, 'eb': 132, 'sp': [6, 32], 'ep': [6, 38], 'parent': 'a_454', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,950 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'attribute', 'type': 'identifier', 'sb': 629, 'eb': 650, 'sp': [21, 44], 'ep': [21, 65], 'parent': 'a_599', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,950 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'function', 'type': 'identifier', 'sb': 2463, 'eb': 2476, 'sp': [66, 13], 'ep': [66, 26], 'parent': 'a_874', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,954 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'attribute', 'type': 'identifier', 'sb': 651, 'eb': 659, 'sp': [21, 66], 'ep': [21, 74], 'parent': 'a_598', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,958 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'function', 'type': 'identifier', 'sb': 231, 'eb': 244, 'sp': [10, 38], 'ep': [10, 51], 'parent': 'a_1089', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,960 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 756, 'eb': 761, 'sp': [34, 4], 'ep': [34, 9], 'parent': 'a_1355', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,961 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 877, 'eb': 880, 'sp': [38, 13], 'ep': [38, 16], 'parent': 'a_1405', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,961 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1143, 'eb': 1147, 'sp': [44, 29], 'ep': [44, 33], 'parent': 'a_1481', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,962 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1708, 'eb': 1719, 'sp': [57, 37], 'ep': [57, 48], 'parent': 'a_1580', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,962 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2246, 'eb': 2259, 'sp': [74, 9], 'ep': [74, 22], 'parent': 'a_1791', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,963 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 2575, 'eb': 2580, 'sp': [84, 19], 'ep': [84, 24], 'parent': 'a_1884', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,963 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 2795, 'eb': 2809, 'sp': [88, 12], 'ep': [88, 26], 'parent': 'a_1935', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,964 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 3035, 'eb': 3040, 'sp': [96, 16], 'ep': [96, 21], 'parent': 'a_1990', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,964 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3382, 'eb': 3396, 'sp': [106, 33], 'ep': [106, 47], 'parent': 'a_2093', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,965 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 3650, 'eb': 3664, 'sp': [113, 12], 'ep': [113, 26], 'parent': 'a_2156', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,965 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 3845, 'eb': 3849, 'sp': [119, 25], 'ep': [119, 29], 'parent': 'a_2229', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,966 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4136, 'eb': 4139, 'sp': [128, 36], 'ep': [128, 39], 'parent': 'a_2270', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,966 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5200, 'eb': 5227, 'sp': [165, 35], 'ep': [165, 62], 'parent': 'a_2361', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,967 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5464, 'eb': 5476, 'sp': [173, 15], 'ep': [173, 27], 'parent': 'a_2416', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,967 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6009, 'eb': 6015, 'sp': [189, 24], 'ep': [189, 30], 'parent': 'a_2535', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,968 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6716, 'eb': 6728, 'sp': [215, 15], 'ep': [215, 27], 'parent': 'a_2679', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,969 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 7907, 'eb': 7917, 'sp': [253, 27], 'ep': [253, 37], 'parent': 'a_2881', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,969 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8010, 'eb': 8015, 'sp': [256, 46], 'ep': [256, 51], 'parent': 'a_2917', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,970 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8118, 'eb': 8122, 'sp': [260, 30], 'ep': [260, 34], 'parent': 'a_2950', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,971 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 8209, 'eb': 8214, 'sp': [263, 17], 'ep': [263, 22], 'parent': 'a_2987', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,971 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8315, 'eb': 8324, 'sp': [266, 26], 'ep': [266, 35], 'parent': 'a_3008', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,972 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 8500, 'eb': 8505, 'sp': [272, 12], 'ep': [272, 17], 'parent': 'a_3048', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,972 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8776, 'eb': 8782, 'sp': [281, 11], 'ep': [281, 17], 'parent': 'a_3111', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,972 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 9002, 'eb': 9006, 'sp': [287, 8], 'ep': [287, 12], 'parent': 'a_3146', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,977 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1255, 'eb': 1260, 'sp': [39, 44], 'ep': [39, 49], 'parent': 'a_3492', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,977 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 1844, 'eb': 1852, 'sp': [57, 23], 'ep': [57, 31], 'parent': 'a_3641', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,987 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 2344, 'eb': 2348, 'sp': [78, 31], 'ep': [78, 35], 'parent': 'a_1812', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,987 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2656, 'eb': 2669, 'sp': [85, 17], 'ep': [85, 30], 'parent': 'a_1905', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,988 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2853, 'eb': 2866, 'sp': [90, 21], 'ep': [90, 34], 'parent': 'a_1943', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,989 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3046, 'eb': 3052, 'sp': [96, 27], 'ep': [96, 33], 'parent': 'a_1995', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,991 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3485, 'eb': 3503, 'sp': [107, 30], 'ep': [107, 48], 'parent': 'a_2117', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,992 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3793, 'eb': 3797, 'sp': [118, 13], 'ep': [118, 17], 'parent': 'a_2204', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,993 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3855, 'eb': 3859, 'sp': [119, 35], 'ep': [119, 39], 'parent': 'a_2234', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,993 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4157, 'eb': 4162, 'sp': [128, 57], 'ep': [128, 62], 'parent': 'a_2268', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,995 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5254, 'eb': 5268, 'sp': [166, 26], 'ep': [166, 40], 'parent': 'a_2370', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,995 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5555, 'eb': 5567, 'sp': [175, 15], 'ep': [175, 27], 'parent': 'a_2449', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,996 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6089, 'eb': 6101, 'sp': [193, 15], 'ep': [193, 27], 'parent': 'a_2551', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,996 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6987, 'eb': 6999, 'sp': [224, 15], 'ep': [224, 27], 'parent': 'a_2723', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,996 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 7923, 'eb': 7927, 'sp': [253, 43], 'ep': [253, 47], 'parent': 'a_2888', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,997 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8051, 'eb': 8062, 'sp': [258, 20], 'ep': [258, 31], 'parent': 'a_2928', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,998 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8148, 'eb': 8154, 'sp': [261, 24], 'ep': [261, 30], 'parent': 'a_2962', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,998 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8225, 'eb': 8231, 'sp': [263, 33], 'ep': [263, 39], 'parent': 'a_2991', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:24,999 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8357, 'eb': 8361, 'sp': [267, 31], 'ep': [267, 35], 'parent': 'a_3016', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,000 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8516, 'eb': 8519, 'sp': [272, 28], 'ep': [272, 31], 'parent': 'a_3052', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,001 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8783, 'eb': 8791, 'sp': [281, 18], 'ep': [281, 26], 'parent': 'a_3110', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,002 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 9025, 'eb': 9032, 'sp': [289, 14], 'ep': [289, 21], 'parent': 'a_3156', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,006 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 291, 'eb': 300, 'sp': [11, 17], 'ep': [11, 26], 'parent': 'a_3270', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,008 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 400, 'eb': 404, 'sp': [14, 9], 'ep': [14, 13], 'parent': 'a_3283', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,009 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 499, 'eb': 504, 'sp': [18, 11], 'ep': [18, 16], 'parent': 'a_3325', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,009 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 1402, 'eb': 1416, 'sp': [42, 18], 'ep': [42, 32], 'parent': 'a_3539', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,027 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'attribute', 'type': 'identifier', 'sb': 606, 'eb': 617, 'sp': [21, 21], 'ep': [21, 32], 'parent': 'a_591', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,027 - INFO - Skipping node {'file_id': 'f_1', 'field_name': 'function', 'type': 'identifier', 'sb': 718, 'eb': 723, 'sp': [26, 0], 'ep': [26, 5], 'parent': 'a_622', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,055 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 2271, 'eb': 2284, 'sp': [71, 26], 'ep': [71, 39], 'parent': 'a_3749', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,056 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2573, 'eb': 2581, 'sp': [78, 32], 'ep': [78, 40], 'parent': 'a_3806', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,057 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3193, 'eb': 3198, 'sp': [94, 23], 'ep': [94, 28], 'parent': 'a_3888', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,058 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3730, 'eb': 3738, 'sp': [109, 36], 'ep': [109, 44], 'parent': 'a_3964', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,059 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 844, 'eb': 849, 'sp': [36, 4], 'ep': [36, 9], 'parent': 'a_1392', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,059 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1047, 'eb': 1051, 'sp': [42, 35], 'ep': [42, 39], 'parent': 'a_1451', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,060 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 1611, 'eb': 1620, 'sp': [56, 18], 'ep': [56, 27], 'parent': 'a_1552', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,060 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 2199, 'eb': 2204, 'sp': [73, 11], 'ep': [73, 16], 'parent': 'a_1775', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,061 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2470, 'eb': 2475, 'sp': [82, 38], 'ep': [82, 43], 'parent': 'a_1844', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,061 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2738, 'eb': 2755, 'sp': [87, 16], 'ep': [87, 33], 'parent': 'a_1928', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,062 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 240, 'eb': 247, 'sp': [10, 15], 'ep': [10, 22], 'parent': 'a_4065', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,062 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 384, 'eb': 390, 'sp': [15, 11], 'ep': [15, 17], 'parent': 'a_4098', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,062 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 672, 'eb': 676, 'sp': [28, 29], 'ep': [28, 33], 'parent': 'a_4210', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,063 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2922, 'eb': 2935, 'sp': [91, 49], 'ep': [91, 62], 'parent': 'a_1963', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,063 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3258, 'eb': 3268, 'sp': [101, 25], 'ep': [101, 35], 'parent': 'a_2055', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,063 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3547, 'eb': 3551, 'sp': [108, 37], 'ep': [108, 41], 'parent': 'a_2134', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,063 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3833, 'eb': 3842, 'sp': [119, 13], 'ep': [119, 22], 'parent': 'a_2223', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,064 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 714, 'eb': 719, 'sp': [28, 71], 'ep': [28, 76], 'parent': 'a_4232', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,065 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4128, 'eb': 4135, 'sp': [128, 28], 'ep': [128, 35], 'parent': 'a_2271', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,065 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 4322, 'eb': 4328, 'sp': [134, 13], 'ep': [134, 19], 'parent': 'a_2335', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,066 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5335, 'eb': 5344, 'sp': [168, 32], 'ep': [168, 41], 'parent': 'a_2391', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,066 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5970, 'eb': 5978, 'sp': [188, 26], 'ep': [188, 34], 'parent': 'a_2520', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,067 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6542, 'eb': 6554, 'sp': [208, 15], 'ep': [208, 27], 'parent': 'a_2638', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,067 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 7538, 'eb': 7550, 'sp': [242, 15], 'ep': [242, 27], 'parent': 'a_2819', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,067 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 7984, 'eb': 7995, 'sp': [256, 20], 'ep': [256, 31], 'parent': 'a_2908', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,067 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8103, 'eb': 8107, 'sp': [260, 15], 'ep': [260, 19], 'parent': 'a_2944', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,068 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8182, 'eb': 8188, 'sp': [261, 58], 'ep': [261, 64], 'parent': 'a_2977', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,069 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8283, 'eb': 8287, 'sp': [265, 26], 'ep': [265, 30], 'parent': 'a_3003', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,069 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8465, 'eb': 8472, 'sp': [270, 35], 'ep': [270, 42], 'parent': 'a_3041', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,069 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8569, 'eb': 8573, 'sp': [274, 29], 'ep': [274, 33], 'parent': 'a_3069', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,069 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8976, 'eb': 8982, 'sp': [285, 21], 'ep': [285, 27], 'parent': 'a_3139', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,069 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 9094, 'eb': 9119, 'sp': [294, 4], 'ep': [294, 29], 'parent': 'a_3183', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,071 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 455, 'eb': 463, 'sp': [16, 11], 'ep': [16, 19], 'parent': 'a_3308', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,083 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 948, 'eb': 953, 'sp': [39, 41], 'ep': [39, 46], 'parent': 'a_1427', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,084 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1178, 'eb': 1188, 'sp': [45, 29], 'ep': [45, 39], 'parent': 'a_1488', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,085 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2181, 'eb': 2187, 'sp': [72, 21], 'ep': [72, 27], 'parent': 'a_1767', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,085 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 2349, 'eb': 2352, 'sp': [78, 36], 'ep': [78, 39], 'parent': 'a_1816', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,086 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2705, 'eb': 2715, 'sp': [86, 29], 'ep': [86, 39], 'parent': 'a_1918', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,086 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2893, 'eb': 2916, 'sp': [91, 20], 'ep': [91, 43], 'parent': 'a_1955', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,087 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 3158, 'eb': 3168, 'sp': [98, 22], 'ep': [98, 32], 'parent': 'a_2027', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,087 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3538, 'eb': 3544, 'sp': [108, 28], 'ep': [108, 34], 'parent': 'a_2128', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,088 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3812, 'eb': 3816, 'sp': [118, 32], 'ep': [118, 36], 'parent': 'a_2213', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,088 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3864, 'eb': 3868, 'sp': [119, 44], 'ep': [119, 48], 'parent': 'a_2228', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,089 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4317, 'eb': 4321, 'sp': [134, 8], 'ep': [134, 12], 'parent': 'a_2326', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,089 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5292, 'eb': 5301, 'sp': [167, 22], 'ep': [167, 31], 'parent': 'a_2379', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,090 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5882, 'eb': 5894, 'sp': [185, 15], 'ep': [185, 27], 'parent': 'a_2497', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,090 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6355, 'eb': 6367, 'sp': [201, 15], 'ep': [201, 27], 'parent': 'a_2601', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,091 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 7349, 'eb': 7361, 'sp': [235, 15], 'ep': [235, 27], 'parent': 'a_2776', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,091 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 7955, 'eb': 7962, 'sp': [255, 21], 'ep': [255, 28], 'parent': 'a_2900', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,092 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8077, 'eb': 8085, 'sp': [258, 46], 'ep': [258, 54], 'parent': 'a_2937', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,092 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 8166, 'eb': 8171, 'sp': [261, 42], 'ep': [261, 47], 'parent': 'a_2973', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,093 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 8246, 'eb': 8255, 'sp': [264, 12], 'ep': [264, 21], 'parent': 'a_2999', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,093 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8396, 'eb': 8397, 'sp': [268, 33], 'ep': [268, 34], 'parent': 'a_3024', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,094 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 8536, 'eb': 8537, 'sp': [272, 48], 'ep': [272, 49], 'parent': 'a_3060', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,094 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 8809, 'eb': 8814, 'sp': [282, 8], 'ep': [282, 13], 'parent': 'a_3122', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,095 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 9051, 'eb': 9058, 'sp': [290, 12], 'ep': [290, 19], 'parent': 'a_3164', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,098 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 405, 'eb': 412, 'sp': [14, 14], 'ep': [14, 21], 'parent': 'a_3287', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,098 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1163, 'eb': 1170, 'sp': [38, 24], 'ep': [38, 31], 'parent': 'a_3466', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,098 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 1609, 'eb': 1618, 'sp': [50, 29], 'ep': [50, 38], 'parent': 'a_3589', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,099 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1936, 'eb': 1948, 'sp': [59, 21], 'ep': [59, 33], 'parent': 'a_3657', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,099 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 2325, 'eb': 2332, 'sp': [72, 25], 'ep': [72, 32], 'parent': 'a_3759', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,100 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 2630, 'eb': 2641, 'sp': [81, 32], 'ep': [81, 43], 'parent': 'a_3816', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,100 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3301, 'eb': 3309, 'sp': [96, 36], 'ep': [96, 44], 'parent': 'a_3899', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,101 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3861, 'eb': 3869, 'sp': [114, 31], 'ep': [114, 39], 'parent': 'a_3983', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,105 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 606, 'eb': 615, 'sp': [27, 13], 'ep': [27, 22], 'parent': 'a_4178', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,106 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 682, 'eb': 690, 'sp': [28, 39], 'ep': [28, 47], 'parent': 'a_4216', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,118 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1237, 'eb': 1246, 'sp': [39, 26], 'ep': [39, 35], 'parent': 'a_3494', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,119 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1781, 'eb': 1801, 'sp': [56, 42], 'ep': [56, 62], 'parent': 'a_3627', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,119 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 1146, 'eb': 1153, 'sp': [42, 29], 'ep': [42, 36], 'parent': 'a_4360', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,120 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 1466, 'eb': 1473, 'sp': [50, 54], 'ep': [50, 61], 'parent': 'a_4444', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,121 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1982, 'eb': 1990, 'sp': [60, 21], 'ep': [60, 29], 'parent': 'a_3665', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,121 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1782, 'eb': 1788, 'sp': [60, 38], 'ep': [60, 44], 'parent': 'a_4531', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,122 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1911, 'eb': 1919, 'sp': [65, 13], 'ep': [65, 21], 'parent': 'a_4573', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,122 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 2384, 'eb': 2391, 'sp': [74, 11], 'ep': [74, 18], 'parent': 'a_3776', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,124 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2239, 'eb': 2247, 'sp': [73, 13], 'ep': [73, 21], 'parent': 'a_4644', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,124 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2426, 'eb': 2438, 'sp': [80, 12], 'ep': [80, 24], 'parent': 'a_4707', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,124 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2846, 'eb': 2851, 'sp': [85, 23], 'ep': [85, 28], 'parent': 'a_3852', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,125 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 3435, 'eb': 3448, 'sp': [101, 30], 'ep': [101, 43], 'parent': 'a_3927', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,125 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2880, 'eb': 2888, 'sp': [93, 32], 'ep': [93, 40], 'parent': 'a_4827', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,125 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 3345, 'eb': 3352, 'sp': [104, 8], 'ep': [104, 15], 'parent': 'a_4920', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,126 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4089, 'eb': 4097, 'sp': [120, 17], 'ep': [120, 25], 'parent': 'a_5030', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,126 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4736, 'eb': 4744, 'sp': [135, 25], 'ep': [135, 33], 'parent': 'a_5141', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,126 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4903, 'eb': 4906, 'sp': [138, 48], 'ep': [138, 51], 'parent': 'a_5191', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,126 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5473, 'eb': 5481, 'sp': [154, 30], 'ep': [154, 38], 'parent': 'a_5310', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,127 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 6286, 'eb': 6290, 'sp': [177, 36], 'ep': [177, 40], 'parent': 'a_5395', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,127 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6473, 'eb': 6481, 'sp': [182, 33], 'ep': [182, 41], 'parent': 'a_5453', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,128 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 6727, 'eb': 6730, 'sp': [188, 24], 'ep': [188, 27], 'parent': 'a_5517', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,130 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 656, 'eb': 664, 'sp': [28, 13], 'ep': [28, 21], 'parent': 'a_4200', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,130 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 275, 'eb': 284, 'sp': [12, 17], 'ep': [12, 26], 'parent': 'a_5608', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,130 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'function', 'type': 'identifier', 'sb': 303, 'eb': 308, 'sp': [13, 8], 'ep': [13, 13], 'parent': 'a_5620', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,131 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 691, 'eb': 696, 'sp': [28, 48], 'ep': [28, 53], 'parent': 'a_4215', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,131 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 741, 'eb': 748, 'sp': [19, 35], 'ep': [19, 42], 'parent': 'a_5705', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,131 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2222, 'eb': 2235, 'sp': [53, 13], 'ep': [53, 26], 'parent': 'a_5863', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,132 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2335, 'eb': 2342, 'sp': [56, 38], 'ep': [56, 45], 'parent': 'a_5901', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,132 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 858, 'eb': 868, 'sp': [32, 11], 'ep': [32, 21], 'parent': 'a_4290', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,132 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 996, 'eb': 999, 'sp': [37, 27], 'ep': [37, 30], 'parent': 'a_4329', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,133 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2769, 'eb': 2778, 'sp': [65, 51], 'ep': [65, 60], 'parent': 'a_5979', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,133 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2999, 'eb': 3006, 'sp': [70, 17], 'ep': [70, 24], 'parent': 'a_6028', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,133 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1292, 'eb': 1305, 'sp': [46, 21], 'ep': [46, 34], 'parent': 'a_4381', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,134 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3243, 'eb': 3250, 'sp': [75, 17], 'ep': [75, 24], 'parent': 'a_6083', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,134 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1520, 'eb': 1525, 'sp': [50, 108], 'ep': [50, 113], 'parent': 'a_4463', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,134 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1832, 'eb': 1838, 'sp': [63, 12], 'ep': [63, 18], 'parent': 'a_4546', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,135 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2192, 'eb': 2200, 'sp': [72, 17], 'ep': [72, 25], 'parent': 'a_4628', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,135 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2272, 'eb': 2282, 'sp': [74, 13], 'ep': [74, 23], 'parent': 'a_4656', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,136 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2660, 'eb': 2673, 'sp': [87, 20], 'ep': [87, 33], 'parent': 'a_4764', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,137 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 3027, 'eb': 3041, 'sp': [96, 22], 'ep': [96, 36], 'parent': 'a_4868', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,137 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3998, 'eb': 4006, 'sp': [117, 17], 'ep': [117, 25], 'parent': 'a_4997', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,138 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 4191, 'eb': 4201, 'sp': [122, 18], 'ep': [122, 28], 'parent': 'a_5061', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,139 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4827, 'eb': 4830, 'sp': [136, 55], 'ep': [136, 58], 'parent': 'a_5160', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,139 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5382, 'eb': 5390, 'sp': [152, 30], 'ep': [152, 38], 'parent': 'a_5280', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,140 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6179, 'eb': 6182, 'sp': [174, 25], 'ep': [174, 28], 'parent': 'a_5364', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,141 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6349, 'eb': 6355, 'sp': [178, 40], 'ep': [178, 46], 'parent': 'a_5416', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,141 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 6648, 'eb': 6651, 'sp': [186, 24], 'ep': [186, 27], 'parent': 'a_5491', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,142 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6774, 'eb': 6778, 'sp': [190, 18], 'ep': [190, 22], 'parent': 'a_5534', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,143 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2449, 'eb': 2454, 'sp': [75, 19], 'ep': [75, 24], 'parent': 'a_3793', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,143 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3096, 'eb': 3104, 'sp': [90, 36], 'ep': [90, 44], 'parent': 'a_3874', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,144 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3516, 'eb': 3521, 'sp': [105, 23], 'ep': [105, 28], 'parent': 'a_3944', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,146 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 1193, 'eb': 1201, 'sp': [44, 15], 'ep': [44, 23], 'parent': 'a_4370', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,146 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1499, 'eb': 1511, 'sp': [50, 87], 'ep': [50, 99], 'parent': 'a_4457', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,148 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 306, 'eb': 312, 'sp': [11, 23], 'ep': [11, 29], 'parent': 'a_4081', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,149 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 667, 'eb': 671, 'sp': [28, 24], 'ep': [28, 28], 'parent': 'a_4205', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,149 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 702, 'eb': 706, 'sp': [28, 59], 'ep': [28, 63], 'parent': 'a_4227', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,154 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2054, 'eb': 2062, 'sp': [69, 16], 'ep': [69, 24], 'parent': 'a_4616', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,155 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2248, 'eb': 2252, 'sp': [73, 22], 'ep': [73, 26], 'parent': 'a_4643', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,155 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2458, 'eb': 2468, 'sp': [81, 12], 'ep': [81, 22], 'parent': 'a_4715', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,156 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2964, 'eb': 2972, 'sp': [94, 74], 'ep': [94, 82], 'parent': 'a_4849', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,157 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3958, 'eb': 3966, 'sp': [116, 29], 'ep': [116, 37], 'parent': 'a_4981', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,158 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 4146, 'eb': 4156, 'sp': [121, 17], 'ep': [121, 27], 'parent': 'a_5049', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,158 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4798, 'eb': 4806, 'sp': [136, 26], 'ep': [136, 34], 'parent': 'a_5163', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,159 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5304, 'eb': 5312, 'sp': [150, 25], 'ep': [150, 33], 'parent': 'a_5255', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,160 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5495, 'eb': 5498, 'sp': [154, 52], 'ep': [154, 55], 'parent': 'a_5308', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,160 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6299, 'eb': 6305, 'sp': [177, 49], 'ep': [177, 55], 'parent': 'a_5400', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,161 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 6562, 'eb': 6576, 'sp': [184, 22], 'ep': [184, 36], 'parent': 'a_5473', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,162 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6736, 'eb': 6742, 'sp': [188, 33], 'ep': [188, 39], 'parent': 'a_5522', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,165 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 372, 'eb': 379, 'sp': [14, 44], 'ep': [14, 51], 'parent': 'a_5634', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,166 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'function', 'type': 'identifier', 'sb': 1138, 'eb': 1148, 'sp': [33, 9], 'ep': [33, 19], 'parent': 'a_5790', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,172 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2497, 'eb': 2502, 'sp': [61, 67], 'ep': [61, 72], 'parent': 'a_5935', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,173 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2798, 'eb': 2805, 'sp': [66, 17], 'ep': [66, 24], 'parent': 'a_5988', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,173 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 3046, 'eb': 3053, 'sp': [71, 17], 'ep': [71, 24], 'parent': 'a_6043', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,188 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1074, 'eb': 1084, 'sp': [39, 27], 'ep': [39, 37], 'parent': 'a_4341', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,189 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1447, 'eb': 1460, 'sp': [50, 35], 'ep': [50, 48], 'parent': 'a_4434', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,190 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 482, 'eb': 489, 'sp': [15, 48], 'ep': [15, 55], 'parent': 'a_5653', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,190 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1719, 'eb': 1728, 'sp': [57, 20], 'ep': [57, 29], 'parent': 'a_4514', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,191 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1881, 'eb': 1887, 'sp': [64, 42], 'ep': [64, 48], 'parent': 'a_4561', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,191 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2217, 'eb': 2223, 'sp': [72, 42], 'ep': [72, 48], 'parent': 'a_4634', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,192 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2403, 'eb': 2407, 'sp': [79, 15], 'ep': [79, 19], 'parent': 'a_4697', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,193 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 2792, 'eb': 2799, 'sp': [91, 19], 'ep': [91, 26], 'parent': 'a_4806', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,193 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 3096, 'eb': 3110, 'sp': [97, 18], 'ep': [97, 32], 'parent': 'a_4884', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,194 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 4044, 'eb': 4054, 'sp': [119, 11], 'ep': [119, 21], 'parent': 'a_5016', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,194 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4284, 'eb': 4292, 'sp': [124, 17], 'ep': [124, 25], 'parent': 'a_5079', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,195 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 4881, 'eb': 4889, 'sp': [138, 26], 'ep': [138, 34], 'parent': 'a_5193', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,196 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 5411, 'eb': 5414, 'sp': [152, 59], 'ep': [152, 62], 'parent': 'a_5277', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,196 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6188, 'eb': 6202, 'sp': [174, 34], 'ep': [174, 48], 'parent': 'a_5370', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,197 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2281, 'eb': 2289, 'sp': [55, 13], 'ep': [55, 21], 'parent': 'a_5883', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,197 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6361, 'eb': 6366, 'sp': [178, 52], 'ep': [178, 57], 'parent': 'a_5414', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,197 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2580, 'eb': 2585, 'sp': [62, 71], 'ep': [62, 76], 'parent': 'a_5948', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,198 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 6657, 'eb': 6663, 'sp': [186, 33], 'ep': [186, 39], 'parent': 'a_5496', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,198 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2845, 'eb': 2852, 'sp': [67, 17], 'ep': [67, 24], 'parent': 'a_6003', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,201 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 591, 'eb': 598, 'sp': [16, 46], 'ep': [16, 53], 'parent': 'a_5672', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,210 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'function', 'type': 'identifier', 'sb': 2197, 'eb': 2201, 'sp': [52, 26], 'ep': [52, 30], 'parent': 'a_5855', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,210 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2310, 'eb': 2321, 'sp': [56, 13], 'ep': [56, 24], 'parent': 'a_5891', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:25,211 - INFO - Skipping node {'file_id': 'f_8', 'field_name': 'attribute', 'type': 'identifier', 'sb': 2667, 'eb': 2672, 'sp': [63, 75], 'ep': [63, 80], 'parent': 'a_5961', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:35,124 - WARNING - Request ID 426 timed out on attempt 1
+2024-12-04 01:07:35,124 - WARNING - Request ID 428 timed out on attempt 1
+2024-12-04 01:07:35,124 - WARNING - Request ID 427 timed out on attempt 1
+2024-12-04 01:07:35,125 - WARNING - Request ID 429 timed out on attempt 1
+2024-12-04 01:07:35,125 - WARNING - Request ID 429 timed out on attempt 1
+2024-12-04 01:07:35,125 - WARNING - Request ID 428 timed out on attempt 1
+2024-12-04 01:07:35,125 - WARNING - Request ID 438 timed out on attempt 1
+2024-12-04 01:07:35,125 - WARNING - Request ID 430 timed out on attempt 1
+2024-12-04 01:07:35,125 - WARNING - Request ID 430 timed out on attempt 1
+2024-12-04 01:07:35,126 - WARNING - Request ID 429 timed out on attempt 1
+2024-12-04 01:07:35,126 - WARNING - Request ID 439 timed out on attempt 1
+2024-12-04 01:07:35,126 - WARNING - Request ID 431 timed out on attempt 1
+2024-12-04 01:07:35,126 - WARNING - Request ID 431 timed out on attempt 1
+2024-12-04 01:07:35,126 - WARNING - Request ID 430 timed out on attempt 1
+2024-12-04 01:07:35,126 - WARNING - Request ID 440 timed out on attempt 1
+2024-12-04 01:07:35,127 - WARNING - Request ID 432 timed out on attempt 1
+2024-12-04 01:07:35,128 - WARNING - Request ID 432 timed out on attempt 1
+2024-12-04 01:07:35,128 - WARNING - Request ID 431 timed out on attempt 1
+2024-12-04 01:07:35,128 - WARNING - Request ID 441 timed out on attempt 1
+2024-12-04 01:07:35,130 - WARNING - Request ID 433 timed out on attempt 1
+2024-12-04 01:07:35,131 - WARNING - Request ID 433 timed out on attempt 1
+2024-12-04 01:07:35,131 - WARNING - Request ID 432 timed out on attempt 1
+2024-12-04 01:07:35,132 - WARNING - Request ID 442 timed out on attempt 1
+2024-12-04 01:07:35,132 - WARNING - Request ID 434 timed out on attempt 1
+2024-12-04 01:07:35,132 - WARNING - Request ID 434 timed out on attempt 1
+2024-12-04 01:07:35,133 - WARNING - Request ID 433 timed out on attempt 1
+2024-12-04 01:07:35,133 - WARNING - Request ID 443 timed out on attempt 1
+2024-12-04 01:07:35,133 - WARNING - Request ID 435 timed out on attempt 1
+2024-12-04 01:07:35,133 - WARNING - Request ID 435 timed out on attempt 1
+2024-12-04 01:07:35,134 - WARNING - Request ID 434 timed out on attempt 1
+2024-12-04 01:07:35,134 - WARNING - Request ID 444 timed out on attempt 1
+2024-12-04 01:07:35,134 - WARNING - Request ID 436 timed out on attempt 1
+2024-12-04 01:07:35,134 - WARNING - Request ID 436 timed out on attempt 1
+2024-12-04 01:07:35,135 - WARNING - Request ID 435 timed out on attempt 1
+2024-12-04 01:07:35,135 - WARNING - Request ID 445 timed out on attempt 1
+2024-12-04 01:07:35,136 - WARNING - Request ID 437 timed out on attempt 1
+2024-12-04 01:07:35,137 - WARNING - Request ID 437 timed out on attempt 1
+2024-12-04 01:07:35,137 - WARNING - Request ID 436 timed out on attempt 1
+2024-12-04 01:07:35,138 - WARNING - Request ID 446 timed out on attempt 1
+2024-12-04 01:07:35,139 - WARNING - Request ID 438 timed out on attempt 1
+2024-12-04 01:07:35,139 - WARNING - Request ID 438 timed out on attempt 1
+2024-12-04 01:07:35,140 - WARNING - Request ID 437 timed out on attempt 1
+2024-12-04 01:07:35,140 - WARNING - Request ID 447 timed out on attempt 1
+2024-12-04 01:07:35,142 - WARNING - Request ID 439 timed out on attempt 1
+2024-12-04 01:07:35,142 - WARNING - Request ID 439 timed out on attempt 1
+2024-12-04 01:07:35,143 - WARNING - Request ID 438 timed out on attempt 1
+2024-12-04 01:07:35,143 - WARNING - Request ID 448 timed out on attempt 1
+2024-12-04 01:07:35,143 - WARNING - Request ID 440 timed out on attempt 1
+2024-12-04 01:07:35,145 - WARNING - Request ID 440 timed out on attempt 1
+2024-12-04 01:07:35,145 - WARNING - Request ID 439 timed out on attempt 1
+2024-12-04 01:07:35,146 - WARNING - Request ID 449 timed out on attempt 1
+2024-12-04 01:07:35,146 - WARNING - Request ID 441 timed out on attempt 1
+2024-12-04 01:07:35,147 - WARNING - Request ID 441 timed out on attempt 1
+2024-12-04 01:07:35,148 - WARNING - Request ID 440 timed out on attempt 1
+2024-12-04 01:07:35,150 - WARNING - Request ID 450 timed out on attempt 1
+2024-12-04 01:07:35,150 - WARNING - Request ID 442 timed out on attempt 1
+2024-12-04 01:07:35,154 - WARNING - Request ID 442 timed out on attempt 1
+2024-12-04 01:07:35,155 - WARNING - Request ID 441 timed out on attempt 1
+2024-12-04 01:07:35,155 - WARNING - Request ID 451 timed out on attempt 1
+2024-12-04 01:07:35,156 - WARNING - Request ID 443 timed out on attempt 1
+2024-12-04 01:07:35,157 - WARNING - Request ID 443 timed out on attempt 1
+2024-12-04 01:07:35,157 - WARNING - Request ID 442 timed out on attempt 1
+2024-12-04 01:07:35,159 - WARNING - Request ID 452 timed out on attempt 1
+2024-12-04 01:07:35,159 - WARNING - Request ID 444 timed out on attempt 1
+2024-12-04 01:07:35,160 - WARNING - Request ID 444 timed out on attempt 1
+2024-12-04 01:07:35,161 - WARNING - Request ID 443 timed out on attempt 1
+2024-12-04 01:07:35,161 - WARNING - Request ID 453 timed out on attempt 1
+2024-12-04 01:07:35,162 - WARNING - Request ID 445 timed out on attempt 1
+2024-12-04 01:07:35,162 - WARNING - Request ID 445 timed out on attempt 1
+2024-12-04 01:07:35,166 - WARNING - Request ID 444 timed out on attempt 1
+2024-12-04 01:07:35,167 - WARNING - Request ID 454 timed out on attempt 1
+2024-12-04 01:07:35,172 - WARNING - Request ID 446 timed out on attempt 1
+2024-12-04 01:07:35,172 - WARNING - Request ID 446 timed out on attempt 1
+2024-12-04 01:07:35,173 - WARNING - Request ID 445 timed out on attempt 1
+2024-12-04 01:07:35,174 - WARNING - Request ID 455 timed out on attempt 1
+2024-12-04 01:07:35,181 - WARNING - Request ID 447 timed out on attempt 1
+2024-12-04 01:07:35,189 - WARNING - Request ID 447 timed out on attempt 1
+2024-12-04 01:07:35,190 - WARNING - Request ID 446 timed out on attempt 1
+2024-12-04 01:07:35,190 - WARNING - Request ID 456 timed out on attempt 1
+2024-12-04 01:07:35,191 - WARNING - Request ID 457 timed out on attempt 1
+2024-12-04 01:07:35,192 - WARNING - Request ID 448 timed out on attempt 1
+2024-12-04 01:07:35,192 - WARNING - Request ID 447 timed out on attempt 1
+2024-12-04 01:07:35,193 - WARNING - Request ID 458 timed out on attempt 1
+2024-12-04 01:07:35,193 - WARNING - Request ID 448 timed out on attempt 1
+2024-12-04 01:07:35,194 - WARNING - Request ID 449 timed out on attempt 1
+2024-12-04 01:07:35,195 - WARNING - Request ID 448 timed out on attempt 1
+2024-12-04 01:07:35,195 - WARNING - Request ID 459 timed out on attempt 1
+2024-12-04 01:07:35,196 - WARNING - Request ID 449 timed out on attempt 1
+2024-12-04 01:07:35,196 - WARNING - Request ID 450 timed out on attempt 1
+2024-12-04 01:07:35,197 - WARNING - Request ID 449 timed out on attempt 1
+2024-12-04 01:07:35,197 - WARNING - Request ID 460 timed out on attempt 1
+2024-12-04 01:07:35,198 - WARNING - Request ID 450 timed out on attempt 1
+2024-12-04 01:07:35,198 - WARNING - Request ID 451 timed out on attempt 1
+2024-12-04 01:07:35,198 - WARNING - Request ID 450 timed out on attempt 1
+2024-12-04 01:07:35,199 - WARNING - Request ID 461 timed out on attempt 1
+2024-12-04 01:07:35,199 - WARNING - Request ID 451 timed out on attempt 1
+2024-12-04 01:07:35,201 - WARNING - Request ID 452 timed out on attempt 1
+2024-12-04 01:07:35,212 - WARNING - Request ID 451 timed out on attempt 1
+2024-12-04 01:07:35,212 - WARNING - Request ID 462 timed out on attempt 1
+2024-12-04 01:07:35,212 - WARNING - Request ID 452 timed out on attempt 1
+2024-12-04 01:07:41,050 - ERROR - Connection closed while reading header
+2024-12-04 01:07:41,050 - INFO - Closed connection to LSP server at localhost:4006
+2024-12-04 01:07:41,050 - ERROR - Connection closed while reading header
+2024-12-04 01:07:41,050 - INFO - Closed connection to LSP server at localhost:4007
+2024-12-04 01:07:41,050 - ERROR - Connection closed while reading header
+2024-12-04 01:07:41,050 - INFO - Closed connection to LSP server at localhost:4008
+2024-12-04 01:07:41,050 - ERROR - Connection closed while reading header
+2024-12-04 01:07:41,050 - INFO - Closed connection to LSP server at localhost:4009
+2024-12-04 01:07:41,065 - INFO - Terminated pylsp process on port 4006
+2024-12-04 01:07:41,079 - INFO - Terminated pylsp process on port 4007
+2024-12-04 01:07:41,090 - INFO - Terminated pylsp process on port 4008
+2024-12-04 01:07:41,101 - INFO - Terminated pylsp process on port 4009
+uest ID 150 timed out on attempt 2
+2024-12-04 01:07:20,147 - WARNING - Request ID 154 timed out on attempt 2
+2024-12-04 01:07:20,147 - WARNING - Request ID 146 timed out on attempt 2
+2024-12-04 01:07:20,147 - WARNING - Request ID 148 timed out on attempt 2
+2024-12-04 01:07:20,147 - WARNING - Request ID 151 timed out on attempt 2
+2024-12-04 01:07:20,147 - WARNING - Request ID 155 timed out on attempt 2
+2024-12-04 01:07:20,147 - WARNING - Request ID 147 timed out on attempt 2
+2024-12-04 01:07:20,147 - WARNING - Request ID 149 timed out on attempt 2
+2024-12-04 01:07:20,147 - WARNING - Request ID 152 timed out on attempt 2
+2024-12-04 01:07:20,147 - WARNING - Request ID 156 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 148 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 150 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 153 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 157 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 149 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 151 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 154 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 158 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 150 timed out on attempt 2
+2024-12-04 01:07:20,148 - WARNING - Request ID 152 timed out on attempt 2
+2024-12-04 01:07:20,154 - WARNING - Request ID 155 timed out on attempt 2
+2024-12-04 01:07:20,154 - WARNING - Request ID 159 timed out on attempt 2
+2024-12-04 01:07:20,155 - WARNING - Request ID 151 timed out on attempt 2
+2024-12-04 01:07:20,156 - WARNING - Request ID 153 timed out on attempt 2
+2024-12-04 01:07:20,156 - WARNING - Request ID 156 timed out on attempt 2
+2024-12-04 01:07:20,157 - WARNING - Request ID 160 timed out on attempt 2
+2024-12-04 01:07:20,157 - WARNING - Request ID 152 timed out on attempt 2
+2024-12-04 01:07:20,157 - WARNING - Request ID 154 timed out on attempt 2
+2024-12-04 01:07:20,159 - WARNING - Request ID 157 timed out on attempt 2
+2024-12-04 01:07:20,159 - WARNING - Request ID 161 timed out on attempt 2
+2024-12-04 01:07:20,160 - WARNING - Request ID 153 timed out on attempt 2
+2024-12-04 01:07:20,161 - WARNING - Request ID 155 timed out on attempt 2
+2024-12-04 01:07:20,161 - WARNING - Request ID 158 timed out on attempt 2
+2024-12-04 01:07:20,161 - WARNING - Request ID 162 timed out on attempt 2
+2024-12-04 01:07:20,162 - WARNING - Request ID 154 timed out on attempt 2
+2024-12-04 01:07:20,162 - WARNING - Request ID 156 timed out on attempt 2
+2024-12-04 01:07:20,163 - WARNING - Request ID 159 timed out on attempt 2
+2024-12-04 01:07:20,163 - WARNING - Request ID 163 timed out on attempt 2
+2024-12-04 01:07:20,163 - WARNING - Request ID 155 timed out on attempt 2
+2024-12-04 01:07:20,163 - WARNING - Request ID 157 timed out on attempt 2
+2024-12-04 01:07:20,163 - WARNING - Request ID 160 timed out on attempt 2
+2024-12-04 01:07:20,166 - WARNING - Request ID 164 timed out on attempt 2
+2024-12-04 01:07:20,177 - WARNING - Request ID 156 timed out on attempt 2
+2024-12-04 01:07:20,178 - WARNING - Request ID 158 timed out on attempt 2
+2024-12-04 01:07:20,179 - WARNING - Request ID 161 timed out on attempt 2
+2024-12-04 01:07:20,179 - WARNING - Request ID 165 timed out on attempt 2
+2024-12-04 01:07:20,179 - WARNING - Request ID 166 timed out on attempt 2
+2024-12-04 01:07:20,181 - WARNING - Request ID 159 timed out on attempt 2
+2024-12-04 01:07:20,181 - WARNING - Request ID 162 timed out on attempt 2
+2024-12-04 01:07:20,181 - WARNING - Request ID 167 timed out on attempt 2
+2024-12-04 01:07:20,181 - WARNING - Request ID 157 timed out on attempt 2
+2024-12-04 01:07:20,182 - WARNING - Request ID 160 timed out on attempt 2
+2024-12-04 01:07:20,182 - WARNING - Request ID 163 timed out on attempt 2
+2024-12-04 01:07:20,183 - WARNING - Request ID 168 timed out on attempt 2
+2024-12-04 01:07:20,183 - WARNING - Request ID 158 timed out on attempt 2
+2024-12-04 01:07:20,183 - WARNING - Request ID 161 timed out on attempt 2
+2024-12-04 01:07:20,186 - WARNING - Request ID 164 timed out on attempt 2
+2024-12-04 01:07:20,186 - WARNING - Request ID 169 timed out on attempt 2
+2024-12-04 01:07:20,186 - WARNING - Request ID 159 timed out on attempt 2
+2024-12-04 01:07:20,187 - WARNING - Request ID 162 timed out on attempt 2
+2024-12-04 01:07:20,187 - WARNING - Request ID 165 timed out on attempt 2
+2024-12-04 01:07:20,187 - WARNING - Request ID 170 timed out on attempt 2
+2024-12-04 01:07:20,187 - WARNING - Request ID 160 timed out on attempt 2
+2024-12-04 01:07:20,187 - WARNING - Request ID 171 timed out on attempt 2
+2024-12-04 01:07:20,190 - WARNING - Request ID 166 timed out on attempt 2
+2024-12-04 01:07:20,190 - WARNING - Request ID 172 timed out on attempt 2
+2024-12-04 01:07:20,191 - WARNING - Request ID 161 timed out on attempt 2
+2024-12-04 01:07:20,191 - WARNING - Request ID 163 timed out on attempt 2
+2024-12-04 01:07:20,191 - WARNING - Request ID 167 timed out on attempt 2
+2024-12-04 01:07:20,191 - WARNING - Request ID 173 timed out on attempt 2
+2024-12-04 01:07:20,191 - WARNING - Request ID 162 timed out on attempt 2
+2024-12-04 01:07:20,191 - WARNING - Request ID 164 timed out on attempt 2
+2024-12-04 01:07:20,192 - WARNING - Request ID 168 timed out on attempt 2
+2024-12-04 01:07:20,193 - WARNING - Request ID 174 timed out on attempt 2
+2024-12-04 01:07:20,193 - WARNING - Request ID 163 timed out on attempt 2
+2024-12-04 01:07:20,193 - WARNING - Request ID 165 timed out on attempt 2
+2024-12-04 01:07:20,193 - WARNING - Request ID 169 timed out on attempt 2
+2024-12-04 01:07:20,193 - WARNING - Request ID 175 timed out on attempt 2
+2024-12-04 01:07:20,193 - WARNING - Request ID 164 timed out on attempt 2
+2024-12-04 01:07:20,193 - WARNING - Request ID 166 timed out on attempt 2
+2024-12-04 01:07:20,193 - WARNING - Request ID 170 timed out on attempt 2
+2024-12-04 01:07:20,195 - WARNING - Request ID 176 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 165 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 167 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 171 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 177 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 166 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 168 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 172 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 178 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 167 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 169 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 173 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 179 timed out on attempt 2
+2024-12-04 01:07:20,196 - WARNING - Request ID 168 timed out on attempt 2
+2024-12-04 01:07:20,197 - WARNING - Request ID 170 timed out on attempt 2
+2024-12-04 01:07:20,197 - WARNING - Request ID 174 timed out on attempt 2
+2024-12-04 01:07:20,199 - WARNING - Request ID 180 timed out on attempt 2
+2024-12-04 01:07:32,160 - WARNING - Request ID 175 timed out on attempt 3
+2024-12-04 01:07:32,160 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/colour_preview.py'}, 'position': {'line': 24, 'character': 34}}, 'id': 175}
+2024-12-04 01:07:32,160 - INFO - Skipping node {'file_id': 'f_2', 'field_name': 'attribute', 'type': 'identifier', 'sb': 563, 'eb': 566, 'sp': [24, 34], 'ep': [24, 37], 'parent': 'a_4109', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,161 - WARNING - Request ID 176 timed out on attempt 3
+2024-12-04 01:07:32,161 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/colour_preview.py'}, 'position': {'line': 42, 'character': 54}}, 'id': 176}
+2024-12-04 01:07:32,161 - INFO - Skipping node {'file_id': 'f_2', 'field_name': 'attribute', 'type': 'identifier', 'sb': 880, 'eb': 887, 'sp': [42, 54], 'ep': [42, 61], 'parent': 'a_4208', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,161 - WARNING - Request ID 177 timed out on attempt 3
+2024-12-04 01:07:32,161 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/colour_preview.py'}, 'position': {'line': 43, 'character': 51}}, 'id': 177}
+2024-12-04 01:07:32,162 - INFO - Skipping node {'file_id': 'f_2', 'field_name': 'attribute', 'type': 'identifier', 'sb': 940, 'eb': 954, 'sp': [43, 51], 'ep': [43, 65], 'parent': 'a_4229', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,162 - WARNING - Request ID 181 timed out on attempt 3
+2024-12-04 01:07:32,162 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 5, 'character': 35}}, 'id': 181}
+2024-12-04 01:07:32,162 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 209, 'eb': 216, 'sp': [5, 35], 'ep': [5, 42], 'parent': 'a_4381', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,162 - WARNING - Request ID 169 timed out on attempt 3
+2024-12-04 01:07:32,162 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 8, 'character': 20}}, 'id': 169}
+2024-12-04 01:07:32,162 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 249, 'eb': 256, 'sp': [8, 20], 'ep': [8, 27], 'parent': 'a_4395', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,162 - WARNING - Request ID 171 timed out on attempt 3
+2024-12-04 01:07:32,162 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 8, 'character': 35}}, 'id': 171}
+2024-12-04 01:07:32,162 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 264, 'eb': 271, 'sp': [8, 35], 'ep': [8, 42], 'parent': 'a_4400', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,162 - WARNING - Request ID 178 timed out on attempt 3
+2024-12-04 01:07:32,163 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 12, 'character': 9}}, 'id': 178}
+2024-12-04 01:07:32,163 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 329, 'eb': 333, 'sp': [12, 9], 'ep': [12, 13], 'parent': 'a_4423', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,163 - WARNING - Request ID 182 timed out on attempt 3
+2024-12-04 01:07:32,163 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 12, 'character': 14}}, 'id': 182}
+2024-12-04 01:07:32,163 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 334, 'eb': 340, 'sp': [12, 14], 'ep': [12, 20], 'parent': 'a_4422', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,163 - WARNING - Request ID 170 timed out on attempt 3
+2024-12-04 01:07:32,163 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 12, 'character': 26}}, 'id': 170}
+2024-12-04 01:07:32,163 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 346, 'eb': 354, 'sp': [12, 26], 'ep': [12, 34], 'parent': 'a_4432', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,163 - WARNING - Request ID 172 timed out on attempt 3
+2024-12-04 01:07:32,163 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 12, 'character': 63}}, 'id': 172}
+2024-12-04 01:07:32,163 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 383, 'eb': 393, 'sp': [12, 63], 'ep': [12, 73], 'parent': 'a_4450', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,164 - WARNING - Request ID 179 timed out on attempt 3
+2024-12-04 01:07:32,164 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 12, 'character': 74}}, 'id': 179}
+2024-12-04 01:07:32,164 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 394, 'eb': 397, 'sp': [12, 74], 'ep': [12, 77], 'parent': 'a_4449', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,164 - WARNING - Request ID 183 timed out on attempt 3
+2024-12-04 01:07:32,164 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 15, 'character': 9}}, 'id': 183}
+2024-12-04 01:07:32,164 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 459, 'eb': 463, 'sp': [15, 9], 'ep': [15, 13], 'parent': 'a_4483', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,164 - WARNING - Request ID 171 timed out on attempt 3
+2024-12-04 01:07:32,164 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 15, 'character': 14}}, 'id': 171}
+2024-12-04 01:07:32,164 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 464, 'eb': 470, 'sp': [15, 14], 'ep': [15, 20], 'parent': 'a_4482', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,164 - WARNING - Request ID 173 timed out on attempt 3
+2024-12-04 01:07:32,164 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 15, 'character': 26}}, 'id': 173}
+2024-12-04 01:07:32,165 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 476, 'eb': 484, 'sp': [15, 26], 'ep': [15, 34], 'parent': 'a_4492', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,165 - WARNING - Request ID 180 timed out on attempt 3
+2024-12-04 01:07:32,165 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 15, 'character': 63}}, 'id': 180}
+2024-12-04 01:07:32,165 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 513, 'eb': 523, 'sp': [15, 63], 'ep': [15, 73], 'parent': 'a_4510', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,165 - WARNING - Request ID 184 timed out on attempt 3
+2024-12-04 01:07:32,165 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 15, 'character': 74}}, 'id': 184}
+2024-12-04 01:07:32,165 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 524, 'eb': 527, 'sp': [15, 74], 'ep': [15, 77], 'parent': 'a_4509', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,165 - WARNING - Request ID 172 timed out on attempt 3
+2024-12-04 01:07:32,165 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 16, 'character': 9}}, 'id': 172}
+2024-12-04 01:07:32,165 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 560, 'eb': 564, 'sp': [16, 9], 'ep': [16, 13], 'parent': 'a_4532', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,165 - WARNING - Request ID 174 timed out on attempt 3
+2024-12-04 01:07:32,166 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 16, 'character': 14}}, 'id': 174}
+2024-12-04 01:07:32,166 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 565, 'eb': 571, 'sp': [16, 14], 'ep': [16, 20], 'parent': 'a_4531', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,166 - WARNING - Request ID 181 timed out on attempt 3
+2024-12-04 01:07:32,166 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 16, 'character': 26}}, 'id': 181}
+2024-12-04 01:07:32,166 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 577, 'eb': 586, 'sp': [16, 26], 'ep': [16, 35], 'parent': 'a_4540', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,166 - WARNING - Request ID 185 timed out on attempt 3
+2024-12-04 01:07:32,166 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 19, 'character': 9}}, 'id': 185}
+2024-12-04 01:07:32,166 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 635, 'eb': 639, 'sp': [19, 9], 'ep': [19, 13], 'parent': 'a_4559', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,166 - WARNING - Request ID 173 timed out on attempt 3
+2024-12-04 01:07:32,166 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 19, 'character': 14}}, 'id': 173}
+2024-12-04 01:07:32,167 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 640, 'eb': 646, 'sp': [19, 14], 'ep': [19, 20], 'parent': 'a_4558', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,167 - WARNING - Request ID 175 timed out on attempt 3
+2024-12-04 01:07:32,167 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 22, 'character': 9}}, 'id': 175}
+2024-12-04 01:07:32,167 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 710, 'eb': 714, 'sp': [22, 9], 'ep': [22, 13], 'parent': 'a_4587', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,167 - WARNING - Request ID 182 timed out on attempt 3
+2024-12-04 01:07:32,167 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 22, 'character': 14}}, 'id': 182}
+2024-12-04 01:07:32,167 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 715, 'eb': 721, 'sp': [22, 14], 'ep': [22, 20], 'parent': 'a_4586', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,167 - WARNING - Request ID 186 timed out on attempt 3
+2024-12-04 01:07:32,167 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 29, 'character': 28}}, 'id': 186}
+2024-12-04 01:07:32,168 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 885, 'eb': 897, 'sp': [29, 28], 'ep': [29, 40], 'parent': 'a_4631', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,168 - WARNING - Request ID 174 timed out on attempt 3
+2024-12-04 01:07:32,168 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 30, 'character': 36}}, 'id': 174}
+2024-12-04 01:07:32,168 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 935, 'eb': 947, 'sp': [30, 36], 'ep': [30, 48], 'parent': 'a_4642', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,168 - WARNING - Request ID 176 timed out on attempt 3
+2024-12-04 01:07:32,168 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 36, 'character': 8}}, 'id': 176}
+2024-12-04 01:07:32,168 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'function', 'type': 'identifier', 'sb': 1007, 'eb': 1018, 'sp': [36, 8], 'ep': [36, 19], 'parent': 'a_4663', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,168 - WARNING - Request ID 183 timed out on attempt 3
+2024-12-04 01:07:32,168 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 36, 'character': 25}}, 'id': 183}
+2024-12-04 01:07:32,168 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1024, 'eb': 1031, 'sp': [36, 25], 'ep': [36, 32], 'parent': 'a_4667', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,169 - WARNING - Request ID 187 timed out on attempt 3
+2024-12-04 01:07:32,169 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 37, 'character': 13}}, 'id': 187}
+2024-12-04 01:07:32,169 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1046, 'eb': 1064, 'sp': [37, 13], 'ep': [37, 31], 'parent': 'a_4674', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,169 - WARNING - Request ID 175 timed out on attempt 3
+2024-12-04 01:07:32,169 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 39, 'character': 20}}, 'id': 175}
+2024-12-04 01:07:32,169 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1088, 'eb': 1092, 'sp': [39, 20], 'ep': [39, 24], 'parent': 'a_4686', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,169 - WARNING - Request ID 177 timed out on attempt 3
+2024-12-04 01:07:32,169 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 39, 'character': 30}}, 'id': 177}
+2024-12-04 01:07:32,170 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1098, 'eb': 1105, 'sp': [39, 30], 'ep': [39, 37], 'parent': 'a_4696', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,172 - WARNING - Request ID 184 timed out on attempt 3
+2024-12-04 01:07:32,173 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 40, 'character': 15}}, 'id': 184}
+2024-12-04 01:07:32,173 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'function', 'type': 'identifier', 'sb': 1122, 'eb': 1129, 'sp': [40, 15], 'ep': [40, 22], 'parent': 'a_4705', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,173 - WARNING - Request ID 188 timed out on attempt 3
+2024-12-04 01:07:32,173 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 40, 'character': 36}}, 'id': 188}
+2024-12-04 01:07:32,173 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1143, 'eb': 1150, 'sp': [40, 36], 'ep': [40, 43], 'parent': 'a_4713', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,173 - WARNING - Request ID 176 timed out on attempt 3
+2024-12-04 01:07:32,173 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 42, 'character': 16}}, 'id': 176}
+2024-12-04 01:07:32,173 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1169, 'eb': 1178, 'sp': [42, 16], 'ep': [42, 25], 'parent': 'a_4720', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,173 - WARNING - Request ID 178 timed out on attempt 3
+2024-12-04 01:07:32,173 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 43, 'character': 27}}, 'id': 178}
+2024-12-04 01:07:32,173 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'function', 'type': 'identifier', 'sb': 1207, 'eb': 1214, 'sp': [43, 27], 'ep': [43, 34], 'parent': 'a_4730', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,173 - WARNING - Request ID 185 timed out on attempt 3
+2024-12-04 01:07:32,173 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 43, 'character': 40}}, 'id': 185}
+2024-12-04 01:07:32,173 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1220, 'eb': 1229, 'sp': [43, 40], 'ep': [43, 49], 'parent': 'a_4735', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,173 - WARNING - Request ID 189 timed out on attempt 3
+2024-12-04 01:07:32,173 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 43, 'character': 61}}, 'id': 189}
+2024-12-04 01:07:32,173 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1241, 'eb': 1248, 'sp': [43, 61], 'ep': [43, 68], 'parent': 'a_4745', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,173 - WARNING - Request ID 177 timed out on attempt 3
+2024-12-04 01:07:32,173 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 44, 'character': 25}}, 'id': 177}
+2024-12-04 01:07:32,173 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1275, 'eb': 1281, 'sp': [44, 25], 'ep': [44, 31], 'parent': 'a_4753', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,173 - WARNING - Request ID 179 timed out on attempt 3
+2024-12-04 01:07:32,173 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 44, 'character': 46}}, 'id': 179}
+2024-12-04 01:07:32,173 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1296, 'eb': 1300, 'sp': [44, 46], 'ep': [44, 50], 'parent': 'a_4758', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,173 - WARNING - Request ID 186 timed out on attempt 3
+2024-12-04 01:07:32,173 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 44, 'character': 58}}, 'id': 186}
+2024-12-04 01:07:32,173 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1308, 'eb': 1321, 'sp': [44, 58], 'ep': [44, 71], 'parent': 'a_4765', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,173 - WARNING - Request ID 190 timed out on attempt 3
+2024-12-04 01:07:32,174 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 44, 'character': 72}}, 'id': 190}
+2024-12-04 01:07:32,174 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1322, 'eb': 1341, 'sp': [44, 72], 'ep': [44, 91], 'parent': 'a_4764', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,174 - WARNING - Request ID 178 timed out on attempt 3
+2024-12-04 01:07:32,174 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 44, 'character': 97}}, 'id': 178}
+2024-12-04 01:07:32,174 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1347, 'eb': 1353, 'sp': [44, 97], 'ep': [44, 103], 'parent': 'a_4773', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,174 - WARNING - Request ID 180 timed out on attempt 3
+2024-12-04 01:07:32,174 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 47, 'character': 13}}, 'id': 180}
+2024-12-04 01:07:32,174 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1402, 'eb': 1407, 'sp': [47, 13], 'ep': [47, 18], 'parent': 'a_4786', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,174 - WARNING - Request ID 187 timed out on attempt 3
+2024-12-04 01:07:32,174 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 47, 'character': 19}}, 'id': 187}
+2024-12-04 01:07:32,174 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1408, 'eb': 1420, 'sp': [47, 19], 'ep': [47, 31], 'parent': 'a_4785', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,174 - WARNING - Request ID 191 timed out on attempt 3
+2024-12-04 01:07:32,174 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 47, 'character': 37}}, 'id': 191}
+2024-12-04 01:07:32,174 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1426, 'eb': 1433, 'sp': [47, 37], 'ep': [47, 44], 'parent': 'a_4794', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,179 - WARNING - Request ID 179 timed out on attempt 3
+2024-12-04 01:07:32,179 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 47, 'character': 51}}, 'id': 179}
+2024-12-04 01:07:32,179 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1440, 'eb': 1454, 'sp': [47, 51], 'ep': [47, 65], 'parent': 'a_4799', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,180 - WARNING - Request ID 181 timed out on attempt 3
+2024-12-04 01:07:32,180 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 51, 'character': 8}}, 'id': 181}
+2024-12-04 01:07:32,180 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1509, 'eb': 1517, 'sp': [51, 8], 'ep': [51, 16], 'parent': 'a_4823', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,181 - WARNING - Request ID 188 timed out on attempt 3
+2024-12-04 01:07:32,181 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 52, 'character': 8}}, 'id': 188}
+2024-12-04 01:07:32,181 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1583, 'eb': 1591, 'sp': [52, 8], 'ep': [52, 16], 'parent': 'a_4843', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,181 - WARNING - Request ID 192 timed out on attempt 3
+2024-12-04 01:07:32,181 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/details.py'}, 'position': {'line': 53, 'character': 8}}, 'id': 192}
+2024-12-04 01:07:32,181 - INFO - Skipping node {'file_id': 'f_3', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1657, 'eb': 1670, 'sp': [53, 8], 'ep': [53, 21], 'parent': 'a_4863', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,181 - WARNING - Request ID 193 timed out on attempt 3
+2024-12-04 01:07:32,181 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 6, 'character': 32}}, 'id': 193}
+2024-12-04 01:07:32,181 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 234, 'eb': 241, 'sp': [6, 32], 'ep': [6, 39], 'parent': 'a_4948', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,181 - WARNING - Request ID 182 timed out on attempt 3
+2024-12-04 01:07:32,181 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 6, 'character': 47}}, 'id': 182}
+2024-12-04 01:07:32,181 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 249, 'eb': 256, 'sp': [6, 47], 'ep': [6, 54], 'parent': 'a_4953', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,181 - WARNING - Request ID 189 timed out on attempt 3
+2024-12-04 01:07:32,181 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 10, 'character': 9}}, 'id': 189}
+2024-12-04 01:07:32,182 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 326, 'eb': 330, 'sp': [10, 9], 'ep': [10, 13], 'parent': 'a_4976', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,182 - WARNING - Request ID 194 timed out on attempt 3
+2024-12-04 01:07:32,182 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 10, 'character': 14}}, 'id': 194}
+2024-12-04 01:07:32,182 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 331, 'eb': 337, 'sp': [10, 14], 'ep': [10, 20], 'parent': 'a_4975', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,182 - WARNING - Request ID 180 timed out on attempt 3
+2024-12-04 01:07:32,182 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 10, 'character': 26}}, 'id': 180}
+2024-12-04 01:07:32,182 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 343, 'eb': 351, 'sp': [10, 26], 'ep': [10, 34], 'parent': 'a_4985', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,183 - WARNING - Request ID 183 timed out on attempt 3
+2024-12-04 01:07:32,183 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 13, 'character': 9}}, 'id': 183}
+2024-12-04 01:07:32,183 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 462, 'eb': 466, 'sp': [13, 9], 'ep': [13, 13], 'parent': 'a_5021', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,183 - WARNING - Request ID 190 timed out on attempt 3
+2024-12-04 01:07:32,183 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 13, 'character': 14}}, 'id': 190}
+2024-12-04 01:07:32,183 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 467, 'eb': 473, 'sp': [13, 14], 'ep': [13, 20], 'parent': 'a_5020', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,185 - WARNING - Request ID 195 timed out on attempt 3
+2024-12-04 01:07:32,185 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 19, 'character': 13}}, 'id': 195}
+2024-12-04 01:07:32,185 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 589, 'eb': 607, 'sp': [19, 13], 'ep': [19, 31], 'parent': 'a_5060', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,185 - WARNING - Request ID 181 timed out on attempt 3
+2024-12-04 01:07:32,185 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 20, 'character': 15}}, 'id': 181}
+2024-12-04 01:07:32,185 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'function', 'type': 'identifier', 'sb': 625, 'eb': 644, 'sp': [20, 15], 'ep': [20, 34], 'parent': 'a_5071', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,185 - WARNING - Request ID 184 timed out on attempt 3
+2024-12-04 01:07:32,185 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 20, 'character': 40}}, 'id': 184}
+2024-12-04 01:07:32,185 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 650, 'eb': 654, 'sp': [20, 40], 'ep': [20, 44], 'parent': 'a_5076', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,186 - WARNING - Request ID 191 timed out on attempt 3
+2024-12-04 01:07:32,186 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 20, 'character': 50}}, 'id': 191}
+2024-12-04 01:07:32,187 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 660, 'eb': 667, 'sp': [20, 50], 'ep': [20, 57], 'parent': 'a_5086', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,187 - WARNING - Request ID 196 timed out on attempt 3
+2024-12-04 01:07:32,187 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 21, 'character': 13}}, 'id': 196}
+2024-12-04 01:07:32,187 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 683, 'eb': 688, 'sp': [21, 13], 'ep': [21, 18], 'parent': 'a_5095', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,187 - WARNING - Request ID 182 timed out on attempt 3
+2024-12-04 01:07:32,187 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 21, 'character': 19}}, 'id': 182}
+2024-12-04 01:07:32,187 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 689, 'eb': 701, 'sp': [21, 19], 'ep': [21, 31], 'parent': 'a_5094', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,188 - WARNING - Request ID 185 timed out on attempt 3
+2024-12-04 01:07:32,188 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 21, 'character': 37}}, 'id': 185}
+2024-12-04 01:07:32,188 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 707, 'eb': 714, 'sp': [21, 37], 'ep': [21, 44], 'parent': 'a_5103', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,188 - WARNING - Request ID 192 timed out on attempt 3
+2024-12-04 01:07:32,188 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 21, 'character': 51}}, 'id': 192}
+2024-12-04 01:07:32,189 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 721, 'eb': 735, 'sp': [21, 51], 'ep': [21, 65], 'parent': 'a_5108', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,189 - WARNING - Request ID 197 timed out on attempt 3
+2024-12-04 01:07:32,189 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 25, 'character': 8}}, 'id': 197}
+2024-12-04 01:07:32,189 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 790, 'eb': 798, 'sp': [25, 8], 'ep': [25, 16], 'parent': 'a_5132', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,189 - WARNING - Request ID 183 timed out on attempt 3
+2024-12-04 01:07:32,189 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/exception_hierarchy.py'}, 'position': {'line': 26, 'character': 8}}, 'id': 183}
+2024-12-04 01:07:32,189 - INFO - Skipping node {'file_id': 'f_4', 'field_name': 'attribute', 'type': 'identifier', 'sb': 900, 'eb': 913, 'sp': [26, 8], 'ep': [26, 21], 'parent': 'a_5152', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,189 - WARNING - Request ID 198 timed out on attempt 3
+2024-12-04 01:07:32,189 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 27, 'character': 21}}, 'id': 198}
+2024-12-04 01:07:32,189 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 764, 'eb': 772, 'sp': [27, 21], 'ep': [27, 29], 'parent': 'a_5384', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,192 - WARNING - Request ID 193 timed out on attempt 3
+2024-12-04 01:07:32,193 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 28, 'character': 41}}, 'id': 193}
+2024-12-04 01:07:32,193 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 820, 'eb': 840, 'sp': [28, 41], 'ep': [28, 61], 'parent': 'a_5401', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,193 - WARNING - Request ID 199 timed out on attempt 3
+2024-12-04 01:07:32,193 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 32, 'character': 22}}, 'id': 199}
+2024-12-04 01:07:32,193 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 972, 'eb': 981, 'sp': [32, 22], 'ep': [32, 31], 'parent': 'a_5433', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,193 - WARNING - Request ID 184 timed out on attempt 3
+2024-12-04 01:07:32,193 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 38, 'character': 8}}, 'id': 184}
+2024-12-04 01:07:32,193 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1122, 'eb': 1130, 'sp': [38, 8], 'ep': [38, 16], 'parent': 'a_5485', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,193 - WARNING - Request ID 186 timed out on attempt 3
+2024-12-04 01:07:32,193 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 38, 'character': 29}}, 'id': 186}
+2024-12-04 01:07:32,193 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'function', 'type': 'identifier', 'sb': 1143, 'eb': 1157, 'sp': [38, 29], 'ep': [38, 43], 'parent': 'a_5496', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,193 - WARNING - Request ID 194 timed out on attempt 3
+2024-12-04 01:07:32,193 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 38, 'character': 48}}, 'id': 194}
+2024-12-04 01:07:32,193 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1162, 'eb': 1168, 'sp': [38, 48], 'ep': [38, 54], 'parent': 'a_5501', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,193 - WARNING - Request ID 200 timed out on attempt 3
+2024-12-04 01:07:32,193 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 38, 'character': 55}}, 'id': 200}
+2024-12-04 01:07:32,193 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1169, 'eb': 1183, 'sp': [38, 55], 'ep': [38, 69], 'parent': 'a_5500', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,193 - WARNING - Request ID 185 timed out on attempt 3
+2024-12-04 01:07:32,193 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 41, 'character': 8}}, 'id': 185}
+2024-12-04 01:07:32,193 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1237, 'eb': 1253, 'sp': [41, 8], 'ep': [41, 24], 'parent': 'a_5536', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,194 - WARNING - Request ID 187 timed out on attempt 3
+2024-12-04 01:07:32,194 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 42, 'character': 8}}, 'id': 187}
+2024-12-04 01:07:32,194 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1291, 'eb': 1298, 'sp': [42, 8], 'ep': [42, 15], 'parent': 'a_5558', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,194 - WARNING - Request ID 195 timed out on attempt 3
+2024-12-04 01:07:32,194 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/resourcelinks.py'}, 'position': {'line': 43, 'character': 30}}, 'id': 195}
+2024-12-04 01:07:32,194 - INFO - Skipping node {'file_id': 'f_5', 'field_name': 'attribute', 'type': 'identifier', 'sb': 1362, 'eb': 1381, 'sp': [43, 30], 'ep': [43, 49], 'parent': 'a_5581', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,194 - WARNING - Request ID 201 timed out on attempt 3
+2024-12-04 01:07:32,194 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 6, 'character': 33}}, 'id': 201}
+2024-12-04 01:07:32,194 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 139, 'eb': 145, 'sp': [6, 33], 'ep': [6, 39], 'parent': 'a_5625', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,194 - WARNING - Request ID 186 timed out on attempt 3
+2024-12-04 01:07:32,195 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 9, 'character': 13}}, 'id': 186}
+2024-12-04 01:07:32,195 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 211, 'eb': 214, 'sp': [9, 13], 'ep': [9, 16], 'parent': 'a_5652', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,195 - WARNING - Request ID 188 timed out on attempt 3
+2024-12-04 01:07:32,195 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 10, 'character': 8}}, 'id': 188}
+2024-12-04 01:07:32,195 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 229, 'eb': 234, 'sp': [10, 8], 'ep': [10, 13], 'parent': 'a_5661', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,195 - WARNING - Request ID 196 timed out on attempt 3
+2024-12-04 01:07:32,195 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 10, 'character': 16}}, 'id': 196}
+2024-12-04 01:07:32,195 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 237, 'eb': 245, 'sp': [10, 16], 'ep': [10, 24], 'parent': 'a_5660', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,195 - WARNING - Request ID 202 timed out on attempt 3
+2024-12-04 01:07:32,195 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 12, 'character': 44}}, 'id': 202}
+2024-12-04 01:07:32,195 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 293, 'eb': 308, 'sp': [12, 44], 'ep': [12, 59], 'parent': 'a_5682', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,195 - WARNING - Request ID 187 timed out on attempt 3
+2024-12-04 01:07:32,195 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 13, 'character': 11}}, 'id': 187}
+2024-12-04 01:07:32,195 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 330, 'eb': 337, 'sp': [13, 11], 'ep': [13, 18], 'parent': 'a_5695', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,195 - WARNING - Request ID 189 timed out on attempt 3
+2024-12-04 01:07:32,195 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 14, 'character': 26}}, 'id': 189}
+2024-12-04 01:07:32,195 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 396, 'eb': 404, 'sp': [14, 26], 'ep': [14, 34], 'parent': 'a_5720', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,196 - WARNING - Request ID 197 timed out on attempt 3
+2024-12-04 01:07:32,196 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 14, 'character': 35}}, 'id': 197}
+2024-12-04 01:07:32,196 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 405, 'eb': 408, 'sp': [14, 35], 'ep': [14, 38], 'parent': 'a_5719', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,197 - WARNING - Request ID 203 timed out on attempt 3
+2024-12-04 01:07:32,197 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 14, 'character': 61}}, 'id': 203}
+2024-12-04 01:07:32,197 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 431, 'eb': 434, 'sp': [14, 61], 'ep': [14, 64], 'parent': 'a_5738', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,197 - WARNING - Request ID 188 timed out on attempt 3
+2024-12-04 01:07:32,197 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 14, 'character': 65}}, 'id': 188}
+2024-12-04 01:07:32,197 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 435, 'eb': 441, 'sp': [14, 65], 'ep': [14, 71], 'parent': 'a_5737', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,197 - WARNING - Request ID 190 timed out on attempt 3
+2024-12-04 01:07:32,197 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 14, 'character': 72}}, 'id': 190}
+2024-12-04 01:07:32,198 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 442, 'eb': 462, 'sp': [14, 72], 'ep': [14, 92], 'parent': 'a_5736', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,198 - WARNING - Request ID 198 timed out on attempt 3
+2024-12-04 01:07:32,198 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 19, 'character': 8}}, 'id': 198}
+2024-12-04 01:07:32,198 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 517, 'eb': 533, 'sp': [19, 8], 'ep': [19, 24], 'parent': 'a_5764', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,198 - WARNING - Request ID 204 timed out on attempt 3
+2024-12-04 01:07:32,198 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 20, 'character': 8}}, 'id': 204}
+2024-12-04 01:07:32,198 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'function', 'type': 'identifier', 'sb': 574, 'eb': 592, 'sp': [20, 8], 'ep': [20, 26], 'parent': 'a_5787', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,198 - WARNING - Request ID 189 timed out on attempt 3
+2024-12-04 01:07:32,198 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 21, 'character': 19}}, 'id': 189}
+2024-12-04 01:07:32,198 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 617, 'eb': 626, 'sp': [21, 19], 'ep': [21, 28], 'parent': 'a_5798', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,198 - WARNING - Request ID 191 timed out on attempt 3
+2024-12-04 01:07:32,198 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 21, 'character': 66}}, 'id': 191}
+2024-12-04 01:07:32,198 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 664, 'eb': 670, 'sp': [21, 66], 'ep': [21, 72], 'parent': 'a_5796', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,198 - WARNING - Request ID 199 timed out on attempt 3
+2024-12-04 01:07:32,198 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/extensions/nitpick_file_ignorer.py'}, 'position': {'line': 21, 'character': 73}}, 'id': 199}
+2024-12-04 01:07:32,198 - INFO - Skipping node {'file_id': 'f_6', 'field_name': 'attribute', 'type': 'identifier', 'sb': 671, 'eb': 680, 'sp': [21, 73], 'ep': [21, 82], 'parent': 'a_5795', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,198 - WARNING - Request ID 205 timed out on attempt 3
+2024-12-04 01:07:32,198 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/conf.py'}, 'position': {'line': 21, 'character': 4}}, 'id': 205}
+2024-12-04 01:07:32,198 - INFO - Skipping node {'file_id': 'f_7', 'field_name': 'attribute', 'type': 'identifier', 'sb': 688, 'eb': 692, 'sp': [21, 4], 'ep': [21, 8], 'parent': 'a_5864', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,198 - WARNING - Request ID 190 timed out on attempt 3
+2024-12-04 01:07:32,198 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/conf.py'}, 'position': {'line': 21, 'character': 9}}, 'id': 190}
+2024-12-04 01:07:32,198 - INFO - Skipping node {'file_id': 'f_7', 'field_name': 'attribute', 'type': 'identifier', 'sb': 693, 'eb': 699, 'sp': [21, 9], 'ep': [21, 15], 'parent': 'a_5863', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,199 - WARNING - Request ID 192 timed out on attempt 3
+2024-12-04 01:07:32,199 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/conf.py'}, 'position': {'line': 21, 'character': 22}}, 'id': 192}
+2024-12-04 01:07:32,199 - INFO - Skipping node {'file_id': 'f_7', 'field_name': 'attribute', 'type': 'identifier', 'sb': 706, 'eb': 710, 'sp': [21, 22], 'ep': [21, 26], 'parent': 'a_5876', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,199 - WARNING - Request ID 200 timed out on attempt 3
+2024-12-04 01:07:32,199 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/conf.py'}, 'position': {'line': 21, 'character': 27}}, 'id': 200}
+2024-12-04 01:07:32,199 - INFO - Skipping node {'file_id': 'f_7', 'field_name': 'attribute', 'type': 'identifier', 'sb': 711, 'eb': 718, 'sp': [21, 27], 'ep': [21, 34], 'parent': 'a_5875', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,199 - WARNING - Request ID 206 timed out on attempt 3
+2024-12-04 01:07:32,199 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/conf.py'}, 'position': {'line': 22, 'character': 4}}, 'id': 206}
+2024-12-04 01:07:32,199 - INFO - Skipping node {'file_id': 'f_7', 'field_name': 'attribute', 'type': 'identifier', 'sb': 730, 'eb': 734, 'sp': [22, 4], 'ep': [22, 8], 'parent': 'a_5893', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,199 - WARNING - Request ID 191 timed out on attempt 3
+2024-12-04 01:07:32,199 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/conf.py'}, 'position': {'line': 22, 'character': 9}}, 'id': 191}
+2024-12-04 01:07:32,199 - INFO - Skipping node {'file_id': 'f_7', 'field_name': 'attribute', 'type': 'identifier', 'sb': 735, 'eb': 741, 'sp': [22, 9], 'ep': [22, 15], 'parent': 'a_5892', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,200 - WARNING - Request ID 193 timed out on attempt 3
+2024-12-04 01:07:32,200 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/conf.py'}, 'position': {'line': 22, 'character': 19}}, 'id': 193}
+2024-12-04 01:07:32,200 - INFO - Skipping node {'file_id': 'f_7', 'field_name': 'attribute', 'type': 'identifier', 'sb': 745, 'eb': 749, 'sp': [22, 19], 'ep': [22, 23], 'parent': 'a_5903', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,200 - WARNING - Request ID 201 timed out on attempt 3
+2024-12-04 01:07:32,200 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/conf.py'}, 'position': {'line': 22, 'character': 24}}, 'id': 201}
+2024-12-04 01:07:32,200 - INFO - Skipping node {'file_id': 'f_7', 'field_name': 'attribute', 'type': 'identifier', 'sb': 750, 'eb': 757, 'sp': [22, 24], 'ep': [22, 31], 'parent': 'a_5902', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:32,200 - WARNING - Request ID 207 timed out on attempt 3
+2024-12-04 01:07:32,200 - ERROR - Failed to get a response after 3 attempts for message: {'jsonrpc': '2.0', 'method': 'textDocument/definition', 'params': {'textDocument': {'uri': 'file:///home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py/docs/conf.py'}, 'position': {'line': 94, 'character': 5}}, 'id': 207}
+2024-12-04 01:07:32,200 - INFO - Skipping node {'file_id': 'f_7', 'field_name': 'function', 'type': 'identifier', 'sb': 2801, 'eb': 2805, 'sp': [94, 5], 'ep': [94, 9], 'parent': 'a_6179', 'children': []} due to repeated timeouts.
+2024-12-04 01:07:42,387 - ERROR - Connection closed while reading header
+2024-12-04 01:07:42,387 - INFO - Closed connection to LSP server at localhost:4002
+2024-12-04 01:07:42,387 - ERROR - Connection closed while reading header
+2024-12-04 01:07:42,387 - INFO - Closed connection to LSP server at localhost:4003
+2024-12-04 01:07:42,387 - ERROR - Connection closed while reading header
+2024-12-04 01:07:42,387 - INFO - Closed connection to LSP server at localhost:4004
+2024-12-04 01:07:42,387 - ERROR - Connection closed while reading header
+2024-12-04 01:07:42,387 - INFO - Closed connection to LSP server at localhost:4005
+2024-12-04 01:07:42,394 - INFO - Terminated pylsp process on port 4002
+2024-12-04 01:07:42,409 - INFO - Terminated pylsp process on port 4003
+2024-12-04 01:07:42,418 - INFO - Terminated pylsp process on port 4004
+2024-12-04 01:07:42,434 - INFO - Terminated pylsp process on port 4005
