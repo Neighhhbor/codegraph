@@ -17,6 +17,55 @@ logger = logging.getLogger(__name__)  # 创建日志记录器
 file_id_cache = {}  # 缓存 file_id
 file_tree_cache = {}  # 缓存每个文件的 identifier 节点
 
+
+def build_file_id_cache(graph):
+    """
+    遍历所有节点，构建 file_id_cache，快速定位文件路径对应的 file_id。
+    """
+    for node_id, node_data in graph.nodes(data=True):
+        if node_data.get("type") == "file" and "path" in node_data:
+            file_path = node_data["path"]
+            file_id_cache[file_path] = node_id  # 将路径映射到 file_id
+            logger.debug(f"缓存文件路径: {file_path} -> {node_id}")
+
+def build_file_tree_cache(graph):
+    """
+    遍历每个文件节点，递归查找文件中所有的 identifier 节点，构建 file_tree_cache。
+    """
+    # 遍历所有文件节点，构建缓存
+    for file_id, file_path in tqdm(file_id_cache.items(), desc="构建文件树缓存"):
+        file_tree_cache[file_id] = []  # 初始化缓存，存储该文件下的所有 identifier 节点
+        find_identifiers_for_file(graph, file_id)  # 递归查找并填充缓存
+
+def find_identifiers_for_file(graph, file_id):
+    """
+    递归遍历文件节点的子树，查找所有的 identifier 节点，并存入 file_tree_cache。
+    """
+    if file_id not in file_tree_cache:
+        file_tree_cache[file_id] = []
+
+    file_node = graph.nodes[file_id]
+    children_ids = file_node.get("children", [])
+    
+    for child_id in children_ids:
+        find_identifier_in_subtree(graph, child_id, file_id)
+
+def find_identifier_in_subtree(graph, node_id, file_id):
+    """
+    在给定文件节点的子树中递归查找 identifier 节点，并将其添加到 file_tree_cache。
+    """
+    node_data = graph.nodes[node_id]
+    
+    # 如果是 identifier 节点，保存它
+    if node_data.get("type") == "identifier":
+        file_tree_cache[file_id].append(node_id)
+
+    # 递归查找子节点
+    children_ids = node_data.get("children", [])
+    for child_id in children_ids:
+        find_identifier_in_subtree(graph, child_id, file_id)
+        
+        
 def find_definition_node(graph, definition):
     """
     根据 definition 信息找到对应的定义节点。

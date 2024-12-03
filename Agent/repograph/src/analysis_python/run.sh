@@ -1,4 +1,4 @@
-REPO_PATH="/home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Software-Development/discord-py"
+REPO_PATH="/home/shixianjie/codegraph/codegraph/DevEval/Source_Code/Utilities/stellar"
 RESULTDIR="./output"
 PORT="3000"
 

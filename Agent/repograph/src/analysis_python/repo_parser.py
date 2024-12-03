@@ -197,7 +197,9 @@ def main():
     repo_path = args.repo_path
     results_dir = os.path.join(args.output_dir, os.path.basename(repo_path))
     os.makedirs(results_dir, exist_ok=True)
-    
+    if os.path.exists(os.path.join(results_dir, f'repoparser.json')):
+        print(f"Repo {repo_path} already processed, skipping...")
+        return
     repo_parser = RepoParser()
 
     # 解析仓库结构和生成项目图

@@ -27,7 +27,7 @@ def analyze_repo(repo_path, repo_name, output_path):
         parser.parse()
     except Exception as e:
         logging.error(f"Error parsing repository {repo_name} at {repo_path}: {e}")
-        return
+        # return
     
     functions = []
     classes = []
