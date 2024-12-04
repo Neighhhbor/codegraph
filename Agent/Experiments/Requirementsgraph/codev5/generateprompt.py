@@ -117,8 +117,12 @@ def generate_prompt(data, related_code):
         - **Context Requirement**: Code that shares the same context with `{namespace}`.
         - **Similarity Requirement**: Code that has similar functionality or structure to `{namespace}`.
         - Based on the retrieved code information , complete the target `{namespace}` function.
-        
-    2. **Web Search**: 
+    
+    2. **Related Code**:
+        - Using the `namespace_code_tool` to gather the related code information.
+        - It will return the code and the path of the code.
+    
+    3. **Web Search**: 
         - Using the `duckduckgo_search_tool` to gather any contextual information that might help understand the purpose or domain-specific usage of `{function_name}`.
         - Based on the search results, reason whether you need additional context from the codebase before proceeding.
 

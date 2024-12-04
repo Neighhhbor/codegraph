@@ -210,5 +210,10 @@ def main():
 
     print("解析完成。所有结果已导出到output文件夹。")
 
+def repo_parser_main(repo_path, output_dir):
+    repo_parser = RepoParser()
+    project_graph = repo_parser.parse_repo(repo_path)
+    return project_graph
+
 if __name__ == "__main__":
     main()

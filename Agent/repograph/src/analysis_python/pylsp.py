@@ -103,7 +103,7 @@ class LSPConnection:
             if req_id is None:
                 continue
             try:
-                await asyncio.wait_for(self.pending_requests[req_id].wait(), timeout=10)
+                await asyncio.wait_for(self.pending_requests[req_id].wait(), timeout=3)
             except asyncio.TimeoutError:
                 self.logger.warning(f"Request ID {req_id} timed out on attempt {attempt + 1}")
                 del self.pending_requests[req_id]
@@ -197,7 +197,7 @@ async def process_ast_nodes(lsp_connections, graph):
 
     target_nodes = [ (node_id, data) for node_id, data in graph.nodes(data=True)
                      if data.get("type") == 'identifier' and data.get("field_name") in ['function', 'attribute'] ]
-    progress_bar = tqdm(total=len(target_nodes), desc="Processing nodes", ncols=100)
+    progress_bar = tqdm(total=len(target_nodes), desc="Processing definitions", ncols=100)
     for i, (node_id, node_data) in enumerate(target_nodes):
             file_id = node_data["file_id"]
             file_path = graph.nodes[file_id]["path"]
@@ -256,6 +256,9 @@ async def main():
     repo_path = args.repo_path
     results_dir = os.path.join(args.output_dir, os.path.basename(repo_path))
     os.makedirs(results_dir, exist_ok=True)
+    output_path = os.path.join(results_dir, 'definitiongraph.json')
+    if os.path.exists(output_path):
+        return
     root_uri = f"file://{repo_path}"
     graph_path = os.path.join(results_dir, 'repoparser.json')
 
@@ -293,7 +296,7 @@ async def main():
         await process_ast_nodes(lsp_connections, graph)
 
         # 保存最终结果
-        output_path = os.path.join(results_dir, 'definitiongraph.json')
+       
         with open(output_path, 'w') as f:
             json.dump(nx.node_link_data(graph), f, indent=4)
         logger.info(f"Definition graph saved to {output_path}")
@@ -310,6 +313,49 @@ async def main():
             process.terminate()
             process.wait()
             logger.info(f"Terminated pylsp process on port {process.args[-1]}")
+        os.remove(graph_path)
+
+async def pylsp_main(graph, repo_path, output_dir, ports):
+    root_uri = f"file://{repo_path}"
+    lsp_ports = ports
+
+    lsp_processes = []
+    for port in lsp_ports:
+        process = start_pylsp(port)
+        lsp_processes.append(process)
+    await asyncio.sleep(2)  # 等待所有 pylsp 启动
+
+    # 创建多个 LSP 连接
+    lsp_connections = []
+    for idx, port in enumerate(lsp_ports):
+        connection = LSPConnection(LSP_HOST, port, connection_id=idx)
+        await connection.connect()
+        lsp_connections.append(connection)
+
+    try:
+        # 初始化所有 LSP 连接
+        initialize_tasks = [initialize_connection(connection, root_uri) for connection in lsp_connections]
+        logger.info(f"Initializing {len(initialize_tasks)} LSP connections...")
+        await asyncio.gather(*initialize_tasks)
+
+        # 处理 AST 节点，分配给不同的 LSP 连接
+        await process_ast_nodes(lsp_connections, graph)
+
+
+    except Exception as e:
+        logger.error(f"Error occurred: {e}")
+    finally:
+        # 关闭所有 LSP 连接
+        close_tasks = [connection.close() for connection in lsp_connections]
+        await asyncio.gather(*close_tasks)
+
+        # 终止所有 pylsp 进程
+        for process in lsp_processes:
+            process.terminate()
+            process.wait()
+            logger.info(f"Terminated pylsp process on port {process.args[-1]}")
+
+        return graph
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -172,6 +172,11 @@ def main():
     save_graph(graph, output_path)
     os.remove(graph_path)
 
+def relation_parser_main(graph, repo_path, output_dir):
+    builder = GraphBuilder(graph)
+    builder.build_contains_relationship()
+    builder.build_calls_relationship()
+    return graph
 
 if __name__ == "__main__":
     main()

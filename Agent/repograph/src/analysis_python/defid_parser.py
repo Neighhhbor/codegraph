@@ -169,7 +169,7 @@ def add_definition_id_to_nodes(graph):
     在每个有 definition 信息的节点上添加 defid 字段。
     """
     nodes = list(graph.nodes(data=True))  # 将节点转为列表
-    for node_id, node_data in tqdm(nodes, desc="Processing Nodes"):  # 使用 tqdm 进度条
+    for node_id, node_data in tqdm(nodes, desc="Processing defids"):  # 使用 tqdm 进度条
         if node_data["type"] in ['identifier'] and node_data.get("field_name") in ['function', 'attribute']:
             definition = node_data.get("definition",[])
             if len(definition) != 0:
@@ -224,7 +224,8 @@ def main():
     os.makedirs(results_dir, exist_ok=True)
     input_path = os.path.join(results_dir, 'definitiongraph.json')
     output_path = os.path.join(results_dir, 'defid_graph.json')     
-
+    if os.path.exists(output_path):
+        return
     graph = load_graph(input_path)
     if graph is None:
         return
@@ -232,6 +233,10 @@ def main():
     add_definition_id_to_nodes(graph)
     save_graph(graph, output_path)
     os.remove(input_path)
+
+def defid_main(graph, repo_path, output_dir):
+    add_definition_id_to_nodes(graph)
+    return graph
 
 if __name__ == "__main__":
     main()

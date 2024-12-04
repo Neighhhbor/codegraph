@@ -381,7 +381,8 @@ def main():
     reponame = os.path.basename(repo_path)
     input_path = os.path.join(results_dir, 'relation_graph.json')
     output_path = os.path.join(results_dir, f'{reponame}.json')
-
+    if os.path.exists(output_path):
+        return      
     graph = load_graph(input_path)
     if graph is None:
         return
@@ -400,6 +401,14 @@ def main():
     save_graph(skeleton, output_path)
     os.remove(input_path)
     
-    
+
+def extract_main(graph ,repo_path, output_dir):
+   
+    skeleton = extract_skeleton(graph)
+    transfer_calls_relationships_to_skeleton(graph, skeleton)
+    change_path_to_relative(skeleton, repo_path)
+    generate_namespaces(skeleton)
+    update_edges_with_namespaces(skeleton)
+    return skeleton
 if __name__ == "__main__":
     main()

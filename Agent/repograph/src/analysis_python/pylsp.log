@@ -1,12 +1,1 @@
-2024-12-03 21:49:50,132 - INFO - Started pylsp process on port 3000
-2024-12-03 21:49:50,133 - INFO - Started pylsp process on port 3001
-2024-12-03 21:49:50,134 - INFO - Started pylsp process on port 3002
-2024-12-03 21:49:50,134 - INFO - Started pylsp process on port 3003
-2024-12-03 21:49:52,143 - INFO - Connected to LSP server at localhost:3000
-2024-12-03 21:49:52,144 - INFO - Connected to LSP server at localhost:3001
-2024-12-03 21:49:52,145 - INFO - Connected to LSP server at localhost:3002
-2024-12-03 21:49:52,146 - INFO - Connected to LSP server at localhost:3003
-2024-12-03 21:49:52,171 - INFO - Python Language Server initialized successfully.
-2024-12-03 21:49:53,366 - INFO - Python Language Server initialized successfully.
-2024-12-03 21:49:53,372 - INFO - Python Language Server initialized successfully.
-2024-12-03 21:49:53,516 - INFO - Python Language Server initialized successfully.
+2024-12-04 11:10:57,309 - INFO - 图已存在: ./testout/stellar/stellar.json

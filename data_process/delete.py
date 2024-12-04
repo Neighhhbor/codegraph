@@ -24,7 +24,7 @@ def delete_files_in_subdirectories(root_dir, target_filename):
 
 if __name__ == "__main__":
     # 指定根目录和目标文件名
-    root_directory = "/home/shixianjie/codegraph/codegraph/data_process/repograph"  # 修改为你的目标目录
+    root_directory = "/home/shixianjie/codegraph/codegraph/data_process/relations"  # 修改为你的目标目录
     target_file_name = "repoparser.json"    # 修改为你要删除的文件名
 
     delete_files_in_subdirectories(root_directory, target_file_name)

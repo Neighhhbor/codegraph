@@ -28,3 +28,5 @@ Repos/**
 **/key.py
 
 **/analysis_java
+
+*.log

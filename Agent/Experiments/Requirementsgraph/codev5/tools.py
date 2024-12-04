@@ -10,6 +10,17 @@ from langchain.tools import tool
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
 import black
+
+import os
+import json
+import networkx as nx
+import logging
+from typing import List, Dict
+
+# logging.basicConfig(level=logging.DEBUG)
+# logger = logging.getLogger(__name__)
+
+GRAPH_DIR = "/home/shixianjie/codegraph/codegraph/data_process/repograph"
 # 设置可见的 CUDA 设备为 2 和 3
 os.environ['CUDA_VISIBLE_DEVICES'] = '2,3'
 # 设置 HuggingFace 镜像站点
@@ -98,18 +109,90 @@ def extract_related_code(dependencies, code_map):
     return related_code
 
 
-# 新增 DuckDuckGo 搜索工具
-# @tool
-# def duckduckgo_search_tool(query: str) -> str: 
-#     """
-#     Perform a web search using DuckDuckGo and summarize the results.
-#     :param query: The search query
-#     :return: A summary of the search results
-#     """
-#     search = DuckDuckGoSearchRun()
-#     # llm = ChatOpenAI(model_name="gpt-4o", temperature=0)  # Use GPT-4 as the LLM
-#     return search.invoke(query)
+
+
+def load_graph(input_path: str) -> nx.Graph:
+    """
+    Load a graph from a JSON file.
+    """
+    try:
+        with open(input_path, 'r') as f:
+            data = json.load(f)
+        graph = nx.node_link_graph(data)
+        print(f"Graph successfully loaded: {input_path}")
+        return graph
+    except FileNotFoundError:
+        # print(f"Graph file not found: {input_path}")
+        return None
+    except Exception as e:
+        # print(f"Error loading graph: {e}")
+        return None
+
+
+def get_caller_nodes_for_namespace(namespace: str) -> Dict:
+    """
+    Retrieve the caller nodes related to a given namespace.
+    """
+    reponame = namespace.split('.')[0]
+    graph_path = os.path.join(GRAPH_DIR,f"{reponame}", f"{reponame}.json")
+    if not os.path.exists(graph_path):
+        raise ValueError(f"Graph database file {graph_path} does not exist")
     
+    graph = load_graph(graph_path)  
+    caller_nodes = []
+    container_nodes = []
+
+    for u, v, data in graph.edges(data=True):
+        if data.get("relationship") == "CALLS" and data.get('target_namespace') == namespace:
+            caller_nodes.append(u)
+        if data.get("relationship") == "CONTAINS" and data.get('target_namespace') == namespace:
+            container_nodes.append(u)
+    
+    related_code = {
+        "namespace": namespace,
+        "caller_nodes": [],
+        "container_nodes": []
+    }
+    
+    for node in caller_nodes:
+        node_data = graph.nodes[node]
+        related_code["caller_nodes"].append(format_node_data(node_data))
+    
+    for node in container_nodes:
+        node_data = graph.nodes[node]
+        related_code["container_nodes"].append(format_node_data(node_data))
+    
+    print(f"Found {len(caller_nodes)} CALLS relationships and {len(container_nodes)} CONTAINS relationships for namespace {namespace}")
+    return related_code
+
+
+def format_node_data(node_data: Dict) -> Dict:
+    """
+    Format and return the node data as a JSON-compatible dictionary.
+    """
+    return {
+        "namespace": node_data.get('namespace', ''),
+        "name": node_data.get('name', ''),
+        "path": node_data.get('path', ''),
+        "type": node_data.get('type', '').split('_')[0],
+        "code": node_data.get('code', '')
+    }
+
+
+@tool
+def related_code_tool(namespace: str) -> str:
+    """
+    Tool to retrieve related code for a given namespace based on its dependencies and relationships.
+    
+    :param namespace: The namespace for which related code is retrieved.
+    :return: A JSON string of related code organized by dependency type.
+    """
+    try:
+        related_code = get_caller_nodes_for_namespace(namespace)
+        return json.dumps(related_code, indent=4, ensure_ascii=False)
+    except Exception as e:
+        return json.dumps({"error": str(e)}, indent=4, ensure_ascii=False)
+
     
 @tool
 def duckduckgo_search_tool(query: str) -> str: 
@@ -215,6 +298,7 @@ if __name__ == "__main__":
     start_time = time.time()
     
     # test
-    namespace = "mistune.toc.add_toc_hook"
+    namespace = "mistune.src.toc.add_toc_hook"
     print(code_search_tool.invoke(namespace))
+    print(related_code_tool.invoke(namespace))
     

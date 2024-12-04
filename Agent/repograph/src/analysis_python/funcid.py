@@ -81,13 +81,20 @@ def main():
     input_path = os.path.join(results_dir, 'defid_graph.json')
     output_path = os.path.join(results_dir, 'funcid_graph.json')
 
+    if os.path.exists(output_path):
+        return
     graph = load_graph(input_path)
     if graph is None:
         return
 
     add_function_id_to_nodes(graph)
     save_graph(graph, output_path)
-    os.remove(input_path)
+    # os.remove(input_path)
+
+def funcid_main(graph, repo_path, output_dir):
+    add_function_id_to_nodes(graph)
+    
+    return graph
 
 if __name__ == "__main__":
     main()
