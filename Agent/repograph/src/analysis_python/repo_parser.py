@@ -125,7 +125,7 @@ class RepoParser:
         return self.project_graph
 
     def generate_ast(self, file_path, file_node_id):
-        logger.info(f"生成AST: {file_path}")
+        logger.debug(f"生成AST: {file_path}")
         ext = os.path.splitext(file_path)[1][1:]
         lang = LANGUAGE_MAP.get(ext)
         if lang is None:

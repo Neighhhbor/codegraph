@@ -15,8 +15,8 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='pylsp.log',
-    filemode='w'
+    # filename='pylsp.log',
+    # filemode='w'
 )
 
 LSP_HOST = 'localhost'
@@ -105,7 +105,7 @@ class LSPConnection:
             try:
                 await asyncio.wait_for(self.pending_requests[req_id].wait(), timeout=3)
             except asyncio.TimeoutError:
-                self.logger.warning(f"Request ID {req_id} timed out on attempt {attempt + 1}")
+                self.logger.debug(f"Request ID {req_id} timed out on attempt {attempt + 1}")
                 del self.pending_requests[req_id]
                 if attempt < retries - 1:
                     await asyncio.sleep(2 ** attempt)  # Exponential backoff
@@ -120,21 +120,21 @@ class LSPConnection:
                     else:
                         del self.pending_requests[req_id]
                         return None
-        self.logger.error(f"Failed to get a response after {retries} attempts for message: {message}")
+        self.logger.debug(f"Failed to get a response after {retries} attempts for message: {message}")
         return None
 
     async def close(self):
         if self.writer:
             self.writer.close()
             await self.writer.wait_closed()
-        self.logger.info(f"Closed connection to LSP server at {self.host}:{self.port}")
+        self.logger.debug(f"Closed connection to LSP server at {self.host}:{self.port}")
 
 # Start pylsp server
 def start_pylsp(port):
     """启动 pylsp 进程，并为其指定端口"""
     cmd = ['jedi-language-server', '--tcp', '--host', '127.0.0.1', '--port', str(port)]
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-    logger.info(f"Started pylsp process on port {port}")
+    logger.debug(f"Started pylsp process on port {port}")
     return process
 
 # Initialize a single LSP connection
@@ -151,11 +151,11 @@ async def initialize_connection(connection, root_uri):
     }
     response = await connection.send_request_and_wait(message, retries=5)
     if response:
-        connection.logger.info("Python Language Server initialized successfully.")
+        connection.logger.debug("Python Language Server initialized successfully.")
         await send_initialized_notification(connection)
         connection.initialized.set()
     else:
-        connection.logger.error("Failed to initialize Python Language Server.")
+        connection.logger.debug("Failed to initialize Python Language Server.")
 
 # Send initialized notification
 async def send_initialized_notification(connection):
@@ -180,7 +180,7 @@ async def handle_node(connection, node_data, file_uri, position, progress_bar, s
         if result is not None:
             node_data["definition"] = result
         else:
-            connection.logger.info(f"Skipping node {node_data} due to repeated timeouts.")
+            connection.logger.debug(f"Skipping node {node_data} due to repeated timeouts.")
         progress_bar.update(1)
 
 # Process AST nodes with multiple LSP connections
@@ -289,7 +289,7 @@ async def main():
     try:
         # 初始化所有 LSP 连接
         initialize_tasks = [initialize_connection(connection, root_uri) for connection in lsp_connections]
-        logger.info(f"Initializing {len(initialize_tasks)} LSP connections...")
+        logger.debug(f"Initializing {len(initialize_tasks)} LSP connections...")
         await asyncio.gather(*initialize_tasks)
 
         # 处理 AST 节点，分配给不同的 LSP 连接
@@ -299,7 +299,7 @@ async def main():
        
         with open(output_path, 'w') as f:
             json.dump(nx.node_link_data(graph), f, indent=4)
-        logger.info(f"Definition graph saved to {output_path}")
+        logger.debug(f"Definition graph saved to {output_path}")
 
     except Exception as e:
         logger.error(f"Error occurred: {e}")
@@ -312,7 +312,7 @@ async def main():
         for process in lsp_processes:
             process.terminate()
             process.wait()
-            logger.info(f"Terminated pylsp process on port {process.args[-1]}")
+            logger.debug(f"Terminated pylsp process on port {process.args[-1]}")
         os.remove(graph_path)
 
 async def pylsp_main(graph, repo_path, output_dir, ports):
@@ -335,7 +335,7 @@ async def pylsp_main(graph, repo_path, output_dir, ports):
     try:
         # 初始化所有 LSP 连接
         initialize_tasks = [initialize_connection(connection, root_uri) for connection in lsp_connections]
-        logger.info(f"Initializing {len(initialize_tasks)} LSP connections...")
+        logger.debug(f"Initializing {len(initialize_tasks)} LSP connections...")
         await asyncio.gather(*initialize_tasks)
 
         # 处理 AST 节点，分配给不同的 LSP 连接
@@ -353,7 +353,7 @@ async def pylsp_main(graph, repo_path, output_dir, ports):
         for process in lsp_processes:
             process.terminate()
             process.wait()
-            logger.info(f"Terminated pylsp process on port {process.args[-1]}")
+            logger.debug(f"Terminated pylsp process on port {process.args[-1]}")
 
         return graph
 

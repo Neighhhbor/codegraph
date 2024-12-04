@@ -13,4 +13,4 @@ PORT="4000 4001 4002 4003"
 # python relation_parser.py $REPO_PATH --output_dir $RESULTDIR
 # python extract.py $REPO_PATH --output_dir $RESULTDIR
 
-python pipeline.py $REPO_PATH --output_dir $RESULTDIR --ports $PORT
+python pipetest.py $REPO_PATH --output_dir $RESULTDIR --ports $PORT
